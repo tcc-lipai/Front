@@ -1,45 +1,113 @@
-.footer-container {
-  background-color: #f8f9fa;
-  padding: 40px 10% 20px;
-  border-top: 1px solid #e0e0e0;
-  color: #333;
+
+.footer {
+  background-color: #f5f0ff;
+  padding: 40px 60px 20px;
+  border-top: 1px solid #e9d5ff;
 }
 
-.footer-content {
+.footer__top {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  flex-wrap: wrap;
-  gap: 20px;
+  gap: 40px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #d8b4fe;
 }
 
-.footer-logo {
-  font-size: 24px;
-  margin-bottom: 10px;
+.footer__brand p {
+  font-size: 0.82rem;
+  color: #6b7280;
+  max-width: 220px;
+  margin-top: 6px;
+  line-height: 1.5;
 }
 
-.footer-logo span {
-  color: #6a3093;
+.footer__logo {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #5b21b6;
 }
 
-.footer-links a {
-  display: block;
+.footer__logo span {
+  color: #a855f7;
+}
+
+.footer__links {
+  display: flex;
+  gap: 60px;
+}
+
+.footer__links-col h4 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #374151;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.footer__links-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer__links-col ul li a {
   text-decoration: none;
-  color: #555;
-  margin-bottom: 8px;
-  font-size: 14px;
+  color: #6b7280;
+  font-size: 0.88rem;
+  transition: color 0.2s;
 }
 
-.footer-info p {
-  margin: 5px 0;
-  font-size: 14px;
+.footer__links-col ul li a:hover {
+  color: #7c3aed;
 }
 
-.footer-copy {
+.footer__contact h4 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #374151;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.footer__contact p {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin: 4px 0;
+}
+
+.footer__social {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.footer__social a {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: #7c3aed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.footer__social a:hover {
+  background-color: #5b21b6;
+}
+
+.footer__bottom {
   text-align: center;
-  margin-top: 30px;
-  padding-top: 20px;
-  border-top: 1px solid #ddd;
-  font-size: 12px;
-  color: #888;
+  padding-top: 16px;
+  font-size: 0.78rem;
+  color: #9ca3af;
 }
