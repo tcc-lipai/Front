@@ -89,6 +89,7 @@ const TelaLandingPage = () => {
 
       {/* SOBRE */}
       <section className="landing__sobre" id="sobre">
+        <div className="landing__sobre-bg"></div> {/* DIV DE FUNDO PARA O ROXO CLARO */}
         <h2>Sobre o LipAI</h2>
         <div className="landing__sobre-content">
           <div className="landing__sobre-image">
@@ -138,22 +139,31 @@ const TelaLandingPage = () => {
       {/* CTA */}
       <section className="landing__cta">
         <div className="landing__cta-card">
+          <div className="landing__cta-circle"></div>
+
           <div className="landing__cta-image">
             <img src={celularImg} alt="Celular LipAI" />
           </div>
+
           <div className="landing__cta-text">
             <h2>
-              Preparado? Vamos começar com <span>LipAI</span> e<br />
-              ter uma experiência incrível!
+              Preparado? Vamos começar com <span>LipAI</span><br />
+              e ter uma experiência incrível!
             </h2>
+
             <p>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s. Lorem ipsum to simply dummy text of the
-              printing and Lorem ipsum has been the industry's standard dummy
-              text ever since the 1500s.
+              Explore uma nova forma de comunicação com tecnologia acessível e
+              intuitiva. Comece agora e evolua no seu ritmo.
             </p>
-            <button className="landing__cta-btn">Saiba mais...</button>
+
+            <div className="landing__cta-buttons">
+              <button className="landing__cta-btn">
+                Saiba mais
+              </button>
+              <button className="landing__cta-btn-acessar">
+                Acessar aqui
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -169,7 +179,6 @@ const TelaLandingPage = () => {
           </h2>
         </div>
 
-        {/* Linha 1 — 3 cards */}
         <div className="landing__equipe-grid">
           {membros.slice(0, 3).map((m, i) => (
             <div className="member-card" key={i}>
@@ -182,7 +191,6 @@ const TelaLandingPage = () => {
           ))}
         </div>
 
-        {/* Linha 2 — 2 cards */}
         <div className="landing__equipe-grid landing__equipe-grid--bottom">
           {membros.slice(3, 5).map((m, i) => (
             <div className="member-card" key={i}>
@@ -220,7 +228,6 @@ const TelaLandingPage = () => {
         </div>
       </section>
 
-      {/* FOOTER */}
       <Footer />
     </div>
   );
