@@ -9,11 +9,11 @@ import celularImg from "../../assets/img/celular-landingpage.png";
 import membroImg from "../../assets/img/img-teste.png";
 
 const membros = [
-  { nome: "Angelo Ivan", cargo: "Back-end e Front-end" },
-  { nome: "Angelo Ivan", cargo: "Back-end e Front-end" },
-  { nome: "Angelo Ivan", cargo: "Back-end e Front-end" },
-  { nome: "Angelo Ivan", cargo: "Back-end e Front-end" },
-  { nome: "Angelo Ivan", cargo: "Back-end e Front-end" },
+  { nome: "Angelo Ivon", cargo: "Back-end e Front-end" },
+  { nome: "Arthur Gael Araújo Pinho de Almeida", cargo: "Back-end e Front-end" },
+  { nome: "Evellyn dos Santos Furtado", cargo: "Back-end e Front-end" },
+  { nome: "Gabriela Romano", cargo: "Back-end e Front-end" },
+  { nome: "João Paulo Souza Azevedo", cargo: "Back-end e Front-end" },
 ];
 
 const TelaLandingPage = () => {
@@ -169,62 +169,55 @@ const TelaLandingPage = () => {
       </section>
 
       {/* EQUIPE */}
-      <section className="landing__equipe" id="participantes">
-        <div className="landing__equipe-header">
-          <p>Desenvolvedores</p>
-          <h2>
-            Membros da
-            <br />
-            Equipe:
-          </h2>
-        </div>
+      {/* EQUIPE */}
+      <section className="equipe">
+        <div className="equipe__container">
 
-        <div className="landing__equipe-grid">
-          {membros.slice(0, 3).map((m, i) => (
-            <div className="member-card" key={i}>
-              <img src={membroImg} alt={m.nome} />
-              <div className="member-card__info">
-                <h4>{m.nome}</h4>
-                <p>{m.cargo}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+          <div className="equipe__header">
+            <span>Desenvolvedores</span>
+            <h2>
+              Membros da <br /> Equipe:
+            </h2>
+          </div>
 
-        <div className="landing__equipe-grid landing__equipe-grid--bottom">
-          {membros.slice(3, 5).map((m, i) => (
-            <div className="member-card" key={i}>
-              <img src={membroImg} alt={m.nome} />
-              <div className="member-card__info">
-                <h4>{m.nome}</h4>
-                <p>{m.cargo}</p>
+          <div className="equipe__grid">
+            {membros.map((m, i) => (
+              <div className="equipe__card" key={i}>
+                <div className="equipe__card-inner">
+                  <img src={membroImg} alt={m.nome} />
+                  <h4>{m.nome}</h4>
+                  <p>{m.cargo}</p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+
         </div>
       </section>
 
       {/* CONTATO */}
       <section className="landing__contato" id="contato">
-        <h2>Contato:</h2>
-        <div className="landing__contato-form">
-          <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="nome">Nome:</label>
-              <input type="text" id="nome" name="nome" />
+        <div className="landing__contato-container">
+          <h2>Contato:</h2>
+          <form className="landing__contato-form">
+            <div className="form-row">
+              <div className="form-group">
+                <label htmlFor="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" placeholder="Seu nome" />
+              </div>
+              <div className="form-group">
+                <label htmlFor="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Seu e-mail" />
+              </div>
             </div>
             <div className="form-group">
-              <label htmlFor="email">Email:</label>
-              <input type="email" id="email" name="email" />
+              <label htmlFor="assunto">Assunto:</label>
+              <textarea id="assunto" name="assunto" placeholder="Como podemos ajudar?" />
             </div>
-          </div>
-          <div className="form-group">
-            <label htmlFor="assunto">Assunto:</label>
-            <textarea id="assunto" name="assunto" />
-          </div>
-          <div className="form-submit">
-            <button type="submit">Enviar</button>
-          </div>
+            <div className="form-submit">
+              <button type="submit">Enviar</button>
+            </div>
+          </form>
         </div>
       </section>
 
