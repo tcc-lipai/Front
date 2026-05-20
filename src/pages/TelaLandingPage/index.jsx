@@ -6,14 +6,45 @@ import "./index.css";
 import notebookImg from "../../assets/img/notebook-dashboard.png";
 import biaImg from "../../assets/img/bia-landingpage.png";
 import celularImg from "../../assets/img/celular-landingpage.png";
-import membroImg from "../../assets/img/img-teste.png";
+
+import evellynImg from "../../assets/img/Evellyn.jpg";
+import gabrielaImg from "../../assets/img/Gabriela.jpg";
+import gaelImg from "../../assets/img/Gael.jpg";
+import joaoImg from "../../assets/img/João.jpg";
+import angeloImg from "../../assets/img/Angelo.jpg"
+
+import cerebroIcon from "../../assets/img/cerebro.png"
+import lipsIcon from "../../assets/img/lips.png"
+import lipsIconPurple from "../../assets/img/lips-purple.png"
+
+
 
 const membros = [
-  { nome: "Angelo Ivon", cargo: "Back-end e Front-end" },
-  { nome: "Arthur Gael Araújo Pinho de Almeida", cargo: "Back-end e Front-end" },
-  { nome: "Evellyn dos Santos Furtado", cargo: "Back-end e Front-end" },
-  { nome: "Gabriela Romano", cargo: "Back-end e Front-end" },
-  { nome: "João Paulo Souza Azevedo", cargo: "Back-end e Front-end" },
+  {
+    nome: "Angelo Ivon Domingues Tenório de Almeida",
+    cargo: "Back-end e Front-end",
+    foto: angeloImg
+  },
+  {
+    nome: "Arthur Gael Araújo Pinho de Almeida",
+    cargo: "Back-end e Front-end",
+    foto: gaelImg
+  },
+  {
+    nome: "Evellyn dos Santos Furtado",
+    cargo: "Back-end e Front-end",
+    foto: evellynImg
+  },
+  {
+    nome: "Gabriela Romano",
+    cargo: "Back-end e Front-end",
+    foto: gabrielaImg
+  },
+  {
+    nome: "João Paulo Souza Azevedo",
+    cargo: "Back-end e Front-end",
+    foto: joaoImg
+  },
 ];
 
 const TelaLandingPage = () => {
@@ -59,21 +90,21 @@ const TelaLandingPage = () => {
         {/* FEATURES */}
         <section className="landing__features">
           <div className="landing__feature-card">
-            <div className="feature-icon"></div>
-            <h3>Foco no Aprendizado</h3>
+            <div className="feature-icon">
+              <img src={cerebroIcon} alt="" />
+            </div>
+            <h3>Aprendizado Interativo</h3>
             <p>
-              Lorem ipsum is simply dummy text of the printing and
-              aaadaatypesetting industry. Lorem Ipsum has been the industry's
-              standard dummy text ever since the 1500s.
+              Atividades dinâmicas que estimulam o aprendizado visual e cognitivo.
             </p>
           </div>
           <div className="landing__feature-card">
-            <div className="feature-icon"></div>
-            <h3>Foco no Aprendizado</h3>
+            <div className="feature-icon">
+              <img src={lipsIcon} alt="" />
+            </div>
+            <h3>Leitura Labial</h3>
             <p>
-              Lorem ipsum is simply dummy text of the printing and
-              aaadaatypesetting industry. Lorem Ipsum has been the industry's
-              standard dummy text ever since the 1500s.
+              Treine a leitura labial com exercícios práticos e guiados.
             </p>
           </div>
           <div className="landing__features-wave">
@@ -101,35 +132,31 @@ const TelaLandingPage = () => {
             </h3>
 
             <div className="benefit-item">
-              <div className="benefit-icon">🕐</div>
+              <div className="benefit-icon">
+                <img src={lipsIconPurple} alt="" />
+              </div>
               <div>
-                <h4>Flexibilidade</h4>
+                <h4>Leitura Labial Guiada</h4>
                 <p>
-                  Aprenda no seu próprio ritmo, a qualquer hora e em qualquer
-                  lugar, com LipAI com sua agenda.
-                </p>
+                O LipAI oferece um sistema de treinamento focado no desenvolvimento da leitura labial, utilizando recursos visuais claros e exercícios interativos. Através de simulações e práticas progressivas, o usuário consegue aprimorar sua capacidade de interpretar movimentos labiais, facilitando a compreensão da comunicação no dia a dia.              </p>
               </div>
             </div>
 
             <div className="benefit-item">
               <div className="benefit-icon">🕐</div>
               <div>
-                <h4>Flexibilidade</h4>
+                <h4>Inclusão e Acessibilidade</h4>
                 <p>
-                  Aprenda no seu próprio ritmo, a qualquer hora e em qualquer
-                  lugar, com LipAI com sua agenda.
-                </p>
+                Desenvolvido com foco em acessibilidade, o LipAI busca reduzir barreiras de comunicação enfrentadas por pessoas surdas. A plataforma foi projetada para ser intuitiva, inclusiva e adaptada às necessidades desse público, promovendo autonomia, integração social e acesso mais igualitário à educação digital.</p>
               </div>
             </div>
 
             <div className="benefit-item">
               <div className="benefit-icon">🕐</div>
               <div>
-                <h4>Flexibilidade</h4>
+                <h4>Aprendizado Interativo</h4>
                 <p>
-                  Aprenda no seu próprio ritmo, a qualquer hora e em qualquer
-                  lugar, com LipAI com sua agenda.
-                </p>
+                A plataforma utiliza uma abordagem dinâmica e interativa, inspirada em métodos modernos de ensino digital. Com atividades práticas, feedback imediato e elementos visuais, o aprendizado se torna mais envolvente e eficiente, incentivando o progresso contínuo do usuário de forma leve e motivadora.                </p>
               </div>
             </div>
           </div>
@@ -170,28 +197,18 @@ const TelaLandingPage = () => {
 
       {/* EQUIPE */}
       {/* EQUIPE */}
-      <section className="equipe">
-        <div className="equipe__container">
-
-          <div className="equipe__header">
-            <span>Desenvolvedores</span>
-            <h2>
-              Membros da <br /> Equipe:
-            </h2>
-          </div>
-
-          <div className="equipe__grid">
-            {membros.map((m, i) => (
-              <div className="equipe__card" key={i}>
-                <div className="equipe__card-inner">
-                  <img src={membroImg} alt={m.nome} />
-                  <h4>{m.nome}</h4>
-                  <p>{m.cargo}</p>
-                </div>
+      <section className="equipe" id="equipe">
+        <div className="equipe__grid">
+          {membros.map((m, i) => (
+            <div className="equipe__card" key={i}>
+              <div className="equipe__card-inner">
+                {/* Mudança aqui: m.foto em vez de membroImg */}
+                <img src={m.foto} alt={m.nome} />
+                <h4>{m.nome}</h4>
+                <p>{m.cargo}</p>
               </div>
-            ))}
-          </div>
-
+            </div>
+          ))}
         </div>
       </section>
 

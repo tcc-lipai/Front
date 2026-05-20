@@ -146,6 +146,11 @@
   margin-top: 100px;
 }
 
+.landing__feature-card .feature-icon img{
+  width: 30px;
+  height: 30px;
+}
+
 .landing__feature-card h3 {
   font-size: 1.1rem;
   font-weight: 700;
@@ -239,6 +244,10 @@
   flex-shrink: 0;
   margin-top: 20px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+.benefit-item .benefit-icon img{
+  width:40px;
+  height:40px
 }
 
 .benefit-item h4 {
