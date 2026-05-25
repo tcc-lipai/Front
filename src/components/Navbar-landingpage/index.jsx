@@ -12,7 +12,7 @@ const NavbarLandingPage = () => {
       <ul className="navbar-lp__links">
         <li><a href="#home">Home</a></li>
         <li><a href="#sobre">Sobre</a></li>
-        <li><a href="#equipe">Participantes</a></li>
+        <li><a href="#participantes">Equipe</a></li>
         <li><a href="#contato">Contato</a></li>
       </ul>
 

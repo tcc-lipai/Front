@@ -13,9 +13,11 @@ import gaelImg from "../../assets/img/Gael.jpg";
 import joaoImg from "../../assets/img/João.jpg";
 import angeloImg from "../../assets/img/Angelo.jpg"
 
+import inclusao_icon from "../../assets/img/inclusao_icon.png"
 import cerebroIcon from "../../assets/img/cerebro.png"
 import lipsIcon from "../../assets/img/lips.png"
 import lipsIconPurple from "../../assets/img/lips-purple.png"
+import aprendizado_icon from "../../assets/img/aprendizado_icon.png"
 
 
 
@@ -50,12 +52,11 @@ const membros = [
 const TelaLandingPage = () => {
   return (
     <div className="landing">
-      {/* NAVBAR */}
+     
       <NavbarLandingPage />
 
-      {/* HERO + WAVE + FEATURES WRAPPER */}
       <div className="landing__hero-wrapper">
-        {/* HERO */}
+        
         <section className="landing__hero" id="home">
           <div className="landing__hero-text">
             <div className="landing__hero-logo">
@@ -77,7 +78,6 @@ const TelaLandingPage = () => {
           </div>
         </section>
 
-        {/* ONDA ROXA */}
         <div className="landing__hero-wave">
           <svg viewBox="0 0 1440 200" preserveAspectRatio="none">
             <path
@@ -87,7 +87,6 @@ const TelaLandingPage = () => {
           </svg>
         </div>
 
-        {/* FEATURES */}
         <section className="landing__features">
           <div className="landing__feature-card">
             <div className="feature-icon">
@@ -118,9 +117,8 @@ const TelaLandingPage = () => {
         </section>
       </div>
 
-      {/* SOBRE */}
       <section className="landing__sobre" id="sobre">
-        <div className="landing__sobre-bg"></div> {/* DIV DE FUNDO PARA O ROXO CLARO */}
+        <div className="landing__sobre-bg"></div> 
         <h2>Sobre o LipAI</h2>
         <div className="landing__sobre-content">
           <div className="landing__sobre-image">
@@ -143,7 +141,9 @@ const TelaLandingPage = () => {
             </div>
 
             <div className="benefit-item">
-              <div className="benefit-icon">🕐</div>
+              <div className="benefit-icon">
+                <img src={inclusao_icon} alt="" />
+              </div>
               <div>
                 <h4>Inclusão e Acessibilidade</h4>
                 <p>
@@ -152,7 +152,9 @@ const TelaLandingPage = () => {
             </div>
 
             <div className="benefit-item">
-              <div className="benefit-icon">🕐</div>
+              <div className="benefit-icon">
+                <img src={aprendizado_icon} alt="" /> 
+              </div>
               <div>
                 <h4>Aprendizado Interativo</h4>
                 <p>
@@ -163,7 +165,6 @@ const TelaLandingPage = () => {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="landing__cta">
         <div className="landing__cta-card">
           <div className="landing__cta-circle"></div>
@@ -195,14 +196,11 @@ const TelaLandingPage = () => {
         </div>
       </section>
 
-      {/* EQUIPE */}
-      {/* EQUIPE */}
-      <section className="equipe" id="equipe">
+      <section className="equipe" id="participantes">
         <div className="equipe__grid">
           {membros.map((m, i) => (
             <div className="equipe__card" key={i}>
               <div className="equipe__card-inner">
-                {/* Mudança aqui: m.foto em vez de membroImg */}
                 <img src={m.foto} alt={m.nome} />
                 <h4>{m.nome}</h4>
                 <p>{m.cargo}</p>
@@ -212,7 +210,6 @@ const TelaLandingPage = () => {
         </div>
       </section>
 
-      {/* CONTATO */}
       <section className="landing__contato" id="contato">
         <div className="landing__contato-container">
           <h2>Contato:</h2>
