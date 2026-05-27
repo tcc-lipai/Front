@@ -1,5 +1,7 @@
 FRONT LIPAI- PASSOS
 
+Abrir o CMD do terminal
+
 npm i
 
 npm run dev
