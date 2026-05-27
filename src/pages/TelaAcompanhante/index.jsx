@@ -1,7 +1,7 @@
-
+import RedesSociais from "../../components/RedesSociais";
 
 const TelaAcompanhante = () => {
-  <p>Oi</p>
+  return <RedesSociais />; 
 };
 
 export default TelaAcompanhante;
