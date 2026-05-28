@@ -1,7 +1,7 @@
 import React from 'react';
 import './index.css';
 
-const Botao = ({ texto, corDeFundo, onClick }) => {
+const Botao = ({ texto, corDeFundo = '#4A154B', onClick = () => {} }) => {
   return (
     <button 
       className="btn-generico" 
