@@ -1,0 +1,228 @@
+/* Container ocupa toda a janela do navegador com o fundo rosa/roxo bem claro solicitado */
+.container-page {
+  width: 100vw;
+  height: 100vh;
+  background-color: #F8EDFB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Card maximizado nas laterais seguindo as instruções anteriores */
+.activity-card {
+  width: 96%;
+  max-width: 1650px;
+  height: 94vh;
+  background: #ffffff;
+  border: none;
+  border-radius: 16px;
+  padding: 35px 40px 20px 40px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+  position: relative;
+  overflow: hidden;
+}
+
+/* HEADER */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.header-titles h3 {
+  margin: 0;
+  font-size: 22px;
+  color: #581c87;
+  font-weight: 700;
+}
+
+.header-titles .subtitle {
+  font-size: 13px;
+  color: #a78bfa;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 26px;
+  color: #333;
+  cursor: pointer;
+  font-weight: 300;
+}
+
+/* PROGRESS BAR */
+.progress-container {
+  height: 6px;
+  background-color: #f3e8ff;
+  border-radius: 10px;
+  margin: 15px 0;
+  width: 100%;
+}
+
+.progress-bar-fill {
+  width: 25%;
+  height: 100%;
+  background-color: #a855f7;
+  border-radius: 10px;
+}
+
+/* ESTRUTURA DO CONTEÚDO EM COLUNAS/BLOCOS VERTICAIS */
+.content-layout {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  overflow-y: auto;
+  padding-bottom: 20px;
+}
+
+/* CAIXA CINZA DO VÍDEO LABIAL */
+.video-placeholder-box {
+  width: 100%;
+  height: 220px;
+  background-color: #f3f4f6;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-placeholder-text {
+  color: #9ca3af;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+/* TEXTO DA QUESTÃO */
+.question-container {
+  text-align: left;
+}
+
+.question-label {
+  font-size: 12px;
+  color: #a78bfa;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.question-text {
+  font-size: 16px;
+  color: #4c1d95;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* LISTA DE ALTERNATIVAS */
+.options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+/* Estilo padrão de cada linha de opção */
+.option-item {
+  width: 100%;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px 20px;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e1b4b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.option-letter {
+  margin-right: 4px;
+}
+
+/* Estado: Selecionado (Roxo) */
+.option-item.selected {
+  background-color: #f3e8ff;
+  border-color: #c084fc;
+}
+
+/* Estado: Correto (Verde) */
+.option-item.correct {
+  background-color: #f0fdf4;
+  border-color: #bbf7d0;
+  color: #166534;
+}
+
+/* Estado: Incorreto (Vermelho/Laranja Suave) */
+.option-item.incorrect {
+  background-color: #fff5f5;
+  border-color: #fca5a5;
+  color: #991b1b;
+}
+
+/* SEÇÃO INFERIOR */
+.footer-area {
+  margin-top: auto;
+  width: 100%;
+}
+
+.actions-area {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+}
+
+/* Caixa de Feedback roxa que preenche o rodapé do Card */
+.feedback-container {
+  background-color: #fae8ff;
+  margin: 0 -40px -20px -40px; /* Estica até as bordas internas do card */
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #f5d0fe;
+}
+
+.feedback-content h4 {
+  margin: 0 0 4px 0;
+  color: #701a75;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.feedback-content p {
+  margin: 0;
+  color: #701a75;
+  font-size: 14px;
+}
+
+/* BOTÕES */
+.btn-purple {
+  background-color: #8659a7;
+  color: white;
+  border: none;
+  padding: 10px 60px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+.btn-gray {
+  background-color: #e2e8f0;
+  color: #475569;
+  border: none;
+  padding: 10px 45px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 20px;
+  cursor: pointer;
+}
