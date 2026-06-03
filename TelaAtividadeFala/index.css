@@ -1,0 +1,188 @@
+/* Container ocupa toda a janela do navegador com o fundo novo */
+.container-page {
+  width: 100vw;
+  height: 100vh;
+  background-color: #F8EDFB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* CARD COM OS LADOS MAIS AMPLIADOS AINDA (MÁXIMA LARGURA) */
+.activity-card {
+  width: 98%;             /* Ocupa 96% da largura total da tela */
+  max-width: 1800px;      /* Aumentado para 1650px para esticar ainda mais para os lados */
+  height: 92vh;       
+  background: #ffffff;
+  border: none;       
+  border-radius: 16px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+}
+
+/* HEADER */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.header-titles h3 {
+  margin: 0;
+  font-size: 24px;
+  color: #581c87;
+  font-weight: 700;
+}
+
+.header-titles .subtitle {
+  font-size: 14px;
+  color: #a78bfa;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #333;
+  cursor: pointer;
+  font-weight: 300;
+}
+
+/* PROGRESS BAR */
+.progress-container {
+  height: 6px;
+  background-color: #f3e8ff;
+  border-radius: 10px;
+  margin-top: -20px;
+  width: 100%;
+}
+
+.progress-bar-fill {
+  width: 25%;
+  height: 100%;
+  background-color: #a855f7;
+  border-radius: 10px;
+}
+
+/* BOX CENTRAL (Onde fica o microfone) */
+.status-box {
+  width: 100%;
+  max-width: 500px;
+  height: 240px;
+  margin: 0 auto;
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+/* Cores de fundo dinâmicas baseadas nas suas imagens */
+.status-box.idle, .status-box.listening, .status-box.loading {
+  background-color: #faf5ff;
+}
+
+.status-box.success {
+  background-color: #e8f5e9;
+  border: 1px solid #c8e6c9;
+}
+
+.status-box.error {
+  background-color: #ffebee;
+  border: 1px solid #ffcdd2;
+}
+
+/* TEXTOS EMBAIXO DO BOX */
+.text-container {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.video-label {
+  font-size: 12px;
+  color: #c084fc;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.instruction-label {
+  font-size: 16px;
+  color: #1e1b4b;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+}
+
+.main-phrase {
+  font-size: 42px;
+  color: #6b21a8;
+  margin: 0;
+  font-weight: 700;
+}
+
+/* ÁREA DE BOTÕES INTERATIVOS */
+.actions-area {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.button-group {
+  display: flex;
+  gap: 16px;
+}
+
+/* Botão Roxo Arredondado do mockup */
+.btn-purple {
+  background-color: #8659a7;
+  color: white;
+  border: none;
+  padding: 12px 48px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-purple:hover {
+  opacity: 0.9;
+}
+
+/* Botão cinza/claro (Próximo) */
+.btn-gray {
+  background-color: #e2e8f0;
+  color: #475569;
+  border: none;
+  padding: 12px 48px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+/* ANIMACAO DOS PONTINHOS (LOADING) */
+.dots span {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-color: #6b21a8;
+  border-radius: 50%;
+  margin: 0 6px;
+  animation: bounce 1.4s infinite ease-in-out both;
+}
+
+.dots span:nth-child(1) { animation-delay: -0.32s; }
+.dots span:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes bounce {
+  0%, 80%, 100% { transform: scale(0); }
+  40% { transform: scale(1.0); }
+}
