@@ -454,3 +454,67 @@
     text-align: center;
   }
 }
+/* Layout com navbar na esquerda */
+.unidades-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.unidades-layout .unidades {
+  flex: 1;
+  overflow-x: auto;
+}
+
+/* Ajuste do conteúdo principal para dar espaço */
+.unidades-layout .unidades__main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem 2rem;
+  width: 100%;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+  .unidades-layout {
+    flex-direction: column;
+  }
+  
+  .unidades-layout .unidades__main {
+    padding: 0 1rem 1rem;
+  }
+}
+
+/* Ajuste do cabeçalho para não ficar colado */
+.unidades-layout .unidades__header {
+  padding: 2rem 2rem 0;
+}
+
+@media (max-width: 768px) {
+  .unidades-layout .unidades__header {
+    padding: 1rem;
+  }
+}
+
+/* Ajuste da navbar existente */
+.sidebar-navbar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 10;
+}
+
+@media (max-width: 768px) {
+  .sidebar-navbar {
+    position: fixed;
+    bottom: 0;
+    top: auto;
+    height: auto;
+    width: 100%;
+    z-index: 20;
+  }
+  
+  .unidades-layout {
+    padding-bottom: 60px; /* Espaço para navbar no mobile */
+  }
+}
