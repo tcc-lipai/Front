@@ -1,0 +1,456 @@
+/* ===== TELA UNIDADES ===== */
+.unidades {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #faf8ff;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ===== CABEÇALHO ===== */
+.unidades__header {
+  background: linear-gradient(135deg, #7A3A8E 0%, #a855f7 100%);
+  padding: 28px 40px 24px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.unidades__header-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.unidades__voltar {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 8px;
+  padding: 6px 10px;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  transition: background 0.15s;
+}
+
+.unidades__voltar:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.unidades__voltar:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.unidades__breadcrumb {
+  font-size: 0.78rem;
+  opacity: 0.8;
+}
+
+.unidades__header-info {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.unidades__titulo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin: 0 0 4px;
+}
+
+.unidades__subtitulo {
+  font-size: 0.82rem;
+  opacity: 0.85;
+  margin: 0;
+}
+
+/* Progresso geral */
+.unidades__progresso-geral {
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-end;
+}
+
+.unidades__progresso-geral-topo {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.unidades__progresso-geral-label {
+  font-size: 0.75rem;
+  opacity: 0.85;
+}
+
+.unidades__progresso-geral-valor {
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.unidades__progresso-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.unidades__progresso-fill {
+  height: 100%;
+  background: #fff;
+  border-radius: 10px;
+  transition: width 0.5s ease;
+}
+
+/* ===== CONTEÚDO PRINCIPAL ===== */
+.unidades__main {
+  flex: 1;
+  padding: 32px 40px;
+  max-width: 860px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Próxima unidade (destaque) */
+.unidades__proxima {
+  background: linear-gradient(135deg, #f3e8ff 0%, #ede9fe 100%);
+  border: 2px solid #7A3A8E;
+  border-radius: 16px;
+  padding: 20px 24px;
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.unidades__proxima-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.unidades__proxima-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #7A3A8E;
+  margin-bottom: 2px;
+}
+
+.unidades__proxima-titulo {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a0533;
+}
+
+.unidades__proxima-desc {
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+.unidades__proxima-btn {
+  padding: 10px 24px;
+  background: #7A3A8E;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.unidades__proxima-btn:hover {
+  background: #5c2a6e;
+}
+
+.unidades__proxima-btn:focus-visible {
+  outline: 2px solid #7A3A8E;
+  outline-offset: 2px;
+}
+
+/* ===== LISTA DE UNIDADES ===== */
+.unidades__lista-titulo {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1a0533;
+  margin-bottom: 16px;
+}
+
+.unidades__lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+}
+
+/* Linha conectora entre unidades */
+.unidades__lista::before {
+  content: '';
+  position: absolute;
+  left: 27px;
+  top: 40px;
+  bottom: 40px;
+  width: 2px;
+  background: linear-gradient(to bottom, #e9d5f5, #e9d5f5);
+  z-index: 0;
+}
+
+/* Card de unidade */
+.unidades__card {
+  background: #fff;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+  position: relative;
+  z-index: 1;
+}
+
+.unidades__card:hover:not(.unidades__card--bloqueado) {
+  border-color: #7A3A8E;
+  box-shadow: 0 4px 16px rgba(122, 58, 142, 0.12);
+  transform: translateY(-1px);
+}
+
+.unidades__card--selecionado {
+  border-color: #7A3A8E;
+  box-shadow: 0 4px 20px rgba(122, 58, 142, 0.18);
+}
+
+.unidades__card--bloqueado {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.unidades__card--concluido {
+  border-color: #d1fae5;
+}
+
+.unidades__card:focus-visible {
+  outline: 2px solid #7A3A8E;
+  outline-offset: 2px;
+}
+
+/* Ícone / número da unidade */
+.unidades__card-icone {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+  background: #f3e8ff;
+}
+
+.unidades__card-icone--concluido {
+  background: #d1fae5;
+}
+
+.unidades__card-icone--bloqueado {
+  background: #f3f4f6;
+  font-size: 1rem;
+}
+
+/* Conteúdo do card */
+.unidades__card-conteudo {
+  flex: 1;
+  min-width: 0;
+}
+
+.unidades__card-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.unidades__card-numero {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #9ca3af;
+}
+
+.unidades__card-status {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 12px;
+}
+
+.unidades__card-status--concluido {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.unidades__card-status--emAndamento {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.unidades__card-status--disponivel {
+  background: #f3e8ff;
+  color: #7A3A8E;
+}
+
+.unidades__card-status--bloqueado {
+  background: #f3f4f6;
+  color: #9ca3af;
+}
+
+.unidades__card-titulo {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1a0533;
+  margin-bottom: 4px;
+}
+
+.unidades__card-desc {
+  font-size: 0.8rem;
+  color: #6b7280;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+/* Rodapé do card */
+.unidades__card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.unidades__card-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.unidades__card-licoes {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.unidades__card-tempo {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Barra de progresso do card */
+.unidades__card-progresso {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 120px;
+}
+
+.unidades__card-progresso-bar {
+  flex: 1;
+  height: 5px;
+  background: #e9d5f5;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.unidades__card-progresso-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #7A3A8E, #a855f7);
+  border-radius: 10px;
+  transition: width 0.4s ease;
+}
+
+.unidades__card-progresso-valor {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #7A3A8E;
+  white-space: nowrap;
+}
+
+/* Botão de ação do card (expandido) */
+.unidades__card-acao {
+  border-top: 1px solid #f3e8ff;
+  padding-top: 12px;
+  margin-top: 8px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.unidades__card-btn {
+  padding: 8px 22px;
+  background: #7A3A8E;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.unidades__card-btn:hover {
+  background: #5c2a6e;
+}
+
+.unidades__card-btn:focus-visible {
+  outline: 2px solid #7A3A8E;
+  outline-offset: 2px;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .unidades__header {
+    padding: 20px 16px 18px;
+  }
+
+  .unidades__main {
+    padding: 20px 16px;
+  }
+
+  .unidades__lista::before {
+    display: none;
+  }
+
+  .unidades__proxima {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .unidades__proxima-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
