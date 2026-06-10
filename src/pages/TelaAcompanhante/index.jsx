@@ -1,7 +1,13 @@
 import RedesSociais from "../../components/RedesSociais";
 
 const TelaAcompanhante = () => {
-  return <RedesSociais />; 
+ 
+
+  return (
+    <p>
+      Oii
+    </p>
+  );
 };
 
 export default TelaAcompanhante;
