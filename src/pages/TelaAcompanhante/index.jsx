@@ -1,7 +1,13 @@
 
 
 const TelaAcompanhante = () => {
-  <p>Oi</p>
+ 
+
+  return (
+    <p>
+      Oii
+    </p>
+  );
 };
 
 export default TelaAcompanhante;
