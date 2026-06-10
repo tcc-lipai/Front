@@ -1,0 +1,44 @@
+.options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+ 
+  .option-item {
+    width: 100%;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 12px 20px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e1b4b;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+ 
+  /* Estado: Selecionado (Roxo) */
+  .option-item.selected {
+    background-color: #f3e8ff;
+    border-color: #c084fc;
+  }
+ 
+  /* Estado: Correto (Verde) */
+  .option-item.correct {
+    background-color: #f0fdf4;
+    border-color: #bbf7d0;
+    color: #166534;
+  }
+ 
+  /* Estado: Incorreto (Vermelho Suave) */
+  .option-item.incorrect {
+    background-color: #fff5f5;
+    border-color: #fca5a5;
+    color: #991b1b;
+  }
+ 
+  .option-letter {
+    margin-right: 4px;
+  }
