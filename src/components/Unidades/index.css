@@ -1,0 +1,172 @@
+.unidades {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: #faf8ff;
+  font-family: 'Poppins', sans-serif;
+}
+
+.unidades-header {
+  padding: 28px 40px;
+  background-color: #fff;
+  border-bottom: 1px solid #e9d5f5;
+}
+
+.unidades-voltar-btn {
+  background: none;
+  border: none;
+  color: #7A3A8E;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+  padding: 0;
+  transition: opacity 0.2s;
+}
+
+.unidades-voltar-btn:hover {
+  opacity: 0.8;
+}
+
+.unidades-titulo {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin: 0 0 6px;
+  color: #1a0533;
+}
+
+.unidades-subtitulo {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.unidades-main {
+  flex: 1;
+  padding: 32px 40px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.unidades-card {
+  background: #fff;
+  border: 1.5px solid #e9d5f5;
+  border-radius: 14px;
+  padding: 20px;
+  transition: all 0.2s;
+}
+
+.unidades-card:hover:not(.bloqueado) {
+  border-color: #d1d5db;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.unidades-card.bloqueado {
+  opacity: 0.6;
+  pointer-events: none;
+  background: #f9f9f9;
+}
+
+.unidades-header-content {
+  margin-bottom: 16px;
+}
+
+.unidades-numero {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #9ca3af;
+}
+
+.unidades-card-titulo {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #1a0533;
+  margin: 4px 0 8px;
+}
+
+.unidades-card-desc {
+  font-size: 0.82rem;
+  color: #6b7280;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.unidades-atividades-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.unidades-atividade-card {
+  background: #f9f7ff;
+  border: 1.5px solid #e9d5f5;
+  border-radius: 10px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.unidades-atividade-card:hover:not(.bloqueado) {
+  background: #f3e8ff;
+  border-color: #7A3A8E;
+  box-shadow: 0 2px 8px rgba(122, 58, 142, 0.1);
+}
+
+.nidades-atividade-card.bloqueado {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: #f3f4f6;
+  border-color: #e5e7eb;
+}
+
+.unidades-atividade-titulo {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #1a0533;
+  flex: 1;
+}
+
+.unidades-atividade-btn {
+  background: #7A3A8E;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+.unidades-atividade-btn:hover {
+  background: #5c2a6e;
+  box-shadow: 0 2px 8px rgba(122, 58, 142, 0.25);
+}
+
+.unidades-atividade-btn:active {
+  transform: scale(0.95);
+}
+
+.unidades-lock-icon {
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+  margin-left: 8px;
+}

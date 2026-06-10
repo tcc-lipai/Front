@@ -26,7 +26,7 @@ const styles = {
   },
   contentContainer: {
     flex: 1,
-    paddingLeft: '110px', // IMPORTANTE: Abre espaço para a Navbar não cobrir o texto
+   paddingLeft: '110px',  // IMPORTANTE: Abre espaço para a Navbar não cobrir o texto
     paddingTop: '40px',
     paddingRight: '20px',
   },
