@@ -1,0 +1,20 @@
+# Dependências (nunca envie para o GitHub, são muito pesadas)
+node_modules/
+
+# Produção / Build
+build/
+dist/
+
+# Arquivos de variáveis de ambiente (segurança)
+.env
+.env.local
+
+# Arquivos do sistema operacional e logs
+.DS_Store
+Thumbs.db
+<<<<<<< HEAD
+*.log
+
+=======
+*.log
+>>>>>>> 0130681f8f48ae58401adbb0189bd858624ea1a0
