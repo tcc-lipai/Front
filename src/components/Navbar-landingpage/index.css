@@ -1,0 +1,80 @@
+.navbar-lp {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 60px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar-lp__logo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #1a0533;
+  text-decoration: none;
+}
+
+.navbar-lp__logo span {
+  color: #5a316e;
+}
+
+.navbar-lp__links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-lp__links a {
+  text-decoration: none;
+  color: #374151;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.navbar-lp__links a:hover {
+  color: #7A3A8E;
+}
+
+.navbar-lp__actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.navbar-lp__btn-cadastrar {
+  padding: 8px 20px;
+  border: 2px solid #7A3A8E;
+  border-radius: 20px;
+  background: transparent;
+  color: #7A3A8E;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.navbar-lp__btn-cadastrar:hover {
+  background: rgb(246, 241, 255);
+}
+
+.navbar-lp__btn-login {
+  padding: 8px 20px;
+  border: none;
+  border-radius: 20px;
+  background: #7A3A8E;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.navbar-lp__btn-login:hover {
+  background: #44204e;
+}
