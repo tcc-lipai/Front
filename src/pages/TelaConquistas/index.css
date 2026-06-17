@@ -1,0 +1,67 @@
+.container-tela-conquistas {
+    min-height: 100vh;
+    background-color: #EADFF0; /* Fundo lilás claro */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .header-conquistas {
+    background-color: #835997;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    padding: 0 40px;
+  }
+  
+  .btn-voltar-conquistas {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+  
+  /* Moldura interna branca */
+  .box-conquistas {
+    background-color: white;
+    border-radius: 12px;
+    margin: 40px auto;
+    padding: 40px;
+    max-width: 1500px;
+    width: calc(100% - 80px);
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  }
+  
+  .secao-grid-conquistas h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #4A154B;
+    margin-bottom: 24px;
+  }
+  
+  /* Força o grid a ter exatamente 7 colunas iguais na mesma linha */
+  .grid-cards-conquistas {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); 
+    gap: 12px;
+    width: 100%;
+  }
+  
+  /* Deixa todo o bloco de conquistas não atingidas com a opacidade reduzida */
+  .bloco-nao-atingidas {
+    opacity: 0.5;
+  }
+  
+  /* Ajuste de rolagem caso a tela do navegador fique muito pequena */
+  @media (max-width: 950px) {
+    .grid-cards-conquistas {
+      display: flex;
+      overflow-x: auto;
+      padding-bottom: 10px;
+    }
+    .grid-cards-conquistas > div {
+      flex-shrink: 0;
+    }
+  }
