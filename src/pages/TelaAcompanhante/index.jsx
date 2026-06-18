@@ -1,4 +1,4 @@
-
+import RedesSociais from "../../components/RedesSociais";
 
 const TelaAcompanhante = () => {
  

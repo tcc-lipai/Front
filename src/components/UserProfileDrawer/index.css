@@ -1,0 +1,123 @@
+.drawer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.1); /* Fundo sutil */
+  z-index: 999;
+}
+
+.drawer-container {
+  position: fixed;
+  top: 0;
+  right: -350px; /* Esconde a barra fora da tela */
+  width: 320px;
+  height: 100vh;
+  background-color: #ffffff;
+  box-shadow: -4px 0 15px rgba(0, 0, 0, 0.05);
+  z-index: 1000;
+  transition: right 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  padding: 30px 20px;
+}
+
+.drawer-container.open {
+  right: 0; /* Desliza para dentro da tela */
+}
+
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.drawer-notification-btn {
+  background-color: #b397b8; 
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.drawer-profile-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.avatar-circle {
+  width: 90px;
+  height: 90px;
+  background-color: #b397b8;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.username {
+  color: #4a154b;
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.user-email {
+  color: #a0a0a0;
+  font-size: 0.85rem;
+}
+
+.drawer-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.drawer-details p {
+  margin: 0;
+  display: flex;
+  gap: 8px;
+}
+
+.drawer-details strong {
+  color: #4a154b;
+  font-weight: 700;
+}
+
+.edit-profile-btn {
+  background-color: #b397b8;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  align-self: center;
+  margin-bottom: 20px;
+  transition: background-color 0.2s;
+  width: max-content;
+}
+
+.edit-profile-btn:hover {
+  background-color: #9b7e9f;
+}

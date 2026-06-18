@@ -1,7 +1,7 @@
 
 
-const TelaAtividadeAlternnativa = () => {
+const TelaAtividadeConcluida = () => {
   
 };
 
-export default TelaAtividadeAlternnativa;
+export default TelaAtividadeConcluida;
