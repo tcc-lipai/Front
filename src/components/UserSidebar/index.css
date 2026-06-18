@@ -1,5 +1,8 @@
 /* --- ESTILOS PADRÃO (DESKTOP) --- */
 .sidebar-container {
+  position: fixed; /* <-- Adicionado: Fixa a sidebar na tela */
+  top: 0;          /* <-- Adicionado: Alinha no topo */
+  left: 0;         /* <-- Adicionado: Alinha na esquerda */
   width: 280px;
   height: 100vh;
   background-color: #fdf8ff;
@@ -12,7 +15,9 @@
   flex-shrink: 0;
   border-right: 1px solid #ecdcf7;
   transition: transform 0.3s ease;
+  z-index: 99;     /* <-- Opcional: Garante que ela fique acima do conteúdo principal */
 }
+
 
 .sidebar-header {
   width: 100%;
@@ -20,6 +25,7 @@
   display: flex;
   align-items: center;
 }
+
 
 .sidebar-back-button {
   background: none;
@@ -30,11 +36,13 @@
   padding: 0;
 }
 
+
 .sidebar-avatar-container {
   position: relative;
   margin-top: 20px;
   margin-bottom: 15px;
 }
+
 
 .sidebar-avatar {
   width: 120px;
@@ -47,17 +55,20 @@
   overflow: hidden;
 }
 
+
 .sidebar-avatar img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
+
 .sidebar-avatar-icon {
   width: 60px;
   height: 60px;
   fill: #ffffff;
 }
+
 
 .sidebar-status-indicator {
   position: absolute;
@@ -71,6 +82,7 @@
   cursor: pointer;
 }
 
+
 .sidebar-user-name {
   color: #4a2868;
   font-size: 18px;
@@ -79,11 +91,13 @@
   text-align: center;
 }
 
+
 .sidebar-menu-list {
   width: 100%;
   display: flex;
   flex-direction: column;
 }
+
 
 .sidebar-menu-item {
   width: 100%;
@@ -99,19 +113,23 @@
   border-left: 6px solid transparent;
 }
 
+
 .sidebar-menu-item:hover {
   background-color: #f3e8f9;
 }
+
 
 .sidebar-menu-item-active {
   background-color: #f5ebfa;
   border-left: 6px solid #5a2d82;
 }
 
+
 /* Oculta os elementos do menu mobile por padrão no Desktop */
 .sidebar-mobile-toggle, .sidebar-overlay {
   display: none;
 }
+
 
 /* --- REGRAS RESPONSIVAS (MOBILE/TABLET) --- */
 @media (max-width: 768px) {
@@ -135,6 +153,7 @@
     justify-content: center;
   }
 
+
   /* Transforma a sidebar em uma gaveta escondida na esquerda */
   .sidebar-container {
     position: fixed;
@@ -148,10 +167,12 @@
     padding-top: 70px; /* Espaço para não cobrir as funções */
   }
 
+
   /* Quando clicado, a classe 'open' empurra ela para a tela */
   .sidebar-container.open {
     transform: translateX(0);
   }
+
 
   /* Cortina preta transparente atrás do menu */
   .sidebar-overlay {

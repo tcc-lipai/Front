@@ -9,7 +9,6 @@
   overflow-x: hidden;
 }
 
-/* Fundo das Ondas cobrindo toda a extensão */
 .bg-waves {
   position: absolute;
   top: 0;
@@ -35,9 +34,10 @@
   flex-direction: column;
   z-index: 1;
   box-sizing: border-box;
+  
+  margin-left: 280px; 
 }
 
-/* Cabeçalho alinhado */
 .perfil-header {
   display: flex;
   justify-content: space-between;
@@ -55,7 +55,6 @@
   margin: 0;
 }
 
-/* Indicador de progresso circular */
 .progress-container {
   position: relative;
   width: 100px;
@@ -101,7 +100,6 @@
   font-weight: normal;
 }
 
-/* Formulário largo e flexível */
 .perfil-form {
   display: flex;
   flex-direction: column;
@@ -168,6 +166,7 @@
 @media (max-width: 1024px) {
   .perfil-main-content {
     padding: 40px 30px;
+    margin-left: 280px; 
   }
 }
 
@@ -176,9 +175,9 @@
     flex-direction: column;
   }
   
-  /* Adiciona um espaço extra no topo para o botão hambúrguer não atropelar o título */
   .perfil-main-content {
     padding: 70px 20px 30px 20px;
+    margin-left: 0; 
   }
   
   .perfil-header {
@@ -186,13 +185,11 @@
     align-items: center;
   }
   
-  /* Diminui o tamanho da fonte do título para caber em telas finas */
   .perfil-title {
     font-size: 26px;
-    margin-left: 10px; /* Desloca levemente para não colar na borda */
+    margin-left: 10px; 
   }
   
-  /* Reduz o tamanho do gráfico circular de progresso */
   .progress-container {
     width: 70px;
     height: 70px;

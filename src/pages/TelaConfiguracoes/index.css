@@ -10,7 +10,6 @@
   overflow-x: hidden;
 }
 
-/* Fundo das Ondas igual ao perfil */
 .bg-waves {
   position: absolute;
   top: 0;
@@ -29,7 +28,6 @@
   object-fit: cover;
 }
 
-/* Mantém o recuo superior de 90px para alinhar a altura com o perfil */
 .configuracoes-main-content {
   flex: 1;
   padding: 90px 70px 50px 70px;
@@ -37,28 +35,26 @@
   flex-direction: column;
   z-index: 1;
   box-sizing: border-box;
+  margin-left: 280px;
 }
 
-/* ALTERADO: O título voltou para o alinhamento padrão à esquerda (sem o margin auto) */
 .configuracoes-title {
   color: #4a2868;
   font-size: 36px;
   font-weight: bold;
-  margin: 0 0 35px 0; /* Alinhado à esquerda como antes */
+  margin: 0 0 35px 0; 
   width: 100%;
 }
 
-/* A grade continua maior (1100px) e centralizada no meio da tela */
 .configuracoes-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 35px;
   width: 100%;
   max-width: 1100px; 
-  margin: 0 auto 35px auto; /* Centraliza o bloco de cards no meio */
+  margin: 0 auto 35px auto; 
 }
 
-/* Estilo do Card padrão com sombra rígida roxa */
 .config-card {
   background-color: #ffffff;
   border-radius: 16px;
@@ -105,7 +101,7 @@
   align-items: center;
   width: 100%;
   max-width: 1100px;
-  margin: 0 auto; /* Centraliza o card longo no meio */
+  margin: 0 auto; 
   box-shadow: 8px 8px 0px #ecdcf7;
   border: 1px solid #ecdcf7;
   box-sizing: border-box;
@@ -199,6 +195,7 @@ input:checked + .slider:before {
 @media (max-width: 1024px) {
   .configuracoes-main-content {
     padding: 40px 30px;
+    margin-left: 280px; 
   }
 }
 
@@ -209,6 +206,7 @@ input:checked + .slider:before {
   
   .configuracoes-main-content {
     padding: 75px 20px 30px 20px;
+    margin-left: 0; 
   }
   
   .configuracoes-title {

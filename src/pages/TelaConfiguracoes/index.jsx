@@ -2,19 +2,18 @@ import React, { useState } from 'react';
 import { UserSidebar } from "../../components/UserSidebar";
 import './index.css';
 
+
 const TelaConfiguracoes = () => {
-  // Estados para simular o ligar/desligar de cada opção
   const [modoEscuro, setModoEscuro] = useState(false);
   const [notificacoes, setNotificacoes] = useState(true);
   const [autenticacao, setAutenticacao] = useState(false);
   const [historico, setHistorico] = useState(true);
-  
-  // Estado para o card grande inferior (Seleção de Tema)
+ 
   const [temaSelecionado, setTemaSelecionado] = useState('claro');
+
 
   return (
     <div className="configuracoes-page-container">
-      {/* Ondas decorativas de fundo - IGUAL AO PERFIL */}
       <div className="bg-waves">
         <svg viewBox="0 0 1440 1024" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
           <path d="M1440 0H900C1100 200 1050 500 1250 750C1350 870 1390 960 1440 1024V0Z" fill="#ecdcf7" opacity="0.6"/>
@@ -23,16 +22,16 @@ const TelaConfiguracoes = () => {
         </svg>
       </div>
 
-      {/* Sidebar Responsiva */}
+
       <UserSidebar onBackClick={() => console.log('Voltou para a Home')} />
 
-      {/* Conteúdo Principal */}
+
       <main className="configuracoes-main-content">
         <h1 className="configuracoes-title">Configurações</h1>
 
-        {/* Grade de Cards Superiores */}
+
         <div className="configuracoes-grid">
-          
+         
           <div className="config-card">
             <h3 className="config-card-title">Modo de Cor</h3>
             <p className="config-card-description">
@@ -40,15 +39,16 @@ const TelaConfiguracoes = () => {
             </p>
             <div className="config-card-action">
               <label className="switch">
-                <input 
-                  type="checkbox" 
-                  checked={modoEscuro} 
-                  onChange={(e) => setModoEscuro(e.target.checked)} 
+                <input
+                  type="checkbox"
+                  checked={modoEscuro}
+                  onChange={(e) => setModoEscuro(e.target.checked)}
                 />
                 <span className="slider round"></span>
               </label>
             </div>
           </div>
+
 
           <div className="config-card">
             <h3 className="config-card-title">Notificações</h3>
@@ -57,15 +57,16 @@ const TelaConfiguracoes = () => {
             </p>
             <div className="config-card-action">
               <label className="switch">
-                <input 
-                  type="checkbox" 
-                  checked={notificacoes} 
-                  onChange={(e) => setNotificacoes(e.target.checked)} 
+                <input
+                  type="checkbox"
+                  checked={notificacoes}
+                  onChange={(e) => setNotificacoes(e.target.checked)}
                 />
                 <span className="slider round"></span>
               </label>
             </div>
           </div>
+
 
           <div className="config-card">
             <h3 className="config-card-title">Segurança</h3>
@@ -74,15 +75,16 @@ const TelaConfiguracoes = () => {
             </p>
             <div className="config-card-action">
               <label className="switch">
-                <input 
-                  type="checkbox" 
-                  checked={autenticacao} 
-                  onChange={(e) => setAutenticacao(e.target.checked)} 
+                <input
+                  type="checkbox"
+                  checked={autenticacao}
+                  onChange={(e) => setAutenticacao(e.target.checked)}
                 />
                 <span className="slider round"></span>
               </label>
             </div>
           </div>
+
 
           <div className="config-card">
             <h3 className="config-card-title">Histórico médico</h3>
@@ -91,19 +93,20 @@ const TelaConfiguracoes = () => {
             </p>
             <div className="config-card-action">
               <label className="switch">
-                <input 
-                  type="checkbox" 
-                  checked={historico} 
-                  onChange={(e) => setHistorico(e.target.checked)} 
+                <input
+                  type="checkbox"
+                  checked={historico}
+                  onChange={(e) => setHistorico(e.target.checked)}
                 />
                 <span className="slider round"></span>
               </label>
             </div>
           </div>
 
+
         </div>
 
-        {/* Card Largo Inferior */}
+
         <div className="config-card-wide">
           <div className="wide-info">
             <h3 className="config-card-title">Tema do Sistema</h3>
@@ -111,27 +114,28 @@ const TelaConfiguracoes = () => {
               Escolha manualmente a paleta de cores predominante da interface do seu aplicativo.
             </p>
           </div>
-          
+         
           <div className="wide-actions">
             <div className="wide-toggle-row">
               <span className="toggle-label">Claro</span>
               <label className="switch">
-                <input 
-                  type="checkbox" 
-                  checked={temaSelecionado === 'claro'} 
-                  onChange={() => setTemaSelecionado('claro')} 
+                <input
+                  type="checkbox"
+                  checked={temaSelecionado === 'claro'}
+                  onChange={() => setTemaSelecionado('claro')}
                 />
                 <span className="slider round"></span>
               </label>
             </div>
 
+
             <div className="wide-toggle-row">
               <span className="toggle-label">Escuro</span>
               <label className="switch">
-                <input 
-                  type="checkbox" 
-                  checked={temaSelecionado === 'escuro'} 
-                  onChange={() => setTemaSelecionado('escuro')} 
+                <input
+                  type="checkbox"
+                  checked={temaSelecionado === 'escuro'}
+                  onChange={() => setTemaSelecionado('escuro')}
                 />
                 <span className="slider round"></span>
               </label>
@@ -139,9 +143,11 @@ const TelaConfiguracoes = () => {
           </div>
         </div>
 
+
       </main>
     </div>
   );
 };
+
 
 export default TelaConfiguracoes;
