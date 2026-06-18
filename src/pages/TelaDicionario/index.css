@@ -1,130 +1,130 @@
-/* TelaDicionario/index.css */
+/* ================= ESTRUTURA GERAL DA TELA ================= */
+.tela-dicionario-layout {
+  display: flex;
+  min-height: 100vh;
+  width: 100vw;
+  background-color: #f6edf7;
+  box-sizing: border-box;
+  overflow-x: hidden; /* Evita qualquer rolagem horizontal intrusa */
+}
 
-* {
-  margin: 0;
-  padding: 0;
+/* Mantém sua barra lateral intocável na esquerda */
+.sidebar-container {
+  width: 90px;
+  flex-shrink: 0; 
+}
+
+/* O segredo da responsividade do miolo tá aqui: min-width: 0 e flex-grow */
+.main-container {
+  flex-grow: 1;
+  min-width: 0; 
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
   box-sizing: border-box;
 }
 
-html, body, #root {
-  height: 100%;
-  width: 100%;
-}
-
-.page-wrapper {
-  display: flex; /* MUDEI PARA FLEX */
-  min-height: 100vh;
-  background-color: #faf8ff;
-}
-
-/* Navbar fixed - posiciona corretamente */
-.page-wrapper > :first-child {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 90px;
-  z-index: 100;
-}
-
-/* Container principal com margem para a navbar fixed */
-.page-container {
-  flex: 1;
-  margin-left: 90px; /* Espaço para a navbar fixed */
-  min-height: 100vh;
-  width: calc(100% - 90px);
-  background-color: #faf8ff;
-}
-
-/* Ajuste para o Dicionario dentro do container */
-.page-container .dicionario {
-  width: 100%;
-  max-width: 100%; /* MUDEI DE 1200px para 100% */
-  margin: 0;
-  padding: 32px 40px;
-}
-
-/* Remove estilos conflitantes do header do dicionario */
-.page-container .dicionario-header {
-  background: transparent; /* Remove o gradiente roxo */
-  padding: 0 0 24px 0;
-  color: inherit;
-}
-
-.page-container .dicionario-titulo {
-  color: #1a0533;
-}
-
-.page-container .dicionario-subtitulo {
-  color: #6b7280;
-}
-
-.page-container .dicionario-busca-wrapper {
-  margin-top: 16px;
-}
-
-.page-container .dicionario-busca-input {
-  background: white;
-  color: #1a0533;
-  border: 1.5px solid #e9d5f5;
-}
-
-.page-container .dicionario-busca-input::placeholder {
-  color: #d1d5db;
-}
-
-.page-container .dicionario-busca-icon {
-  color: #9ca3af;
-}
-
-/* Ajuste para o corpo do dicionario */
-.page-container .dicionario-corpo {
+/* Header alinhado à direita */
+.header-top {
   display: flex;
-  gap: 24px;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+  width: 100%;
 }
 
-.page-container .dicionario-alfabeto {
-  width: 60px;
-  min-width: 60px;
-  background: transparent;
-  border-right: none;
-  padding: 0;
+/* Painel Central Branco Adaptável */
+.content-card {
+  background-color: #ffffff;
+  border-radius: 24px;
+  padding: 30px;
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-.page-container .dicionario-main {
-  padding: 0;
-  overflow-y: visible;
+/* Títulos maleáveis que reduzem conforme a tela aperta */
+.main-title {
+  color: #4a1565;
+  font-size: clamp(24px, 4vw, 36px); /* Diminui automaticamente em telas menores */
+  font-weight: 700;
+  margin: 0 0 10px 0;
 }
 
-/* Responsividade */
+.main-subtitle {
+  color: #4a1565;
+  font-size: clamp(14px, 2vw, 16px);
+  margin: 0 0 30px 0;
+  line-height: 1.4;
+  word-wrap: break-word; /* Evita que o texto estoure para fora */
+}
+
+/* ================= FILTROS RESPONSIVOS ================= */
+.filters-container {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap; /* Faz os botões pularem para a linha de baixo se faltar espaço */
+  margin-bottom: 35px;
+  width: 100%;
+}
+
+.btn-filter {
+  padding: 0 24px;
+  height: 38px;
+  border-radius: 19px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: all 0.2s ease-in-out;
+  border: 1.5px solid #4a1565;
+  white-space: nowrap; /* Impede o texto de quebrar dentro do botão */
+}
+
+.btn-active {
+  background-color: #9c8cb9 !important;
+  border-color: #9c8cb9 !important;
+  color: #ffffff !important;
+}
+
+.btn-inactive {
+  background-color: transparent !important;
+  border-color: #4a1565 !important;
+  color: #4a1565 !important;
+}
+
+/* ================= GRADE DE CARDS MALEÁVEL ================= */
+.cards-grid {
+  display: grid;
+  /* Cria colunas dinâmicas: se não couber 4, passa pra 3, 2 ou 1 automaticamente */
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 24px 16px; /* Mantém os cards mais juntinhos nas laterais */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Alinhamento fino dos cards individuais */
+.cards-grid > div, 
+.dicionario-container {
+  width: 100% !important;
+  max-width: 240px !important; /* Limita o tamanho máximo para não deformar em telas grandes */
+  justify-self: start; /* Alinha os cards à esquerda conforme a grade muda */
+}
+
+/* ================= REGRAS PARA TELAS PEQUENAS (MOBILE/TABLET) ================= */
 @media (max-width: 768px) {
-  .page-wrapper {
-    flex-direction: column;
+  .main-container {
+    padding: 16px 12px;
   }
-  
-  .page-wrapper > :first-child {
-    position: relative;
-    width: 100%;
-    height: auto;
+
+  .content-card {
+    padding: 20px;
+    border-radius: 16px;
   }
-  
-  .page-container {
-    margin-left: 0;
-    width: 100%;
-  }
-  
-  .page-container .dicionario {
-    padding: 20px 16px;
-  }
-  
-  .page-container .dicionario-corpo {
-    flex-direction: column;
-  }
-  
-  .page-container .dicionario-alfabeto {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+
+  .cards-grid {
+    /* Em telas muito estreitas, diminui o limite mínimo da coluna para os cards não sumirem */
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px 12px;
   }
 }
