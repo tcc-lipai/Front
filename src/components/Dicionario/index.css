@@ -1,326 +1,90 @@
-.dicionario {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  background-color: #faf8ff;
-  font-family: 'Poppins', sans-serif;
-}
-
-.dicionario-header {
-  background: linear-gradient(135deg, #7A3A8E 0%, #a855f7 100%);
-  padding: 36px 40px 28px;
-  color: #fff;
-}
-
-.dicionario-header-content {
-  margin-bottom: 18px;
-}
-
-.mdicionario-titulo {
-  font-size: 1.8rem;
-  font-weight: 800;
-  margin: 0 0 6px;
-}
-
-.dicionario-subtitulo {
-  font-size: 0.9rem;
-  opacity: 0.9;
-  margin: 0;
-}
-
-.dicionario-busca-wrapper {
+/* Container principal do Card */
+.dicionario-container {
   position: relative;
-  max-width: 500px;
-  margin-top: 16px;
+  display: inline-flex;
+  background-color: #ffffff;
+  border: 2px solid #9c8cb9; /* Cor da borda suave */
+  border-radius: 24px;
+  padding: 16px;
+  width: 280px;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  overflow: visible;
+  cursor: pointer;
+  transition: transform 0.2s ease;
 }
 
-.dicionario-busca-icon {
+.dicionario-container:hover {
+  transform: translateY(-2px);
+}
+
+/* Detalhe roxo que vaza pelo lado esquerdo */
+.dicionario-sidebar-detail {
   position: absolute;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: rgba(255, 255, 255, 0.7);
-  pointer-events: none;
+  left: -6px;
+  top: 15px;
+  bottom: 45px;
+  width: 12px;
+  background-color: #692d83; /* Roxo escuro do detalhe */
+  border-radius: 8px;
+  z-index: 1;
 }
 
-.dicionario-busca-input {
-  width: 100%;
-  padding: 11px 16px 11px 40px;
-  border: none;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
-  font-size: 0.88rem;
-  font-family: 'Poppins', sans-serif;
-  outline: none;
-  transition: all 0.2s;
-  backdrop-filter: blur(10px);
-}
-
-.dicionario-busca-input::placeholder {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.dicionario-busca-input:focus {
-  background: rgba(255, 255, 255, 0.3);
-}
-
-.dicionario-corpo {
-  display: flex;
-  flex: 1;
-  overflow: hidden;
-}
-
-.dicionario-alfabeto {
-  width: 48px;
-  min-width: 48px;
-  background: #fff;
-  border-right: 1px solid #e9d5f5;
+/* Conteúdo interno do card */
+.dicionario-content {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 16px 0;
-  gap: 2px;
-  overflow-y: auto;
+  width: 100%;
+  z-index: 2;
 }
 
-.dicionario-letra-btn {
-  width: 32px;
-  height: 28px;
-  border: none;
-  background: none;
-  border-radius: 6px;
-  font-size: 0.72rem;
-  font-weight: 600;
-  font-family: 'Poppins', sans-serif;
-  cursor: pointer;
-  color: #9ca3af;
-  transition: all 0.15s;
+/* Box cinza (Simulador de vídeo) */
+.dicionario-video-placeholder {
+  background-color: #d9d9d9;
+  border-radius: 4px;
+  width: 100%;
+  height: 140px;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 12px;
+  box-sizing: border-box;
 }
 
-.dicionario-letra-btn:hover:not(:disabled) {
-  background: #f3e8ff;
-}
-
-.dicionario-letra-btn.ativa {
-  background: #7A3A8E;
-  color: #fff;
-  box-shadow: 0 2px 8px rgba(122, 58, 142, 0.25);
-}
-
-.dicionario-letra-btn:disabled {
-  opacity: 0.3;
-  cursor: default;
-}
-
-.dicionario-main {
-  flex: 1;
-  padding: 24px 32px;
-  overflow-y: auto;
-}
-
-.dicionario-categorias {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 20px;
-  align-items: center;
-}
-
-.dicionario-categoria-btn {
-  padding: 6px 16px;
-  border-radius: 20px;
-  border: 1.5px solid #e5e7eb;
-  background: #fff;
-  font-size: 0.78rem;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 500;
-  color: #6b7280;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-
-.dicionario-categoria-btn:hover {
-  border-color: #7A3A8E;
-  background: #f9f7ff;
-}
-
-.dicionario-categoria-btn.ativa {
-  background: #7A3A8E;
-  border-color: #7A3A8E;
-  color: #fff;
-}
-
-.mdicionario-info-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 16px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #e9d5f5;
-}
-
-.dicionario-contagem {
-  font-size: 0.8rem;
-  color: #9ca3af;
-  font-weight: 500;
-}
-
-.dicionario-limpar-btn {
-  background: none;
-  border: none;
-  font-size: 0.78rem;
-  font-family: 'Poppins', sans-serif;
-  color: #7A3A8E;
+/* Texto em diagonal dentro do box cinza */
+.placeholder-text {
+  color: #939393;
+  font-size: 18px;
   font-weight: 600;
-  cursor: pointer;
-  padding: 0;
-  transition: opacity 0.2s;
-}
-
-.dicionario-limpar-btn:hover {
-  opacity: 0.8;
-}
-
-.mdicionario-lista {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-.dicionario-grupo {
-  margin-bottom: 12px;
-}
-
-.dicionario-grupo-letra {
-  font-size: 1.1rem;
-  font-weight: 800;
-  color: #7A3A8E;
-  padding: 8px 0 4px;
-  border-bottom: 2px solid #e9d5f5;
-  margin-bottom: 8px;
-}
-
-.mdicionario-card {
-  background: #fff;
-  border: 1.5px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 14px 16px;
-  margin-bottom: 8px;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.dicionario-card:hover {
-  border-color: #d1d5db;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.dicionario-card.expandido {
-  border-color: #7A3A8E;
-  box-shadow: 0 4px 16px rgba(122, 58, 142, 0.15);
-}
-
-.dicionario-card-topo {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  cursor: pointer;
-}
-
-.dicionario-card-palavra {
-  font-size: 1rem;
-  font-weight: 700;
-  color: #1a0533;
-}
-
-.dicionario-card-acoes {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.dicionario-card-categoria {
-  font-size: 0.7rem;
-  padding: 3px 10px;
-  border-radius: 20px;
-  font-weight: 600;
-  background: #f3e8ff;
-  color: #7A3A8E;
-}
-
-.dicionario-card-favorito {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #d1d5db;
-  display: flex;
-  align-items: center;
-  padding: 2px;
-  border-radius: 4px;
-  transition: all 0.15s;
-}
-
-.mdicionario-card-favorito:hover {
-  color: #f59e0b;
-}
-
-.dicionario-card-favorito.ativo {
-  color: #f59e0b;
-}
-
-.dicionario-card-expandir {
-  color: #9ca3af;
-  display: flex;
-  align-items: center;
-  margin-left: 4px;
-}
-
-.dicionario-card-descricao {
-  font-size: 0.82rem;
-  color: #6b7280;
-  line-height: 1.5;
-  margin: 0;
-}
-
-.dicionario-card-detalhe {
-  border-top: 1px solid #f3e8ff;
-  padding-top: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.dicionario-card-dica {
-  background: #faf8ff;
-  border-left: 3px solid #7A3A8E;
-  padding: 10px 12px;
-  border-radius: 0 8px 8px 0;
-  font-size: 0.8rem;
-  color: #4b5563;
-  line-height: 1.5;
-}
-
-.dicionario-card-dica-titulo {
-  font-weight: 700;
-  color: #7A3A8E;
-  display: block;
-  margin-bottom: 4px;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.dicionario-vazio {
   text-align: center;
-  padding: 80px 20px;
-  color: #9ca3af;
+  text-transform: uppercase;
+  transform: rotate(-20deg); /* Inclinação do texto */
+  letter-spacing: 1px;
+  line-height: 1.3;
+}
+
+/* Área dos textos */
+.dicionario-text-container {
+  margin-top: 14px;
+  padding-left: 4px;
+}
+
+/* Título "Laranja" */
+.dicionario-title {
+  color: #4a1565; /* Roxo principal do texto */
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+  padding: 0;
+  line-height: 1.1;
+}
+
+/* Descrição inferior */
+.dicionario-description {
+  color: #4a1565;
+  font-size: 14px;
+  font-weight: 400;
+  margin: 4px 0 0 0;
+  padding: 0;
+  letter-spacing: 0.5px;
 }
