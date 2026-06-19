@@ -1,28 +1,30 @@
 .card-exercicio {
   width: 100%;
-  max-width: 650px;
+  height: 76px;
 
-  background-color: #e7dff2;
-  border-radius: 30px;
-
-  padding: 20px 30px;
+  background-color: #E9DDF4;
+  border-radius: 12px;
 
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 12px;
+
+  padding: 10px 14px;
+  box-sizing: border-box;
 }
 
 .card-imagem {
+  flex-shrink: 0;
+
   display: flex;
   align-items: center;
   justify-content: center;
-
-  min-width: 150px;
 }
 
 .card-imagem img {
-  width: 120px;
-  height: auto;
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
 }
 
 .card-info {
@@ -30,18 +32,67 @@
 
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  gap: 20px;
+  justify-content: space-between;
+
+  min-width: 0;
 }
 
 .card-info p {
-  width: 100%;
-
-  color: #4d2c67;
-  font-size: 20px;
   margin: 0;
+
+  color: #6B3D85;
+  font-size: 10px;
+  line-height: 1.2;
 }
 
 .btn-card {
-  min-width: 140px;
+  align-self: flex-end;
+
+  min-width: auto;
+  width: 70px;
+
+  padding: 4px 10px !important;
+
+  font-size: 9px !important;
+  font-weight: 500;
+
+  border-radius: 20px;
+}
+
+.btn-card {
+  align-self: flex-end;
+
+  width: 75px;
+  height: 22px;
+
+  border-radius: 20px;
+  font-size: 9px !important;
+}
+
+@media (max-width: 768px) {
+  .card-exercicio {
+    width: 70px;
+    height: 70px;
+
+    justify-content: center;
+    padding: 0;
+  }
+
+  .card-info {
+    display: none; /* esconde texto e botão */
+  }
+
+  .card-imagem {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .card-imagem img {
+    width: 42px;
+    height: 42px;
+  }
 }
