@@ -29,7 +29,7 @@ const TelaLoginUser = () => {
           </div>
 
           <div className="btn-container">
-            <Botao texto="Entrar" corDeFundo="#F7F0FA" />
+            <Botao texto="Entrar" corDeFundo="#8426ac" corBorda=""/>
           </div>
 
           <div className="google-login">
@@ -53,7 +53,7 @@ const TelaLoginUser = () => {
               Por favor, preencha suas informações aqui
             </p>
 
-            <Botao texto="Cadastro" corDeFundo="transparent" onClick={() => navigate("/criar-conta")}/>
+            <Botao texto="Cadastro" corDeFundo="transparent" corBorda="white" onClick={() => navigate("/criar-conta")}/>
 
             <div className="triangle-top"></div>
             <div className="triangle-middle"></div>
