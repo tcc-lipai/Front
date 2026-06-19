@@ -1,0 +1,47 @@
+.card-exercicio {
+  width: 100%;
+  max-width: 650px;
+
+  background-color: #e7dff2;
+  border-radius: 30px;
+
+  padding: 20px 30px;
+
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.card-imagem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 150px;
+}
+
+.card-imagem img {
+  width: 120px;
+  height: auto;
+}
+
+.card-info {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 20px;
+}
+
+.card-info p {
+  width: 100%;
+
+  color: #4d2c67;
+  font-size: 20px;
+  margin: 0;
+}
+
+.btn-card {
+  min-width: 140px;
+}
