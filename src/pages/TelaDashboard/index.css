@@ -8,8 +8,6 @@
   font-family: 'Inter', 'Segoe UI', sans-serif;
 }
 
-/* A Navbar é fixed com 90px de largura,
-   então empurramos o conteúdo para a direita */
 .dashboard-main {
   margin-left: 90px;
   flex: 1;
@@ -28,6 +26,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
   margin-bottom: 4px;
 }
 
@@ -42,6 +42,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-shrink: 0;
 }
 
 /* =====================
@@ -58,6 +59,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+  gap: 8px;
   margin-bottom: 16px;
 }
 
@@ -99,7 +101,14 @@
 .strike-days {
   display: flex;
   gap: 8px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+}
+
+.strike-days::-webkit-scrollbar {
+  display: none;
 }
 
 .strike-day {
@@ -107,8 +116,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-width: 52px;
-  padding: 8px 6px;
+  min-width: 60px;
+  padding: 10px 6px;
   border: 1.5px solid #e0d4f7;
   border-radius: 10px;
   background: #faf5ff;
@@ -205,7 +214,7 @@
 }
 
 .btn-comecar:hover {
-  background: #6d28d9;
+  background: #5e2d70;
 }
 
 /* =====================
@@ -294,11 +303,31 @@
 }
 
 /* =====================
-   Responsivo
+   Tablet (≤ 1024px)
    ===================== */
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
   .dashboard-main {
+    padding: 24px 20px 36px 20px;
+    gap: 16px;
+  }
+
+  .conquistas-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* =====================
+   Tablet pequeno (≤ 768px)
+   ===================== */
+@media (max-width: 768px) {
+  .dashboard-main {
+    margin-left: 80px;
     padding: 20px 16px 32px 16px;
+    gap: 14px;
+  }
+
+  .dashboard-title {
+    font-size: 1.5rem;
   }
 
   .activities-grid {
@@ -309,30 +338,89 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .strike-days {
-    gap: 5px;
+  .card-section {
+    padding: 18px 16px;
   }
 
   .strike-day {
-    min-width: 40px;
-    padding: 6px 4px;
+    min-width: 52px;
+    padding: 8px 4px;
   }
 }
 
-@media (max-width: 600px) {
+/* =====================
+   Mobile (≤ 480px)
+   ===================== */
+@media (max-width: 480px) {
   .dashboard-main {
-    margin-left: 80px;
+    margin-left: 90px;
+    padding: 20px 12px 32px 12px; /* espaço para navbar em cima/baixo se virar bottom nav */
   }
 
   .dashboard-title {
-    font-size: 1.3rem;
+    font-size: 1.25rem;
   }
 
   .card-section {
-    padding: 16px 14px;
+    padding: 14px 12px;
+    border-radius: 12px;
+  }
+
+  .section-title {
+    font-size: 1rem;
+  }
+
+  .activity-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .activity-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .conquistas-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
   }
 
   .perf-label {
     min-width: 80px;
+    font-size: 0.72rem;
   }
+
+  .perf-value {
+    font-size: 0.72rem;
+    min-width: 28px;
+  }
+
+  .strike-day {
+    min-width: 44px;
+    padding: 6px 2px;
+  }
+
+  .strike-num {
+    font-size: 0.9rem;
+  }
+
+  .strike-month {
+    font-size: 0.55rem;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* =====================
+   Override Conquista card
+   para encaixar no grid
+   ===================== */
+.conquistas-grid .conquista-card {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
