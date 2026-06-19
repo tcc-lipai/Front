@@ -1,0 +1,453 @@
+/* =============================================
+   TELA ACOMPANHANTE — index.css
+   ============================================= */
+
+/* Garante que a sidebar fique acima de todo o conteúdo da página */
+.sidebar-navbar {
+  z-index: 100;
+}
+
+/* ---------- Wrapper ---------- */
+.tela-acompanhante {
+  min-height: 100vh;
+  background-color: #f3eef9;
+  font-family: "Inter", "Segoe UI", sans-serif;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+
+  /* Empurra o conteúdo pra direita da sidebar fixa (90px) */
+  margin-left: 90px;
+}
+
+/* ---------- Header ---------- */
+.ta-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 12px 24px;
+}
+
+/* ---------- Banner Dicionário ---------- */
+.ta-dicionario {
+  margin: 16px 24px 0;
+  background-color: #8b5fbf; /* roxo sólido da imagem */
+  border-radius: 14px;
+  padding: 28px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  overflow: visible; /* Bia pode ultrapassar o card */
+  min-height: 130px;
+}
+
+.ta-dicionario__content {
+  flex: 1;
+  z-index: 1;
+  /* texto ocupa bastante largura, deixando espaço pra Bia */
+  max-width: 68%;
+}
+
+.ta-dicionario__title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 10px;
+  letter-spacing: -0.01em;
+}
+
+.ta-dicionario__text {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.55;
+  margin: 0 0 18px;
+}
+
+.ta-dicionario__btn {
+  background-color: #fff;
+  color: #333;
+  border: none;
+  border-radius: 6px;
+  padding: 7px 22px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  display: inline-block;
+}
+
+.ta-dicionario__btn:hover {
+  background-color: #f0e6ff;
+  transform: translateY(-1px);
+}
+
+/* Bia saindo pela direita, levemente cortada */
+.ta-dicionario__illustration {
+  position: absolute;
+  right: -8px;
+  bottom: 0;
+  height: 160px;
+  display: flex;
+  align-items: flex-end;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.ta-dicionario__illustration img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+/* ---------- Como Funciona ---------- */
+.ta-como-funciona {
+  margin: 32px 24px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.ta-como-funciona__illustration {
+  width: 280px;
+  height: 230px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.ta-como-funciona__illustration img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ta-como-funciona__content {
+  flex: 1;
+}
+
+.ta-como-funciona__title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #7c3aed;
+  margin: 0 0 12px;
+}
+
+.ta-como-funciona__text {
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: #555;
+  margin: 0;
+}
+
+/* ---------- Carousel ---------- */
+.ta-carousel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 8px 0 32px;
+}
+
+.ta-carousel__track {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 16px 0 20px;
+}
+
+/* ---------- Cards ---------- */
+.ta-carousel__card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 32px 28px;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+}
+
+/* Card central (ativo) */
+.ta-carousel__card--center {
+  width: 420px;
+  min-height: 210px;
+  z-index: 3;
+  opacity: 1;
+  filter: none;
+  box-shadow: 0 8px 32px rgba(124, 58, 237, 0.18);
+}
+
+/* Cards laterais (borrados) */
+.ta-carousel__card--left,
+.ta-carousel__card--right {
+  width: 320px;
+  min-height: 180px;
+  z-index: 1;
+  opacity: 0.5;
+  filter: blur(1.5px);
+  cursor: pointer;
+  background: #f3eef9;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+.ta-carousel__card--left {
+  transform: scale(0.88) translateX(24px);
+  margin-right: -40px;
+}
+
+.ta-carousel__card--right {
+  transform: scale(0.88) translateX(-24px);
+  margin-left: -40px;
+}
+
+.ta-carousel__card--left:hover,
+.ta-carousel__card--right:hover {
+  opacity: 0.72;
+  filter: blur(0.5px);
+}
+
+.ta-carousel__card--left:focus-visible,
+.ta-carousel__card--right:focus-visible {
+  outline: 2px solid #7c3aed;
+  outline-offset: 2px;
+  opacity: 0.8;
+  filter: none;
+}
+
+.ta-carousel__card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #7c3aed;
+  margin: 0 0 10px;
+  line-height: 1.3;
+}
+
+.ta-carousel__card--center .ta-carousel__card-title {
+  font-size: 1.15rem;
+}
+
+.ta-carousel__card-text {
+  font-size: 0.82rem;
+  color: #666;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ---------- Dots ---------- */
+.ta-carousel__dots {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.ta-carousel__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background-color: #d0b8f5;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.25s, transform 0.2s;
+}
+
+.ta-carousel__dot--active {
+  background-color: #7c3aed;
+  transform: scale(1.3);
+}
+
+.ta-carousel__dot:focus-visible {
+  outline: 2px solid #7c3aed;
+  outline-offset: 2px;
+}
+
+/* ---------- Próximas Atividades ---------- */
+.ta-atividades {
+  margin: 0 24px 40px;
+}
+
+.ta-atividades__title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0 0 16px;
+}
+
+/* Grid de cards de atividade — 2 colunas */
+.ta-atividades__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+/* ---------- Footer ---------- */
+.ta-footer {
+  margin-top: auto;
+}
+
+/* =============================================
+   RESPONSIVO
+   ============================================= */
+
+/* ── Tablet largo: sidebar ainda visível ── */
+@media (max-width: 1024px) {
+  .ta-carousel__card--center {
+    width: 360px;
+  }
+
+  .ta-carousel__card--left,
+  .ta-carousel__card--right {
+    width: 270px;
+  }
+}
+
+/* ── Tablet: sidebar fica em cima, conteúdo se comprime ── */
+@media (max-width: 900px) {
+  .tela-acompanhante {
+    margin-left: 90px; /* sidebar ainda presente */
+  }
+
+  .ta-carousel__card--center {
+    width: 300px;
+  }
+
+  .ta-carousel__card--left,
+  .ta-carousel__card--right {
+    width: 210px;
+  }
+}
+
+/* ── Mobile: sidebar vira bottom-bar ou some, conteúdo ocupa tudo ── */
+@media (max-width: 768px) {
+  .tela-acompanhante {
+    margin-left: 0;
+    padding-bottom: 80px; /* espaço pro eventual bottom-nav */
+  }
+
+  /* Dicionário */
+  .ta-dicionario {
+    margin: 12px 14px 0;
+    padding: 20px 18px;
+    min-height: 130px;
+    overflow: hidden; /* Bia fica contida no mobile */
+  }
+
+  .ta-dicionario__content {
+    max-width: 60%;
+  }
+
+  .ta-dicionario__illustration {
+    height: 130px;
+    right: 0;
+  }
+
+  /* Como Funciona */
+  .ta-como-funciona {
+    flex-direction: column;
+    margin: 20px 14px;
+    gap: 14px;
+  }
+
+  .ta-como-funciona__illustration {
+    width: 100%;
+    max-width: 320px;
+    height: 200px;
+    margin: 0 auto;
+    border-radius: 16px;
+  }
+
+  .ta-como-funciona__title {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  .ta-como-funciona__text {
+    text-align: center;
+  }
+
+  /* Carousel */
+  .ta-carousel__card--center {
+    width: 240px;
+    min-height: 160px;
+    padding: 22px 18px;
+  }
+
+  .ta-carousel__card--left,
+  .ta-carousel__card--right {
+    width: 160px;
+    min-height: 130px;
+    padding: 18px 14px;
+  }
+
+  .ta-carousel__card--left {
+    margin-right: -24px;
+  }
+
+  .ta-carousel__card--right {
+    margin-left: -24px;
+  }
+
+  /* Atividades */
+  .ta-atividades {
+    margin: 0 14px 28px;
+  }
+
+  .ta-atividades__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Mobile pequeno ── */
+@media (max-width: 480px) {
+  .ta-header {
+    padding: 10px 14px;
+  }
+
+  .ta-dicionario {
+    margin: 10px 12px 0;
+    padding: 18px 16px;
+    min-height: 120px;
+  }
+
+  .ta-dicionario__content {
+    max-width: 58%;
+  }
+
+  .ta-dicionario__illustration {
+    height: 115px;
+  }
+
+  .ta-dicionario__title {
+    font-size: 1.05rem;
+  }
+
+  .ta-dicionario__text {
+    font-size: 0.74rem;
+  }
+
+  .ta-como-funciona {
+    margin: 16px 12px;
+  }
+
+  .ta-como-funciona__illustration {
+    height: 170px;
+  }
+
+  .ta-carousel__card--center {
+    width: 200px;
+    min-height: 150px;
+    padding: 18px 16px;
+  }
+
+  .ta-carousel__card--left,
+  .ta-carousel__card--right {
+    width: 128px;
+    min-height: 115px;
+    padding: 14px 12px;
+  }
+
+  .ta-atividades {
+    margin: 0 12px 24px;
+  }
+}
