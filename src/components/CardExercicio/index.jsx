@@ -17,6 +17,8 @@ const CardExercicio = ({
 
         <Botao
           texto="Começar"
+          corDeFundo="#7D3A93"
+          corTexto="#FFF"
           onClick={onComecar}
           className="btn-card"
         />
