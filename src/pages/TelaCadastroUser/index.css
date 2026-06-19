@@ -1,0 +1,242 @@
+.cadastro-page {
+  min-height: 100vh;
+  background: #f7f0fa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* MESMOS BACKGROUNDS */
+.bg-circle {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.bg-circle-1 {
+  width: 350px;
+  height: 350px;
+  background: #d6a6f4;
+  bottom: -180px;
+  right: -100px;
+}
+
+.bg-circle-2 {
+  width: 180px;
+  height: 180px;
+  background: #b46ddb;
+  bottom: 20px;
+  right: 120px;
+  opacity: 0.6;
+}
+
+.bg-triangle {
+  position: absolute;
+}
+
+.triangle-1 {
+  top: 80px;
+  left: 180px;
+  border-left: 18px solid transparent;
+  border-right: 18px solid transparent;
+  border-bottom: 30px solid #6a347f;
+  opacity: 0.2;
+}
+
+.triangle-2 {
+  top: 300px;
+  left: 100px;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 22px solid #6a347f;
+  opacity: 0.15;
+}
+
+.triangle-3 {
+  top: 140px;
+  right: 150px;
+  border-left: 16px solid transparent;
+  border-right: 16px solid transparent;
+  border-bottom: 28px solid #6a347f;
+  opacity: 0.2;
+}
+
+/* CONTAINER */
+
+.cadastro-container {
+  width: 1100px;
+  max-width: 95%;
+  height: auto;
+  min-height: 650px;
+  background: #f4edf8;
+  border-radius: 24px;
+  display: flex;
+  overflow: hidden;
+  z-index: 2;
+}
+
+/* ESQUERDA ROXA */
+
+.cadastro-left {
+  width: 40%;
+  min-height: 300px;
+  background: #522566;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cadastro-left .btn-generico {
+  border: 1px solid white;
+  color: white;
+}
+
+/* DIREITA FORM */
+
+.cadastro-right {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 50px;
+}
+
+.cadastro-right h1 {
+  color: #5b2b77;
+  font-size: 30px;
+}
+
+.subtitle {
+  margin-top: 10px;
+  color: #7b6688;
+}
+
+/* SCROLL */
+.form-scroll {
+  width: 100%;
+  max-height: 480px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 20px;
+}
+
+/* INPUTS */
+
+.input-group {
+  width: 100%;
+  max-width: 420px;
+  margin-top: 20px;
+}
+
+.input-group input,
+.input-group select {
+  width: 100%;
+  height: 55px;
+  border: none;
+  border-radius: 20px;
+  background: #dec8e9;
+  padding: 0 20px;
+  font-size: 15px;
+  outline: none;
+}
+
+/* DIVIDER */
+
+.divider {
+  width: 420px;
+  height: 1px;
+  background: #cbb6d6;
+  margin: 25px 0;
+}
+
+/* TEXTO */
+
+.helper-text {
+  width: 420px;
+  font-size: 12px;
+  color: #9a88a8;
+  margin-top: 10px;
+}
+
+/* BOTÃO */
+
+.btn-container {
+  margin-top: 30px;
+  width: 250px;
+}
+
+.btn-container .btn-generico {
+  width: 100%;
+  border: 1px solid #7d4997;
+  color: #7d4997;
+  font-weight: 600;
+}
+
+/* GOOGLE */
+
+.google-login {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 25px;
+  color: #9a88a8;
+}
+
+.google-login img {
+  width: 30px;
+}
+
+/* RESPONSIVO */
+
+@media (max-width: 900px) {
+  .cadastro-page {
+    padding: 20px;
+  }
+
+  .cadastro-container {
+    flex-direction: column;
+    border-radius: 20px;
+  }
+
+  .cadastro-left {
+    width: 100%;
+    height: 220px;
+    padding: 20px;
+  }
+
+  .cadastro-right {
+    width: 100%;
+    padding: 30px 20px;
+  }
+
+  .form-scroll {
+    width: 100%;
+    max-height: 480px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 20px 20px;
+  }
+
+  .input-group {
+    width: 100%;
+  }
+
+  .divider,
+  .helper-text {
+    width: 100%;
+  }
+
+  .btn-container {
+    width: 100%;
+  }
+
+  .google-login {
+    justify-content: center;
+  }
+}

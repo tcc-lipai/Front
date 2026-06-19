@@ -8,6 +8,7 @@
   overflow: hidden;
 }
 
+/* BOLINHAS */
 
 .bg-circle {
   position: absolute;
@@ -32,12 +33,14 @@
   opacity: 0.6;
 }
 
+/* TRIÂNGULOS DE FUNDO */
 
 .bg-triangle {
   position: absolute;
   pointer-events: none;
 }
 
+/* topo esquerdo */
 .triangle-1 {
   top: 80px;
   left: 180px;
@@ -53,6 +56,7 @@
   transform: rotate(-15deg);
 }
 
+/* meio esquerdo */
 .triangle-2 {
   top: 300px;
   left: 100px;
@@ -68,6 +72,7 @@
   transform: rotate(45deg);
 }
 
+/* topo direito */
 .triangle-3 {
   top: 140px;
   right: 150px;
@@ -83,6 +88,7 @@
   transform: rotate(25deg);
 }
 
+/* meio direito */
 .triangle-4 {
   top: 420px;
   right: 100px;
@@ -98,6 +104,7 @@
   transform: rotate(-35deg);
 }
 
+/* canto inferior esquerdo */
 .triangle-5 {
   bottom: 140px;
   left: 220px;
@@ -113,10 +120,10 @@
   transform: rotate(100deg);
 }
 
+/* CARD */
 
 .login-container {
-  width: min(1100px, 95%);
-  min-height: 650px;
+  width: 1100px;
   height: 650px;
   background: #f4edf8;
   border-radius: 24px;
@@ -127,6 +134,7 @@
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.048);
 }
 
+/* ESQUERDA */
 
 .login-left {
   width: 60%;
@@ -176,6 +184,7 @@
   font-weight: 600;
 }
 
+/* GOOGLE */
 
 .google-login {
   display: flex;
@@ -191,9 +200,10 @@
   height: 35px;
 }
 
+/* DIREITA */
 
 .login-right {
-  padding-top: 200px;
+    padding-top: 200px;
   width: 40%;
   background: #522566;
   position: relative;
@@ -223,125 +233,4 @@
   width: 220px;
   border: 1px solid white;
   color: white;
-}
-
-
-@media (max-width: 1200px) {
-  .login-container {
-    width: 90%;
-    height: auto;
-    min-height: 650px;
-  }
-
-  .input-group {
-    width: 80%;
-  }
-}
-
-/* ========================= */
-/* TABLETS PEQUENOS */
-/* ========================= */
-
-@media (max-width: 900px) {
-  .login-container {
-    flex-direction: column;
-    width: 95%;
-    height: auto;
-  }
-
-  .login-left,
-  .login-right {
-    width: 100%;
-  }
-
-  .login-left {
-    padding: 60px 30px;
-    margin-top: 0;
-  }
-
-  .login-right {
-    padding: 60px 30px;
-  }
-
-  .welcome-content {
-    gap: 5px;
-  }
-
-  .input-group {
-    width: 100%;
-    max-width: 450px;
-  }
-
-  .google-login {
-    margin-top: 50px;
-  }
-
-
-  .bg-circle-1 {
-    width: 250px;
-    height: 250px;
-  }
-
-  .bg-circle-2 {
-    width: 120px;
-    height: 120px;
-  }
-}
-
-@media (max-width: 600px) {
-  .login-page {
-    padding: 20px;
-  }
-
-  .login-container {
-    border-radius: 20px;
-  }
-
-  .login-left {
-    padding: 40px 20px;
-  }
-
-  .login-right {
-    padding: 40px 20px;
-  }
-
-  .login-left h1 {
-    font-size: 24px;
-    text-align: center;
-  }
-
-  .subtitle {
-    text-align: center;
-  }
-
-  .welcome-content h2 {
-    font-size: 26px;
-    text-align: center;
-  }
-
-  .welcome-content p {
-    font-size: 14px;
-  }
-
-  .input-group input {
-    height: 52px;
-    font-size: 14px;
-  }
-
-  .btn-container {
-    width: 100%;
-    max-width: 250px;
-  }
-
-  .google-login {
-    flex-direction: column;
-    text-align: center;
-    margin-top: 40px;
-  }
-
-
-  .bg-circle,
-  .bg-triangle {
-    display: none;
-  }
 }
