@@ -4,7 +4,6 @@ import { useHeaderActions } from './index.hook';
 import './index.css';
 
 export const HeaderActions = ({ onOpenProfile }) => {
-  // O hook agora não recebe mais o onOpenProfile
   const { xp, hasNotification, handleNotificationClick } = useHeaderActions();
 
   return (
@@ -20,24 +19,26 @@ export const HeaderActions = ({ onOpenProfile }) => {
         <span className="xp-value">{xp}</span>
       </div>
 
-      <button 
-        type="button" /* Adicionado por segurança */
-        className={`action-btn notification-btn ${hasNotification ? 'active' : ''}`}
-        onClick={handleNotificationClick}
-        aria-label="Notificações"
-      >
-        <Bell size={20} color="white" fill="white" />
-      </button>
+      <div className="buttons-wrapper">
+        <button 
+          type="button" 
+          className={`action-btn notification-btn ${hasNotification ? 'active' : ''}`}
+          onClick={handleNotificationClick}
+          aria-label="Notificações"
+        >
+          <Bell size={20} color="white" fill="white" />
+        </button>
 
-      {/* Botão de Perfil: Chamando a prop diretamente aqui! */}
-      <button 
-        type="button" /* Adicionado por segurança */
-        className="action-btn profile-btn"
-        onClick={onOpenProfile} 
-        aria-label="Perfil do usuário"
-      >
-        <User size={20} color="white" fill="white" />
-      </button>
+        <button 
+          type="button" 
+          className="action-btn profile-btn"
+          onClick={onOpenProfile} 
+          aria-label="Perfil do usuário"
+        >
+          <User size={20} color="white" fill="white" />
+        </button>
+      </div>
+
     </div>
   );
 };
