@@ -1,13 +1,12 @@
-/* =============================================
-   TELA ACOMPANHANTE — index.css
-   ============================================= */
-
-/* Garante que a sidebar fique acima de todo o conteúdo da página */
 .sidebar-navbar {
   z-index: 100;
 }
 
-/* ---------- Wrapper ---------- */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
 .tela-acompanhante {
   min-height: 100vh;
   background-color: #f3eef9;
@@ -16,12 +15,13 @@
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
+  width: 100%;
 
-  /* Empurra o conteúdo pra direita da sidebar fixa (90px) */
-  margin-left: 90px;
+  margin-left: 0;
+  padding-left: 90px;
+  box-sizing: border-box;
 }
 
-/* ---------- Header ---------- */
 .ta-header {
   display: flex;
   justify-content: flex-end;
@@ -29,24 +29,22 @@
   padding: 12px 24px;
 }
 
-/* ---------- Banner Dicionário ---------- */
 .ta-dicionario {
   margin: 16px 24px 0;
-  background-color: #8b5fbf; /* roxo sólido da imagem */
+  background-color: #8b5fbf;
   border-radius: 14px;
   padding: 28px 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: relative;
-  overflow: visible; /* Bia pode ultrapassar o card */
+  overflow: visible;
   min-height: 130px;
 }
 
 .ta-dicionario__content {
   flex: 1;
   z-index: 1;
-  /* texto ocupa bastante largura, deixando espaço pra Bia */
   max-width: 68%;
 }
 
@@ -83,7 +81,6 @@
   transform: translateY(-1px);
 }
 
-/* Bia saindo pela direita, levemente cortada */
 .ta-dicionario__illustration {
   position: absolute;
   right: -8px;
@@ -168,7 +165,6 @@
   position: relative;
 }
 
-/* Card central (ativo) */
 .ta-carousel__card--center {
   width: 420px;
   min-height: 210px;
@@ -178,7 +174,6 @@
   box-shadow: 0 8px 32px rgba(124, 58, 237, 0.18);
 }
 
-/* Cards laterais (borrados) */
 .ta-carousel__card--left,
 .ta-carousel__card--right {
   width: 320px;
@@ -274,7 +269,6 @@
   margin: 0 0 16px;
 }
 
-/* Grid de cards de atividade — 2 colunas */
 .ta-atividades__grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -290,7 +284,6 @@
    RESPONSIVO
    ============================================= */
 
-/* ── Tablet largo: sidebar ainda visível ── */
 @media (max-width: 1024px) {
   .ta-carousel__card--center {
     width: 360px;
@@ -302,10 +295,10 @@
   }
 }
 
-/* ── Tablet: sidebar fica em cima, conteúdo se comprime ── */
 @media (max-width: 900px) {
   .tela-acompanhante {
-    margin-left: 90px; /* sidebar ainda presente */
+    margin-left: 0;
+    padding-left: 90px;
   }
 
   .ta-carousel__card--center {
@@ -318,31 +311,29 @@
   }
 }
 
-/* ── Mobile: sidebar vira bottom-bar ou some, conteúdo ocupa tudo ── */
 @media (max-width: 768px) {
   .tela-acompanhante {
     margin-left: 0;
-    padding-bottom: 80px; /* espaço pro eventual bottom-nav */
+    padding-left: 0;
+    padding-bottom: 80px;
   }
 
-  /* Dicionário */
   .ta-dicionario {
     margin: 12px 14px 0;
     padding: 20px 18px;
     min-height: 130px;
-    overflow: hidden; /* Bia fica contida no mobile */
+    overflow: hidden;
+  }
+
+  /* Sem imagem: conteúdo ocupa todo o container */
+  .ta-dicionario__illustration {
+    display: none;
   }
 
   .ta-dicionario__content {
-    max-width: 60%;
+    max-width: 100%;
   }
 
-  .ta-dicionario__illustration {
-    height: 130px;
-    right: 0;
-  }
-
-  /* Como Funciona */
   .ta-como-funciona {
     flex-direction: column;
     margin: 20px 14px;
@@ -366,7 +357,6 @@
     text-align: center;
   }
 
-  /* Carousel */
   .ta-carousel__card--center {
     width: 240px;
     min-height: 160px;
@@ -388,7 +378,6 @@
     margin-left: -24px;
   }
 
-  /* Atividades */
   .ta-atividades {
     margin: 0 14px 28px;
   }
@@ -398,7 +387,6 @@
   }
 }
 
-/* ── Mobile pequeno ── */
 @media (max-width: 480px) {
   .ta-header {
     padding: 10px 14px;
@@ -408,14 +396,6 @@
     margin: 10px 12px 0;
     padding: 18px 16px;
     min-height: 120px;
-  }
-
-  .ta-dicionario__content {
-    max-width: 58%;
-  }
-
-  .ta-dicionario__illustration {
-    height: 115px;
   }
 
   .ta-dicionario__title {

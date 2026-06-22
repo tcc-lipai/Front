@@ -53,7 +53,7 @@ const TelaAcompanhante = () => {
       {/* ── Banner Dicionário ── */}
       <section className="ta-dicionario">
         <div className="ta-dicionario__content">
-          <h2 className="ta-dicionario__title">DIcionário</h2>
+          <h2 className="ta-dicionario__title">Dicionário</h2>
           <p className="ta-dicionario__text">
             Teste seus conhecimentos de leitura labial através de um dicionário. Veja quais sa dwa dw dwad w d wa
             dw wdadem ipsum doicing elperspiciatis dolorem veritatis ratione minus aspernatur pariatur officia distinctio praesentium minima unde, ipsam rerum ea. ugit sunt.
@@ -133,10 +133,6 @@ const TelaAcompanhante = () => {
         </div>
       </section>
 
-      {/* ── Footer ── */}
-      <footer className="ta-footer">
-        <RedesSociais />
-      </footer>
 
     </div>
   );
