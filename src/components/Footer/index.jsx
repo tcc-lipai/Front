@@ -34,14 +34,14 @@ const Footer = () => {
         </div>
 
         {/* Lado Direito: Social */}
-        <div className="footer__social-col">
+        {/* <div className="footer__social-col">
           <div className="footer__social-icons">
             <a href="#" aria-label="Instagram">ig</a>
             <a href="#" aria-label="Facebook">f</a>
             <a href="#" aria-label="LinkedIn">in</a>
           </div>
           <span>Siga-nos</span>
-        </div>
+        </div> */}
 
       </div>
 

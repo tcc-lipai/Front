@@ -79,7 +79,7 @@ const TelaLandingPage = () => {
         </section>
 
         <div className="landing__hero-wave">
-          <svg viewBox="0 0 1440 200" preserveAspectRatio="none">
+          <svg viewBox="0 0 1440 200" preserveAspectRatio="none" >
             <path
               d="M0,80 C320,180 1120,0 1440,100 L1440,200 L0,200 Z"
               fill="#7A3A8E"
