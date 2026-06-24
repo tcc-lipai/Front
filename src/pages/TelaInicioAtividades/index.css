@@ -162,7 +162,7 @@ h2 {
   margin: 4px 0 0;
 }
 
-/* ---------- FILTRO ---------- */
+/* ---------- FILTRO (Padrão Desktop) ---------- */
 
 .conteudo > .filter {
   width: 280px;
@@ -181,17 +181,33 @@ h2 {
   font-weight: 700;
 }
 
-/* ---------- RESPONSIVO ---------- */
+
+/* ---------- RESPONSIVIDADE CORRIGIDA ---------- */
 
 @media (max-width: 1200px) {
+  /* Faz o bloco principal ocupar a largura total sem esmagar */
   .conteudo {
-    flex-direction: column;
+    flex-direction: column; 
+    gap: 24px;
   }
 
+  /* Transforma o Filtro em uma GAVETA FLUTUANTE puxada do lado */
   .conteudo > .filter {
-    width: 100%;
-    height: auto;
-    position: static;
+    position: fixed;
+    right: -100%; /* Escondido fora da tela na direita */
+    top: 0;
+    width: 320px;
+    max-width: 85vw;
+    height: 100vh;
+    z-index: 1001;
+    overflow-y: auto;
+    box-shadow: -4px 0 15px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease-in-out;
+  }
+
+  /* Classe injetada via React para abrir deslizando pela lateral */
+  .conteudo > .filter.open {
+    right: 0;
   }
 }
 
@@ -201,7 +217,7 @@ h2 {
   }
 
   .conteudo {
-    margin-left: 80px; /* Reduz ligeiramente o recuo se a navbar encolher */
+    margin-left: 80px; /* Recuo seguro da Navbar lateral */
     gap: 16px;
   }
 
@@ -217,7 +233,7 @@ h2 {
     width: 110px;
   }
 
-  /* Cria um scroll horizontal suave nos cards de info se a tela for muito pequena */
+  /* Carrossel de arrastar para o lado nos cards de info */
   .infos {
     overflow-x: auto;
     padding-bottom: 8px;
@@ -233,7 +249,7 @@ h2 {
 
 @media (max-width: 768px) {
   .conteudo {
-    margin-left: 70px; /* Mantém o conteúdo empurrado para o lado */
+    margin-left: 70px; /* Impede de encostar na Navbar */
   }
 
   .principal {
@@ -273,7 +289,7 @@ h2 {
   }
 
   .conteudo {
-    margin-left: 60px; /* Limite mínimo de segurança para telas bem pequenas */
+    margin-left: 60px; /* Margem mínima para a Navbar em telas bem pequenas */
   }
 
   .banner h1 {
@@ -290,5 +306,21 @@ h2 {
 
   .card-info span {
     font-size: 11px;
+  }
+
+  /* Em telas minúsculas (mobile), puxar de baixo para cima faz mais sentido */
+  .conteudo > .filter {
+    right: 0;
+    bottom: -100%;
+    top: auto;
+    height: 75vh;
+    width: 100%;
+    max-width: 100%;
+    border-radius: 24px 24px 0 0;
+    transition: bottom 0.3s ease-in-out;
+  }
+
+  .conteudo > .filter.open {
+    bottom: 0;
   }
 }
