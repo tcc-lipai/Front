@@ -1,67 +1,100 @@
 .container-tela-conquistas {
-    min-height: 100vh;
-    background-color: #EADFF0; /* Fundo lilás claro */
-    display: flex;
-    flex-direction: column;
-  }
-  
+  min-height: 100vh;
+  background-color: #EADFF0; /* Fundo lilás claro */
+  display: flex;
+  flex-direction: column;
+}
+
+.header-conquistas {
+  background-color: #835997;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  padding: 0 40px;
+}
+
+.btn-voltar-conquistas {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.btn-voltar-conquistas:hover {
+  transform: translateX(-4px); /* Um feedback visual bacana ao passar o mouse */
+}
+
+/* Moldura interna branca */
+.box-conquistas {
+  background-color: white;
+  border-radius: 12px;
+  margin: 40px auto;
+  padding: 40px;
+  max-width: 1500px;
+  width: calc(100% - 80px);
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+}
+
+.secao-grid-conquistas h2 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #4A154B;
+  margin-bottom: 24px;
+}
+
+/* GRID RESPONSIVO: Se adapta sozinho ao tamanho da tela */
+.grid-cards-conquistas {
+  display: grid;
+  /* Troque '150px' pelo tamanho mínimo ideal que o seu componente <Conquistas /> precisa para não amassar */
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
+  gap: 20px; /* Aumentei um pouco o gap para respirar melhor */
+  width: 100%;
+}
+
+/* Deixa todo o bloco de conquistas não atingidas com a opacidade reduzida */
+.bloco-nao-atingidas {
+  opacity: 0.5;
+}
+
+---
+
+/* Media Query para Tablets e Celulares */
+@media (max-width: 768px) {
   .header-conquistas {
-    background-color: #835997;
-    height: 80px;
-    display: flex;
-    align-items: center;
-    padding: 0 40px;
+    padding: 0 20px;
+    height: 64px; /* Header um pouco menor no mobile */
   }
-  
-  .btn-voltar-conquistas {
-    background: none;
-    border: none;
-    color: white;
-    cursor: pointer;
-  }
-  
-  /* Moldura interna branca */
+
   .box-conquistas {
-    background-color: white;
-    border-radius: 12px;
-    margin: 40px auto;
-    padding: 40px;
-    max-width: 1500px;
-    width: calc(100% - 80px);
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    margin: 20px auto;
+    padding: 24px;
+    width: calc(100% - 40px); /* Menos margem nas laterais no mobile */
+    gap: 32px;
   }
-  
+
   .secao-grid-conquistas h2 {
-    font-size: 32px;
-    font-weight: 700;
-    color: #4A154B;
-    margin-bottom: 24px;
+    font-size: 24px; /* Diminui o título para não dar quebra de linha feia */
+    margin-bottom: 16px;
   }
-  
-  /* Força o grid a ter exatamente 7 colunas iguais na mesma linha */
+
   .grid-cards-conquistas {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr); 
+    /* Diminui um pouco o tamanho mínimo no mobile para caberem mais cards por linha */
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 12px;
-    width: 100%;
   }
-  
-  /* Deixa todo o bloco de conquistas não atingidas com a opacidade reduzida */
-  .bloco-nao-atingidas {
-    opacity: 0.5;
+}
+
+/* Para celulares bem pequenos (iPhone SE, etc) */
+@media (max-width: 400px) {
+  .grid-cards-conquistas {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   }
-  
-  /* Ajuste de rolagem caso a tela do navegador fique muito pequena */
-  @media (max-width: 950px) {
-    .grid-cards-conquistas {
-      display: flex;
-      overflow-x: auto;
-      padding-bottom: 10px;
-    }
-    .grid-cards-conquistas > div {
-      flex-shrink: 0;
-    }
-  }
+}
