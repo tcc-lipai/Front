@@ -16,6 +16,7 @@ import TelaAtividadeSalva from '../pages/TelaAtividadeSalva';
 import TelaInicioAtividades from '../pages/TelaInicioAtividades';
 import TelaInicioAtividadeUnidade from '../pages/TelaInicioAtividadeUnidade';
 import TelaAtividadeConcluida from '../pages/TelaAtividadeConcluida';
+import TelaAtividadeAlternativa from '../pages/TelaAtividadeAlternativa';
 import TelaAtividadeFala from '../pages/TelaAtividadeFala';
 import TelaAcompanhanteIA from '../pages/TelaAcompanhanteIA';
 import TelaLandingPage from '../pages/TelaLandingPage';
@@ -42,7 +43,8 @@ function AppRoutes() {
         <Route path="/atividades-salvas" element={<TelaAtividadeSalva />} />
         <Route path="/inicio-atividades" element={<TelaInicioAtividades />} />
         <Route path="/atividades-unidades" element={<TelaInicioAtividadeUnidade />} />
-        <Route path="/atividade/alternativa/:id" element={<TelaAtividadeConcluida />} />
+        <Route path="/atividade/concluida/:id" element={<TelaAtividadeConcluida />} />
+        <Route path="/atividade/alternativa/:id" element={<TelaAtividadeAlternativa />} />
         <Route path="/atividade/fala/:id" element={<TelaAtividadeFala />} />
         <Route path="/atividade/acompanhante/:id" element={<TelaAcompanhanteIA />} />
 
