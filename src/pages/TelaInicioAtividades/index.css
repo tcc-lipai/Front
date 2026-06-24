@@ -2,6 +2,7 @@
   min-height: 100vh;
   background: #efe6f3;
   padding: 16px 24px;
+  box-sizing: border-box;
 }
 
 .topo-acoes {
@@ -13,6 +14,8 @@
   display: flex;
   gap: 24px;
   align-items: flex-start;
+  /* Margem de segurança para a Navbar não sobrepor o conteúdo */
+  margin-left: 90px; 
 }
 
 .principal {
@@ -20,7 +23,6 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin-left: 90px;
   min-width: 0;
 }
 
@@ -64,7 +66,7 @@
   bottom: 0;
 }
 
-/* Botão "Testar" dentro do banner - sobrescreve o padding padrão do .btn-generico */
+/* Botão "Testar" dentro do banner */
 .banner-texto .btn-generico {
   padding: 6px 18px;
   font-size: 13px;
@@ -76,40 +78,40 @@
 .infos {
   display: flex;
   gap: 10px;
-  flex-wrap: wrap;
+  width: 100%;
 }
 
 .card-info {
-  flex: 1 !important;
+  flex: 1;
   min-width: 150px;
-  background: white !important;
-  border-radius: 16px !important;
-  padding: 10px 16px !important;
-  display: flex !important;
-  flex-direction: row !important;
-  align-items: center !important;
-  justify-content: flex-start !important;
-  text-align: left !important;
-  gap: 12px !important;
+  background: white;
+  border-radius: 16px;
+  padding: 10px 16px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+  gap: 12px;
 }
 
 .card-info img {
-  width: 18px !important;
-  height: 18px !important;
-  border-radius: 50% !important;
-  padding: 12px !important;
-  box-sizing: content-box !important;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  padding: 12px;
+  box-sizing: content-box;
   flex-shrink: 0;
-  margin: 0 !important;
+  margin: 0;
 }
 
 .card-info > div {
-  display: flex !important;
-  flex-direction: column !important;
-  text-align: left !important;
-  margin: 0 !important;
-  width: auto !important;
-  flex: none !important;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin: 0;
+  width: auto;
+  flex: none;
 }
 
 .card-info:nth-child(1) img {
@@ -133,7 +135,7 @@
 .card-info h3 {
   font-size: 16px;
   font-weight: 700;
-  margin: 0 !important;
+  margin: 0;
 }
 
 .card-info:nth-child(1) span,
@@ -167,8 +169,8 @@ h2 {
   flex-shrink: 0;
   position: sticky;
   right: 0;
-  top: 0;
-  height: 100vh;
+  top: 16px;
+  height: calc(100vh - 32px);
   padding: 16px;
 }
 
@@ -186,10 +188,6 @@ h2 {
     flex-direction: column;
   }
 
-  .principal {
-    margin-left: 0;
-  }
-
   .conteudo > .filter {
     width: 100%;
     height: auto;
@@ -200,6 +198,11 @@ h2 {
 @media (max-width: 900px) {
   .pagina-atividades {
     padding: 16px;
+  }
+
+  .conteudo {
+    margin-left: 80px; /* Reduz ligeiramente o recuo se a navbar encolher */
+    gap: 16px;
   }
 
   .banner {
@@ -214,16 +217,25 @@ h2 {
     width: 110px;
   }
 
+  /* Cria um scroll horizontal suave nos cards de info se a tela for muito pequena */
   .infos {
-    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
   }
 
   .card-info {
-    min-width: 0;
+    flex: 0 0 200px;
+    scroll-snap-align: start;
   }
 }
 
 @media (max-width: 768px) {
+  .conteudo {
+    margin-left: 70px; /* Mantém o conteúdo empurrado para o lado */
+  }
+
   .principal {
     gap: 12px;
   }
@@ -232,8 +244,8 @@ h2 {
     flex-direction: column;
     text-align: center;
     gap: 16px;
-    position: static;
-    padding: 16px;
+    position: relative;
+    padding: 20px;
   }
 
   .banner-texto {
@@ -247,24 +259,21 @@ h2 {
   .banner img {
     position: static;
     width: 120px;
+    margin-top: 8px;
   }
 
   h2 {
     font-size: 16px;
-  }
-
-  .infos {
-    flex-direction: column;
-  }
-
-  .card-info {
-    width: 100%;
   }
 }
 
 @media (max-width: 480px) {
   .pagina-atividades {
     padding: 12px;
+  }
+
+  .conteudo {
+    margin-left: 60px; /* Limite mínimo de segurança para telas bem pequenas */
   }
 
   .banner h1 {
