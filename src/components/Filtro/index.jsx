@@ -1,8 +1,10 @@
+import { useState } from "react";
 import "./index.css";
 import { difficulties, statusOptions } from "./types";
 import { useFilter } from "./hook";
 
 export default function Filter() {
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
   const {
     search,
     setSearch,
@@ -18,71 +20,92 @@ export default function Filter() {
   } = useFilter();
 
   return (
-    <aside className="filter">
-      <h2>Filtro</h2>
+    <>
+      {/* Botão flutuante visível apenas em telas menores */}
+      <button 
+        className="btn-filtro-flutuante"
+        onClick={() => setIsMobileOpen(true)}
+      >
+        ☰ Filtros
+      </button>
 
-      <div className="search">
-        <input
-          type="text"
-          placeholder="Pesquisar"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-      </div>
+      {/* Overlay de fundo escuro quando o menu mobile estiver aberto */}
+      {isMobileOpen && (
+        <div className="filter-overlay" onClick={() => setIsMobileOpen(false)} />
+      )}
 
-      <div className="section">
-        <button
-          className="section-title"
-          onClick={() => setOpenDifficulty(!openDifficulty)}
-        >
-          <span>Dificuldade</span>
-          <span>{openDifficulty ? "⌃" : "⌄"}</span>
-        </button>
+      <aside className={`filter ${isMobileOpen ? "open" : ""}`}>
+        <div className="filter-header">
+          <h2>Filtro</h2>
+          {/* Botão de fechar (X) visível apenas no mobile */}
+          <button className="btn-fechar-filtro" onClick={() => setIsMobileOpen(false)}>
+            ✕
+          </button>
+        </div>
 
-        {openDifficulty && (
-          <div className="options">
-            {difficulties.map((item) => (
-              <label key={item}>
-                <input
-                  type="checkbox"
-                  checked={difficulty.includes(item)}
-                  onChange={() =>
-                    toggleItem(item, difficulty, setDifficulty)
-                  }
-                />
-                {item}
-              </label>
-            ))}
-          </div>
-        )}
-      </div>
+        <div className="search">
+          <input
+            type="text"
+            placeholder="Pesquisar"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
 
-      <div className="section">
-        <button
-          className="section-title"
-          onClick={() => setOpenStatus(!openStatus)}
-        >
-          <span>Status</span>
-          <span>{openStatus ? "⌃" : "⌄"}</span>
-        </button>
+        <div className="section">
+          <button
+            className="section-title"
+            onClick={() => setOpenDifficulty(!openDifficulty)}
+          >
+            <span>Dificuldade</span>
+            <span>{openDifficulty ? "⌃" : "⌄"}</span>
+          </button>
 
-        {openStatus && (
-          <div className="options">
-            {statusOptions.map((item) => (
-              <label key={item}>
-                <input
-                  type="checkbox"
-                  checked={status.includes(item)}
-                  onChange={() =>
-                    toggleItem(item, status, setStatus)
-                  }
-                />
-                {item}
-              </label>
-            ))}
-          </div>
-        )}
-      </div>
-    </aside>
+          {openDifficulty && (
+            <div className="options">
+              {difficulties.map((item) => (
+                <label key={item}>
+                  <input
+                    type="checkbox"
+                    checked={difficulty.includes(item)}
+                    onChange={() =>
+                      toggleItem(item, difficulty, setDifficulty)
+                    }
+                  />
+                  {item}
+                </label>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="section">
+          <button
+            className="section-title"
+            onClick={() => setOpenStatus(!openStatus)}
+          >
+            <span>Status</span>
+            <span>{openStatus ? "⌃" : "⌄"}</span>
+          </button>
+
+          {openStatus && (
+            <div className="options">
+              {statusOptions.map((item) => (
+                <label key={item}>
+                  <input
+                    type="checkbox"
+                    checked={status.includes(item)}
+                    onChange={() =>
+                      toggleItem(item, status, setStatus)
+                    }
+                  />
+                  {item}
+                </label>
+              ))}
+            </div>
+          )}
+        </div>
+      </aside>
+    </>
   );
 }

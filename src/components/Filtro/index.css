@@ -1,40 +1,46 @@
 .filter {
   position: sticky;
   top: 24px;
-
-  margin-left: auto; /* joga para direita */
-
+  margin-left: auto;
   width: 320px;
   min-width: 320px;
-
-  height: 100vh;
-
+  height: calc(100vh - 48px);
   background: #f5edf8;
-
   padding: 24px;
   border-radius: 24px;
-
   display: flex;
   flex-direction: column;
   gap: 24px;
+  box-sizing: border-box;
+}
 
-  transition: all 0.3s ease;
+.filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .filter h2 {
   margin: 0;
-  font-size: 2rem;
+  font-size: 1.8rem;
+  color: #5b2f78;
+}
+
+/* Botões de controle mobile ocultos no desktop */
+.btn-filtro-flutuante,
+.btn-fechar-filtro,
+.filter-overlay {
+  display: none;
 }
 
 .search input {
   width: 100%;
-
   padding: 10px 14px;
-
   border: none;
   border-radius: 10px;
-
   background: #ece8ef;
+  outline: none;
+  box-sizing: border-box;
 }
 
 .section {
@@ -45,89 +51,106 @@
 
 .section-title {
   display: flex;
-
   justify-content: space-between;
-
   background: transparent;
   border: none;
-
   cursor: pointer;
-
   font-weight: 700;
+  color: #5b2f78;
+  padding: 0;
+  font-size: 15px;
 }
 
 .options {
   display: flex;
   flex-direction: column;
-
   gap: 12px;
 }
 
 .options label {
   display: flex;
-
   align-items: center;
-
   gap: 10px;
+  font-size: 14px;
+  cursor: pointer;
 }
 
 .options input {
   width: 18px;
   height: 18px;
+  cursor: pointer;
 }
 
 /* ---------- RESPONSIVO ---------- */
 
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
+  /* Exibe o botão flutuante no canto inferior direito */
+  .btn-filtro-flutuante {
+    display: block;
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    background: #7a4aa5;
+    color: white;
+    padding: 14px 20px;
+    border-radius: 999px;
+    font-weight: 600;
+    border: none;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    z-index: 999;
+    transition: transform 0.2s;
+  }
+
+  .btn-filtro-flutuante:active {
+    transform: scale(0.95);
+  }
+
+  /* Botão de fechar interno */
+  .btn-fechar-filtro {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ece8ef;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 14px;
+    color: #5b2f78;
+  }
+
+  /* Escurecimento de fundo */
+  .filter-overlay {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+  }
+
+  /* Transforma a barra lateral em uma Gaveta (Drawer) Escondida */
   .filter {
     position: fixed;
-
-    right: -100%;
+    right: -100%; /* Escondido totalmente à direita */
     top: 0;
-
     width: 320px;
     max-width: 85vw;
-
     height: 100vh;
-
     border-radius: 24px 0 0 24px;
-
-    z-index: 1000;
-
+    z-index: 1001;
     overflow-y: auto;
+    box-shadow: -4px 0 15px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease-in-out;
   }
 
-  /* abre */
+  /* Classe injetada pelo React para abrir a lateral */
   .filter.open {
     right: 0;
-  }
-
-  /* botão flutuante */
-  .filter::before {
-    content: "☰ Filtros";
-
-    position: fixed;
-
-    right: 20px;
-    bottom: 20px;
-
-    background: #7a4aa5;
-
-    color: white;
-
-    padding: 14px 18px;
-
-    border-radius: 999px;
-
-    font-weight: 600;
-
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-
-    cursor: pointer;
-  }
-
-  .filter.open::before {
-    display: none;
   }
 }
 
@@ -135,7 +158,17 @@
   .filter {
     width: 100%;
     max-width: 100%;
-
     border-radius: 20px 20px 0 0;
+    
+    /* Alternativa para mobile: abrir de baixo para cima fica mais elegante */
+    right: 0;
+    bottom: -100%;
+    top: auto;
+    height: 80vh;
+    transition: bottom 0.3s ease-in-out;
+  }
+
+  .filter.open {
+    bottom: 0;
   }
 }
