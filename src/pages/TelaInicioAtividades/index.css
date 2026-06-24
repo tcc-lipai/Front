@@ -1,0 +1,285 @@
+.pagina-atividades {
+  min-height: 100vh;
+  background: #efe6f3;
+  padding: 16px 24px;
+}
+
+.topo-acoes {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.conteudo {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.principal {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-left: 90px;
+  min-width: 0;
+}
+
+/* ---------- BANNER ---------- */
+
+.banner {
+  background: #8458a7;
+  border-radius: 18px;
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 150px;
+  position: relative;
+  overflow: hidden;
+}
+
+.banner-texto {
+  max-width: 55%;
+  color: white;
+}
+
+.banner h1 {
+  margin-bottom: 4px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.banner p {
+  margin-bottom: 12px;
+  line-height: 1.4;
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.banner img {
+  width: 140px;
+  object-fit: contain;
+  position: absolute;
+  right: 16px;
+  bottom: 0;
+}
+
+/* Botão "Testar" dentro do banner - sobrescreve o padding padrão do .btn-generico */
+.banner-texto .btn-generico {
+  padding: 6px 18px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ---------- INFOS (Realizadas / Salvas / Revisadas) ---------- */
+
+.infos {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.card-info {
+  flex: 1 !important;
+  min-width: 150px;
+  background: white !important;
+  border-radius: 16px !important;
+  padding: 10px 16px !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+  gap: 12px !important;
+}
+
+.card-info img {
+  width: 18px !important;
+  height: 18px !important;
+  border-radius: 50% !important;
+  padding: 12px !important;
+  box-sizing: content-box !important;
+  flex-shrink: 0;
+  margin: 0 !important;
+}
+
+.card-info > div {
+  display: flex !important;
+  flex-direction: column !important;
+  text-align: left !important;
+  margin: 0 !important;
+  width: auto !important;
+  flex: none !important;
+}
+
+.card-info:nth-child(1) img {
+  background: #E1EFE0;
+}
+
+.card-info:nth-child(2) img {
+  background: #F3ECCF;
+}
+
+.card-info:nth-child(3) img {
+  background: #DCE9F0;
+}
+
+.card-info span {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.card-info h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 !important;
+}
+
+.card-info:nth-child(1) span,
+.card-info:nth-child(1) h3 {
+  color: #3A7131;
+}
+
+.card-info:nth-child(2) span,
+.card-info:nth-child(2) h3 {
+  color: #A8901F;
+}
+
+.card-info:nth-child(3) span,
+.card-info:nth-child(3) h3 {
+  color: #2E6B86;
+}
+
+/* ---------- TÍTULOS ---------- */
+
+h2 {
+  color: #5b2f78;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 4px 0 0;
+}
+
+/* ---------- FILTRO ---------- */
+
+.conteudo > .filter {
+  width: 280px;
+  flex-shrink: 0;
+  position: sticky;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  padding: 16px;
+}
+
+.filter h1,
+.filter .titulo-filtro {
+  color: #5b2f78;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+/* ---------- RESPONSIVO ---------- */
+
+@media (max-width: 1200px) {
+  .conteudo {
+    flex-direction: column;
+  }
+
+  .principal {
+    margin-left: 0;
+  }
+
+  .conteudo > .filter {
+    width: 100%;
+    height: auto;
+    position: static;
+  }
+}
+
+@media (max-width: 900px) {
+  .pagina-atividades {
+    padding: 16px;
+  }
+
+  .banner {
+    min-height: 130px;
+  }
+
+  .banner-texto {
+    max-width: 60%;
+  }
+
+  .banner img {
+    width: 110px;
+  }
+
+  .infos {
+    gap: 8px;
+  }
+
+  .card-info {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .principal {
+    gap: 12px;
+  }
+
+  .banner {
+    flex-direction: column;
+    text-align: center;
+    gap: 16px;
+    position: static;
+    padding: 16px;
+  }
+
+  .banner-texto {
+    max-width: 100%;
+  }
+
+  .banner-texto p {
+    margin: 0 auto 12px;
+  }
+
+  .banner img {
+    position: static;
+    width: 120px;
+  }
+
+  h2 {
+    font-size: 16px;
+  }
+
+  .infos {
+    flex-direction: column;
+  }
+
+  .card-info {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .pagina-atividades {
+    padding: 12px;
+  }
+
+  .banner h1 {
+    font-size: 18px;
+  }
+
+  .banner-texto p {
+    font-size: 12px;
+  }
+
+  .card-info h3 {
+    font-size: 14px;
+  }
+
+  .card-info span {
+    font-size: 11px;
+  }
+}
