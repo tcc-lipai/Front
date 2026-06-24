@@ -1,0 +1,236 @@
+.login-page {
+  min-height: 100vh;
+  background: #f7f0fa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* BOLINHAS */
+
+.bg-circle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.bg-circle-1 {
+  width: 350px;
+  height: 350px;
+  background: #d6a6f4;
+  bottom: -180px;
+  right: -100px;
+}
+
+.bg-circle-2 {
+  width: 180px;
+  height: 180px;
+  background: #b46ddb;
+  bottom: 20px;
+  right: 120px;
+  opacity: 0.6;
+}
+
+/* TRIÂNGULOS DE FUNDO */
+
+.bg-triangle {
+  position: absolute;
+  pointer-events: none;
+}
+
+/* topo esquerdo */
+.triangle-1 {
+  top: 80px;
+  left: 180px;
+
+  width: 0;
+  height: 0;
+
+  border-left: 18px solid transparent;
+  border-right: 18px solid transparent;
+  border-bottom: 30px solid #6a347f;
+
+  opacity: 0.2;
+  transform: rotate(-15deg);
+}
+
+/* meio esquerdo */
+.triangle-2 {
+  top: 300px;
+  left: 100px;
+
+  width: 0;
+  height: 0;
+
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 22px solid #6a347f;
+
+  opacity: 0.15;
+  transform: rotate(45deg);
+}
+
+/* topo direito */
+.triangle-3 {
+  top: 140px;
+  right: 150px;
+
+  width: 0;
+  height: 0;
+
+  border-left: 16px solid transparent;
+  border-right: 16px solid transparent;
+  border-bottom: 28px solid #6a347f;
+
+  opacity: 0.2;
+  transform: rotate(25deg);
+}
+
+/* meio direito */
+.triangle-4 {
+  top: 420px;
+  right: 100px;
+
+  width: 0;
+  height: 0;
+
+  border-left: 22px solid transparent;
+  border-right: 22px solid transparent;
+  border-bottom: 36px solid #6a347f;
+
+  opacity: 0.1;
+  transform: rotate(-35deg);
+}
+
+/* canto inferior esquerdo */
+.triangle-5 {
+  bottom: 140px;
+  left: 220px;
+
+  width: 0;
+  height: 0;
+
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-bottom: 25px solid #6a347f;
+
+  opacity: 0.15;
+  transform: rotate(100deg);
+}
+
+/* CARD */
+
+.login-container {
+  width: 1100px;
+  height: 650px;
+  background: #f4edf8;
+  border-radius: 24px;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.048);
+}
+
+/* ESQUERDA */
+
+.login-left {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 100px;
+  margin-top: 20px;
+}
+
+.login-left h1 {
+  color: #5b2b77;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.subtitle {
+  margin-top: 12px;
+  color: #7b6688;
+}
+
+.input-group {
+  width: 420px;
+  margin-top: 30px;
+}
+
+.input-group input {
+  width: 100%;
+  height: 60px;
+  border: none;
+  border-radius: 20px;
+  background: #dec8e9;
+  padding: 0 25px;
+  font-size: 16px;
+  outline: none;
+}
+
+.btn-container {
+  margin-top: 40px;
+  width: 250px;
+}
+
+.btn-container .btn-generico {
+  width: 100%;
+  border: 1px solid #7d4997;
+  color: #7d4997;
+  font-weight: 600;
+}
+
+/* GOOGLE */
+
+.google-login {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 100px;
+  color: #9a88a8;
+  font-weight: 600;
+}
+
+.google-login img {
+  width: 35px;
+  height: 35px;
+}
+
+/* DIREITA */
+
+.login-right {
+    padding-top: 200px;
+  width: 40%;
+  background: #522566;
+  position: relative;
+  color: white;
+}
+
+.welcome-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+
+.welcome-content h2 {
+  font-size: 33px;
+  font-weight: 700;
+}
+
+.welcome-content p {
+  text-align: center;
+  line-height: 1.6;
+}
+
+.welcome-content .btn-generico {
+  width: 220px;
+  border: 1px solid white;
+  color: white;
+}
