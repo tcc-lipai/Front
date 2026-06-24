@@ -30,6 +30,7 @@ const TelaCadastroUser = () => {
             <Botao
               texto="Login"
               corDeFundo="transparent"
+              corBorda="white"
               onClick={() => navigate("/login")}
             />
           </div>
@@ -79,7 +80,7 @@ const TelaCadastroUser = () => {
             </span>
 
             <div className="btn-container">
-              <Botao texto="Cadastrar-se" corDeFundo="#F7F0FA" />
+              <Botao texto="Cadastrar-se" corDeFundo="#8426ac" corBorda=""/>
             </div>
 
             <div className="google-login">

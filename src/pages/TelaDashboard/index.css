@@ -1,0 +1,426 @@
+/* =====================
+   Layout raiz
+   ===================== */
+.dashboard-wrapper {
+  display: flex;
+  min-height: 100vh;
+  background: #f3e8ff;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+.dashboard-main {
+  margin-left: 90px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 28px 32px 40px 32px;
+  overflow-y: auto;
+  min-width: 0;
+}
+
+/* =====================
+   Header
+   ===================== */
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.dashboard-title {
+  color: #4a154b;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+/* =====================
+   Seções (cards brancos)
+   ===================== */
+.card-section {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 22px 24px;
+  box-shadow: 0 1px 6px rgba(74, 21, 75, 0.06);
+}
+
+.section-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #2d2d2d;
+  margin: 0 0 2px 0;
+}
+
+.section-subtitle {
+  font-size: 0.78rem;
+  color: #888;
+  margin: 0;
+}
+
+/* =====================
+   Botão de ajuda (?)
+   ===================== */
+.help-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: #7b3b93;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* =====================
+   Ofensiva – dias
+   ===================== */
+.strike-days {
+  display: flex;
+  gap: 8px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+}
+
+.strike-days::-webkit-scrollbar {
+  display: none;
+}
+
+.strike-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 60px;
+  padding: 10px 6px;
+  border: 1.5px solid #e0d4f7;
+  border-radius: 10px;
+  background: #faf5ff;
+  gap: 2px;
+  flex: 1;
+}
+
+.strike-day--active {
+  background: #7b3b93;
+  border-color: #7b3b93;
+}
+
+.strike-day--active .strike-month,
+.strike-day--active .strike-num {
+  color: #fff;
+}
+
+.strike-month {
+  font-size: 0.65rem;
+  color: #9b59b6;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.strike-num {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #4a154b;
+}
+
+/* =====================
+   Atividades Recentes
+   ===================== */
+.activities-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 14px;
+}
+
+.activity-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #faf5ff;
+  border-radius: 12px;
+  padding: 14px 16px;
+  border: 1px solid #e9d8fd;
+}
+
+.activity-icon {
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.activity-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.activity-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #7c3aed;
+  margin: 0;
+}
+
+.activity-desc {
+  font-size: 0.72rem;
+  color: #666;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.btn-comecar {
+  align-self: flex-start;
+  margin-top: 6px;
+  background: #7b3b93;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 18px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-comecar:hover {
+  background: #5e2d70;
+}
+
+/* =====================
+   Ver mais
+   ===================== */
+.ver-mais-btn {
+  background: none;
+  border: none;
+  color: #7c3aed;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  white-space: nowrap;
+  align-self: flex-start;
+  margin-top: 4px;
+}
+
+.ver-mais-btn:hover {
+  text-decoration: underline;
+}
+
+/* =====================
+   Conquistas grid
+   ===================== */
+.conquistas-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 14px;
+}
+
+/* =====================
+   Desempenho – barras
+   ===================== */
+.perf-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.perf-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.perf-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: #555;
+  min-width: 100px;
+  white-space: nowrap;
+}
+
+.perf-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.perf-track {
+  flex: 1;
+  height: 10px;
+  background: #f0e6ff;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.perf-fill {
+  height: 100%;
+  border-radius: 20px;
+  transition: width 0.6s ease;
+}
+
+.perf-value {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #555;
+  min-width: 36px;
+  text-align: right;
+}
+
+/* =====================
+   Tablet (≤ 1024px)
+   ===================== */
+@media (max-width: 1024px) {
+  .dashboard-main {
+    padding: 24px 20px 36px 20px;
+    gap: 16px;
+  }
+
+  .conquistas-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* =====================
+   Tablet pequeno (≤ 768px)
+   ===================== */
+@media (max-width: 768px) {
+  .dashboard-main {
+    margin-left: 80px;
+    padding: 20px 16px 32px 16px;
+    gap: 14px;
+  }
+
+  .dashboard-title {
+    font-size: 1.5rem;
+  }
+
+  .activities-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .conquistas-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .card-section {
+    padding: 18px 16px;
+  }
+
+  .strike-day {
+    min-width: 52px;
+    padding: 8px 4px;
+  }
+}
+
+/* =====================
+   Mobile (≤ 480px)
+   ===================== */
+@media (max-width: 480px) {
+  .dashboard-main {
+    margin-left: 90px;
+    padding: 20px 12px 32px 12px; /* espaço para navbar em cima/baixo se virar bottom nav */
+  }
+
+  .dashboard-title {
+    font-size: 1.25rem;
+  }
+
+  .card-section {
+    padding: 14px 12px;
+    border-radius: 12px;
+  }
+
+  .section-title {
+    font-size: 1rem;
+  }
+
+  .activity-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .activity-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .conquistas-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .perf-label {
+    min-width: 80px;
+    font-size: 0.72rem;
+  }
+
+  .perf-value {
+    font-size: 0.72rem;
+    min-width: 28px;
+  }
+
+  .strike-day {
+    min-width: 44px;
+    padding: 6px 2px;
+  }
+
+  .strike-num {
+    font-size: 0.9rem;
+  }
+
+  .strike-month {
+    font-size: 0.55rem;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* =====================
+   Override Conquista card
+   para encaixar no grid
+   ===================== */
+.conquistas-grid .conquista-card {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
