@@ -1,53 +1,110 @@
-/* Container que envelopa a navbar na tela */
 .sidebar-navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 90px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-left: 15px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 15px;
+}
+
+.navbar-container {
+  background-color: #7b3b93;
+  width: 65px;
+  height: 85vh;
+  min-height: 400px;
+  max-height: 800px;
+  border-radius: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 20px 0;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  color: #ffffff;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.nav-icon {
+  stroke-width: 1.5;
+}
+
+.nav-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-item.active {
+  background-color: rgba(255, 255, 255, 0.25);
+  box-shadow: inset 0 0 4px rgba(255, 255, 255, 0.2);
+}
+
+.navbar-hamburguer {
+  display: none;
+  position: fixed;
+  top: 43px;
+  left: 18px;
+  z-index: 40;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background-color: #7b3b93;
+  color: #ffffff;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.2s ease;
+}
+
+.navbar-hamburguer:hover {
+  background-color: #8c46a6;
+}
+
+@media (max-width: 768px) {
+  .sidebar-navbar {
+    display: none;
   }
-  
+
+  .navbar-hamburguer {
+    display: flex;
+  }
+}
+
+@media (max-width: 600px) {
+  .navbar-hamburguer {
+    display: flex;
+    top: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-hamburguer {
+    display: flex;
+    top: 37px;
+  }
+}
+
+@media (max-height: 650px) {
   .navbar-container {
-    background-color: #7b3b93; /* O roxo da sua imagem */
-    width: 65px;
-    height: 85vh;
-    border-radius: 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 25px 0;
-    gap: 50px;
+    height: 95vh;
+    padding: 15px 0;
   }
-  
-  /* Estilo padrão de cada botão/link */
+
   .nav-item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    color: #ffffff;
-    text-decoration: none;
-    transition: all 0.3s ease;
+    width: 40px;
+    height: 40px;
   }
-  
-  .nav-icon {
-    stroke-width: 1.5;
-  }
-  
-  /* Efeito Hover */
-  .nav-item:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-  }
-  
-  /* Item Ativo (Destaque igual ao ícone Home da imagem) */
-  .nav-item.active {
-    background-color: rgba(255, 255, 255, 0.25);
-    box-shadow: inset 0 0 4px rgba(255, 255, 255, 0.2);
-  }
+}

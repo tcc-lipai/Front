@@ -1,0 +1,92 @@
+.navbar-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 49;
+}
+
+.navbar-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 260px;
+  max-width: 80vw;
+  background: #ffffff;
+  z-index: 50;
+  transform: translateX(-100%);
+  transition: transform 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.navbar-drawer.open {
+  transform: translateX(0);
+}
+
+.navbar-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 1px solid #f0e9f7;
+}
+
+.navbar-drawer-titulo {
+  font-weight: 700;
+  font-size: 16px;
+  color: #4C1D95;
+}
+
+.navbar-drawer-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: #6B7280;
+  cursor: pointer;
+}
+
+.navbar-drawer-itens {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px;
+  overflow-y: auto;
+}
+
+.navbar-drawer-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  color: #374151;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 0.15s ease;
+}
+
+.navbar-drawer-item:hover {
+  background-color: #F3EFFA;
+}
+
+.navbar-drawer-item.active {
+  background-color: #EDE3FB;
+  color: #6B2FBF;
+}
+
+.navbar-drawer-icon {
+  flex-shrink: 0;
+  stroke-width: 1.8;
+}
+
+@media (min-width: 769px) {
+  .navbar-drawer-overlay,
+  .navbar-drawer {
+    display: none;
+  }
+}
