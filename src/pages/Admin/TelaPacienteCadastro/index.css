@@ -1,0 +1,166 @@
+/* Container Geral da Página */
+.cadastro-page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #E6D7E9;
+    font-family: sans-serif;
+    box-sizing: border-box;
+  }
+  
+  /* Área de Conteúdo Principal (Centralização) */
+  .cadastro-main-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+  }
+  
+  /* Card Branco Centralizado (Largura expandida para 850px) */
+  .cadastro-card {
+    background-color: #FFFFFF;
+    width: 100%;
+    max-width: 850px; /* Aumentado para deixar o formulário mais largo */
+    border-radius: 20px;
+    padding: 50px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+  }
+  
+  /* Cabeçalho do Card */
+  .cadastro-header {
+    margin-bottom: 35px;
+  }
+  
+  .cadastro-title {
+    color: #4A154B;
+    font-size: 32px;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  /* Formulário e Estrutura de Inputs */
+  .cadastro-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+  }
+  
+  .form-group label {
+    color: #4A154B;
+    font-weight: bold;
+    font-size: 16px;
+  }
+  
+  /* Inputs de texto e senha */
+  .form-group input[type="text"],
+  .form-group input[type="email"],
+  .form-group input[type="password"] {
+    width: 100%;
+    height: 48px;
+    border: 1px solid #BFA1C9;
+    border-radius: 12px;
+    padding: 0 15px;
+    font-size: 15px;
+    color: #333333;
+    outline: none;
+    background-color: #FFFFFF;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+  }
+  
+  .form-group input:focus {
+    border-color: #7A3B8C;
+  }
+  
+  /* Estilização dos Dropdowns (Selects) */
+  .form-group select {
+    width: 100%;
+    height: 52px;
+    border: 1px solid #BFA1C9;
+    border-radius: 12px;
+    padding: 0 15px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #4A154B;
+    outline: none;
+    background-color: #FFFFFF;
+    cursor: pointer;
+    box-sizing: border-box;
+    appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%234A154B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 16px;
+  }
+  
+  /* Controle do campo opcional */
+  .input-opcional {
+    margin-bottom: 5px;
+  }
+  
+  .label-opcional {
+    align-self: flex-end;
+    font-size: 12px;
+    color: #666666;
+    margin-top: 4px;
+  }
+  
+  /* Alinhamento e dimensões do Botão Enviar */
+  .container-botao-enviar {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .btn-cadastro-submit {
+    width: 240px !important;
+    height: 45px;
+    border-radius: 20px !important;
+    font-size: 16px !important;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  
+  .btn-cadastro-submit:hover {
+    opacity: 0.9;
+  }
+  
+  /* --- Responsividade (Media Queries) --- */
+  @media (max-width: 768px) {
+    .cadastro-card {
+      padding: 35px 25px;
+      border-radius: 15px;
+    }
+  
+    .cadastro-title {
+      font-size: 26px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .cadastro-main-content {
+      padding: 15px 10px;
+    }
+  
+    .cadastro-card {
+      padding: 25px 15px;
+    }
+  
+    .cadastro-title {
+      font-size: 22px;
+    }
+  
+    .btn-cadastro-submit {
+      width: 100% !important;
+    }
+  }

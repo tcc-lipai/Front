@@ -20,7 +20,9 @@ import TelaAtividadeConcluida from '../pages/TelaAtividadeConcluida';
 import TelaAtividadeFala from '../pages/TelaAtividadeFala';
 import TelaAcompanhanteIA from '../pages/TelaAcompanhanteIA';
 import TelaLandingPage from '../pages/TelaLandingPage';
-import DashboardMedico from '../pages/TelaDashboardMedico';
+import DashboardMedico from '../pages/Profissional/TelaDashboardMedico';
+import CadastrarPaciente from '../pages/Admin/TelaPacienteCadastro';
+
 
 function AppRoutes() {
   return (
@@ -49,6 +51,8 @@ function AppRoutes() {
         <Route path="/atividade/acompanhante/:id" element={<TelaAcompanhanteIA />} />
 
         <Route path="/dashboard-medico" element={<DashboardMedico />} />
+
+        <Route path="/cadastrar-paciente" element={<CadastrarPaciente />} />
 
         <Route path="*" element={<h1>Página não encontrada</h1>} />
       </Routes>

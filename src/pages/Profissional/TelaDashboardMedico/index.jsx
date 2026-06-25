@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Navbar from "../../components/Navbar";
-import { HeaderActions } from "../../components/infoEstrelas";
-import CardUsuario from "../../components/CardUsuario";
+import Navbar from "../../../components/Navbar"
+import { HeaderActions } from "../../../components/infoEstrelas";
+import CardUsuario from "../../../components/CardUsuario";
 import "./index.css";
 
 const IconeLupa = () => (
