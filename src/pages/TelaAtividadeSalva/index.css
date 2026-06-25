@@ -39,6 +39,7 @@
     font-weight: 800;
     color: #522566;
     margin: 0;
+    text-align: center;
   }
   
   .tela-atividade-salva__descricao {
@@ -75,5 +76,19 @@
   
     .tela-atividade-salva__titulo {
       font-size: 19px;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .tela-atividade-salva__cabecalho {
+        justify-content: center;
+    }
+
+    .tela-atividade-salva__cabecalho svg {
+        display: none;
+    }
+      
+      .tela-atividade-salva__descricao {
+        text-align: center;
     }
   }
