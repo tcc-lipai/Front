@@ -1,0 +1,256 @@
+/* --- ESTILOS PADRÃO (DESKTOP) --- */
+.configuracoes-page-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  font-family: sans-serif;
+  box-sizing: border-box;
+  background-color: #f6effb;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.bg-waves {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.bg-waves svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.configuracoes-main-content {
+  flex: 1;
+  padding: 90px 70px 50px 70px;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+  box-sizing: border-box;
+  margin-left: 280px;
+}
+
+.configuracoes-title {
+  color: #4a2868;
+  font-size: 36px;
+  font-weight: bold;
+  margin: 0 0 35px 0; 
+  width: 100%;
+}
+
+.configuracoes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 35px;
+  width: 100%;
+  max-width: 1100px; 
+  margin: 0 auto 35px auto; 
+}
+
+.config-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 35px 30px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 8px 8px 0px #ecdcf7;
+  border: 1px solid #ecdcf7;
+}
+
+.config-card-title {
+  color: #4a2868;
+  margin: 0 0 16px 0;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
+}
+
+.config-card-description {
+  color: #555555;
+  margin: 0 0 24px 0;
+  font-size: 14px;
+  line-height: 1.6;
+  text-align: center;
+  flex-grow: 1;
+}
+
+.config-card-action {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-top: auto;
+}
+
+/* Card Inferior Estendido centralizado e maior */
+.config-card-wide {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 30px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto; 
+  box-shadow: 8px 8px 0px #ecdcf7;
+  border: 1px solid #ecdcf7;
+  box-sizing: border-box;
+}
+
+.config-card-wide .config-card-title {
+  text-align: left;
+  margin-bottom: 8px;
+}
+
+.config-card-wide .config-card-description {
+  text-align: left;
+  margin-bottom: 0;
+}
+
+.wide-info {
+  flex: 1;
+  padding-right: 40px;
+}
+
+.wide-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 160px;
+}
+
+.wide-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 20px;
+}
+
+.toggle-label {
+  font-size: 14px;
+  color: #7b4d9c;
+  font-weight: 600;
+}
+
+/* --- DESIGN CUSTOMIZADO DO TOGGLE SWITCH --- */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 26px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #e8daef;
+  transition: .3s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .3s;
+}
+
+input:checked + .slider {
+  background-color: #b37dd3;
+}
+
+input:checked + .slider:before {
+  transform: translateX(22px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/* --- RESPONSIVIDADE (TABLET & MOBILE) --- */
+@media (max-width: 1024px) {
+  .configuracoes-main-content {
+    padding: 40px 30px;
+    margin-left: 280px; 
+  }
+}
+
+@media (max-width: 768px) {
+  .configuracoes-page-container {
+    flex-direction: column;
+  }
+  
+  .configuracoes-main-content {
+    padding: 75px 20px 30px 20px;
+    margin-left: 0; 
+  }
+  
+  .configuracoes-title {
+    font-size: 26px;
+    margin-bottom: 25px;
+    margin-left: 10px;
+  }
+  
+  .configuracoes-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .config-card {
+    padding: 20px;
+    box-shadow: 5px 5px 0px #ecdcf7;
+  }
+
+  .config-card-wide {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    gap: 20px;
+    box-shadow: 5px 5px 0px #ecdcf7;
+  }
+
+  .config-card-wide .config-card-title,
+  .config-card-wide .config-card-description {
+    text-align: center;
+  }
+
+  .wide-info {
+    padding-right: 0;
+    width: 100%;
+  }
+
+  .wide-actions {
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .wide-toggle-row {
+    width: 100%;
+    justify-content: center;
+  }
+}
