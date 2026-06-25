@@ -1,0 +1,139 @@
+/* Zerando margens padrões e definindo a fonte */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
+  }
+  
+  .container-notificacoes {
+    min-height: 100vh;
+    background-color: #F8EDFB; /* Fundo levemente arroxeado/claro */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Header Roxo Superior */
+  .header-notificacoes {
+    background-color: #835997; /* Tom de roxo da imagem */
+    height: 80px;
+    display: flex;
+    align-items: center;
+    padding: 0 40px;
+  }
+  
+  .btn-voltar {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Layout do Conteúdo */
+  .conteudo-principal {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 30px 40px;
+  }
+  
+  /* Container de Filtros (Lidas / Não Lidas) */
+  .container-filtros {
+    display: flex;
+    justify-content: flex-end;
+    gap: 5px;
+    background-color: #EFE9F3;
+    padding: 4px;
+    border-radius: 20px;
+    width: fit-content;
+    margin-left: auto;
+    margin-bottom: 30px;
+  }
+  
+  .btn-filtro {
+    background: none;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #757575;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .btn-filtro.ativo {
+    background-color: white;
+    color: #333;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.08);
+  }
+  
+  /* Seções de Notificação (Hoje / Último Mês) */
+  .secao-notificacoes {
+    margin-bottom: 35px;
+  }
+  
+  .secao-notificacoes h2 {
+    color: #4A154B; /* Roxo escuro para os títulos principais */
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+  
+  .lista-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  /* Card de Notificação Individual */
+  .card-notificacao {
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 4px 12px rgba(131, 89, 151, 0.05); /* Sombra suave roxa */
+    position: relative;
+    transition: transform 0.2s ease;
+  }
+  
+  .card-notificacao:hover {
+    transform: translateY(-2px);
+  }
+  
+  /* Ícone do Card */
+  .icone-calendario {
+    background-color: #F8EDFB;
+    padding: 10px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Textos dentro do Card */
+  .texto-notificacao h3 {
+    color: #4A154B;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  
+  .texto-notificacao p {
+    color: #666;
+    font-size: 14px;
+  }
+  
+  /* Ponto roxo de item Não Lido (Igual o primeiro card da imagem) */
+  .ponto-nao-lida {
+    width: 10px;
+    height: 10px;
+    background-color: #8A46A8;
+    border-radius: 50%;
+    margin-left: auto; /* Joga a bolinha para a extrema direita */
+  }
