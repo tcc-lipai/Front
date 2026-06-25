@@ -1,0 +1,326 @@
+.pagina-atividades {
+  min-height: 100vh;
+  background: #efe6f3;
+  padding: 16px 24px;
+  box-sizing: border-box;
+}
+
+.topo-acoes {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.conteudo {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  /* Margem de segurança para a Navbar não sobrepor o conteúdo */
+  margin-left: 90px; 
+}
+
+.principal {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+/* ---------- BANNER ---------- */
+
+.banner {
+  background: #8458a7;
+  border-radius: 18px;
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 150px;
+  position: relative;
+  overflow: hidden;
+}
+
+.banner-texto {
+  max-width: 55%;
+  color: white;
+}
+
+.banner h1 {
+  margin-bottom: 4px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.banner p {
+  margin-bottom: 12px;
+  line-height: 1.4;
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.banner img {
+  width: 140px;
+  object-fit: contain;
+  position: absolute;
+  right: 16px;
+  bottom: 0;
+}
+
+/* Botão "Testar" dentro do banner */
+.banner-texto .btn-generico {
+  padding: 6px 18px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ---------- INFOS (Realizadas / Salvas / Revisadas) ---------- */
+
+.infos {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.card-info {
+  flex: 1;
+  min-width: 150px;
+  background: white;
+  border-radius: 16px;
+  padding: 10px 16px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+  gap: 12px;
+}
+
+.card-info img {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  padding: 12px;
+  box-sizing: content-box;
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.card-info > div {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin: 0;
+  width: auto;
+  flex: none;
+}
+
+.card-info:nth-child(1) img {
+  background: #E1EFE0;
+}
+
+.card-info:nth-child(2) img {
+  background: #F3ECCF;
+}
+
+.card-info:nth-child(3) img {
+  background: #DCE9F0;
+}
+
+.card-info span {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.card-info h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.card-info:nth-child(1) span,
+.card-info:nth-child(1) h3 {
+  color: #3A7131;
+}
+
+.card-info:nth-child(2) span,
+.card-info:nth-child(2) h3 {
+  color: #A8901F;
+}
+
+.card-info:nth-child(3) span,
+.card-info:nth-child(3) h3 {
+  color: #2E6B86;
+}
+
+/* ---------- TÍTULOS ---------- */
+
+h2 {
+  color: #5b2f78;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 4px 0 0;
+}
+
+/* ---------- FILTRO (Padrão Desktop) ---------- */
+
+.conteudo > .filter {
+  width: 280px;
+  flex-shrink: 0;
+  position: sticky;
+  right: 0;
+  top: 16px;
+  height: calc(100vh - 32px);
+  padding: 16px;
+}
+
+.filter h1,
+.filter .titulo-filtro {
+  color: #5b2f78;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+
+/* ---------- RESPONSIVIDADE CORRIGIDA ---------- */
+
+@media (max-width: 1200px) {
+  /* Faz o bloco principal ocupar a largura total sem esmagar */
+  .conteudo {
+    flex-direction: column; 
+    gap: 24px;
+  }
+
+  /* Transforma o Filtro em uma GAVETA FLUTUANTE puxada do lado */
+  .conteudo > .filter {
+    position: fixed;
+    right: -100%; /* Escondido fora da tela na direita */
+    top: 0;
+    width: 320px;
+    max-width: 85vw;
+    height: 100vh;
+    z-index: 1001;
+    overflow-y: auto;
+    box-shadow: -4px 0 15px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease-in-out;
+  }
+
+  /* Classe injetada via React para abrir deslizando pela lateral */
+  .conteudo > .filter.open {
+    right: 0;
+  }
+}
+
+@media (max-width: 900px) {
+  .pagina-atividades {
+    padding: 16px;
+  }
+
+  .conteudo {
+    margin-left: 80px; /* Recuo seguro da Navbar lateral */
+    gap: 16px;
+  }
+
+  .banner {
+    min-height: 130px;
+  }
+
+  .banner-texto {
+    max-width: 60%;
+  }
+
+  .banner img {
+    width: 110px;
+  }
+
+  /* Carrossel de arrastar para o lado nos cards de info */
+  .infos {
+    overflow-x: auto;
+    padding-bottom: 8px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .card-info {
+    flex: 0 0 200px;
+    scroll-snap-align: start;
+  }
+}
+
+@media (max-width: 768px) {
+  .conteudo {
+    margin-left: 70px; /* Impede de encostar na Navbar */
+  }
+
+  .principal {
+    gap: 12px;
+  }
+
+  .banner {
+    flex-direction: column;
+    text-align: center;
+    gap: 16px;
+    position: relative;
+    padding: 20px;
+  }
+
+  .banner-texto {
+    max-width: 100%;
+  }
+
+  .banner-texto p {
+    margin: 0 auto 12px;
+  }
+
+  .banner img {
+    position: static;
+    width: 120px;
+    margin-top: 8px;
+  }
+
+  h2 {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .pagina-atividades {
+    padding: 12px;
+  }
+
+  .conteudo {
+    margin-left: 60px; /* Margem mínima para a Navbar em telas bem pequenas */
+  }
+
+  .banner h1 {
+    font-size: 18px;
+  }
+
+  .banner-texto p {
+    font-size: 12px;
+  }
+
+  .card-info h3 {
+    font-size: 14px;
+  }
+
+  .card-info span {
+    font-size: 11px;
+  }
+
+  /* Em telas minúsculas (mobile), puxar de baixo para cima faz mais sentido */
+  .conteudo > .filter {
+    right: 0;
+    bottom: -100%;
+    top: auto;
+    height: 75vh;
+    width: 100%;
+    max-width: 100%;
+    border-radius: 24px 24px 0 0;
+    transition: bottom 0.3s ease-in-out;
+  }
+
+  .conteudo > .filter.open {
+    bottom: 0;
+  }
+}
