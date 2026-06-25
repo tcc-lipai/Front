@@ -1,0 +1,108 @@
+/* ===== CardUsuario ===== */
+
+.card-usuario {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background-color: #f3eef4;
+  border-radius: 16px;
+  padding: 16px 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Avatar */
+.card-usuario__avatar {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #7b3f8c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Bloco de texto + badges */
+.card-usuario__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.card-usuario__nome {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #2d1a2e;
+}
+
+.card-usuario__descricao {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #5a4a5e;
+}
+
+/* Badges */
+.card-usuario__badges {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.card-usuario__badge {
+  padding: 3px 18px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
+.card-usuario__badge--nivel {
+  background-color: #e0b8e8;
+  color: #5a1a6b;
+}
+
+.card-usuario__badge--ativo {
+  background-color: #c8eac8;
+  color: #2a6b2a;
+}
+
+.card-usuario__badge--inativo {
+  background-color: #f5c6c6;
+  color: #7a1a1a;
+}
+
+/* Botões */
+.card-usuario__acoes {
+  flex-shrink: 0;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* ===== Variantes do Botao usadas aqui ===== */
+
+.btn-generico {
+  padding: 8px 20px;
+  border-radius: 20px;
+  border: none;
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.btn-generico:hover {
+  opacity: 0.85;
+}
+
+.btn-primario {
+  background-color: #7b3f8c;
+  color: #ffffff;
+}
+
+.btn-perigo {
+  background-color: #c0444b;
+  color: #ffffff;
+}
