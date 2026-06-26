@@ -106,3 +106,37 @@
   background-color: #c0444b;
   color: #ffffff;
 }
+
+
+/* ==========================================================
+   Responsividade: Ajustes para telas menores (Mobile)
+   ========================================================== */
+@media (max-width: 600px) {
+  .card-usuario {
+    flex-direction: column; /* Muda de linha para coluna */
+    text-align: center;     /* Centraliza os textos */
+    padding: 20px 16px;     /* Ajusta o espaçamento interno */
+    gap: 12px;
+  }
+
+  .card-usuario__info {
+    align-items: center;    /* Centraliza o nome e a descrição */
+    width: 100%;
+  }
+
+  .card-usuario__badges {
+    justify-content: center; /* Centraliza as badges abaixo do texto */
+  }
+
+  .card-usuario__acoes {
+    width: 100%;             /* Bloco de ações ocupa a largura total */
+    flex-direction: column;  /* Botões ficam um embaixo do outro */
+    gap: 8px;
+  }
+
+  /* Aplica largura de 100% nos botões dentro das ações para preencher o espaço */
+  .card-usuario__acoes button, 
+  .card-usuario__acoes .btn-generico { 
+    width: 100%; 
+  }
+}
