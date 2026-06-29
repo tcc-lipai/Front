@@ -63,7 +63,11 @@ function AppRoutes() {
         <Route path="/atividade/video/:id" element={<TelaAtividadeVideo />} />
 
         <Route path="/dashboard-medico" element={<DashboardMedico />} />
+<<<<<<< HEAD
         <Route path="/dashboard-admin" element={<DashboardAdmin />} />
+=======
+        <Route path="/profissionais-admin" element={<TelaProfissionaisAdmin />} />
+>>>>>>> 8e2f3dd (feat: adiciona tela de profissionais admin)
 
 <<<<<<< HEAD
         <Route path="/cadastrar-paciente" element={<CadastrarPaciente />} />
