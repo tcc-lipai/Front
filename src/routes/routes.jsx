@@ -26,6 +26,9 @@ import TelaPaciente from '../pages/Profissional/TelaPaciente';
 import TelaPacienteAtividade from '../pages/Profissional/TelaPacienteAtividade';
 
 
+import DashboardAdmin from '../pages/Admin/TelaDashboardAdmin';
+
+
 
 function AppRoutes() {
   return (
@@ -54,6 +57,7 @@ function AppRoutes() {
         <Route path="/atividade/acompanhante/:id" element={<TelaAcompanhanteIA />} />
 
         <Route path="/dashboard-medico" element={<DashboardMedico />} />
+        <Route path="/dashboard-admin" element={<DashboardAdmin />} />
 
         <Route path="/cadastrar-paciente" element={<CadastrarPaciente />} />
         {/*<Route path="/tela-paciente" element={<TelaPaciente />} />        
