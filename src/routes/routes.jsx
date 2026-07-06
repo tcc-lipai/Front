@@ -18,6 +18,7 @@ import TelaInicioAtividadeUnidade from '../pages/TelaInicioAtividadeUnidade';
 import TelaAtividadeAlternativa from '../pages/TelaAtividadeAlternativa';
 import TelaAtividadeConcluida from '../pages/TelaAtividadeConcluida';
 import TelaAtividadeFala from '../pages/TelaAtividadeFala';
+import TelaAtividadeVideo from '../pages/TelaAtividadeVideo';
 import TelaAcompanhanteIA from '../pages/TelaAcompanhanteIA';
 import TelaLandingPage from '../pages/TelaLandingPage';
 import DashboardMedico from '../pages/Profissional/TelaDashboardMedico';
@@ -55,13 +56,14 @@ function AppRoutes() {
         <Route path="/teste-atividade" element={<TelaAtividadeAlternativa />} />
         <Route path="/atividade/fala/:id" element={<TelaAtividadeFala />} />
         <Route path="/atividade/acompanhante/:id" element={<TelaAcompanhanteIA />} />
+        <Route path="/atividade/video/:id" element={<TelaAtividadeVideo />} />
 
         <Route path="/dashboard-medico" element={<DashboardMedico />} />
         <Route path="/dashboard-admin" element={<DashboardAdmin />} />
 
         <Route path="/cadastrar-paciente" element={<CadastrarPaciente />} />
-        {/*<Route path="/tela-paciente" element={<TelaPaciente />} />        
-        <Route path="/atividade-paciente" element={<TelaPacienteAtividade />} /> */}
+        <Route path="/tela-paciente" element={<TelaPaciente />} />        
+        <Route path="/atividade-paciente/:id" element={<TelaPacienteAtividade />} />
 
         <Route path="*" element={<h1>Página não encontrada</h1>} />
       </Routes>
