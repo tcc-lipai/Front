@@ -5,9 +5,14 @@
   box-sizing: border-box;
 }
 
+/* ---------- TOPO ALINHADO DE PONTA A PONTA ---------- */
 .topo-acoes {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between; /* Empurra o menu/placeholder pra esquerda e o HeaderActions pra direita */
+  align-items: center;
+  width: 100%;
+  margin-bottom: 8px;
+  box-sizing: border-box;
 }
 
 .conteudo {
@@ -24,10 +29,10 @@
   flex-direction: column;
   gap: 16px;
   min-width: 0;
+  width: 100%;
 }
 
 /* ---------- BANNER ---------- */
-
 .banner {
   background: #8458a7;
   border-radius: 18px;
@@ -74,7 +79,6 @@
 }
 
 /* ---------- INFOS (Realizadas / Salvas / Revisadas) ---------- */
-
 .infos {
   display: flex;
   gap: 10px;
@@ -154,7 +158,6 @@
 }
 
 /* ---------- TÍTULOS ---------- */
-
 h2 {
   color: #5b2f78;
   font-size: 18px;
@@ -163,7 +166,6 @@ h2 {
 }
 
 /* ---------- FILTRO (Padrão Desktop) ---------- */
-
 .conteudo > .filter {
   width: 280px;
   flex-shrink: 0;
@@ -181,20 +183,17 @@ h2 {
   font-weight: 700;
 }
 
-
-/* ---------- RESPONSIVIDADE CORRIGIDA ---------- */
+/* ---------- RESPONSIVIDADE CORRIGIDA (SUBSTITUIR A PARTIR DAQUI) ---------- */
 
 @media (max-width: 1200px) {
-  /* Faz o bloco principal ocupar a largura total sem esmagar */
   .conteudo {
     flex-direction: column; 
     gap: 24px;
   }
 
-  /* Transforma o Filtro em uma GAVETA FLUTUANTE puxada do lado */
   .conteudo > .filter {
     position: fixed;
-    right: -100%; /* Escondido fora da tela na direita */
+    right: -100%; 
     top: 0;
     width: 320px;
     max-width: 85vw;
@@ -205,7 +204,6 @@ h2 {
     transition: right 0.3s ease-in-out;
   }
 
-  /* Classe injetada via React para abrir deslizando pela lateral */
   .conteudo > .filter.open {
     right: 0;
   }
@@ -217,8 +215,20 @@ h2 {
   }
 
   .conteudo {
-    margin-left: 80px; /* Recuo seguro da Navbar lateral */
+    margin-left: 0; /* ZERA a margem para remover o espaço fantasma na esquerda */
+    padding-left: 60px; /* Cria um recuo interno apenas para não cobrir os ícones da navbar lateral fixa */
     gap: 16px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .topo-acoes {
+    width: 100%;
+    justify-content: flex-end; /* Garante os contadores na direita */
+  }
+
+  .menu-espaco-placeholder {
+    display: none; /* Remove o espaço vazio do menu no mobile */
   }
 
   .banner {
@@ -233,7 +243,6 @@ h2 {
     width: 110px;
   }
 
-  /* Carrossel de arrastar para o lado nos cards de info */
   .infos {
     overflow-x: auto;
     padding-bottom: 8px;
@@ -249,11 +258,18 @@ h2 {
 
 @media (max-width: 768px) {
   .conteudo {
-    margin-left: 70px; /* Impede de encostar na Navbar */
+    padding-left: 0; /* Se a navbar sumir ou for para o rodapé/topo, zera o padding */
+    margin-left: 0;
+  }
+
+  .topo-acoes {
+    justify-content: flex-end;
+    padding: 0 8px;
   }
 
   .principal {
     gap: 12px;
+    align-items: center; /* Centraliza os elementos internos na tela */
   }
 
   .banner {
@@ -262,10 +278,15 @@ h2 {
     gap: 16px;
     position: relative;
     padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .banner-texto {
     max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza o título, parágrafo e botão do banner */
   }
 
   .banner-texto p {
@@ -275,11 +296,18 @@ h2 {
   .banner img {
     position: static;
     width: 120px;
-    margin-top: 8px;
+    margin: 8px auto 0;
+  }
+
+  /* Garante que os cards e títulos ocupem a largura correta centralizados */
+  h2, .info-atividade-container, .infos {
+    width: 100%;
   }
 
   h2 {
     font-size: 16px;
+    text-align: left; /* Mantém os títulos alinhados à esquerda do bloco */
+    padding-left: 4px;
   }
 }
 
@@ -289,7 +317,8 @@ h2 {
   }
 
   .conteudo {
-    margin-left: 60px; /* Margem mínima para a Navbar em telas bem pequenas */
+    margin-left: 0;
+    padding-left: 0;
   }
 
   .banner h1 {
@@ -308,7 +337,6 @@ h2 {
     font-size: 11px;
   }
 
-  /* Em telas minúsculas (mobile), puxar de baixo para cima faz mais sentido */
   .conteudo > .filter {
     right: 0;
     bottom: -100%;
