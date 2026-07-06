@@ -1,0 +1,84 @@
+/* Layout Base Geral */
+.atividade-detalhe-page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #F8EDFB;
+    font-family: sans-serif;
+    box-sizing: border-box;
+}
+
+.atividade-detalhe-main-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 20px;
+}
+
+/* Card Branco Padronizado (Mesmo tamanho de 1200px do Cadastro e Perfil) */
+.atividade-detalhe-card-background {
+    background-color: #FFFFFF;
+    width: 90%;
+    max-width: 1200px;
+    border-radius: 28px;
+    padding: 60px 80px;
+    box-shadow: 0 4px 20px rgba(70, 32, 87, 0.05);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 40px; /* Distância vertical sutil entre o card do topo e as unidades */
+}
+
+/* Remove a sombra, borda externa e os botões interativos do componente para ele agir como um cabeçalho fixo */
+.atividade-detalhe-topo-card .info-atividade {
+    box-shadow: none !important;
+    padding: 0 0 30px 0 !important;
+    border-radius: 0 !important;
+    border-bottom: 1px solid #F1EAF4; /* Cria a linha divisória elegante do print */
+}
+
+/* Oculta os botões de ação que não fazem sentido na tela de detalhes aberta */
+.atividade-detalhe-topo-card .info-atividade__bookmark,
+.atividade-detalhe-topo-card .info-atividade__avancar {
+    display: none !important;
+}
+
+/* Lista vertical que segura os blocos de desempenho das unidades */
+.unidades-container-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 45px; /* Espaço uniforme idêntico à imagem do Figma */
+    width: 100%;
+}
+
+/* Estrutura de cada bloco de unidade */
+.unidade-desempenho-block {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+
+.unidade-titulo-sub {
+    color: #462057;
+    font-size: 26px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.unidade-barras-wrapper {
+    width: 100%;
+}
+
+/* Responsividade para manter o layout harmônico em telas menores */
+@media (max-width: 768px) {
+    .atividade-detalhe-card-background {
+        padding: 40px 30px;
+        gap: 30px;
+    }
+    
+    .unidades-container-lista {
+        gap: 35px;
+    }
+}
