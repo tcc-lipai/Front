@@ -14,36 +14,31 @@ const TelaDicionario = () => {
 
   const categorias = ["Comida", "Escola", "Trabalho", "Natureza", "Saudações"];
 
-  // Gerando os 8 cards exatamente como na referência
   const cardsData = Array(8).fill({
     titulo: "Laranja",
     descricao: "blabla fawdwadw",
   });
 
   return (
-    <div className="tela-dicionario-layout">
-      {/* Sidebar na esquerda */}
-      <aside className="sidebar-container">
-        <Navbar />
-      </aside>
+    <div className="tela-dicionario">
+      {/* Navbar solta exatamente como na loja */}
+      <Navbar /> 
 
-      {/* Conteúdo principal */}
-      <div className="main-container">
-        
-        {/* Topo com os contadores alinhados à direita */}
-        <header className="header-top">
+      <main className="tela-dicionario__conteudo">
+        {/* Topo com ações alinhadas à direita */}
+        <div className="tela-dicionario__topo">
           <HeaderActions onOpenProfile={handleOpenProfile} />
-        </header>
+        </div>
 
-        {/* Card Branco Central */}
-        <main className="content-card">
-          <h1 className="main-title">Dicionário</h1>
-          <p className="main-subtitle">
+        {/* Painel Central Branco */}
+        <section className="tela-dicionario__painel">
+          <h1 className="tela-dicionario__titulo">Dicionário</h1>
+          <p className="tela-dicionario__descricao">
             Explicação do que é o dicionário e como isso pode ajudar no ensino nlnald dwa f wafw afw
           </p>
 
           {/* Filtros organizados */}
-          <section className="filters-container">
+          <div className="tela-dicionario__filtros">
             {categorias.map((cat) => {
               const isActive = categoriaAtiva === cat;
               return (
@@ -52,27 +47,27 @@ const TelaDicionario = () => {
                   texto={cat}
                   onClick={() => setCategoriaAtiva(cat)}
                   className={`btn-filter ${isActive ? "btn-active" : "btn-inactive"}`}
-                  // Enviando as propriedades de cores para o seu componente receber
                   corFundo={isActive ? "#9c8cb9" : "transparent"}
                   corTexto={isActive ? "#ffffff" : "#4a1565"}
                   corBorda="#4a1565"
                 />
               );
             })}
-          </section>
+          </div>
 
-          {/* Grade de Cards perfeitamente alinhada e dimensionada */}
-          <section className="cards-grid">
+          {/* Grade de Cards Responsiva */}
+          <div className="tela-dicionario__grid">
             {cardsData.map((card, index) => (
-              <DicionarioCard
-                key={index}
-                titulo={card.titulo}
-                descricao={card.descricao}
-              />
+              <div className="tela-dicionario__grid-item" key={index}>
+                <DicionarioCard
+                  titulo={card.titulo}
+                  descricao={card.descricao}
+                />
+              </div>
             ))}
-          </section>
-        </main>
-      </div>
+          </div>
+        </section>
+      </main>
     </div>
   );
 };

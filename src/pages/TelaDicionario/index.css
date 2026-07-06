@@ -1,70 +1,61 @@
-/* ================= ESTRUTURA GERAL DA TELA ================= */
-.tela-dicionario-layout {
-  display: flex;
+/* ================= ESTRUTURA COPIADA DA LOJA ================= */
+.tela-dicionario {
+  --td-roxo-texto: #4a1565;
+  --td-cinza-texto: rgb(99, 71, 110);
+  --td-fundo: #F3EFFA;
   min-height: 100vh;
-  width: 100vw;
-  background-color: #f6edf7;
-  box-sizing: border-box;
-  overflow-x: hidden; /* Evita qualquer rolagem horizontal intrusa */
+  background: var(--td-fundo);
+  font-family: "Inter", "Segoe UI", system-ui, sans-serif;
 }
 
-/* Mantém sua barra lateral intocável na esquerda */
-.sidebar-container {
-  width: 90px;
-  flex-shrink: 0; 
-}
-
-/* O segredo da responsividade do miolo tá aqui: min-width: 0 e flex-grow */
-.main-container {
-  flex-grow: 1;
-  min-width: 0; 
+.tela-dicionario__conteudo {
+  margin-left: 80px; /* Alinhamento idêntico à loja para dar espaço ao Navbar */
   display: flex;
   flex-direction: column;
-  padding: 24px;
+  gap: 20px;
+  padding: 28px 32px;
+  min-height: 100vh;
   box-sizing: border-box;
 }
 
-/* Header alinhado à direita */
-.header-top {
+.tela-dicionario__topo {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 20px;
-  width: 100%;
 }
 
-/* Painel Central Branco Adaptável */
-.content-card {
-  background-color: #ffffff;
+/* Painel Central Branco Unificado */
+.tela-dicionario__painel {
+  position: relative;
+  flex: 1;
+  background: #FFFFFF;
   border-radius: 24px;
-  padding: 30px;
-  box-sizing: border-box;
-  width: 98%;
+  padding: 32px;
+  box-shadow: 0 4px 20px rgba(107, 47, 191, 0.06);
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Organiza os elementos de cima para baixo */
+  gap: 24px;
 }
 
-/* Títulos maleáveis que reduzem conforme a tela aperta */
-.main-title {
-  color: #4a1565;
-  font-size: clamp(24px, 4vw, 36px); /* Diminui automaticamente em telas menores */
-  font-weight: 700;
-  margin: 0 0 10px 0;
+.tela-dicionario__titulo {
+  margin: 0 0 8px;
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--td-roxo-texto);
 }
 
-.main-subtitle {
-  color: #4a1565;
-  font-size: clamp(14px, 2vw, 16px);
-  margin: 0 0 30px 0;
-  line-height: 1.4;
-  word-wrap: break-word; /* Evita que o texto estoure para fora */
+.tela-dicionario__descricao {
+  margin: 0 0 12px;
+  max-width: 640px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--td-cinza-texto);
 }
 
 /* ================= FILTROS RESPONSIVOS ================= */
-.filters-container {
+.tela-dicionario__filtros {
   display: flex;
   gap: 12px;
-  flex-wrap: wrap; /* Faz os botões pularem para a linha de baixo se faltar espaço */
-  margin-bottom: 35px;
+  flex-wrap: wrap; /* Caso falte espaço em telas menores, quebra a linha */
   width: 100%;
 }
 
@@ -78,7 +69,7 @@
   box-sizing: border-box;
   transition: all 0.2s ease-in-out;
   border: 1.5px solid #4a1565;
-  white-space: nowrap; /* Impede o texto de quebrar dentro do botão */
+  white-space: nowrap; 
 }
 
 .btn-active {
@@ -93,38 +84,35 @@
   color: #4a1565 !important;
 }
 
-/* ================= GRADE DE CARDS MALEÁVEL ================= */
-.cards-grid {
+/* ================= GRADE DE CARDS (ADAPTADA COM BASE NO GRID DA LOJA) ================= */
+.tela-dicionario__grid {
   display: grid;
-  /* Cria colunas dinâmicas: se não couber 4, passa pra 3, 2 ou 1 automaticamente */
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 24px 16px; /* Mantém os cards mais juntinhos nas laterais */
+  /* Cria as 4 colunas em telas normais e vai reduzindo com segurança */
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+  gap: 20px;
   width: 100%;
-  box-sizing: border-box;
 }
 
-/* Alinhamento fino dos cards individuais */
-.cards-grid > div, 
+.tela-dicionario__grid-item {
+  width: 100%;
+  min-width: 0;
+}
+
+/* Garante que o componente de Card interno se comporte bem com a grade */
+.tela-dicionario__grid-item > div,
 .dicionario-container {
   width: 100% !important;
-  max-width: 240px !important; /* Limita o tamanho máximo para não deformar em telas grandes */
-  justify-self: start; /* Alinha os cards à esquerda conforme a grade muda */
+  max-width: 100% !important;
 }
 
-/* ================= REGRAS PARA TELAS PEQUENAS (MOBILE/TABLET) ================= */
+/* ================= RESPONSIVIDADE (MOBILE) ================= */
 @media (max-width: 768px) {
-  .main-container {
+  .tela-dicionario__conteudo {
+    margin-left: 0px; /* Navbar vai pra cima/baixo, remove margem */
     padding: 16px 12px;
   }
 
-  .content-card {
-    padding: 20px;
-    border-radius: 16px;
-  }
-
-  .cards-grid {
-    /* Em telas muito estreitas, diminui o limite mínimo da coluna para os cards não sumirem */
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 16px 12px;
+  .tela-dicionario__painel {
+    padding: 20px 16px;
   }
 }

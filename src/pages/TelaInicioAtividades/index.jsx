@@ -1,3 +1,4 @@
+import React from "react";
 import "./index.css";
 
 import Navbar from "../../components/Navbar";
@@ -15,49 +16,37 @@ import revisadas from "../../assets/img/revisadas.png";
 const TelaInicioAtividades = () => {
   return (
     <div className="pagina-atividades">
-
       <Navbar />
 
       <div className="conteudo">
-
         <section className="principal">
-
+          
+          {/* Topo ajustado para distribuir os elementos de ponta a ponta */}
           <div className="topo-acoes">
+            <div className="menu-espaco-placeholder"></div> 
             <HeaderActions />
           </div>
 
           <div className="banner">
-
             <div className="banner-texto">
-
               <h1>Dicionário</h1>
-
               <p>
                 Teste seus conhecimentos de leitura labial através de um
                 dicionário. Veja quais são cha cha vdw chawd w w daw
                 dwdad wd a dw ad wad wad wd
               </p>
-
               <Botao
                 texto="Testar"
                 corDeFundo="#FFFFFF"
                 corTexto="#6D458C"
               />
-
             </div>
-
-            <img
-              src={personagem}
-              alt=""
-            />
-
+            <img src={personagem} alt="" />
           </div>
 
           <div className="infos">
-
             <div className="card-info">
               <img src={realizadas} alt="" />
-
               <div>
                 <span>10 Atividades</span>
                 <h3>Realizadas</h3>
@@ -66,7 +55,6 @@ const TelaInicioAtividades = () => {
 
             <div className="card-info">
               <img src={salvas} alt="" />
-
               <div>
                 <span>08 Atividades</span>
                 <h3>Salvas</h3>
@@ -75,13 +63,11 @@ const TelaInicioAtividades = () => {
 
             <div className="card-info">
               <img src={revisadas} alt="" />
-
               <div>
                 <span>02 Atividades</span>
                 <h3>Revisadas</h3>
               </div>
             </div>
-
           </div>
 
           <h2>Continuar Atividade</h2>
@@ -109,13 +95,10 @@ const TelaInicioAtividades = () => {
             dificuldade="Iniciante"
             tipo="Escrita"
           />
-
         </section>
 
         <Filtro />
-
       </div>
-
     </div>
   );
 };
