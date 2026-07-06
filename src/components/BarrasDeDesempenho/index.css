@@ -1,0 +1,64 @@
+.barras-desempenho-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 22px; /* Distância exata entre as linhas do design */
+    box-sizing: border-box;
+    padding: 10px 0;
+}
+
+/* Alinha a bolinha, o texto e a barra na horizontal perfeitamente */
+.barra-item-linha {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 32px; /* Espaço entre o fim do texto e o início da barra */
+}
+
+/* Define um tamanho fixo para a área de texto não empurrar as barras desordenadamente */
+.barra-lado-esquerdo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 130px; 
+    max-width: 130px;
+}
+
+/* A bolinha redonda da esquerda */
+.barra-status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* Nome da Categoria */
+.barra-label {
+    font-size: 15px;
+    font-weight: 500;
+    font-family: sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* O trilho de fundo cinza bem clarinho igual ao print */
+.barra-trilho-fundo {
+    flex: 1; /* Faz a barra esticar ao máximo na largura da tela */
+    height: 5px; /* Super fina igual à imagem */
+    background-color: #EDEDED; /* Cor de fundo exata do Figma (trilho vazio) */
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+/* O progresso com cantos retos/suaves */
+.barra-preenchimento {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.4s ease-out;
+}
+
+.barras-empty-state {
+    font-style: italic;
+    font-size: 14px;
+}
