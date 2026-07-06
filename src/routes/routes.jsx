@@ -22,6 +22,9 @@ import TelaAcompanhanteIA from '../pages/TelaAcompanhanteIA';
 import TelaLandingPage from '../pages/TelaLandingPage';
 import DashboardMedico from '../pages/Profissional/TelaDashboardMedico';
 import CadastrarPaciente from '../pages/Admin/TelaPacienteCadastro';
+import TelaPaciente from '../pages/Profissional/TelaPaciente';
+import TelaPacienteAtividade from '../pages/Profissional/TelaPacienteAtividade';
+
 
 
 function AppRoutes() {
