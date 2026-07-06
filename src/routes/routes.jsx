@@ -56,7 +56,7 @@ function AppRoutes() {
         <Route path="/dashboard-medico" element={<DashboardMedico />} />
 
         <Route path="/cadastrar-paciente" element={<CadastrarPaciente />} />
-        {/* <Route path="/tela-paciente" element={<TelaPaciente />} />        
+        {/*<Route path="/tela-paciente" element={<TelaPaciente />} />        
         <Route path="/atividade-paciente" element={<TelaPacienteAtividade />} /> */}
 
         <Route path="*" element={<h1>Página não encontrada</h1>} />

@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // 1. IMPORTAR O NAVIGATE DAQUI
 import Navbar from "../../../components/Navbar_reta";
 import BarrasDeDesempenho from "../../../components/BarrasDeDesempenho";
 import InfoAtividades from "../../../components/InfoAtividades/InfoAtividades";
 import "./index.css";
 
 const TelaPaciente = () => {
+  const navigate = useNavigate(); // 2. INSTANCIAR O NAVIGATE AQUI DENTRO
+
   // Estado para os dados das barras de desempenho
   const [dadosDesempenho] = useState([
     { label: "Interpretação", acertos: 7.5, total: 10 },
@@ -24,14 +27,12 @@ const TelaPaciente = () => {
           
           {/* SEÇÃO 1: Cabeçalho com o Perfil do Paciente */}
           <section className="paciente-perfil-header">
-            {/* Avatar do Usuário (Ícone roxo redondo) */}
             <div className="paciente-avatar-container">
               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="paciente-avatar-icon">
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" fill="#7A3A8E"/>
               </svg>
             </div>
 
-            {/* Informações de texto ao lado da foto */}
             <div className="paciente-info-texto">
               <h1 className="paciente-nome">Paciente 1</h1>
               
@@ -64,7 +65,6 @@ const TelaPaciente = () => {
                 onChange={(e) => setBusca(e.target.value)}
                 className="input-busca-paciente"
               />
-              {/* Ícone de Lupa no canto direito */}
               <svg className="busca-lupa-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7A3A8E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="11" cy="11" r="8"></circle>
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
@@ -72,11 +72,18 @@ const TelaPaciente = () => {
             </div>
           </section>
 
-          {/* SEÇÃO 4: Listagem das Atividades do Paciente */}
+          {/* SEÇÃO 4: PASSAR A FUNÇÃO NO ONAVANCAR DE CADA CARD */}
           <section className="paciente-atividades-lista">
-            {/* Renderizando as atividades (Duas conforme o seu design) */}
-            <InfoAtividades />
-            <InfoAtividades />
+            <InfoAtividades 
+              titulo="Primeira Atividade"
+              progresso={75}
+              onAvancar={() => navigate("/paciente/atividade/1")} // Passa o ID 1 na URL
+            />
+            <InfoAtividades 
+              titulo="Segunda Atividade"
+              progresso={40}
+              onAvancar={() => navigate("/paciente/atividade/2")} // Passa o ID 2 na URL
+            />
           </section>
 
         </div>
