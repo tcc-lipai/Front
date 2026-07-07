@@ -53,7 +53,8 @@ const usuariosMock = [
   },
 ];
 
-const DashboardAdmin = () => {
+// 1. Mudança do nome da função aqui:
+const ProfissionaisAdmin = () => {
   const [pesquisa, setPesquisa] = useState("");
   const navigate = useNavigate();
 
@@ -131,4 +132,5 @@ const DashboardAdmin = () => {
   );
 };
 
-export default DashboardAdmin;
+// 2. Mudança na exportação aqui:
+export default ProfissionaisAdmin;

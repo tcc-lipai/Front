@@ -22,17 +22,13 @@ import TelaAtividadeVideo from '../pages/TelaAtividadeVideo';
 import TelaAcompanhanteIA from '../pages/TelaAcompanhanteIA';
 import TelaLandingPage from '../pages/TelaLandingPage';
 import DashboardMedico from '../pages/Profissional/TelaDashboardMedico';
-<<<<<<< HEAD
 import CadastrarPaciente from '../pages/Admin/TelaPacienteCadastro';
 import TelaPaciente from '../pages/Profissional/TelaPaciente';
 import TelaPacienteAtividade from '../pages/Profissional/TelaPacienteAtividade';
 
 
 import DashboardAdmin from '../pages/Admin/TelaDashboardAdmin';
-=======
-import TelaProfissionaisAdmin from '../pages/Admin/TelaProfissionaisAdmin';
->>>>>>> 1277820 (feat: adiciona rota da tela)
-
+import ProfissionaisAdmin from '../pages/Admin/TelaProfissionaisAdmin';
 
 
 function AppRoutes() {
@@ -63,19 +59,15 @@ function AppRoutes() {
         <Route path="/atividade/video/:id" element={<TelaAtividadeVideo />} />
 
         <Route path="/dashboard-medico" element={<DashboardMedico />} />
-<<<<<<< HEAD
         <Route path="/dashboard-admin" element={<DashboardAdmin />} />
-=======
-        <Route path="/profissionais-admin" element={<TelaProfissionaisAdmin />} />
->>>>>>> 8e2f3dd (feat: adiciona tela de profissionais admin)
 
-<<<<<<< HEAD
+        <Route path="/profissional-admin" element={<ProfissionaisAdmin />} /> 
+
+
         <Route path="/cadastrar-paciente" element={<CadastrarPaciente />} />
         <Route path="/tela-paciente" element={<TelaPaciente />} />        
         <Route path="/atividade-paciente/:id" element={<TelaPacienteAtividade />} />
 
-=======
->>>>>>> 1277820 (feat: adiciona rota da tela)
         <Route path="*" element={<h1>Página não encontrada</h1>} />
       </Routes>
     </BrowserRouter>
