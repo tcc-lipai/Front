@@ -29,6 +29,7 @@ import TelaPacienteAtividade from '../pages/Profissional/TelaPacienteAtividade';
 
 import DashboardAdmin from '../pages/Admin/TelaDashboardAdmin';
 import ProfissionaisAdmin from '../pages/Admin/TelaProfissionaisAdmin';
+import TelaAtividadesAdmin from '../pages/Admin/TelaAtividadesAdmin';
 
 
 function AppRoutes() {
@@ -59,9 +60,10 @@ function AppRoutes() {
         <Route path="/atividade/video/:id" element={<TelaAtividadeVideo />} />
 
         <Route path="/dashboard-medico" element={<DashboardMedico />} />
+        
         <Route path="/dashboard-admin" element={<DashboardAdmin />} />
-
         <Route path="/profissional-admin" element={<ProfissionaisAdmin />} /> 
+        <Route path="/atividades-admin" element={<TelaAtividadesAdmin />} /> 
 
 
         <Route path="/cadastrar-paciente" element={<CadastrarPaciente />} />

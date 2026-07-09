@@ -1,7 +1,8 @@
-// InfoAtividade.utils.js
+// InfoAtividades.utils.js
 // Funções utilitárias do componente InfoAtividade.
 // Mantidas separadas do JSX para facilitar testes e reaproveitamento
 // quando a integração com o back-end for feita.
+// (Sem alterações em relação ao arquivo original enviado.)
 
 export const DIFICULDADES = {
   INICIANTE: "Iniciante",

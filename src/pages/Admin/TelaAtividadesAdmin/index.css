@@ -1,0 +1,109 @@
+/* index.css (TelaAtividadesAdmin)
+   Ajuste o valor de --sidebar-largura se a sua Navbar tiver uma largura
+   diferente de 84px.
+*/
+
+.tela-atividades-admin {
+  --sidebar-largura: 84px;
+  min-height: 100vh;
+  background: #f4ecfa;
+  background-image: radial-gradient(
+      circle at 90% 8%,
+      rgba(255, 255, 255, 0.6) 0%,
+      transparent 45%
+    ),
+    radial-gradient(circle at 100% 0%, #ecdff5 0%, transparent 40%);
+}
+
+.atividades-admin__conteudo {
+  margin-left: var(--sidebar-largura);
+  padding: 40px 48px 60px;
+  width: calc(95vw - var(--sidebar-largura));
+  max-width: 1400px; /* teto pra não esticar demais em monitores enormes */
+  box-sizing: border-box;
+}
+
+.atividades-admin__titulo {
+  margin: 0 0 24px;
+  font-size: 28px;
+  font-weight: 800;
+  color: #4a154b;
+}
+
+.atividades-admin__painel {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: 0 10px 30px rgba(74, 21, 75, 0.06);
+}
+
+.atividades-admin__busca {
+  position: relative;
+  margin-bottom: 22px;
+}
+
+.atividades-admin__busca input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px 42px 11px 18px;
+  border-radius: 999px;
+  border: 1px solid #e3dde8;
+  font-size: 14px;
+  color: #4a154b;
+  outline: none;
+  background: #ffffff;
+}
+
+.atividades-admin__busca input::placeholder {
+  color: #b9b2c2;
+}
+
+.atividades-admin__busca input:focus {
+  border-color: #a855c9;
+}
+
+.atividades-admin__busca-icone {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #b9b2c2;
+  pointer-events: none;
+}
+
+.atividades-admin__lista {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.atividades-admin__vazio {
+  text-align: center;
+  color: #8b8594;
+  font-size: 14px;
+  padding: 24px 0;
+}
+
+.atividades-admin__ver-mais {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  margin-top: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  color: #4a154b;
+}
+
+/* Telas pequenas: a Navbar vira drawer (ver componente Navbar), então
+   removemos o recuo lateral fixo. */
+@media (max-width: 768px) {
+  .atividades-admin__conteudo {
+    margin-left: 0;
+    padding: 24px 16px 40px;
+  }
+}
