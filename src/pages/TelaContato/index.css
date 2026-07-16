@@ -1,185 +1,487 @@
-/* Container Geral da Página */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600&display=swap');
+
+/* ===== Tokens ===== */
+:root {
+  --roxo-900: #4a154b;
+  --roxo-700: #7b3b93;
+  --roxo-500: #8c5ca3;
+  --lilas-50: #f3eaf5;
+  --lilas-100: #ece0f0;
+  --borda: #e2d6e9;
+  --campo-bg: #f9f6fa;
+  --texto: #333333;
+  --texto-suave: #6b6b6b;
+  --placeholder: #b8a9c0;
+
+  --fonte-titulo: 'Plus Jakarta Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --fonte-corpo: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ===== Container Geral da Página ===== */
 .page-layout {
-    display: flex;
-    min-height: 100vh;
-    background-color: #f3eaf5; /* Fundo levemente arroxeado/lilás ao redor do card */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 85% 15%, rgba(123, 59, 147, 0.10) 0%, transparent 45%),
+    radial-gradient(circle at 10% 90%, rgba(140, 92, 163, 0.10) 0%, transparent 45%),
+    linear-gradient(135deg, var(--lilas-50) 0%, var(--lilas-100) 100%);
+  font-family: var(--fonte-corpo);
+}
+
+/* Compensação da Navbar Fixed */
+.content-container {
+  margin-left: 90px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+/* Card central branco arredondado */
+.card-contato {
+  position: relative;
+  background-color: #ffffff;
+  width: 100%;
+  max-width: 1240px;
+  min-height: 560px;
+  border-radius: 32px;
+  box-shadow:
+    0 30px 60px -15px rgba(74, 21, 75, 0.22),
+    0 10px 24px -10px rgba(123, 59, 147, 0.15);
+  display: flex;
+  overflow: hidden;
+  animation: subir-e-aparecer 0.6s ease both;
+}
+
+@keyframes subir-e-aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
   }
-  
-  /* Compensação da Navbar Fixed (90px de largura da sua config) */
-  .content-container {
-    margin-left: 90px;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  /* Card central branco arredondado */
-  .card-contato {
-    background-color: #ffffff;
-    width: 100%;
-    max-width: 960px;
-    min-height: 550px;
-    border-radius: 24px;
-    box-shadow: 0 10px 30px rgba(123, 59, 147, 0.05);
-    display: flex;
-    padding: 40px;
-    gap: 40px;
-    align-items: center;
+}
+
+/* ===== Lado Esquerdo - Formulário ===== */
+.form-section {
+  flex: 1.8;
+  padding: 56px 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.form-title {
+  color: var(--roxo-900);
+  font-family: var(--fonte-titulo);
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 10px;
+  line-height: 1.2;
+  text-align: left;
+  position: relative;
+  padding-left: 18px;
+}
+
+.form-title::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 5px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, var(--roxo-500), var(--roxo-700));
+}
+
+.form-subtitle {
+  color: var(--texto-suave);
+  font-size: 14.5px;
+  line-height: 1.65;
+  margin-bottom: 30px;
+  text-align: left;
+  max-width: 480px;
+  padding-left: 18px;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  max-width: 480px;
+  margin: 0;
+  padding-left: 18px;
+  box-sizing: border-box;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.input-group label {
+  color: var(--texto);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.input-group input,
+.input-group textarea {
+  width: 100%;
+  padding: 13px 16px;
+  border: 1.5px solid var(--borda);
+  background-color: var(--campo-bg);
+  border-radius: 12px;
+  font-size: 14.5px;
+  font-family: inherit;
+  color: var(--texto);
+  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.input-group input::placeholder,
+.input-group textarea::placeholder {
+  color: var(--placeholder);
+}
+
+.input-group input:hover,
+.input-group textarea:hover {
+  border-color: #d3bfdd;
+}
+
+.input-group input:focus,
+.input-group textarea:focus {
+  border-color: var(--roxo-700);
+  background-color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(123, 59, 147, 0.14);
+}
+
+.input-group textarea {
+  resize: none;
+  min-height: 110px;
+}
+
+/* Botão Enviar */
+.btn-enviar {
+  background: linear-gradient(135deg, var(--roxo-500) 0%, var(--roxo-700) 100%);
+  color: #ffffff;
+  border: none;
+  padding: 14px 40px;
+  font-size: 14.5px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  border-radius: 24px;
+  cursor: pointer;
+  align-self: flex-start;
+  margin-top: 6px;
+  width: auto;
+  min-width: 200px;
+  box-shadow: 0 10px 20px -6px rgba(123, 59, 147, 0.5);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+
+/* ===== Lado Direito - Painel decorativo ===== */
+.illustration-section {
+  flex: 1;
+  position: relative;
+  background: linear-gradient(160deg, var(--roxo-700) 0%, var(--roxo-900) 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  padding: 40px;
+  overflow: hidden;
+}
+
+/* Formas decorativas flutuantes */
+.illustration-section::before,
+.illustration-section::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.illustration-section::before {
+  width: 260px;
+  height: 260px;
+  top: -80px;
+  right: -80px;
+}
+
+.illustration-section::after {
+  width: 160px;
+  height: 160px;
+  bottom: -40px;
+  left: -40px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.panel-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Anel pulsante atrás do ícone, como um "estamos on-line" */
+.panel-icon {
+  position: relative;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.14);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+}
+
+.panel-icon::before {
+  content: '';
+  position: absolute;
+  inset: -10px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  animation: pulsar 2.4s ease-out infinite;
+}
+
+@keyframes pulsar {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.7;
   }
-  
-  /* Seções Internas */
-  .form-section {
-    flex: 1.1; /* Diminuído levemente para dar espaço à imagem */
+  100% {
+    transform: scale(1.35);
+    opacity: 0;
   }
-  
-  .illustration-section {
-    flex: 1.1; /* Aumentado de 1 para 1.1 para equilibrar o espaço com o formulário */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 24px;
-  }
-  
-  /* Títulos e Textos */
-  .form-title {
-    color: #4a154b; /* Roxo escuro para destaque */
-    font-size: 26px;
-    font-weight: 700;
-    margin-bottom: 12px;
-  }
-  
-  .form-subtitle {
-    color: #555555;
-    font-size: 14px;
-    line-height: 1.5;
-    margin-bottom: 24px;
-  }
-  
-  /* Formulário e Inputs */
-  .contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-  
-  .input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-  
-  .input-group label {
-    color: #333333;
-    font-size: 14px;
-    font-weight: 500;
-  }
-  
-  .input-group input,
-  .input-group textarea {
-    width: 100%;
-    padding: 12px 16px;
-    border: 1px solid #e2d6e9;
-    background-color: #f9f6fa; /* Fundo cinza/lilás clarinho idêntico ao design */
-    border-radius: 12px;
-    font-size: 14px;
-    color: #333333;
-    transition: all 0.2s ease;
-    outline: none;
-  }
-  
-  /* Foco nos Inputs */
-  .input-group input:focus,
-  .input-group textarea:focus {
-    border-color: #7b3b93;
-    background-color: #ffffff;
-    box-shadow: 0 0 0 3px rgba(123, 59, 147, 0.1);
-  }
-  
-  /* Remove o resize manual feio do textarea */
-  .input-group textarea {
-    resize: none;
-  }
-  
-  /* Botão Enviar */
-  .btn-enviar {
-    background-color: #8c5ca3; /* Cor roxa do botão Enviar */
-    color: #ffffff;
-    border: none;
-    padding: 12px 36px;
-    font-size: 14px;
-    font-weight: 600;
-    border-radius: 20px;
-    cursor: pointer;
-    align-self: flex-start; /* Alinha à esquerda igual à imagem */
-    margin-top: 8px;
-    transition: background-color 0.2s ease, transform 0.1s ease;
-  }
-  
-  .btn-enviar:hover {
-    background-color: #7b3b93;
-  }
-  
-  .btn-enviar:active {
-    transform: scale(0.98);
-  }
-  
-  /* Imagem/Ilustração */
-  .avatar-wrapper {
-    width: 100%;
-    max-width: 1000px; /* Aumentado de 280px para 380px para a Bia crescer */
-    display: flex;
-    justify-content: center;
-  }
-  
-  .avatar-img {
-    width: 100%;
-    height: auto;
-    max-height: 500px; /* Garante que ela não estoure a altura do card */
-    object-fit: contain;
-  }
-  
-  /* Redes Sociais */
-  .social-media-links {
-    display: flex;
-    gap: 16px;
-  }
-  
+}
+
+.panel-title {
+  color: #ffffff;
+  font-family: var(--fonte-titulo);
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.panel-text {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 13.5px;
+  line-height: 1.65;
+  max-width: 260px;
+}
+
+/* Redes Sociais */
+.social-media-links {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: 14px;
+}
+
+.social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 700;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.social-icon:hover {
+  background-color: #ffffff;
+  color: var(--roxo-700);
+  transform: translateY(-3px);
+}
+
+.social-icon:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
+}
+
+/* Respeita preferência por menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  .card-contato,
+  .panel-icon::before,
+  .btn-enviar,
   .social-icon {
-    display: flex;
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ===== Responsividade ===== */
+
+/* Telas grandes / laptops menores */
+@media (max-width: 1180px) {
+  .card-contato {
+    max-width: 980px;
+  }
+
+  .form-section {
+    padding: 48px 44px;
+  }
+}
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .content-container {
+    padding: 24px;
+  }
+
+  .card-contato {
+    max-width: 860px;
+  }
+
+  .form-section {
+    padding: 44px 38px;
+  }
+
+  .illustration-section {
+    flex: 0.85;
+  }
+}
+
+/* Tablets pequenos / Mobile grande - empilha o layout */
+@media (max-width: 768px) {
+  .content-container {
+    margin-left: 0;
+    padding: 20px;
+  }
+
+  .card-contato {
+    flex-direction: column-reverse;
+    border-radius: 24px;
+    min-height: auto;
+  }
+
+  .illustration-section {
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background-color: #f3eaf5;
-    color: #7b3b93;
-    text-decoration: none;
-    transition: all 0.2s ease;
+    padding: 26px 28px;
+    gap: 18px;
   }
-  
-  .social-icon:hover {
-    background-color: #7b3b93;
-    color: #ffffff;
-    transform: translateY(-2px);
+
+  .illustration-section::before,
+  .illustration-section::after {
+    display: none;
   }
-  
-  /* Responsividade Básica (para telas menores) */
-  @media (max-width: 768px) {
-    .card-contato {
-      flex-direction: column-reverse; /* Ilustração vai para cima no mobile */
-      padding: 24px;
-      gap: 24px;
-    }
-    
-    .content-container {
-      padding: 16px;
-    }
-  
-    .avatar-wrapper {
-      max-width: 240px; /* Tamanho um pouco menor no mobile para não sumir com o form */
-    }
+
+  .panel-content {
+    flex-direction: row;
+    text-align: left;
+    gap: 14px;
   }
+
+  .panel-icon {
+    width: 52px;
+    height: 52px;
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+
+  .panel-title {
+    font-size: 16px;
+  }
+
+  .panel-text {
+    display: none;
+  }
+
+  .social-media-links {
+    flex-shrink: 0;
+  }
+
+  .form-section {
+    padding: 36px 28px;
+    align-items: center;
+  }
+
+  .form-title,
+  .form-subtitle,
+  .contact-form {
+    padding-left: 0;
+    text-align: center;
+    align-items: center;
+  }
+
+  .form-title {
+    font-size: 24px;
+  }
+
+  .form-title::before {
+    display: none;
+  }
+
+  .form-subtitle {
+    max-width: 100%;
+  }
+
+  .contact-form {
+    max-width: 100%;
+  }
+
+  .btn-enviar {
+    align-self: center;
+    width: 70%;
+  }
+}
+
+/* Mobile pequeno */
+@media (max-width: 420px) {
+  .content-container {
+    padding: 12px;
+  }
+
+  .card-contato {
+    border-radius: 18px;
+  }
+
+  .form-section {
+    padding: 28px 18px;
+  }
+
+  .illustration-section {
+    padding: 20px 18px;
+  }
+
+  .panel-title {
+    font-size: 14.5px;
+  }
+
+  .social-icon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .btn-enviar {
+    width: 100%;
+    min-width: unset;
+    text-align: center;
+    align-self: stretch;
+  }
+}

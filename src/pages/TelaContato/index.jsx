@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
-import Navbar from '../../components/Navbar'; // Importação da sua Navbar lateral
+import Navbar from '../../components/Navbar';
+import Botao from '../../components/Botao';
 import './index.css';
-
-
-// Importando a imagem local direto da sua pasta de assets
-import biaImg from '../../assets/img/biaComputador.png';
-
 
 const TelaContato = () => {
   const [formData, setFormData] = useState({
@@ -13,7 +9,6 @@ const TelaContato = () => {
     email: '',
     mensagem: ''
   });
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,29 +18,29 @@ const TelaContato = () => {
     }));
   };
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Dados do formulário:', formData);
+    alert('Mensagem enviada com sucesso!');
+    setFormData({
+      nome: '',
+      email: '',
+      mensagem: ''
+    });
   };
-
 
   return (
     <div className="page-layout">
-      {/* Sua Navbar na lateral */}
       <Navbar />
-
 
       <main className="content-container">
         <div className="card-contato">
-         
-          {/* Lado Esquerdo - Formulário */}
+
           <div className="form-section">
             <h1 className="form-title">Está com Problemas?</h1>
             <p className="form-subtitle">
               Ajude-nos a melhorar sua experiência relatando erros ou enviando dúvidas.
             </p>
-
 
             <form onSubmit={handleSubmit} className="contact-form">
               <div className="input-group">
@@ -54,12 +49,12 @@ const TelaContato = () => {
                   type="text"
                   id="nome"
                   name="nome"
+                  placeholder="Como podemos te chamar?"
                   value={formData.nome}
                   onChange={handleChange}
                   required
                 />
               </div>
-
 
               <div className="input-group">
                 <label htmlFor="email">E-mail</label>
@@ -67,12 +62,12 @@ const TelaContato = () => {
                   type="email"
                   id="email"
                   name="email"
+                  placeholder="seu@email.com"
                   value={formData.email}
                   onChange={handleChange}
                   required
                 />
               </div>
-
 
               <div className="input-group">
                 <label htmlFor="mensagem">Sua Mensagem</label>
@@ -80,30 +75,31 @@ const TelaContato = () => {
                   id="mensagem"
                   name="mensagem"
                   rows="5"
+                  placeholder="Conte pra gente o que aconteceu..."
                   value={formData.mensagem}
                   onChange={handleChange}
                   required
-                ></textarea>
+                />
               </div>
 
-
-              <button type="submit" className="btn-enviar">
-                Enviar
-              </button>
+              <Botao
+                texto="Enviar"
+                corDeFundo="#7b3b93"
+                corTexto="#ffffff"
+                className="btn-enviar"
+              />
             </form>
           </div>
 
-
-          {/* Lado Direito - Ilustração Local e Redes Sociais */}
           <div className="illustration-section">
-            <div className="avatar-wrapper">
-              <img
-                src={biaImg}
-                alt="Ilustração da Bia no Computador"
-                className="avatar-img"
-              />
+            <div className="panel-content">
+              <div className="panel-icon">💬</div>
+              <h2 className="panel-title">Estamos aqui pra ajudar</h2>
+              <p className="panel-text">
+                Nossa equipe responde o mais rápido possível. Fica à vontade pra entrar em contato!
+              </p>
             </div>
-           
+
             <div className="social-media-links">
               <a href="https://instagram.com" target="_blank" rel="noreferrer" className="social-icon">
                 i
@@ -114,12 +110,10 @@ const TelaContato = () => {
             </div>
           </div>
 
-
         </div>
       </main>
     </div>
   );
 };
-
 
 export default TelaContato;
