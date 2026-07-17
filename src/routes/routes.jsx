@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import TelaLoginUser from '../pages/TelaLoginUser';
 import TelaCadastroUser from '../pages/TelaCadastroUser';
-import TelaPerguntas from '../pages/TelaPerguntas';
 import TelaDashboard from '../pages/TelaDashboard';
 import TelaPerfil from '../pages/TelaPerfil';
 import TelaConfiguracoes from '../pages/TelaConfiguracoes';
@@ -16,7 +15,6 @@ import TelaAtividadeSalva from '../pages/TelaAtividadeSalva';
 import TelaInicioAtividades from '../pages/TelaInicioAtividades';
 import TelaInicioAtividadeUnidade from '../pages/TelaInicioAtividadeUnidade';
 import TelaAtividadeAlternativa from '../pages/TelaAtividadeAlternativa';
-import TelaAtividadeConcluida from '../pages/TelaAtividadeConcluida';
 import TelaAtividadeFala from '../pages/TelaAtividadeFala';
 import TelaAtividadeVideo from '../pages/TelaAtividadeVideo';
 import TelaAcompanhanteIA from '../pages/TelaAcompanhanteIA';
@@ -38,9 +36,7 @@ function AppRoutes() {
       <Routes>
         <Route path="/login" element={<TelaLoginUser />} />
         <Route path="/criar-conta" element={<TelaCadastroUser />} />
-        <Route path="/pergunta-inicial" element={<TelaPerguntas />} />
         <Route path="/landingpage" element={<TelaLandingPage />} />
-
         <Route path="/" element={<TelaDashboard />} />
         <Route path="/perfil" element={<TelaPerfil />} />
         <Route path="/configuracoes" element={<TelaConfiguracoes />} />
