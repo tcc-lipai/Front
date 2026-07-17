@@ -3,13 +3,11 @@ import './index.css';
 import Conquistas from '../../components/Conquistas/index.jsx';
 
 const TelaConquistas = () => {
-  // 7 conquistas atingidas (uma linha completa)
   const conquistasAtingidas = Array(7).fill({
     title: "Semana Ouro",
     subtitle: "Semana Ouro"
   });
 
-  // 14 conquistas não atingidas (duas linhas completas de 7)
   const conquistasNaoAtingidas = Array(14).fill({
     title: "Semana Ouro",
     subtitle: "Semana Ouro"

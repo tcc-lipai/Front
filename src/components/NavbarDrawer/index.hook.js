@@ -1,7 +1,3 @@
-// index.hook.js
-// Pequena melhoria de UX: fecha o drawer ao apertar Esc, enquanto ele
-// estiver aberto.
-
 import { useEffect } from "react";
 
 export function useNavbarDrawer(isOpen, onClose) {

@@ -32,12 +32,10 @@ const CadastrarPaciente = () => {
 
       <main className="cadastro-main-content">
         <div className="cadastro-card">
-          {/* Cabeçalho apenas com o Título */}
           <div className="cadastro-header">
             <h1 className="cadastro-title">Cadastrar Paciente</h1>
           </div>
 
-          {/* Formulário */}
           <form onSubmit={handleSubmit} className="cadastro-form">
             <div className="form-group">
               <label htmlFor="nome">Nome:</label>

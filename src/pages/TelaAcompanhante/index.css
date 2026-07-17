@@ -156,7 +156,6 @@ html, body {
   padding: 16px 0 20px;
 }
 
-/* ---------- Cards ---------- */
 .ta-carousel__card {
   background: #fff;
   border-radius: 16px;
@@ -229,7 +228,6 @@ html, body {
   margin: 0;
 }
 
-/* ---------- Dots ---------- */
 .ta-carousel__dots {
   display: flex;
   gap: 8px;
@@ -257,7 +255,6 @@ html, body {
   outline-offset: 2px;
 }
 
-/* ---------- Próximas Atividades ---------- */
 .ta-atividades {
   margin: 0 24px 40px;
 }
@@ -275,14 +272,9 @@ html, body {
   gap: 16px;
 }
 
-/* ---------- Footer ---------- */
 .ta-footer {
   margin-top: auto;
 }
-
-/* =============================================
-   RESPONSIVO
-   ============================================= */
 
 @media (max-width: 1024px) {
   .ta-carousel__card--center {
@@ -325,7 +317,6 @@ html, body {
     overflow: hidden;
   }
 
-  /* Sem imagem: conteúdo ocupa todo o container */
   .ta-dicionario__illustration {
     display: none;
   }

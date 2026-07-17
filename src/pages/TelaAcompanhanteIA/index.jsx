@@ -12,10 +12,6 @@ const TelaAcompanhante = () => {
 
   const handleConfirmarSaida = () => {
     console.log("Usuário saiu da atividade");
-
-    // navigate("/home");
-    // ou:
-    // window.history.back();
   };
 
   return (

@@ -11,7 +11,6 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Botão hambúrguer: só fica visível em telas pequenas (ver index.css) */}
       <button
         type="button"
         className="navbar-hamburguer"
@@ -21,7 +20,6 @@ const Navbar = () => {
         <Menu size={24} />
       </button>
 
-      {/* Sidebar normal: some em telas pequenas (ver index.css) */}
       <nav className="sidebar-navbar">
         <div className="navbar-container">
           {NAV_ITEMS.map((item, index) => {

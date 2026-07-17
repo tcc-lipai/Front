@@ -7,7 +7,6 @@ const Modal = ({ isOpen, onClose, onConfirm }) => {
   return (
     <div className="modal-overlay">
       <div className="modal-container">
-        {/* Botão "X" para fechar */}
         <button className="modal-close-x" onClick={onClose} aria-label="Fechar modal">
           &times;
         </button>

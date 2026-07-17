@@ -5,10 +5,9 @@
   box-sizing: border-box;
 }
 
-/* ---------- TOPO ALINHADO DE PONTA A PONTA ---------- */
 .topo-acoes {
   display: flex;
-  justify-content: space-between; /* Empurra o menu/placeholder pra esquerda e o HeaderActions pra direita */
+  justify-content: space-between; 
   align-items: center;
   width: 100%;
   margin-bottom: 8px;
@@ -19,7 +18,6 @@
   display: flex;
   gap: 24px;
   align-items: flex-start;
-  /* Margem de segurança para a Navbar não sobrepor o conteúdo */
   margin-left: 90px; 
 }
 
@@ -32,7 +30,6 @@
   width: 100%;
 }
 
-/* ---------- BANNER ---------- */
 .banner {
   background: #8458a7;
   border-radius: 18px;
@@ -71,14 +68,12 @@
   bottom: 0;
 }
 
-/* Botão "Testar" dentro do banner */
 .banner-texto .btn-generico {
   padding: 6px 18px;
   font-size: 13px;
   font-weight: 600;
 }
 
-/* ---------- INFOS (Realizadas / Salvas / Revisadas) ---------- */
 .infos {
   display: flex;
   gap: 10px;
@@ -157,7 +152,6 @@
   color: #2E6B86;
 }
 
-/* ---------- TÍTULOS ---------- */
 h2 {
   color: #5b2f78;
   font-size: 18px;
@@ -165,7 +159,6 @@ h2 {
   margin: 4px 0 0;
 }
 
-/* ---------- FILTRO (Padrão Desktop) ---------- */
 .conteudo > .filter {
   width: 280px;
   flex-shrink: 0;
@@ -182,8 +175,6 @@ h2 {
   font-size: 22px;
   font-weight: 700;
 }
-
-/* ---------- RESPONSIVIDADE CORRIGIDA (SUBSTITUIR A PARTIR DAQUI) ---------- */
 
 @media (max-width: 1200px) {
   .conteudo {
@@ -215,8 +206,8 @@ h2 {
   }
 
   .conteudo {
-    margin-left: 0; /* ZERA a margem para remover o espaço fantasma na esquerda */
-    padding-left: 60px; /* Cria um recuo interno apenas para não cobrir os ícones da navbar lateral fixa */
+    margin-left: 0; 
+    padding-left: 60px; 
     gap: 16px;
     width: 100%;
     box-sizing: border-box;
@@ -224,11 +215,11 @@ h2 {
 
   .topo-acoes {
     width: 100%;
-    justify-content: flex-end; /* Garante os contadores na direita */
+    justify-content: flex-end; 
   }
 
   .menu-espaco-placeholder {
-    display: none; /* Remove o espaço vazio do menu no mobile */
+    display: none; 
   }
 
   .banner {
@@ -258,7 +249,7 @@ h2 {
 
 @media (max-width: 768px) {
   .conteudo {
-    padding-left: 0; /* Se a navbar sumir ou for para o rodapé/topo, zera o padding */
+    padding-left: 0; 
     margin-left: 0;
   }
 
@@ -269,7 +260,7 @@ h2 {
 
   .principal {
     gap: 12px;
-    align-items: center; /* Centraliza os elementos internos na tela */
+    align-items: center; 
   }
 
   .banner {
@@ -286,7 +277,7 @@ h2 {
     max-width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centraliza o título, parágrafo e botão do banner */
+    align-items: center; 
   }
 
   .banner-texto p {
@@ -299,14 +290,13 @@ h2 {
     margin: 8px auto 0;
   }
 
-  /* Garante que os cards e títulos ocupem a largura correta centralizados */
   h2, .info-atividade-container, .infos {
     width: 100%;
   }
 
   h2 {
     font-size: 16px;
-    text-align: left; /* Mantém os títulos alinhados à esquerda do bloco */
+    text-align: left; 
     padding-left: 4px;
   }
 }

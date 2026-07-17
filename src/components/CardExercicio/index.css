@@ -2,7 +2,6 @@
   width: 100%;
   height: 76px;
 
-  /* Cor de fundo lilás claro vinda de image_2.png */
   background-color: #EBE0FF; 
   border-radius: 12px;
 
@@ -28,7 +27,6 @@
   object-fit: contain;
 }
 
-/* No index.css do CardExercicio, force a transparência: */
 .card-info {
   flex: 1;
   display: flex;
@@ -36,7 +34,7 @@
   justify-content: space-between;
   min-width: 0;
   
-  background: transparent !important; /* <--- Adicione isso */
+  background: transparent !important; 
 }
 
 .card-info p {
@@ -45,7 +43,7 @@
   font-size: 10px;
   line-height: 1.2;
 
-  background: transparent !important; /* <--- Adicione isso também por garantia */
+  background: transparent !important; 
 }
 
 .btn-card {
@@ -71,7 +69,7 @@
   }
 
   .card-info {
-    display: none; /* esconde texto e botão */
+    display: none; 
   }
 
   .card-imagem {

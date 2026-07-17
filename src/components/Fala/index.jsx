@@ -3,8 +3,6 @@ import "./index.css";
 
 
 export default function Fala() {
-  // O próprio componente agora controla o seu estado interno
-  // 'idle' -> 'recording' (espera 5s) -> 'correct' ou 'incorrect'
   const [status, setStatus] = useState("idle");
 
 
@@ -12,33 +10,27 @@ export default function Fala() {
     let temporizador;
 
 
-    // Se o status mudar para gravando, inicia a contagem de 5 segundos
     if (status === "recording") {
       temporizador = setTimeout(() => {
-        // Sorteia entre correto (verde) ou incorreto (vermelho)
         const acertou = Math.random() > 0.5;
         setStatus(acertou ? "correct" : "incorrect");
-      }, 5000); // 5 segundos
+      }, 5000); 
     }
 
 
-    // Limpa o temporizador se o componente for desmontado para evitar bugs de memória
     return () => clearTimeout(temporizador);
   }, [status]);
 
 
   const handleClique = () => {
-    // Só deixa clicar se estiver no estado inicial (idle)
     if (status === "idle") {
       setStatus("recording");
     } else if (status === "correct" || status === "incorrect") {
-      // Clique extra: se já terminou, um novo clique reseta para testar de novo
       setStatus("idle");
     }
   };
 
 
-  // Renderiza o ícone interno baseado no status atual
   const renderIcon = () => {
     if (status === "recording") {
       return (
@@ -66,7 +58,7 @@ export default function Fala() {
     <button
       className={`fala-box ${status}`}
       onClick={handleClique}
-      disabled={status === "recording"} // Só desabilita enquanto estiver contando os 5s
+      disabled={status === "recording"} 
     >
       <div className="icon-container">
         {renderIcon()}

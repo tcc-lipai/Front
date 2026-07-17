@@ -8,8 +8,6 @@
   overflow: hidden;
 }
 
-/* BOLINHAS */
-
 .bg-circle {
   position: absolute;
   border-radius: 50%;
@@ -33,14 +31,11 @@
   opacity: 0.6;
 }
 
-/* TRIÂNGULOS DE FUNDO */
-
 .bg-triangle {
   position: absolute;
   pointer-events: none;
 }
 
-/* topo esquerdo */
 .triangle-1 {
   top: 80px;
   left: 180px;
@@ -56,7 +51,6 @@
   transform: rotate(-15deg);
 }
 
-/* meio esquerdo */
 .triangle-2 {
   top: 300px;
   left: 100px;
@@ -72,7 +66,6 @@
   transform: rotate(45deg);
 }
 
-/* topo direito */
 .triangle-3 {
   top: 140px;
   right: 150px;
@@ -88,7 +81,6 @@
   transform: rotate(25deg);
 }
 
-/* meio direito */
 .triangle-4 {
   top: 420px;
   right: 100px;
@@ -104,7 +96,6 @@
   transform: rotate(-35deg);
 }
 
-/* canto inferior esquerdo */
 .triangle-5 {
   bottom: 140px;
   left: 220px;
@@ -120,8 +111,6 @@
   transform: rotate(100deg);
 }
 
-/* CARD */
-
 .login-container {
   width: 1100px;
   height: 650px;
@@ -133,8 +122,6 @@
   z-index: 2;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.048);
 }
-
-/* ESQUERDA */
 
 .login-left {
   width: 60%;
@@ -184,8 +171,6 @@
   font-weight: 600;
 }
 
-/* GOOGLE */
-
 .google-login {
   display: flex;
   align-items: center;
@@ -199,8 +184,6 @@
   width: 35px;
   height: 35px;
 }
-
-/* DIREITA */
 
 .login-right {
     padding-top: 200px;

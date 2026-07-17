@@ -42,15 +42,12 @@ const TelaAcompanhante = () => {
   return (
     <div className="tela-acompanhante">
 
-      {/* ── Navbar ── */}
       <Navbar />
 
-      {/* ── Header com estrelas e dúvida ── */}
       <header className="ta-header">
         <HeaderActions />
       </header>
 
-      {/* ── Banner Dicionário ── */}
       <section className="ta-dicionario">
         <div className="ta-dicionario__content">
           <h2 className="ta-dicionario__title">Dicionário</h2>
@@ -65,7 +62,6 @@ const TelaAcompanhante = () => {
         </div>
       </section>
 
-      {/* ── Como Funciona ── */}
       <section className="ta-como-funciona">
         <div className="ta-como-funciona__illustration">
           <img src={biaAcompanhante} alt="Bia com acompanhante" />
@@ -80,7 +76,6 @@ const TelaAcompanhante = () => {
         </div>
       </section>
 
-      {/* ── Carousel ── */}
       <section className="ta-carousel" aria-label="Por que ter um acompanhante">
         <div className="ta-carousel__track">
           {CARDS.map((card) => {
@@ -122,7 +117,6 @@ const TelaAcompanhante = () => {
         </div>
       </section>
 
-      {/* ── Próximas Atividades ── */}
       <section className="ta-atividades">
         <h2 className="ta-atividades__title">Próximas atividades</h2>
         <div className="ta-atividades__grid">

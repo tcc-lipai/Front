@@ -1,7 +1,6 @@
-/* ===== FOOTER COMPLETO ===== */
 .footer {
-  background-color: #ffffff; /* Fundo branco no topo */
-  padding: 60px 0 0; /* Remove padding lateral para a barra roxa ocupar tudo */
+  background-color: #ffffff; 
+  padding: 60px 0 0; 
   font-family: "Segoe UI", sans-serif;
 }
 
@@ -15,7 +14,6 @@
   gap: 40px;
 }
 
-/* Coluna 1: Logo e Nav */
 .footer__brand-col {
   flex: 1;
 }
@@ -38,9 +36,8 @@
   margin-bottom: 30px;
 }
 
-/* Linha e Links */
 .footer__nav {
-  border-top: 2px solid #9ca3af; /* Linha cinza da imagem */
+  border-top: 2px solid #9ca3af; 
   padding-top: 15px;
   max-width: 400px;
 }
@@ -60,7 +57,6 @@
   transition: color 0.2s;
 }
 
-/* Coluna 2: Contato */
 .footer__contact-col {
   flex: 1;
   display: flex;
@@ -80,7 +76,6 @@
   color: #374151;
 }
 
-/* Coluna 3: Social */
 .footer__social-col {
   display: flex;
   flex-direction: column;
@@ -120,7 +115,6 @@
   font-size: 1.1rem;
 }
 
-/* Barra Roxa Final */
 .footer__bottom {
   background-color: #7A3A8E;
   padding: 15px 0;
@@ -134,7 +128,6 @@
   opacity: 0.9;
 }
 
-/* Responsivo */
 @media (max-width: 900px) {
   .footer__container {
     flex-direction: column;

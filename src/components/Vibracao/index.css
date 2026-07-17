@@ -6,23 +6,22 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
-/* O Card igual ao da imagem */
+
 .card {
-  background-color: #fbf5fc; /* Tom de lilás bem claro/fundo suave */
-  border: 1px solid #f2e6f5;  /* Borda sutil para dar acabamento */
-  border-radius: 24px;       /* Bordas bem arredondadas */
-  width: 320px;              /* Largura proporcional */
-  height: 200px;             /* Altura proporcional */
+  background-color: #fbf5fc; 
+  border: 1px solid #f2e6f5; 
+  border-radius: 24px;      
+  width: 320px;             
+  height: 200px;             
   display: flex;
-  justify-content: center;   /* Centraliza o texto na horizontal */
-  align-items: center;       /* Centraliza o texto na vertical */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03); /* Sombra bem leve */
+  justify-content: center;   
+  align-items: center;      
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03); 
 }
 
-/* O texto "Pa" */
 .text {
-  color: #7d3c98;            /* Roxo/Lilás escuro idêntico ao da imagem */
-  font-size: 4.5rem;         /* Tamanho grande e destacado */
-  font-weight: 700;          /* Texto em negrito (bold) */
-  letter-spacing: -1px;      /* Ajuste fino de aproximação das letras */
+  color: #7d3c98;           
+  font-size: 4.5rem;         
+  font-weight: 700;         
+  letter-spacing: -1px;      
 }

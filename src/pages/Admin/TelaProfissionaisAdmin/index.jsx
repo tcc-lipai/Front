@@ -17,7 +17,6 @@ const IconeChevron = () => (
   </svg>
 );
 
-// Dados mockados
 const usuariosMock = [
   {
     id: 1,
@@ -53,28 +52,22 @@ const usuariosMock = [
   },
 ];
 
-// 1. Mudança do nome da função aqui:
 const ProfissionaisAdmin = () => {
   const [pesquisa, setPesquisa] = useState("");
   const navigate = useNavigate();
 
   return (
     <div className="dashboard-admin">
-      {/* Sidebar */}
       <aside className="dashboard-admin__sidebar">
         <Navbar />
       </aside>
 
-      {/* Conteúdo principal */}
       <main className="dashboard-admin__main">
-        {/* Header */}
         <header className="dashboard-admin__header">
           <h1 className="dashboard-admin__titulo">Profissionais</h1>
         </header>
 
-        {/* Container branco */}
         <div className="dashboard-admin__container">
-          {/* Barra de pesquisa e filtros */}
           <div className="dashboard-admin__controles">
             <div className="dashboard-admin__pesquisa">
               <input
@@ -99,7 +92,6 @@ const ProfissionaisAdmin = () => {
             </div>
           </div>
 
-          {/* Lista de usuários */}
           <ul className="dashboard-admin__lista">
             {usuariosMock.map((usuario) => (
               <li key={usuario.id} className="dashboard-admin__item">
@@ -116,7 +108,6 @@ const ProfissionaisAdmin = () => {
             ))}
           </ul>
 
-          {/* Rodapé: Ver mais + Cadastrar */}
           <div className="dashboard-admin__rodape">
             <button className="dashboard-admin__ver-mais">
               Ver mais <IconeChevron />
@@ -132,5 +123,4 @@ const ProfissionaisAdmin = () => {
   );
 };
 
-// 2. Mudança na exportação aqui:
 export default ProfissionaisAdmin;

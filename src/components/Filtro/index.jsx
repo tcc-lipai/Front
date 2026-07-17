@@ -21,7 +21,6 @@ export default function Filter() {
 
   return (
     <>
-      {/* Botão flutuante visível apenas em telas menores */}
       <button 
         className="btn-filtro-flutuante"
         onClick={() => setIsMobileOpen(true)}
@@ -29,7 +28,6 @@ export default function Filter() {
         ☰ Filtros
       </button>
 
-      {/* Overlay de fundo escuro quando o menu mobile estiver aberto */}
       {isMobileOpen && (
         <div className="filter-overlay" onClick={() => setIsMobileOpen(false)} />
       )}
@@ -37,7 +35,6 @@ export default function Filter() {
       <aside className={`filter ${isMobileOpen ? "open" : ""}`}>
         <div className="filter-header">
           <h2>Filtro</h2>
-          {/* Botão de fechar (X) visível apenas no mobile */}
           <button className="btn-fechar-filtro" onClick={() => setIsMobileOpen(false)}>
             ✕
           </button>

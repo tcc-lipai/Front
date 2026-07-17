@@ -1,37 +1,3 @@
-// InfoAtividades.jsx
-// Card de atividade reutilizável (ex: "Primeira Atividade").
-// Ainda sem integração com back-end: todos os dados vêm via props,
-// com valores padrão para facilitar o uso em telas de protótipo.
-// A barra de progresso é sempre exibida (default progresso={0}).
-//
-// NOVO (modoAdmin): quando modoAdmin={true}, o card troca o botão de
-// "salvar" (bookmark) e o de "avançar" (chevron) pelos botões
-// "Editar" e "Excluir", usando o componente <Botao />. Esse é o único
-// efeito do modoAdmin — o restante (título, descrição, badges,
-// progresso) continua idêntico. Como o valor padrão é modoAdmin=false,
-// nenhuma tela que já usa o componente é afetada.
-//
-// Uso básico (telas normais, sem alteração):
-//   <InfoAtividade
-//     titulo="Primeira Atividade"
-//     descricao="Teste seus conhecimentos de leitura labial através de uma ferramenta de IA..."
-//     dificuldade="Iniciante"
-//     tipo="Escrita"
-//     progresso={65}
-//   />
-//
-// Uso na tela de Admin:
-//   <InfoAtividade
-//     modoAdmin
-//     titulo="Primeira Atividade"
-//     descricao="..."
-//     dificuldade="Iniciante"
-//     tipo="Escrita"
-//     progresso={65}
-//     onEditar={() => ...}
-//     onExcluir={() => ...}
-//   />
-
 import { PenTool, Bookmark, ChevronRight } from "lucide-react";
 import { useInfoAtividade } from "./InfoAtividades.hook";
 import {
@@ -39,8 +5,6 @@ import {
   normalizarDificuldade,
   truncarDescricao,
 } from "./InfoAtividades.utils";
-// Ajuste o caminho de importação abaixo conforme a localização real
-// do componente Botao no seu projeto (ex: "../Botao" ou "../Botao/Botao").
 import Botao from "../Botao";
 import "./InfoAtividades.css";
 

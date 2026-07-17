@@ -4,14 +4,14 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.1); /* Fundo sutil */
+  background: rgba(0, 0, 0, 0.1); 
   z-index: 999;
 }
 
 .drawer-container {
   position: fixed;
   top: 0;
-  right: -350px; /* Esconde a barra fora da tela */
+  right: -350px; 
   width: 320px;
   height: 100vh;
   background-color: #ffffff;
@@ -24,7 +24,7 @@
 }
 
 .drawer-container.open {
-  right: 0; /* Desliza para dentro da tela */
+  right: 0; 
 }
 
 .drawer-header {

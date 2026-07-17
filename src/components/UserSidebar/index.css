@@ -1,8 +1,7 @@
-/* --- ESTILOS PADRÃO (DESKTOP) --- */
 .sidebar-container {
-  position: fixed; /* <-- Adicionado: Fixa a sidebar na tela */
-  top: 0;          /* <-- Adicionado: Alinha no topo */
-  left: 0;         /* <-- Adicionado: Alinha na esquerda */
+  position: fixed;
+  top: 0;         
+  left: 0;        
   width: 280px;
   height: 100vh;
   background-color: #fdf8ff;
@@ -15,7 +14,7 @@
   flex-shrink: 0;
   border-right: 1px solid #ecdcf7;
   transition: transform 0.3s ease;
-  z-index: 99;     /* <-- Opcional: Garante que ela fique acima do conteúdo principal */
+  z-index: 99;     
 }
 
 
@@ -125,21 +124,18 @@
 }
 
 
-/* Oculta os elementos do menu mobile por padrão no Desktop */
 .sidebar-mobile-toggle, .sidebar-overlay {
   display: none;
 }
 
 
-/* --- REGRAS RESPONSIVAS (MOBILE/TABLET) --- */
 @media (max-width: 768px) {
-  /* Botão Hambúrguer ajustado para não sobrepor o conteúdo */
   .sidebar-mobile-toggle {
     display: flex;
     position: fixed;
     top: 12px;
     left: 12px;
-    z-index: 1000; /* Fica acima do fundo e do conteúdo */
+    z-index: 1000; 
     background-color: #4a2868;
     color: #ffffff;
     border: none;
@@ -154,7 +150,6 @@
   }
 
 
-  /* Transforma a sidebar em uma gaveta escondida na esquerda */
   .sidebar-container {
     position: fixed;
     top: 0;
@@ -162,19 +157,17 @@
     height: 100vh;
     width: 260px;
     z-index: 999;
-    transform: translateX(-100%); /* Esconde para fora da tela */
+    transform: translateX(-100%);
     box-shadow: 4px 0 15px rgba(0, 0, 0, 0.15);
-    padding-top: 70px; /* Espaço para não cobrir as funções */
+    padding-top: 70px; 
   }
 
 
-  /* Quando clicado, a classe 'open' empurra ela para a tela */
   .sidebar-container.open {
     transform: translateX(0);
   }
 
 
-  /* Cortina preta transparente atrás do menu */
   .sidebar-overlay {
     display: block;
     position: fixed;

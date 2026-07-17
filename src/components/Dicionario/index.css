@@ -1,9 +1,8 @@
-/* Container principal do Card */
 .dicionario-container {
   position: relative;
   display: inline-flex;
   background-color: #ffffff;
-  border: 2px solid #9c8cb9; /* Cor da borda suave */
+  border: 2px solid #9c8cb9; 
   border-radius: 24px;
   padding: 16px;
   width: 280px;
@@ -18,19 +17,17 @@
   transform: translateY(-2px);
 }
 
-/* Detalhe roxo que vaza pelo lado esquerdo */
 .dicionario-sidebar-detail {
   position: absolute;
   left: -6px;
   top: 15px;
   bottom: 45px;
   width: 12px;
-  background-color: #692d83; /* Roxo escuro do detalhe */
+  background-color: #692d83; 
   border-radius: 8px;
   z-index: 1;
 }
 
-/* Conteúdo interno do card */
 .dicionario-content {
   display: flex;
   flex-direction: column;
@@ -38,7 +35,6 @@
   z-index: 2;
 }
 
-/* Box cinza (Simulador de vídeo) */
 .dicionario-video-placeholder {
   background-color: #d9d9d9;
   border-radius: 4px;
@@ -51,27 +47,24 @@
   box-sizing: border-box;
 }
 
-/* Texto em diagonal dentro do box cinza */
 .placeholder-text {
   color: #939393;
   font-size: 18px;
   font-weight: 600;
   text-align: center;
   text-transform: uppercase;
-  transform: rotate(-20deg); /* Inclinação do texto */
+  transform: rotate(-20deg); 
   letter-spacing: 1px;
   line-height: 1.3;
 }
 
-/* Área dos textos */
 .dicionario-text-container {
   margin-top: 14px;
   padding-left: 4px;
 }
 
-/* Título "Laranja" */
 .dicionario-title {
-  color: #4a1565; /* Roxo principal do texto */
+  color: #4a1565; 
   font-size: 28px;
   font-weight: 700;
   margin: 0;
@@ -79,7 +72,6 @@
   line-height: 1.1;
 }
 
-/* Descrição inferior */
 .dicionario-description {
   color: #4a1565;
   font-size: 14px;

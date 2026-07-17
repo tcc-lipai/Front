@@ -22,7 +22,6 @@ const IconeX = () => (
   </svg>
 );
 
-// Dados mockados
 const pacientesMock = [
   {
     id: 1,
@@ -69,22 +68,17 @@ const DashboardMedico = () => {
 
   return (
     <div className="dashboard-medico">
-      {/* Sidebar: isola a Navbar para que ela nunca sobreponha o conteúdo */}
       <aside className="dashboard-medico__sidebar">
         <Navbar />
       </aside>
 
-      {/* Conteúdo principal */}
       <main className="dashboard-medico__main">
-        {/* Header */}
         <header className="dashboard-medico__header">
           <h1 className="dashboard-medico__titulo">Pacientes</h1>
           <HeaderActions onOpenProfile={() => {}} />
         </header>
 
-        {/* Container branco com lista */}
         <div className="dashboard-medico__container">
-          {/* Barra de pesquisa e filtros */}
           <div className="dashboard-medico__controles">
             <div className="dashboard-medico__pesquisa">
               <input
@@ -109,7 +103,6 @@ const DashboardMedico = () => {
             </div>
           </div>
 
-          {/* Lista de pacientes */}
           <ul className="dashboard-medico__lista">
             {pacientesMock.map((paciente) => (
               <li key={paciente.id} className="dashboard-medico__item">
@@ -125,7 +118,6 @@ const DashboardMedico = () => {
             ))}
           </ul>
 
-          {/* Ver mais */}
           <button className="dashboard-medico__ver-mais">
             Ver mais <IconeChevron />
           </button>
