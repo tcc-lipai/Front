@@ -7,7 +7,6 @@ const TelaCadastroUser = () => {
 
   return (
     <div className="cadastro-page">
-      {/* BACKGROUND */}
       <div className="bg-circle bg-circle-1"></div>
       <div className="bg-circle bg-circle-2"></div>
 
@@ -16,7 +15,6 @@ const TelaCadastroUser = () => {
       <div className="bg-triangle triangle-3"></div>
 
       <div className="cadastro-container">
-        {/* LADO ESQUERDO (ROXO) */}
         <div className="cadastro-left">
           <div className="welcome-content">
             <h2>Seja Bem vindo</h2>
@@ -36,7 +34,6 @@ const TelaCadastroUser = () => {
           </div>
         </div>
 
-        {/* LADO DIREITO (FORM) */}
         <div className="cadastro-right">
           <h1>Crie sua conta!</h1>
           <p className="subtitle">

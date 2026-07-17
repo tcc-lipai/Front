@@ -10,10 +10,6 @@ const TelaAtividadeVideo = () => {
 
   const handleConfirmarSaida = () => {
     console.log('Usuário saiu da atividade');
-
-    // Exemplo:
-    // window.history.back();
-    // ou navigate('/home');
   };
 
   return (
@@ -47,7 +43,7 @@ const TelaAtividadeVideo = () => {
             </button>
           </div>
 
-          {/* Aqui depois entra o vídeo vindo do back */}
+
           <div className="video-container">
             <div className="video-placeholder">
               <span>VIDEO AULA</span>

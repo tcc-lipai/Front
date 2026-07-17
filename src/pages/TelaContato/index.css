@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600&display=swap');
 
-/* ===== Tokens ===== */
 :root {
   --roxo-900: #4a154b;
   --roxo-700: #7b3b93;
@@ -17,7 +16,6 @@
   --fonte-corpo: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* ===== Container Geral da Página ===== */
 .page-layout {
   display: flex;
   min-height: 100vh;
@@ -28,7 +26,6 @@
   font-family: var(--fonte-corpo);
 }
 
-/* Compensação da Navbar Fixed */
 .content-container {
   margin-left: 90px;
   flex: 1;
@@ -38,7 +35,6 @@
   padding: 40px;
 }
 
-/* Card central branco arredondado */
 .card-contato {
   position: relative;
   background-color: #ffffff;
@@ -65,7 +61,6 @@
   }
 }
 
-/* ===== Lado Esquerdo - Formulário ===== */
 .form-section {
   flex: 1.8;
   padding: 56px 64px;
@@ -173,7 +168,6 @@
   min-height: 110px;
 }
 
-/* Botão Enviar */
 .btn-enviar {
   background: linear-gradient(135deg, var(--roxo-500) 0%, var(--roxo-700) 100%);
   color: #ffffff;
@@ -193,7 +187,6 @@
 }
 
 
-/* ===== Lado Direito - Painel decorativo ===== */
 .illustration-section {
   flex: 1;
   position: relative;
@@ -207,7 +200,6 @@
   overflow: hidden;
 }
 
-/* Formas decorativas flutuantes */
 .illustration-section::before,
 .illustration-section::after {
   content: '';
@@ -241,7 +233,6 @@
   gap: 14px;
 }
 
-/* Anel pulsante atrás do ícone, como um "estamos on-line" */
 .panel-icon {
   position: relative;
   width: 76px;
@@ -322,7 +313,6 @@
   outline-offset: 3px;
 }
 
-/* Respeita preferência por menos movimento */
 @media (prefers-reduced-motion: reduce) {
   .card-contato,
   .panel-icon::before,
@@ -333,9 +323,6 @@
   }
 }
 
-/* ===== Responsividade ===== */
-
-/* Telas grandes / laptops menores */
 @media (max-width: 1180px) {
   .card-contato {
     max-width: 980px;
@@ -346,7 +333,6 @@
   }
 }
 
-/* Tablets */
 @media (max-width: 1024px) {
   .content-container {
     padding: 24px;
@@ -365,7 +351,6 @@
   }
 }
 
-/* Tablets pequenos / Mobile grande - empilha o layout */
 @media (max-width: 768px) {
   .content-container {
     margin-left: 0;
@@ -451,7 +436,6 @@
   }
 }
 
-/* Mobile pequeno */
 @media (max-width: 420px) {
   .content-container {
     padding: 12px;

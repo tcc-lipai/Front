@@ -1,9 +1,8 @@
-/* Layout Base e Alinhamento de Fundo */
 .paciente-page-container {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-color: #F8EDFB; /* Cor de fundo da sua identidade visual */
+    background-color: #F8EDFB; 
     font-family: sans-serif;
     box-sizing: border-box;
 }
@@ -16,21 +15,19 @@
     padding: 40px 20px;
 }
 
-/* O Grande Card Branco Principal (Padronizado com o Cadastro) */
 .paciente-card-background {
     background-color: #FFFFFF;
-    width: 90%; /* Ocupa a maior parte em telas menores */
-    max-width: 1200px; /* Mesma largura máxima do Cadastro */
-    border-radius: 28px; /* Mesmos cantos arredondados suaves */
-    padding: 60px 80px; /* Mesmo respiro interno nas laterais para ficar bem largo */
-    box-shadow: 0 4px 20px rgba(70, 32, 87, 0.05); /* Mesma sombra sutil */
+    width: 90%; 
+    max-width: 1200px; 
+    border-radius: 28px; 
+    padding: 60px 80px; 
+    box-shadow: 0 4px 20px rgba(70, 32, 87, 0.05);
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    gap: 45px; /* Espaçamento ordenado entre blocos */
+    gap: 45px; 
 }
 
-/* Estilização do Perfil (Cabeçalho) */
 .paciente-perfil-header {
     display: flex;
     align-items: center;
@@ -56,13 +53,12 @@
 }
 
 .paciente-nome {
-    color: #462057; /* Tom escuro exato do design */
+    color: #462057; 
     font-size: 32px;
     font-weight: bold;
     margin: 0;
 }
 
-/* Alinhamento dos Chips/Tags de Status */
 .paciente-tags-container {
     display: flex;
     gap: 14px;
@@ -77,23 +73,22 @@
 }
 
 .tag-iniciante {
-    background-color: #E2BDF2; /* Lilás suave do badge */
+    background-color: #E2BDF2; 
     color: #FFFFFF;
 }
 
 .tag-ativo {
-    background-color: #C9EBBF; /* Verde suave do design */
+    background-color: #C9EBBF; 
     color: #FFFFFF;
 }
 
 .paciente-descricao {
-    color: #6C5375; /* Cinza arroxeado secundário */
+    color: #6C5375; 
     font-size: 18px;
     margin: 4px 0 0 0;
     line-height: 1.4;
 }
 
-/* Seção de Desempenho */
 .secao-titulo-sub {
     color: #462057;
     font-size: 24px;
@@ -103,10 +98,9 @@
 
 .container-barras-wrapper {
     width: 100%;
-    padding-left: 5px; /* Alinhamento visual com as bolinhas da foto */
+    padding-left: 5px;
 }
 
-/* Barra de Busca Customizada */
 .paciente-busca-section {
     width: 100%;
 }
@@ -114,14 +108,14 @@
 .busca-input-wrapper {
     position: relative;
     width: 100%;
-    max-width: 500px; /* Tamanho proporcional ao design */
+    max-width: 500px; 
 }
 
 .input-busca-paciente {
     width: 100%;
     height: 40px;
     border: 1px solid #DCC9E2;
-    border-radius: 20px; /* Formato pílula idêntico à imagem */
+    border-radius: 20px;
     padding: 0 45px 0 20px;
     font-size: 14px;
     color: #462057;
@@ -142,15 +136,13 @@
     pointer-events: none;
 }
 
-/* Lista de Atividades */
 .paciente-atividades-lista {
     display: flex;
     flex-direction: column;
-    gap: 24px; /* Separação harmônica entre os cards de atividade */
+    gap: 24px; 
     width: 100%;
 }
 
-/* Responsividade Básica para Tablets/Celulares */
 @media (max-width: 768px) {
     .paciente-card-background {
         padding: 40px 20px;

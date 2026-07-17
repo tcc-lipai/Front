@@ -1,4 +1,3 @@
-/* --- ESTILOS PADRÃO (DESKTOP) --- */
 .configuracoes-page-container {
   display: flex;
   min-height: 100vh;
@@ -91,7 +90,6 @@
   margin-top: auto;
 }
 
-/* Card Inferior Estendido centralizado e maior */
 .config-card-wide {
   background-color: #ffffff;
   border-radius: 16px;
@@ -142,7 +140,6 @@
   font-weight: 600;
 }
 
-/* --- DESIGN CUSTOMIZADO DO TOGGLE SWITCH --- */
 .switch {
   position: relative;
   display: inline-block;
@@ -191,7 +188,6 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-/* --- RESPONSIVIDADE (TABLET & MOBILE) --- */
 @media (max-width: 1024px) {
   .configuracoes-main-content {
     padding: 40px 30px;

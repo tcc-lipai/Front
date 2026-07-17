@@ -19,7 +19,6 @@ const NavbarLandingPage = () => {
         <li><a href="#participantes" onClick={closeMenu}>Equipe</a></li>
         <li><a href="#contato" onClick={closeMenu}>Contato</a></li>
 
-        {/* Botões aparecem dentro do menu mobile também */}
         <li className="navbar-lp__actions navbar-lp__actions--mobile">
           <Link to="/criar-conta" onClick={closeMenu}>
             <button className="navbar-lp__btn-cadastrar">Cadastrar</button>

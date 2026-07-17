@@ -7,7 +7,6 @@ import './index.css';
 export const UserProfileDrawer = ({ isOpen, onClose, userData }) => {
   const { handleEditProfileClick } = useUserProfileDrawer(onClose);
 
-  // Dados de fallback caso o userData não seja passado
   const data = userData || {
     username: 'Username',
     email: 'username@gmail.com',

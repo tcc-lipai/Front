@@ -2,19 +2,6 @@ import React from 'react';
 import Botao from '../Botao';
 import './index.css';
 
-/**
- * CardUsuario — card reutilizável para listagens de usuários
- *
- * Props:
- *  - tipo: 'paciente-admin' | 'profissional' | 'paciente-profissional'
- *  - nome: string
- *  - descricao: string
- *  - nivel: string (ex: "Iniciante") — aparece nas variantes com badges
- *  - status: 'ativo' | 'inativo'   — aparece nas variantes com badges
- *  - onEditar: fn
- *  - onExcluir: fn
- *  - onVer: fn
- */
 const CardUsuario = ({
   tipo = 'paciente-admin',
   nome = '',

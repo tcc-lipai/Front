@@ -1,8 +1,3 @@
-/* index.css (TelaAtividadesAdmin)
-   Ajuste o valor de --sidebar-largura se a sua Navbar tiver uma largura
-   diferente de 84px.
-*/
-
 .tela-atividades-admin {
   --sidebar-largura: 84px;
   min-height: 100vh;
@@ -19,7 +14,7 @@
   margin-left: var(--sidebar-largura);
   padding: 40px 48px 60px;
   width: calc(95vw - var(--sidebar-largura));
-  max-width: 1400px; /* teto pra não esticar demais em monitores enormes */
+  max-width: 1400px; 
   box-sizing: border-box;
 }
 
@@ -99,8 +94,6 @@
   color: #4a154b;
 }
 
-/* Telas pequenas: a Navbar vira drawer (ver componente Navbar), então
-   removemos o recuo lateral fixo. */
 @media (max-width: 768px) {
   .atividades-admin__conteudo {
     margin-left: 0;

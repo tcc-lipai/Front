@@ -21,7 +21,6 @@ const TelaInicioAtividades = () => {
       <div className="conteudo">
         <section className="principal">
           
-          {/* Topo ajustado para distribuir os elementos de ponta a ponta */}
           <div className="topo-acoes">
             <div className="menu-espaco-placeholder"></div> 
             <HeaderActions />

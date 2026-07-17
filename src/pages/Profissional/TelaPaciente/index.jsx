@@ -1,21 +1,19 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // 1. IMPORTAR O NAVIGATE DAQUI
+import { useNavigate } from "react-router-dom"; 
 import Navbar from "../../../components/Navbar_reta";
 import BarrasDeDesempenho from "../../../components/BarrasDeDesempenho";
 import InfoAtividades from "../../../components/InfoAtividades/InfoAtividades";
 import "./index.css";
 
 const TelaPaciente = () => {
-  const navigate = useNavigate(); // 2. INSTANCIAR O NAVIGATE AQUI DENTRO
+  const navigate = useNavigate(); 
 
-  // Estado para os dados das barras de desempenho
   const [dadosDesempenho] = useState([
     { label: "Interpretação", acertos: 7.5, total: 10 },
     { label: "Fala", acertos: 9, total: 10 },
     { label: "Video", acertos: 9, total: 10 }
   ]);
 
-  // Estado para controlar o termo de busca da barra de pesquisa
   const [busca, setBusca] = useState("");
 
   return (
@@ -25,7 +23,6 @@ const TelaPaciente = () => {
       <main className="paciente-main-content">
         <div className="paciente-card-background">
           
-          {/* SEÇÃO 1: Cabeçalho com o Perfil do Paciente */}
           <section className="paciente-perfil-header">
             <div className="paciente-avatar-container">
               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="paciente-avatar-icon">
@@ -47,7 +44,6 @@ const TelaPaciente = () => {
             </div>
           </section>
 
-          {/* SEÇÃO 2: Desempenho Geral do Paciente */}
           <section className="paciente-desempenho-section">
             <h2 className="secao-titulo-sub">Desempenho Geral</h2>
             <div className="container-barras-wrapper">
@@ -55,7 +51,6 @@ const TelaPaciente = () => {
             </div>
           </section>
 
-          {/* SEÇÃO 3: Barra de Busca com Ícone de Lupa */}
           <section className="paciente-busca-section">
             <div className="busca-input-wrapper">
               <input 
@@ -72,17 +67,16 @@ const TelaPaciente = () => {
             </div>
           </section>
 
-          {/* SEÇÃO 4: PASSAR A FUNÇÃO NO ONAVANCAR DE CADA CARD */}
           <section className="paciente-atividades-lista">
             <InfoAtividades 
               titulo="Primeira Atividade"
               progresso={75}
-              onAvancar={() => navigate("/paciente/atividade/1")} // Passa o ID 1 na URL
+              onAvancar={() => navigate("/paciente/atividade/1")} 
             />
             <InfoAtividades 
               titulo="Segunda Atividade"
               progresso={40}
-              onAvancar={() => navigate("/paciente/atividade/2")} // Passa o ID 2 na URL
+              onAvancar={() => navigate("/paciente/atividade/2")} 
             />
           </section>
 

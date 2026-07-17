@@ -8,7 +8,6 @@
   overflow: hidden;
 }
 
-/* MESMOS BACKGROUNDS */
 .bg-circle {
   position: absolute;
   border-radius: 50%;
@@ -62,7 +61,6 @@
   opacity: 0.2;
 }
 
-/* CONTAINER */
 
 .cadastro-container {
   width: 1100px;
@@ -76,7 +74,6 @@
   z-index: 2;
 }
 
-/* ESQUERDA ROXA */
 
 .cadastro-left {
   width: 40%;
@@ -92,8 +89,6 @@
   border: 1px solid white;
   color: white;
 }
-
-/* DIREITA FORM */
 
 .cadastro-right {
   width: 60%;
@@ -113,7 +108,6 @@
   color: #7b6688;
 }
 
-/* SCROLL */
 .form-scroll {
   width: 100%;
   max-height: 480px;
@@ -123,8 +117,6 @@
   align-items: center;
   padding-bottom: 20px;
 }
-
-/* INPUTS */
 
 .input-group {
   width: 100%;
@@ -144,7 +136,6 @@
   outline: none;
 }
 
-/* DIVIDER */
 
 .divider {
   width: 420px;
@@ -153,7 +144,6 @@
   margin: 25px 0;
 }
 
-/* TEXTO */
 
 .helper-text {
   width: 420px;
@@ -162,7 +152,6 @@
   margin-top: 10px;
 }
 
-/* BOTÃO */
 
 .btn-container {
   margin-top: 30px;
@@ -176,7 +165,6 @@
   font-weight: 600;
 }
 
-/* GOOGLE */
 
 .google-login {
   display: flex;
@@ -190,7 +178,6 @@
   width: 30px;
 }
 
-/* RESPONSIVO */
 
 @media (max-width: 900px) {
   .cadastro-page {

@@ -6,7 +6,6 @@ import { UserProfileDrawer } from "../../components/UserProfileDrawer";
 import ProdutoLoja from "../../components/Produto-loja";
 import { useTelaLoja } from "./index.hook";
 
-// 1. Importe a imagem da personagem aqui (ajuste o caminho se necessário)
 import ImgPersonagem from "../../assets/img/menina-carrinho.png"; 
 
 import "./index.css";
@@ -30,10 +29,8 @@ const TelaLoja = () => {
           <HeaderActions onOpenProfile={abrirPerfil} />
         </div>
 
-        {/* Painel Principal */}
         <section className="tela-loja__painel">
           
-          {/* LADO ESQUERDO: Textos, Busca e Grid */}
           <div className="tela-loja__painel-esquerda">
             <h1 className="tela-loja__titulo">Loja</h1>
             <p className="tela-loja__descricao">
@@ -58,7 +55,7 @@ const TelaLoja = () => {
                     title={item.title}
                     description={item.description}
                     price={item.price}
-                    tipo={item.tipo} // Usando "tipo" como combinamos antes
+                    tipo={item.tipo} 
                     isBlocked={item.isBlocked}
                   />
                 </div>
@@ -72,7 +69,6 @@ const TelaLoja = () => {
             )}
           </div>
 
-          {/* LADO DIREITO: Ilustração */}
           <div className="tela-loja__painel-direita">
             <img 
               src={ImgPersonagem} 

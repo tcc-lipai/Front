@@ -22,12 +22,6 @@ const TelaAtividadeFala = () => {
 
   const handleConfirmarSaida = () => {
     console.log("Usuário saiu da atividade");
-
-    // Exemplo com React Router:
-    // navigate("/home");
-
-    // Ou:
-    // window.history.back();
   };
 
   return (

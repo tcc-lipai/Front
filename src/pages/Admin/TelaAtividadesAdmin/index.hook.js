@@ -1,12 +1,3 @@
-// index.hook.js (TelaAtividadesAdmin)
-// Toda a lógica da tela fica aqui, seguindo o mesmo padrão usado na Navbar
-// (index.jsx "burro" + index.hook.js com o estado/lógica).
-//
-// Hoje os dados são mockados localmente. Quando a API estiver pronta,
-// troque MOCK_ATIVIDADES por uma chamada de API dentro de um useEffect,
-// mantendo os handlers (handleEditar, handleExcluir, handleVerMais...)
-// com a mesma assinatura para não precisar mexer no index.jsx.
-
 import { useMemo, useState } from "react";
 
 const MOCK_ATIVIDADES = [
@@ -89,12 +80,10 @@ export function useTelaAtividadesAdmin() {
   };
 
   const handleEditar = (id) => {
-    // TODO: integrar com a rota/modal de edição real da atividade.
     console.log("Editar atividade", id);
   };
 
   const handleExcluir = (id) => {
-    // TODO: chamar a API de exclusão. Por enquanto remove só localmente.
     setAtividades((atual) => atual.filter((atividade) => atividade.id !== id));
   };
 

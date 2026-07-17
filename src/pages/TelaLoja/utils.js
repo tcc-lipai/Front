@@ -1,12 +1,10 @@
-// utils.js
-
 export const ITENS_LOJA_MOCK = [
   {
     id: "1",
     title: "Bloqueio de ofensiva",
     description: "Protege sua sequência de dias mesmo se você faltar um dia.",
     price: 500,
-    tipo: "gelo", // <-- Identificador simples
+    tipo: "gelo", 
     isBlocked: false,
   },
   {
@@ -31,7 +29,7 @@ export const ITENS_LOJA_MOCK = [
     description: "Protege sua sequência de dias mesmo se você faltar um dia.",
     price: 500,
     tipo: "gelo",
-    isBlocked: true, // Este usará o coração cinza automaticamente
+    isBlocked: true, 
   },
   {
     id: "5",

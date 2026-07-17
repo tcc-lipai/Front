@@ -3,10 +3,8 @@ import React, { useState } from 'react';
 import './index.css';
 
 const TelaNotificacoes = () => {
-  // Estado para controlar o filtro superior (Lidas / Não lidas)
   const [filtro, setFiltro] = useState('lidas');
 
-  // Dados mockados simulando as notificações da imagem
   const notificacoesHoje = [
     { id: 1, titulo: "Sua Ofensiva", mensagem: "Não esqueça da sua ofensiva blal fvald dawdwawd", lida: false },
     { id: 2, titulo: "Sua Ofensiva", mensagem: "Não esqueça da sua ofensiva blal fvald dawdwawd", lida: true }
@@ -20,7 +18,6 @@ const TelaNotificacoes = () => {
 
   return (
     <div className="container-notificacoes">
-      {/* Cabeçalho Roxo */}
       <header className="header-notificacoes">
         <button className="btn-voltar">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -30,9 +27,7 @@ const TelaNotificacoes = () => {
         </button>
       </header>
 
-      {/* Conteúdo Principal */}
       <main className="conteudo-principal">
-        {/* Filtros */}
         <div className="container-filtros">
           <button 
             className={`btn-filtro ${filtro === 'nao-lidas' ? 'ativo' : ''}`}
@@ -48,14 +43,12 @@ const TelaNotificacoes = () => {
           </button>
         </div>
 
-        {/* Seção: Hoje */}
         <section className="secao-notificacoes">
           <h2>Hoje</h2>
           <div className="lista-cards">
             {notificacoesHoje.map((notif) => (
               <div key={notif.id} className="card-notificacao">
                 <div className="icone-calendario">
-                  {/* SVG do Calendário com Checkmark */}
                   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8A46A8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                     <line x1="16" y1="2" x2="16" y2="6"></line>
@@ -74,7 +67,6 @@ const TelaNotificacoes = () => {
           </div>
         </section>
 
-        {/* Seção: Último mês */}
         <section className="secao-notificacoes">
           <h2>Último mês</h2>
           <div className="lista-cards">

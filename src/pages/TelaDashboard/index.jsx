@@ -68,7 +68,6 @@ const TelaDashboard = () => {
           </div>
         </div>
 
-        {/* Ofensiva */}
         <section className="card-section">
           <div className="section-title-row">
             <div>
@@ -87,7 +86,6 @@ const TelaDashboard = () => {
           </div>
         </section>
 
-        {/* Atividades Recentes */}
         <section className="card-section">
           <h2 className="section-title">Atividades Recentes</h2>
           <div className="activities-grid">
@@ -102,7 +100,6 @@ const TelaDashboard = () => {
           </div>
         </section>
 
-        {/* Conquistas */}
         <section className="card-section">
           <div className="section-title-row">
             <div>
@@ -119,7 +116,6 @@ const TelaDashboard = () => {
           </div>
         </section>
 
-        {/* Desempenho */}
         <section className="card-section">
           <h2 className="section-title">Desempenho</h2>
           <p className="section-subtitle">Veja seu desempenho nas atividades de escuta, fala, interpretação e</p>

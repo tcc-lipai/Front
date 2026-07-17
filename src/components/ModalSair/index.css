@@ -12,10 +12,10 @@
   }
   
   .modal-container {
-    position: relative; /* Necessário para posicionar o "X" em relação ao card */
+    position: relative;
     background-color: #ffffff;
     border-radius: 24px;
-    padding: 48px 32px 40px 32px; /* Aumentado o padding superior por causa do X */
+    padding: 48px 32px 40px 32px;
     width: 90%;
     max-width: 550px;
     text-align: center;
@@ -23,7 +23,6 @@
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
   }
   
-  /* Estilo do botão "X" */
   .modal-close-x {
     position: absolute;
     top: 20px;
@@ -39,7 +38,7 @@
   }
   
   .modal-close-x:hover {
-    color: #4A154B; /* Muda para o roxo no hover */
+    color: #4A154B; 
   }
   
   .modal-title {

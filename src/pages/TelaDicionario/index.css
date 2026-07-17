@@ -1,4 +1,3 @@
-/* ================= ESTRUTURA COPIADA DA LOJA ================= */
 .tela-dicionario {
   --td-roxo-texto: #4a1565;
   --td-cinza-texto: rgb(99, 71, 110);
@@ -9,7 +8,7 @@
 }
 
 .tela-dicionario__conteudo {
-  margin-left: 80px; /* Alinhamento idêntico à loja para dar espaço ao Navbar */
+  margin-left: 80px; 
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -23,7 +22,6 @@
   justify-content: flex-end;
 }
 
-/* Painel Central Branco Unificado */
 .tela-dicionario__painel {
   position: relative;
   flex: 1;
@@ -32,7 +30,7 @@
   padding: 32px;
   box-shadow: 0 4px 20px rgba(107, 47, 191, 0.06);
   display: flex;
-  flex-direction: column; /* Organiza os elementos de cima para baixo */
+  flex-direction: column; 
   gap: 24px;
 }
 
@@ -51,11 +49,10 @@
   color: var(--td-cinza-texto);
 }
 
-/* ================= FILTROS RESPONSIVOS ================= */
 .tela-dicionario__filtros {
   display: flex;
   gap: 12px;
-  flex-wrap: wrap; /* Caso falte espaço em telas menores, quebra a linha */
+  flex-wrap: wrap; 
   width: 100%;
 }
 
@@ -84,10 +81,8 @@
   color: #4a1565 !important;
 }
 
-/* ================= GRADE DE CARDS (ADAPTADA COM BASE NO GRID DA LOJA) ================= */
 .tela-dicionario__grid {
   display: grid;
-  /* Cria as 4 colunas em telas normais e vai reduzindo com segurança */
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
   gap: 20px;
   width: 100%;
@@ -98,17 +93,15 @@
   min-width: 0;
 }
 
-/* Garante que o componente de Card interno se comporte bem com a grade */
 .tela-dicionario__grid-item > div,
 .dicionario-container {
   width: 100% !important;
   max-width: 100% !important;
 }
 
-/* ================= RESPONSIVIDADE (MOBILE) ================= */
 @media (max-width: 768px) {
   .tela-dicionario__conteudo {
-    margin-left: 0px; /* Navbar vai pra cima/baixo, remove margem */
+    margin-left: 0px; 
     padding: 16px 12px;
   }
 

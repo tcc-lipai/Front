@@ -1,4 +1,3 @@
-// Conquistas/index.jsx
 import React from 'react';
 import './index.css';
 import medalhaImg from '../../assets/img/medalha.png';

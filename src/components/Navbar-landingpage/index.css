@@ -48,7 +48,6 @@
   align-items: center;
 }
 
-/* No desktop, esconde a versão de botões que vive dentro do menu mobile */
 .navbar-lp__actions--mobile {
   display: none;
 }
@@ -87,7 +86,6 @@
   background: #44204e;
 }
 
-/* ===== HAMBURGUER (escondido no desktop) ===== */
 .navbar-lp__hamburger {
   display: none;
   flex-direction: column;
@@ -123,30 +121,23 @@
   transform: translateY(-8px) rotate(-45deg);
 }
 
-/* Overlay escuro atrás do menu mobile aberto */
 .navbar-lp__overlay {
   display: none;
 }
 
-/* ======================================================
-   RESPONSIVO
-   ====================================================== */
 @media (max-width: 768px) {
   .navbar-lp {
     padding: 14px 20px;
   }
 
-  /* Esconde os botões de ação que ficam no header (vão pro menu mobile) */
   .navbar-lp__actions--desktop {
     display: none;
   }
 
-  /* Mostra o hamburguer */
   .navbar-lp__hamburger {
     display: flex;
   }
 
-  /* Menu lateral/dropdown mobile */
   .navbar-lp__links {
     position: fixed;
     top: 0;
@@ -179,7 +170,6 @@
     font-size: 1.05rem;
   }
 
-  /* Mostra a versão dos botões dentro do menu mobile */
   .navbar-lp__actions--mobile {
     display: flex;
     flex-direction: column;
@@ -194,7 +184,6 @@
     width: 100%;
   }
 
-  /* Overlay escuro */
   .navbar-lp__overlay {
     display: block;
     position: fixed;

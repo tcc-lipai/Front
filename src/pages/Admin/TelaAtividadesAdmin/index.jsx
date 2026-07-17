@@ -1,7 +1,5 @@
 import React from "react";
 import { Search, ChevronDown } from "lucide-react";
-// Ajuste os caminhos abaixo conforme a localização real dos componentes
-// no seu projeto (baseado na estrutura de pastas que você mostrou).
 import Navbar from "../../../components/Navbar";
 import InfoAtividade from "../../../components/InfoAtividades/InfoAtividades";
 import { useTelaAtividadesAdmin } from "./index.hook";

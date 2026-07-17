@@ -21,23 +21,19 @@ const TelaDicionario = () => {
 
   return (
     <div className="tela-dicionario">
-      {/* Navbar solta exatamente como na loja */}
       <Navbar /> 
 
       <main className="tela-dicionario__conteudo">
-        {/* Topo com ações alinhadas à direita */}
         <div className="tela-dicionario__topo">
           <HeaderActions onOpenProfile={handleOpenProfile} />
         </div>
 
-        {/* Painel Central Branco */}
         <section className="tela-dicionario__painel">
           <h1 className="tela-dicionario__titulo">Dicionário</h1>
           <p className="tela-dicionario__descricao">
             Explicação do que é o dicionário e como isso pode ajudar no ensino nlnald dwa f wafw afw
           </p>
 
-          {/* Filtros organizados */}
           <div className="tela-dicionario__filtros">
             {categorias.map((cat) => {
               const isActive = categoriaAtiva === cat;
@@ -55,7 +51,6 @@ const TelaDicionario = () => {
             })}
           </div>
 
-          {/* Grade de Cards Responsiva */}
           <div className="tela-dicionario__grid">
             {cardsData.map((card, index) => (
               <div className="tela-dicionario__grid-item" key={index}>
