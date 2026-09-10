@@ -1,32 +1,32 @@
-import React, { useState } from 'react';
-import Navbar from '../../components/Navbar';
-import Botao from '../../components/Botao';
-import RedesSociais from '../../components/RedesSociais';
-import './index.css';
+import React, { useState } from "react";
+import Navbar from "../../components/Navbar";
+import Botao from "../../components/Botao";
+import RedesSociais from "../../components/RedesSociais";
+import "./index.css";
 
 const TelaContato = () => {
   const [formData, setFormData] = useState({
-    nome: '',
-    email: '',
-    mensagem: ''
+    nome: "",
+    email: "",
+    mensagem: "",
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
+    setFormData((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Dados do formulário:', formData);
-    alert('Mensagem enviada com sucesso!');
+    console.log("Dados do formulário:", formData);
+    alert("Mensagem enviada com sucesso!");
     setFormData({
-      nome: '',
-      email: '',
-      mensagem: ''
+      nome: "",
+      email: "",
+      mensagem: "",
     });
   };
 
@@ -36,7 +36,6 @@ const TelaContato = () => {
 
       <main className="content-container">
         <div className="card-contato">
-
           <div className="form-section">
             <h1 className="form-title">Está com Problemas?</h1>
             <p className="form-subtitle">
@@ -103,7 +102,6 @@ const TelaContato = () => {
 
             <RedesSociais />
           </div>
-
         </div>
       </main>
     </div>

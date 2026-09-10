@@ -3,22 +3,25 @@ import { ThemeContext } from "./themeContext";
 
 const STORAGE_KEY = "lipai-theme";
 
-function getInitialTheme() {
-  const savedTheme = localStorage.getItem(STORAGE_KEY);
+function prefereEscuroNoSistema() {
+  return (
+    typeof window !== "undefined" && window.matchMedia?.("(prefers-color-scheme: dark)").matches
+  );
+}
 
-  if (savedTheme === "dark" || savedTheme === "light") {
-    return savedTheme;
+function obterTemaInicial() {
+  const salvo = localStorage.getItem(STORAGE_KEY);
+  if (salvo === "dark" || salvo === "light") {
+    return salvo;
   }
-
-return "light";
+  return prefereEscuroNoSistema() ? "dark" : "light";
 }
 
 export function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState(getInitialTheme);
+  const [theme, setTheme] = useState(obterTemaInicial);
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
-    document.documentElement.style.colorScheme = theme;
     localStorage.setItem(STORAGE_KEY, theme);
   }, [theme]);
 
@@ -27,11 +30,9 @@ export function ThemeProvider({ children }) {
       theme,
       isDarkMode: theme === "dark",
       setTheme,
-      toggleTheme: () => {
-        setTheme((current) => (current === "dark" ? "light" : "dark"));
-      },
+      toggleTheme: () => setTheme((atual) => (atual === "dark" ? "light" : "dark")),
     }),
-    [theme],
+    [theme]
   );
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;

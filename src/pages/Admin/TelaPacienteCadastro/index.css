@@ -1,218 +1,176 @@
 .cadastro-page-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    background-color: #F8EDFB; 
-    font-family: 'Poppins', sans-serif;
-    box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f8edfb;
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
 }
-  
+
 .cadastro-main-content {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 60px 40px; 
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 40px;
 }
-  
+
 .cadastro-card {
-    background-color: #FFFFFF;
-    width: 90%;
-    max-width: 1200px; 
-    border-radius: 28px; 
-    padding: 60px 80px; 
-    box-shadow: 0 4px 20px rgba(70, 32, 87, 0.05);
-    box-sizing: border-box;
+  background-color: #ffffff;
+  width: 90%;
+  max-width: 1200px;
+  border-radius: 28px;
+  padding: 60px 80px;
+  box-shadow: 0 4px 20px rgba(70, 32, 87, 0.05);
+  box-sizing: border-box;
 }
-  
+
 .cadastro-header {
-    margin-bottom: 45px;
+  margin-bottom: 45px;
 }
-  
+
 .cadastro-title {
-    color: #462057; 
-    font-size: 36px;
-    font-weight: bold;
-    margin: 0;
+  color: #462057;
+  font-size: 36px;
+  font-weight: bold;
+  margin: 0;
 }
-  
+
 .cadastro-form {
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
 }
-  
+
 .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
 }
-  
+
 .form-group label {
-    color: #462057; 
-    font-weight: bold;
-    font-size: 18px;
+  color: #462057;
+  font-weight: bold;
+  font-size: 18px;
 }
-  
+
 .form-group input[type="text"],
 .form-group input[type="email"],
 .form-group input[type="password"] {
-    width: 100%;
-    height: 56px;
-    border: 1px solid #DCC9E2; 
-    border-radius: 14px;
-    padding: 0 20px;
-    font-size: 16px;
-    color: #462057;
-    outline: none;
-    background-color: #FFFFFF;
-    box-sizing: border-box;
-    transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+  height: 56px;
+  border: 1px solid #dcc9e2;
+  border-radius: 14px;
+  padding: 0 20px;
+  font-size: 16px;
+  color: #462057;
+  outline: none;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
 }
-  
+
 .form-group input:focus {
-    border-color: #7A3A8E;
-    box-shadow: 0 0 0 3px rgba(122, 58, 142, 0.1);
+  border-color: #7a3a8e;
+  box-shadow: 0 0 0 3px rgba(122, 58, 142, 0.1);
 }
-  
+
 .form-group select {
-    width: 100%;
-    height: 56px;
-    border: 1px solid #DCC9E2; 
-    border-radius: 14px;
-    padding: 0 20px;
-    font-size: 18px;
-    font-weight: bold;
-    color: #462057;
-    outline: none;
-    background-color: #FFFFFF;
-    cursor: pointer;
-    box-sizing: border-box;
-    appearance: none;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23462057' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
-    background-repeat: no-repeat;
-    background-position: right 20px center;
-    background-size: 18px;
+  width: 100%;
+  height: 56px;
+  border: 1px solid #dcc9e2;
+  border-radius: 14px;
+  padding: 0 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #462057;
+  outline: none;
+  background-color: #ffffff;
+  cursor: pointer;
+  box-sizing: border-box;
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23462057' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+  background-repeat: no-repeat;
+  background-position: right 20px center;
+  background-size: 18px;
 }
 
 .form-group select:focus {
-    border-color: #7A3A8E;
+  border-color: #7a3a8e;
 }
-  
+
 .input-opcional {
-    margin-bottom: 5px;
+  margin-bottom: 5px;
 }
-  
+
 .label-opcional {
-    align-self: flex-end;
-    font-size: 13px;
-    font-weight: bold;
-    color: #462057;
-    margin-top: 6px;
+  align-self: flex-end;
+  font-size: 13px;
+  font-weight: bold;
+  color: #462057;
+  margin-top: 6px;
 }
-  
+
 .container-botao-enviar {
-    display: flex;
-    justify-content: center;
-    margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
 }
-  
+
 .btn-cadastro-submit {
-    width: 280px !important; 
-    height: 50px;
-    background-color: #7A3A8E !important; 
-    border-radius: 25px !important; 
-    font-size: 18px !important;
-    font-weight: bold;
-    color: #FFFFFF !important;
-    border: none;
-    cursor: pointer;
-    transition: transform 0.2s, background-color 0.2s;
+  width: 280px !important;
+  height: 50px;
+  background-color: #7a3a8e !important;
+  border-radius: 25px !important;
+  font-size: 18px !important;
+  font-weight: bold;
+  color: #ffffff !important;
+  border: none;
+  cursor: pointer;
+  transition:
+    transform 0.2s,
+    background-color 0.2s;
 }
-  
+
 .btn-cadastro-submit:hover {
-    background-color: #522566 !important; 
-    transform: scale(1.02);
+  background-color: #522566 !important;
+  transform: scale(1.02);
 }
 
 @media (max-width: 992px) {
-    .cadastro-card {
-        padding: 50px 40px;
-    }
+  .cadastro-card {
+    padding: 50px 40px;
+  }
 }
 
 @media (max-width: 768px) {
-    .cadastro-main-content {
-        padding: 30px 15px;
-    }
+  .cadastro-main-content {
+    padding: 30px 15px;
+  }
 
-    .cadastro-card {
-        padding: 40px 25px;
-        border-radius: 20px;
-    }
-  
-    .cadastro-title {
-        font-size: 28px;
-    }
+  .cadastro-card {
+    padding: 40px 25px;
+    border-radius: 20px;
+  }
+
+  .cadastro-title {
+    font-size: 28px;
+  }
 }
-  
+
 @media (max-width: 480px) {
-    .cadastro-card {
-        padding: 30px 20px;
-    }
-  
-    .cadastro-title {
-        font-size: 24px;
-    }
-  
-    .btn-cadastro-submit {
-        width: 100% !important;
-    }
-}
-/* LIPAI_THEME_DARK_COMPONENT: regras específicas para pages/Admin/TelaPacienteCadastro/index.css. */
-:root[data-theme='dark'] #root .cadastro-page-container,
-:root[data-theme='dark'] #root .cadastro-main-content,
-:root[data-theme='dark'] #root .container-botao-enviar {
-  background-color: var(--lipai-background);
-  color: var(--lipai-text);
-}
-:root[data-theme='dark'] #root .cadastro-card,
-:root[data-theme='dark'] #root .cadastro-form,
-:root[data-theme='dark'] #root .form-group {
-  background-color: var(--lipai-surface);
-  border-color: var(--lipai-border);
-}
-:root[data-theme='dark'] #root .cadastro-title,
-:root[data-theme='dark'] #root .label-opcional {
-  color: var(--lipai-text);
-}
+  .cadastro-card {
+    padding: 30px 20px;
+  }
 
+  .cadastro-title {
+    font-size: 24px;
+  }
 
-/* Refinamento de contornos — cadastro administrativo no modo escuro. */
-:root[data-theme='dark'] #root .cadastro-card {
-  background: linear-gradient(145deg, #23182c, #1c1424) !important;
-  border: 0 !important;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18) !important;
-}
-
-:root[data-theme='dark'] #root :is(.cadastro-form, .form-group, .container-botao-enviar) {
-  background: transparent !important;
-  border: 0 !important;
-}
-
-:root[data-theme='dark'] #root :is(
-  .form-group input[type="text"], .form-group input[type="email"],
-  .form-group input[type="password"], .form-group select
-) {
-  border: 0 !important;
-  background-color: #17111e !important;
-  box-shadow: inset 0 0 0 1px rgba(239, 220, 249, 0.24) !important;
-}
-
-:root[data-theme='dark'] #root :is(
-  .form-group input[type="text"], .form-group input[type="email"],
-  .form-group input[type="password"], .form-group select
-):focus {
-  box-shadow: inset 0 0 0 1px #e4b4fa, 0 0 0 3px rgba(208, 128, 246, 0.22) !important;
+  .btn-cadastro-submit {
+    width: 100% !important;
+  }
 }

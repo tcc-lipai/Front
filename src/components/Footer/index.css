@@ -1,7 +1,7 @@
 .footer {
-  background-color: #ffffff; 
-  padding: 60px 0 0; 
-  font-family: 'Poppins', sans-serif;
+  background-color: #ffffff;
+  padding: 60px 0 0;
+  font-family: "Poppins", sans-serif;
 }
 
 .footer__container {
@@ -26,18 +26,18 @@
 }
 
 .footer__logo span {
-  color: #7A3A8E;
+  color: #7a3a8e;
 }
 
 .footer__brand-col p {
   font-size: 0.85rem;
   font-weight: 700;
-  color: #7A3A8E;
+  color: #7a3a8e;
   margin-bottom: 30px;
 }
 
 .footer__nav {
-  border-top: 2px solid #9ca3af; 
+  border-top: 2px solid #9ca3af;
   padding-top: 15px;
   max-width: 400px;
 }
@@ -104,19 +104,19 @@
 }
 
 .footer__social-icons a:hover {
-  background-color: #7A3A8E;
-  border-color: #7A3A8E;
+  background-color: #7a3a8e;
+  border-color: #7a3a8e;
   color: #fff;
 }
 
 .footer__social-col span {
   font-weight: 800;
-  color: #7A3A8E;
+  color: #7a3a8e;
   font-size: 1.1rem;
 }
 
 .footer__bottom {
-  background-color: #7A3A8E;
+  background-color: #7a3a8e;
   padding: 15px 0;
   text-align: center;
 }
@@ -140,68 +140,4 @@
   .footer__nav ul {
     justify-content: center;
   }
-}
-/* LIPAI_THEME_DARK_COMPONENT: regras específicas para components/Footer/index.css. */
-:root[data-theme='dark'] #root .footer__container {
-  background-color: var(--lipai-background);
-  color: var(--lipai-text);
-}
-:root[data-theme='dark'] #root .footer__contact-item {
-  background-color: var(--lipai-surface);
-  border-color: var(--lipai-border);
-}
-
-:root[data-theme='dark'] #root .footer {
-  background: var(--lipai-background) !important;
-}
-
-:root[data-theme='dark'] #root .footer__container {
-  background: var(--lipai-background) !important;
-}
-
-:root[data-theme='dark'] #root .footer__nav ul li a,
-:root[data-theme='dark'] #root .footer__contact-item h4,
-:root[data-theme='dark'] #root .footer__contact-item p,
-:root[data-theme='dark'] #root .footer__social-icons a {
-  color: var(--lipai-text);
-}
-
-:root[data-theme='dark'] #root .footer__nav,
-:root[data-theme='dark'] #root .footer__social-icons a {
-  border-color: var(--lipai-border);
-}
-
-
-/* Correção de acessibilidade visual — rodapé no modo escuro. */
-:root[data-theme='dark'] #root .footer,
-:root[data-theme='dark'] #root .footer__container {
-  background: #140e19 !important;
-}
-
-:root[data-theme='dark'] #root .footer__logo {
-  color: #fffaff !important;
-}
-
-:root[data-theme='dark'] #root .footer__logo span,
-:root[data-theme='dark'] #root .footer__brand-col p,
-:root[data-theme='dark'] #root .footer__social-col span {
-  color: #e3a8ff !important;
-}
-
-:root[data-theme='dark'] #root :is(.footer__nav ul li a, .footer__contact-item h4) {
-  color: #fffaff !important;
-}
-
-:root[data-theme='dark'] #root .footer__contact-item p {
-  color: #e2d6e8 !important;
-  opacity: 1 !important;
-}
-
-:root[data-theme='dark'] #root .footer__nav,
-:root[data-theme='dark'] #root .footer__social-icons a {
-  border-color: var(--lipai-border-strong) !important;
-}
-
-:root[data-theme='dark'] #root .footer__social-icons a {
-  color: #fffaff !important;
 }

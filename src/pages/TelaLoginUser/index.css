@@ -156,12 +156,15 @@
   background: #f9f6fa;
   padding: 0 22px;
   font-size: 15px;
-    font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 
   color: #333333;
   outline: none;
   box-sizing: border-box;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
 }
 
 .input-group input::placeholder {
@@ -310,79 +313,4 @@
     height: 52px;
     font-size: 14px;
   }
-}
-/* LIPAI_THEME_DARK_COMPONENT: regras específicas para pages/TelaLoginUser/index.css. */
-:root[data-theme='dark'] #root .login-page,
-:root[data-theme='dark'] #root .login-container,
-:root[data-theme='dark'] #root .btn-container {
-  background-color: var(--lipai-background);
-  color: var(--lipai-text);
-}
-:root[data-theme='dark'] #root .form-scroll {
-  background-color: var(--lipai-surface);
-  border-color: var(--lipai-border);
-}
-:root[data-theme='dark'] #root .subtitle,
-:root[data-theme='dark'] #root .helper-text,
-:root[data-theme='dark'] #root .helper-text-erro {
-  color: var(--lipai-text);
-}
-:root[data-theme='dark'] #root .subtitle,
-:root[data-theme='dark'] #root .helper-text,
-:root[data-theme='dark'] #root .helper-text-erro {
-  color: var(--lipai-text-muted);
-}
-
-
-/* Correção de acessibilidade visual — Login no modo escuro. */
-:root[data-theme='dark'] #root .login-page {
-  background: var(--lipai-background) !important;
-}
-
-:root[data-theme='dark'] #root .login-container {
-  background: #211727 !important;
-  border: 1px solid var(--lipai-border-subtle);
-  box-shadow: var(--lipai-shadow);
-}
-
-:root[data-theme='dark'] #root .login-left,
-:root[data-theme='dark'] #root .form-scroll {
-  background: #211727 !important;
-}
-
-:root[data-theme='dark'] #root .login-left h1,
-:root[data-theme='dark'] #root .welcome-content h2 {
-  color: #fffaff !important;
-}
-
-:root[data-theme='dark'] #root :is(.subtitle, .helper-text, .google-login-area) {
-  color: #e2d6e8 !important;
-  opacity: 1 !important;
-}
-
-:root[data-theme='dark'] #root :is(.input-group input, .input-group select) {
-  background: #130d18 !important;
-  border: 1px solid var(--lipai-border-strong) !important;
-  color: #fffaff !important;
-}
-
-:root[data-theme='dark'] #root .input-group input::placeholder {
-  color: #c9b9d2 !important;
-  opacity: 1 !important;
-}
-
-:root[data-theme='dark'] #root :is(.input-group input, .input-group select):focus {
-  background: #1b1221 !important;
-  border-color: #e4b4fa !important;
-  box-shadow: 0 0 0 3px rgba(208, 128, 246, 0.30) !important;
-}
-
-:root[data-theme='dark'] #root .login-right {
-  background: linear-gradient(160deg, #6d328b 0%, #35113f 100%) !important;
-}
-
-:root[data-theme='dark'] #root .google-login-indisponivel {
-  background: #2a1d35;
-  border-color: var(--lipai-border-strong);
-  color: #e2d6e8;
 }

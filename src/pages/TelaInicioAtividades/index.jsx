@@ -4,9 +4,9 @@ import "./index.css";
 
 import Navbar from "../../components/Navbar";
 import Filtro from "../../components/Filtro";
-import InfoAtividade from "../../components/InfoAtividades/InfoAtividades";
+import InfoAtividade from "../../components/InfoAtividades";
 import Botao from "../../components/Botao";
-import { HeaderActions } from "../../components/infoEstrelas";
+import { HeaderActions } from "../../components/HeaderActions";
 import { UserProfileDrawer } from "../../components/UserProfileDrawer";
 
 import realizadas from "../../assets/img/realizadas.png";
@@ -22,31 +22,27 @@ const TelaInicioAtividades = () => {
     drawerAberto,
     abrirPerfil,
     fecharPerfil,
-    search,
-    setSearch,
-    difficulty,
-    setDifficulty,
+    busca,
+    setBusca,
+    dificuldade,
+    setDificuldade,
     status,
     setStatus,
-    toggleItem,
-    atividadesFiltradas
+    alternarItem,
+    atividadesFiltradas,
   } = useTelaInicioAtividades();
 
   const navigate = useNavigate();
 
-  const atividadesParaContinuar = atividadesFiltradas.filter(a => a.categoria === "continuar");
-  const atividadesRecomendadas = atividadesFiltradas.filter(a => a.categoria === "recomendada");
+  const atividadesParaContinuar = atividadesFiltradas.filter((a) => a.categoria === "continuar");
+  const atividadesRecomendadas = atividadesFiltradas.filter((a) => a.categoria === "recomendada");
 
   return (
-    <div
-      className="pagina-atividades"
-      style={{ backgroundImage: `url(${backgroundOnda})` }}
-    >
+    <div className="pagina-atividades" style={{ backgroundImage: `url(${backgroundOnda})` }}>
       <Navbar />
 
       <div className="conteudo">
         <section className="principal">
-
           <div className="topo-acoes">
             <div className="menu-espaco-placeholder"></div>
             <HeaderActions onOpenProfile={abrirPerfil} />
@@ -56,7 +52,11 @@ const TelaInicioAtividades = () => {
             <div className="banner-texto">
               <h1>Dicionário</h1>
               <p>
-                O dicionário da plataforma é uma ferramenta de apoio à leitura labial. Nele, você poderá pesquisar ou encontrar o nome de diferentes objetos e acessar um vídeo demonstrativo mostrando como realizar a leitura labial daquela palavra. Dessa forma, o recurso facilita o aprendizado e a prática da leitura labial de maneira visual e interativa.
+                O dicionário da plataforma é uma ferramenta de apoio à leitura labial. Nele, você
+                poderá pesquisar ou encontrar o nome de diferentes objetos e acessar um vídeo
+                demonstrativo mostrando como realizar a leitura labial daquela palavra. Dessa forma,
+                o recurso facilita o aprendizado e a prática da leitura labial de maneira visual e
+                interativa.
               </p>
               <Botao
                 texto="Testar"
@@ -127,13 +127,13 @@ const TelaInicioAtividades = () => {
         </section>
 
         <Filtro
-          search={search}
-          setSearch={setSearch}
-          difficulty={difficulty}
-          setDifficulty={setDifficulty}
+          busca={busca}
+          setBusca={setBusca}
+          dificuldade={dificuldade}
+          setDificuldade={setDificuldade}
           status={status}
           setStatus={setStatus}
-          toggleItem={toggleItem}
+          alternarItem={alternarItem}
         />
       </div>
 

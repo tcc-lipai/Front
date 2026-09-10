@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Navbar from "../../../components/Navbar_reta";
+import Navbar from "../../../components/NavbarVoltar";
 import Botao from "../../../components/Botao";
 import "./index.css";
 

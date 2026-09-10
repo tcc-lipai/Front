@@ -1,10 +1,10 @@
 .conquista-card {
-  width: 150px; 
-  background-color: #fcf8ff; 
+  width: 150px;
+  background-color: #fcf8ff;
   border-radius: 20px;
-  padding: 16px; 
-  box-shadow: 0px 4px 12px rgba(142, 68, 173, 0.06); 
-    font-family: 'Poppins', sans-serif;
+  padding: 16px;
+  box-shadow: 0px 4px 12px rgba(142, 68, 173, 0.06);
+  font-family: "Poppins", sans-serif;
 
   display: inline-flex;
   flex-direction: column;
@@ -14,10 +14,10 @@
 }
 
 .conquista-icon-container {
-  width: 54px; 
-  height: 54px; 
+  width: 54px;
+  height: 54px;
   border-radius: 50%;
-  background-color: #e8dbf3; 
+  background-color: #e8dbf3;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -25,22 +25,22 @@
 }
 
 .conquista-icon-img {
-  width: 30px; 
-  height: 30px; 
+  width: 30px;
+  height: 30px;
   object-fit: contain;
 }
 
 .conquista-title {
-  color: #462057; 
-  font-size: 15px; 
+  color: #462057;
+  font-size: 15px;
   font-weight: bold;
   margin: 0 0 4px 0;
   white-space: nowrap;
 }
 
 .conquista-subtitle {
-  color: #9b7fa6; 
-  font-size: 12px; 
+  color: #9b7fa6;
+  font-size: 12px;
   font-weight: 500;
   margin: 0;
 }

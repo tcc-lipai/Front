@@ -1,8 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom"; // <-- 1. Importando o useNavigate
 import { Bookmark, X } from "lucide-react"; // <-- 2. Importando o ícone de X
-import Navbar from "../../components/Navbar_reta"; 
-import InfoAtividade from "../../components/InfoAtividades/InfoAtividades"; 
+import Navbar from "../../components/NavbarVoltar";
+import InfoAtividade from "../../components/InfoAtividades";
 import { useTelaAtividadeSalva } from "./index.hook";
 import "./index.css";
 
@@ -20,25 +20,28 @@ function TelaAtividadeSalva() {
       <Navbar />
 
       <main className="tela-atividade-salva__painel">
-        
         {/* 5. Adicionando o botão de sair no cabeçalho */}
-        <header className="tela-atividade-salva__cabecalho" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <header
+          className="tela-atividade-salva__cabecalho"
+          style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
             <Bookmark size={24} />
             <h1 className="tela-atividade-salva__titulo">Atividades salvas</h1>
           </div>
-          
-          <button 
-            className="btn-fechar" 
-            onClick={handleSair} 
-            style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+
+          <button
+            className="btn-fechar"
+            onClick={handleSair}
+            style={{ background: "none", border: "none", cursor: "pointer" }}
           >
             <X size={32} color="#5B2D74" />
           </button>
         </header>
-        
+
         <p className="tela-atividade-salva__descricao">
-          Gerencie e continue as atividades que você salvou anteriormente para praticar sua leitura labial.
+          Gerencie e continue as atividades que você salvou anteriormente para praticar sua leitura
+          labial.
         </p>
 
         <div className="tela-atividade-salva__lista">

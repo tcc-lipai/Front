@@ -1,7 +1,7 @@
 import React from "react";
 import { Search, ChevronDown } from "lucide-react";
-import InfoAtividade from "../../../components/InfoAtividades/InfoAtividades";
-import NavbarAdmin from "../../../components/NavbarAdmin";
+import InfoAtividade from "../../../components/InfoAtividades";
+import Navbar, { NAV_ITENS_ADMIN } from "../../../components/Navbar";
 import { UserProfileDrawer } from "../../../components/UserProfileDrawer";
 import { useTelaAtividadesAdmin } from "./index.hook";
 import "./index.css";
@@ -21,7 +21,7 @@ const TelaAtividadesAdmin = () => {
 
   return (
     <div className="tela-atividades-admin">
-      <NavbarAdmin />
+      <Navbar itens={NAV_ITENS_ADMIN} />
 
       <main className="atividades-admin__conteudo">
         <h1 className="atividades-admin__titulo">Atividade</h1>
@@ -54,18 +54,12 @@ const TelaAtividadesAdmin = () => {
             ))}
 
             {atividadesVisiveis.length === 0 && (
-              <p className="atividades-admin__vazio">
-                Nenhuma atividade encontrada.
-              </p>
+              <p className="atividades-admin__vazio">Nenhuma atividade encontrada.</p>
             )}
           </div>
 
           {podeVerMais && (
-            <button
-              type="button"
-              className="atividades-admin__ver-mais"
-              onClick={handleVerMais}
-            >
+            <button type="button" className="atividades-admin__ver-mais" onClick={handleVerMais}>
               Ver mais
               <ChevronDown size={16} />
             </button>

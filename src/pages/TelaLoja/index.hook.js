@@ -1,15 +1,12 @@
 import { useMemo, useState } from "react";
-import { ITENS_LOJA_MOCK, filtrarItensPorBusca } from "./utils";
+import { ITENS_LOJA_MOCK, filtrarItensPorBusca } from "./index.utils";
 
 export function useTelaLoja() {
   const [busca, setBusca] = useState("");
   const [drawerAberto, setDrawerAberto] = useState(false);
 
   // Filtro memoizado por termo de pesquisa
-  const itensFiltrados = useMemo(
-    () => filtrarItensPorBusca(ITENS_LOJA_MOCK, busca),
-    [busca]
-  );
+  const itensFiltrados = useMemo(() => filtrarItensPorBusca(ITENS_LOJA_MOCK, busca), [busca]);
 
   const abrirPerfil = () => setDrawerAberto(true);
   const fecharPerfil = () => setDrawerAberto(false);

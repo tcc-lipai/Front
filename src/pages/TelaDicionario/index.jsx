@@ -1,7 +1,7 @@
 import React from "react";
 import { DicionarioCard } from "../../components/Dicionario";
 import Navbar from "../../components/Navbar";
-import { HeaderActions } from "../../components/infoEstrelas";
+import { HeaderActions } from "../../components/HeaderActions";
 import Botao from "../../components/Botao";
 import { UserProfileDrawer } from "../../components/UserProfileDrawer";
 import "./index.css";
@@ -10,7 +10,6 @@ import { useTelaDicionario } from "./index.hook";
 
 import backgroundOnda from "../../assets/img/background_onda.png";
 
-
 const TelaDicionario = () => {
   const {
     categoriaAtiva,
@@ -18,16 +17,13 @@ const TelaDicionario = () => {
     cardsFiltrados,
     drawerAberto,
     abrirPerfil,
-    fecharPerfil
+    fecharPerfil,
   } = useTelaDicionario();
 
   const categorias = ["Comida", "Escola", "Trabalho", "Natureza", "Saudações"];
 
   return (
-    <div
-      className="tela-dicionario"
-      style={{ backgroundImage: `url(${backgroundOnda})` }}
-    >
+    <div className="tela-dicionario" style={{ backgroundImage: `url(${backgroundOnda})` }}>
       <Navbar />
 
       <main className="tela-dicionario__conteudo">
@@ -49,10 +45,8 @@ const TelaDicionario = () => {
                   key={cat}
                   texto={cat}
                   onClick={() => setCategoriaAtiva(cat)}
-                  className={`btn-filter ${isActive ? "btn-active" : "btn-inactive"}`}
-                  corFundo={isActive ? "#9c8cb9" : "transparent"}
-                  corTexto={isActive ? "#ffffff" : "#4a1565"}
-                  corBorda="#4a1565"
+                  variante={isActive ? "primario" : "secundario"}
+                  className="btn-filter"
                 />
               );
             })}
@@ -61,10 +55,7 @@ const TelaDicionario = () => {
           <div className="tela-dicionario__grid">
             {cardsFiltrados.map((card) => (
               <div className="tela-dicionario__grid-item" key={card.id}>
-                <DicionarioCard
-                  titulo={card.titulo}
-                  descricao={card.descricao}
-                />
+                <DicionarioCard titulo={card.titulo} descricao={card.descricao} />
               </div>
             ))}
 

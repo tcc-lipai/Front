@@ -1,0 +1,294 @@
+/* ==========================================================================
+   Tema escuro central do LipAI
+   --------------------------------------------------------------------------
+   Antes o modo escuro era feito com ~540 linhas espalhadas em 28 arquivos
+   CSS, cada um com um roxo/cinza diferente. Agora fica tudo aqui, usando só
+   os tokens de src/index.css (var(--lipai-*)).
+
+   Este arquivo cuida do tema ESCURO no nível estrutural (fundos, superfícies,
+   campos, texto). As telas definem o tema CLARO livremente; ajustes finos de
+   uma tela específica no escuro podem viver no CSS dela, sempre com tokens.
+
+   O `!important` aqui é proposital: é uma camada de tema que precisa vencer
+   o CSS legado das telas (que usa cores fixas e, às vezes, `!important`).
+   ========================================================================== */
+
+/* ---- Fundo de página / wrappers de tela ------------------------------- */
+:root[data-theme="dark"]
+  :is(
+    .dashboard-wrapper,
+    .tela-loja,
+    .tela-dicionario,
+    .tela-acompanhante,
+    .tela-atividade-salva,
+    .tela-atividades-admin,
+    .pagina-atividades,
+    .container-atividade,
+    .container-tela-conquistas,
+    .container-notificacoes,
+    .perfil-page-container,
+    .configuracoes-page-container,
+    .cadastro-page,
+    .cadastro-page-container,
+    .login-page,
+    .page-layout,
+    .atividade-overlay,
+    .atividade-detalhe-page-container,
+    .paciente-page-container,
+    .lista-usuarios
+  ) {
+  background-color: var(--lipai-bg) !important;
+  background-image: none !important;
+  color: var(--lipai-text);
+}
+
+/* elementos puramente decorativos (ondas SVG, brilhos, círculos, gradientes) */
+:root[data-theme="dark"] :is(.bg-waves, .bg-circle, .bg-triangle) {
+  opacity: 0.1 !important;
+  filter: grayscale(1);
+}
+
+/* A landing page é marketing pré-login, com design próprio: roda sempre no
+   tema claro, mesmo com o app no escuro. */
+:root[data-theme="dark"] .landing {
+  --lipai-bg: #f6f2fb;
+  --lipai-surface: #ffffff;
+  --lipai-surface-2: #f5eefb;
+  --lipai-field: #ffffff;
+  --lipai-border: #e7dcf1;
+  --lipai-text: #241033;
+  --lipai-text-muted: #6f6377;
+  --lipai-primary: #7a3a8e;
+  --lipai-on-primary: #ffffff;
+  color-scheme: light;
+}
+
+/* ---- Superfícies (cards, painéis, modais, drawers) -------------------- */
+:root[data-theme="dark"]
+  :is(
+    .card-section,
+    .activity-card,
+    .card-progresso,
+    .banner,
+    .tela-loja__painel,
+    .tela-dicionario__painel,
+    .tela-atividade-salva__painel,
+    .atividades-admin__painel,
+    .box-conquistas,
+    .conquista-card,
+    .info-atividade,
+    .card-exercicio,
+    .card-usuario,
+    .card-produto-figma,
+    .dicionario-container,
+    .card-contato,
+    .card-notificacao,
+    .config-card,
+    .config-card-wide,
+    .cadastro-card,
+    .login-container,
+    .cadastro-container,
+    .lista-usuarios__container,
+    .paciente-card-background,
+    .atividade-detalhe-card-background,
+    .conteudo-atividade,
+    .atividade-container,
+    .frase-container,
+    .modal-container,
+    .licao-modal,
+    .feedback-container,
+    .logout-modal,
+    .drawer-container,
+    .navbar-drawer,
+    .sidebar-container,
+    .filter,
+    .ta-dicionario,
+    .ta-como-funciona,
+    .ta-carousel__card,
+    .ta-ver-atividades
+  ) {
+  background-color: var(--lipai-surface) !important;
+  background-image: none !important;
+  border-color: var(--lipai-border);
+  box-shadow: var(--lipai-shadow);
+  color: var(--lipai-text);
+}
+
+/* superfícies internas / sutis (chips neutros, trilhas, campos de busca) */
+:root[data-theme="dark"]
+  :is(
+    .strike-day,
+    .perf-track,
+    .video-placeholder,
+    .video-container,
+    .dicionario-video-placeholder,
+    .info-atividade__progresso-trilha,
+    .barra-trilho-fundo,
+    .card-icone-placeholder-figma,
+    .tela-loja__busca,
+    .busca-input-wrapper,
+    .lista-usuarios__pesquisa,
+    .atividades-admin__busca,
+    .fala-box,
+    .option-item,
+    .star-counter,
+    .container-filtros,
+    .frase-container
+  ) {
+  background-color: var(--lipai-surface-2) !important;
+  border-color: var(--lipai-border);
+  color: var(--lipai-text);
+}
+
+/* ---- Overlays de modal / drawer ------------------------------------- */
+:root[data-theme="dark"]
+  :is(
+    .modal-overlay,
+    .licao-overlay,
+    .feedback-overlay,
+    .logout-modal-overlay,
+    .drawer-overlay,
+    .navbar-drawer-overlay,
+    .sidebar-overlay,
+    .filter-overlay,
+    .navbar-lp__overlay
+  ) {
+  background-color: var(--lipai-overlay) !important;
+}
+
+/* ---- Campos de formulário ------------------------------------------- */
+:root[data-theme="dark"]
+  :is(input, textarea, select):not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
+  background-color: var(--lipai-field) !important;
+  border-color: var(--lipai-border) !important;
+  color: var(--lipai-text) !important;
+}
+
+:root[data-theme="dark"] input::placeholder,
+:root[data-theme="dark"] textarea::placeholder {
+  color: var(--lipai-text-muted);
+  opacity: 1;
+}
+
+:root[data-theme="dark"] :is(input, textarea, select):focus {
+  border-color: var(--lipai-primary) !important;
+  outline-color: var(--lipai-primary);
+}
+
+/* ---- Texto -----------------------------------------------------------
+   No escuro, texto de conteúdo vira claro por padrão. Elementos coloridos
+   de propósito (badges, tags, botões, chips) ficam de fora. */
+:root[data-theme="dark"] :is(h1, h2, h3, h4, h5, h6, p, label, strong, li, th, td):not(.landing *),
+:root[data-theme="dark"]
+  span:not([class*="badge"]):not([class*="tag"]):not([class*="btn"]):not([class*="chip"]):not(
+    [class*="dot"]
+  ):not([class*="estrela"]):not(.landing *) {
+  color: var(--lipai-text);
+}
+
+/* textos secundários conhecidos */
+:root[data-theme="dark"]
+  :is(
+    .section-subtitle,
+    .activity-desc,
+    .perf-label,
+    .perf-value,
+    .tela-loja__descricao,
+    .tela-dicionario__descricao,
+    .info-atividade__descricao,
+    .card-usuario__descricao,
+    .card-descricao-figma,
+    .config-card-description,
+    .subtitle,
+    .form-subtitle,
+    .helper-text,
+    .perfil-status,
+    .licao-subtitle,
+    .drawer-details,
+    .user-email,
+    .tela-loja__vazio,
+    .tela-dicionario__vazio,
+    .tela-atividade-salva__descricao,
+    .paciente-descricao
+  ) {
+  color: var(--lipai-text-muted) !important;
+}
+
+/* links / botões de texto */
+:root[data-theme="dark"]
+  :is(
+    a:not([class*="btn"]),
+    .ver-mais-btn,
+    .lista-usuarios__ver-mais,
+    .atividades-admin__ver-mais
+  ):not(.landing *) {
+  color: var(--lipai-primary);
+}
+
+/* ---- Acentos de marca --------------------------------------------- */
+:root[data-theme="dark"] .strike-day--active {
+  background-color: var(--lipai-primary) !important;
+  border-color: var(--lipai-primary) !important;
+}
+:root[data-theme="dark"] .strike-day--active :is(.strike-month, .strike-num) {
+  color: var(--lipai-on-primary);
+}
+
+/* barra lateral do aluno (Navbar) */
+:root[data-theme="dark"] .navbar-container {
+  background-color: var(--lipai-surface) !important;
+  border: 1px solid var(--lipai-border);
+}
+:root[data-theme="dark"] .nav-item {
+  color: var(--lipai-text-muted);
+}
+:root[data-theme="dark"] :is(.nav-item:hover, .nav-item.active) {
+  background-color: var(--lipai-primary-soft);
+  color: var(--lipai-primary);
+}
+:root[data-theme="dark"] .navbar-hamburguer {
+  background-color: var(--lipai-primary) !important;
+  color: var(--lipai-on-primary);
+}
+
+/* menu lateral do perfil */
+:root[data-theme="dark"] .sidebar-menu-item {
+  color: var(--lipai-text-muted);
+}
+:root[data-theme="dark"] .sidebar-menu-item-active {
+  background-color: var(--lipai-primary-soft) !important;
+  color: var(--lipai-primary) !important;
+}
+
+/* toggle de notificações (lidas / não lidas) */
+:root[data-theme="dark"] .btn-filtro {
+  color: var(--lipai-text-muted);
+}
+:root[data-theme="dark"] .btn-filtro.ativo {
+  background-color: var(--lipai-surface) !important;
+  color: var(--lipai-text);
+}
+
+/* cabeçalho roxo da tela de notificações */
+:root[data-theme="dark"] .header-notificacoes {
+  background-color: var(--lipai-surface) !important;
+  border-bottom: 1px solid var(--lipai-border);
+}
+
+/* preenchimentos roxos de progresso */
+:root[data-theme="dark"]
+  :is(
+    .perf-fill,
+    .info-atividade__progresso-preenchido,
+    .barra-preenchimento,
+    .progresso,
+    .progress-circle-bar
+  ) {
+  background-color: var(--lipai-primary) !important;
+}
+
+/* divisórias */
+:root[data-theme="dark"] :is(hr, .divider, .linha-divisoria, .divisoria) {
+  background-color: var(--lipai-border) !important;
+  border-color: var(--lipai-border) !important;
+}

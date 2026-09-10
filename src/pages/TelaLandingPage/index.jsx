@@ -1,7 +1,7 @@
 import React from "react";
 // 1. Importamos o useNavigate para as rotas
-import { useNavigate } from "react-router-dom"; 
-import NavbarLandingPage from "../../components/Navbar-landingpage";
+import { useNavigate } from "react-router-dom";
+import NavbarLandingPage from "../../components/NavbarLandingPage";
 import Footer from "../../components/Footer";
 import "./index.css";
 
@@ -13,39 +13,39 @@ import evellynImg from "../../assets/img/Evellyn.jpg";
 import gabrielaImg from "../../assets/img/Gabriela.jpg";
 import gaelImg from "../../assets/img/Gael.jpg";
 import joaoImg from "../../assets/img/João.jpg";
-import angeloImg from "../../assets/img/Angelo.jpg"
+import angeloImg from "../../assets/img/Angelo.jpg";
 
-import inclusao_icon from "../../assets/img/inclusao_icon.png"
-import cerebroIcon from "../../assets/img/cerebro.png"
-import lipsIcon from "../../assets/img/lips.png"
-import lipsIconPurple from "../../assets/img/lips-purple.png"
-import aprendizado_icon from "../../assets/img/aprendizado_icon.png"
+import inclusao_icon from "../../assets/img/inclusao_icon.png";
+import cerebroIcon from "../../assets/img/cerebro.png";
+import lipsIcon from "../../assets/img/lips.png";
+import lipsIconPurple from "../../assets/img/lips-purple.png";
+import aprendizado_icon from "../../assets/img/aprendizado_icon.png";
 
 const membros = [
   {
     nome: "Angelo Ivon Domingues Tenório de Almeida",
     cargo: "Back-end e Front-end",
-    foto: angeloImg
+    foto: angeloImg,
   },
   {
     nome: "Arthur Gael Araújo Pinho de Almeida",
     cargo: "Back-end e Front-end",
-    foto: gaelImg
+    foto: gaelImg,
   },
   {
     nome: "Evellyn dos Santos Furtado",
     cargo: "Back-end e Front-end",
-    foto: evellynImg
+    foto: evellynImg,
   },
   {
     nome: "Gabriela Romano",
     cargo: "Back-end e Front-end",
-    foto: gabrielaImg
+    foto: gabrielaImg,
   },
   {
     nome: "João Paulo Souza Azevedo",
     cargo: "Back-end e Front-end",
-    foto: joaoImg
+    foto: joaoImg,
   },
 ];
 
@@ -61,24 +61,19 @@ const TelaLandingPage = () => {
 
   return (
     <div className="landing">
-      
       <NavbarLandingPage />
 
       <div className="landing__hero-wrapper">
-        
         <section className="landing__hero" id="home">
           <div className="landing__hero-text">
             <div className="landing__hero-logo">
               <span className="logo-lip">Lip</span>
               <span className="logo-ai">AI</span>
             </div>
-            <p className="landing__hero-subtitle">
-              Sistema de leitura labial e treinamento da voz
-            </p>
+            <p className="landing__hero-subtitle">Sistema de leitura labial e treinamento da voz</p>
             <p className="landing__hero-desc">
-              Este projeto tem como objetivo auxiliar pessoas surdas ou
-              surdo-mudas no desenvolvimento da comunicação por meio da
-              tecnologia.
+              Este projeto tem como objetivo auxiliar pessoas surdas ou surdo-mudas no
+              desenvolvimento da comunicação por meio da tecnologia.
             </p>
             {/* Adicionado onClick chamando a tela de Login */}
             <button className="landing__hero-btn" onClick={() => navigate("/login")}>
@@ -91,11 +86,8 @@ const TelaLandingPage = () => {
         </section>
 
         <div className="landing__hero-wave">
-          <svg viewBox="0 0 1440 200" preserveAspectRatio="none" >
-            <path
-              d="M0,80 C320,180 1120,0 1440,100 L1440,200 L0,200 Z"
-              fill="#7A3A8E"
-            />
+          <svg viewBox="0 0 1440 200" preserveAspectRatio="none">
+            <path d="M0,80 C320,180 1120,0 1440,100 L1440,200 L0,200 Z" fill="#7A3A8E" />
           </svg>
         </div>
 
@@ -105,32 +97,25 @@ const TelaLandingPage = () => {
               <img src={cerebroIcon} alt="" />
             </div>
             <h3>Aprendizado Interativo</h3>
-            <p>
-              Atividades dinâmicas que estimulam o aprendizado visual e cognitivo.
-            </p>
+            <p>Atividades dinâmicas que estimulam o aprendizado visual e cognitivo.</p>
           </div>
           <div className="landing__feature-card">
             <div className="feature-icon">
               <img src={lipsIcon} alt="" />
             </div>
             <h3>Leitura Labial</h3>
-            <p>
-              Treine a leitura labial com exercícios práticos e guiados.
-            </p>
+            <p>Treine a leitura labial com exercícios práticos e guiados.</p>
           </div>
           <div className="landing__features-wave">
             <svg viewBox="0 0 1440 150" preserveAspectRatio="none">
-              <path
-                d="M0,40 C360,140 1080,0 1440,80 L1440,150 L0,150 Z"
-                fill="#ede3f6"
-              />
+              <path d="M0,40 C360,140 1080,0 1440,80 L1440,150 L0,150 Z" fill="#ede3f6" />
             </svg>
           </div>
         </section>
       </div>
 
       <section className="landing__sobre" id="sobre">
-        <div className="landing__sobre-bg"></div> 
+        <div className="landing__sobre-bg"></div>
         <h2>Sobre o LipAI</h2>
         <div className="landing__sobre-content">
           <div className="landing__sobre-image">
@@ -148,7 +133,12 @@ const TelaLandingPage = () => {
               <div>
                 <h4>Leitura Labial Guiada</h4>
                 <p>
-                O LipAI oferece um sistema de treinamento focado no desenvolvimento da leitura labial, utilizando recursos visuais claros e exercícios interativos. Através de simulações e práticas progressivas, o usuário consegue aprimorar sua capacidade de interpretar movimentos labiais, facilitando a compreensão da comunicação no dia a dia.              </p>
+                  O LipAI oferece um sistema de treinamento focado no desenvolvimento da leitura
+                  labial, utilizando recursos visuais claros e exercícios interativos. Através de
+                  simulações e práticas progressivas, o usuário consegue aprimorar sua capacidade de
+                  interpretar movimentos labiais, facilitando a compreensão da comunicação no dia a
+                  dia.{" "}
+                </p>
               </div>
             </div>
 
@@ -159,18 +149,26 @@ const TelaLandingPage = () => {
               <div>
                 <h4>Inclusão e Acessibilidade</h4>
                 <p>
-                Desenvolvido com foco em acessibilidade, o LipAI busca reduzir barreiras de comunicação enfrentadas por pessoas surdas. A plataforma foi projetada para ser intuitiva, inclusiva e adaptada às necessidades desse público, promovendo autonomia, integração social e acesso mais igualitário à educação digital.</p>
+                  Desenvolvido com foco em acessibilidade, o LipAI busca reduzir barreiras de
+                  comunicação enfrentadas por pessoas surdas. A plataforma foi projetada para ser
+                  intuitiva, inclusiva e adaptada às necessidades desse público, promovendo
+                  autonomia, integração social e acesso mais igualitário à educação digital.
+                </p>
               </div>
             </div>
 
             <div className="benefit-item">
               <div className="benefit-icon">
-                <img src={aprendizado_icon} alt="" /> 
+                <img src={aprendizado_icon} alt="" />
               </div>
               <div>
                 <h4>Aprendizado Interativo</h4>
                 <p>
-                A plataforma utiliza uma abordagem dinâmica e interativa, inspirada em métodos modernos de ensino digital. Com atividades práticas, feedback imediato e elementos visuais, o aprendizado se torna mais envolvente e eficiente, incentivando o progresso contínuo do usuário de forma leve e motivadora.                </p>
+                  A plataforma utiliza uma abordagem dinâmica e interativa, inspirada em métodos
+                  modernos de ensino digital. Com atividades práticas, feedback imediato e elementos
+                  visuais, o aprendizado se torna mais envolvente e eficiente, incentivando o
+                  progresso contínuo do usuário de forma leve e motivadora.{" "}
+                </p>
               </div>
             </div>
           </div>
@@ -187,29 +185,28 @@ const TelaLandingPage = () => {
 
           <div className="landing__cta-text">
             <h2>
-              Preparado? Vamos começar com <span>LipAI</span><br />
-              e ter uma experiência incrível!
+              Preparado? Vamos começar com <span>LipAI</span>
+              <br />e ter uma experiência incrível!
             </h2>
 
             <p>
-              Explore uma nova forma de comunicação com tecnologia acessível e
-              intuitiva. Comece agora e evolua no seu ritmo.
+              Explore uma nova forma de comunicação com tecnologia acessível e intuitiva. Comece
+              agora e evolua no seu ritmo.
             </p>
 
             <div className="landing__cta-buttons">
               {/* Faz a página rolar suavemente até a seção de "Sobre" */}
-              <button 
+              <button
                 className="landing__cta-btn"
-                onClick={() => document.getElementById("sobre").scrollIntoView({ behavior: "smooth" })}
+                onClick={() =>
+                  document.getElementById("sobre").scrollIntoView({ behavior: "smooth" })
+                }
               >
                 Saiba mais
               </button>
 
               {/* Redireciona para o Login */}
-              <button 
-                className="landing__cta-btn-acessar" 
-                onClick={() => navigate("/login")}
-              >
+              <button className="landing__cta-btn-acessar" onClick={() => navigate("/login")}>
                 Acessar aqui
               </button>
             </div>
@@ -234,7 +231,7 @@ const TelaLandingPage = () => {
       <section className="landing__contato" id="contato">
         <div className="landing__contato-container">
           <h2>Contato:</h2>
-          
+
           {/* Adicionando o onSubmit no formulário e "required" nos campos obrigatórios */}
           <form className="landing__contato-form" onSubmit={handleContatoSubmit}>
             <div className="form-row">
@@ -255,7 +252,6 @@ const TelaLandingPage = () => {
               <button type="submit">Enviar</button>
             </div>
           </form>
-
         </div>
       </section>
 

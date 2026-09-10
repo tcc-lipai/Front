@@ -1,18 +1,17 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { X } from 'lucide-react';
-import { NAV_ITEMS } from '../Navbar/index.types';
-import { useNavbarDrawer } from './index.hook';
-import './index.css';
+import { NavLink } from "react-router-dom";
+import { X } from "lucide-react";
+import { NAV_ITENS_ALUNO } from "../Navbar/index.types";
+import { useNavbarDrawer } from "./index.hook";
+import "./index.css";
 
-export const NavbarDrawer = ({ isOpen, onClose }) => {
+export const NavbarDrawer = ({ isOpen, onClose, itens = NAV_ITENS_ALUNO }) => {
   useNavbarDrawer(isOpen, onClose);
 
   return (
     <>
       {isOpen && <div className="navbar-drawer-overlay" onClick={onClose} />}
 
-      <nav className={`navbar-drawer ${isOpen ? 'open' : ''}`}>
+      <nav className={`navbar-drawer ${isOpen ? "open" : ""}`}>
         <div className="navbar-drawer-header">
           <span className="navbar-drawer-titulo">Menu</span>
           <button
@@ -26,16 +25,14 @@ export const NavbarDrawer = ({ isOpen, onClose }) => {
         </div>
 
         <div className="navbar-drawer-itens">
-          {NAV_ITEMS.map((item, index) => {
+          {itens.map((item) => {
             const Icon = item.icon;
             return (
               <NavLink
-                key={index}
+                key={item.path}
                 to={item.path}
                 onClick={onClose}
-                className={({ isActive }) =>
-                  `navbar-drawer-item ${isActive ? 'active' : ''}`
-                }
+                className={({ isActive }) => `navbar-drawer-item ${isActive ? "active" : ""}`}
               >
                 <Icon className="navbar-drawer-icon" size={20} />
                 <span>{item.label}</span>

@@ -6,8 +6,7 @@
   background-position: right bottom;
   background-size: 100% 100%;
   background-attachment: fixed;
-  font-family: 'Poppins', sans-serif;
-
+  font-family: "Poppins", sans-serif;
 }
 
 .dashboard-main {
@@ -175,7 +174,7 @@
 .activity-title {
   font-size: 0.95rem;
   font-weight: 700;
-  color: #7A3A8E;
+  color: #7a3a8e;
   margin: 0;
 }
 
@@ -207,7 +206,7 @@
 .ver-mais-btn {
   background: none;
   border: none;
-  color: #7A3A8E;
+  color: #7a3a8e;
   font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
@@ -299,7 +298,7 @@
   }
 
   .dashboard-header {
-    padding-left: 56px; 
+    padding-left: 56px;
   }
 
   .dashboard-title {
@@ -327,14 +326,14 @@
 @media (max-width: 480px) {
   .dashboard-main {
     margin-left: 0px;
-    padding: 20px 12px 32px 12px; 
+    padding: 20px 12px 32px 12px;
   }
 
   .dashboard-header {
-    flex-direction: row; 
-    flex-wrap: wrap; 
-    align-items: center; 
-    padding-left: 56px; 
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    padding-left: 56px;
     gap: 12px;
   }
 
@@ -393,15 +392,15 @@
 
 @media (max-width: 350px) {
   .dashboard-header {
-    flex-direction: row; 
-    align-items: center;   
-    padding-left: 0;      
-    padding-top: 60px;     
+    flex-direction: row;
+    align-items: center;
+    padding-left: 0;
+    padding-top: 60px;
     gap: 16px;
   }
 
   .conquistas-grid {
-    grid-template-columns: 1fr; 
+    grid-template-columns: 1fr;
   }
 }
 

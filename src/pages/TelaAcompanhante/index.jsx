@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RedesSociais from "../../components/RedesSociais";
-import { HeaderActions } from "../../components/infoEstrelas";
-import InfoAtividades from "../../components/InfoAtividades/InfoAtividades";
+import { HeaderActions } from "../../components/HeaderActions";
+import InfoAtividades from "../../components/InfoAtividades";
 import Navbar from "../../components/Navbar";
 import { UserProfileDrawer } from "../../components/UserProfileDrawer";
 import Bia from "../../assets/img/Bia.png";
 import biaAcompanhante from "../../assets/img/biaAcompanhante.png";
 import "./index.css";
 
-import backgroundOnda from "../../assets/img/background_onda.png"
+import backgroundOnda from "../../assets/img/background_onda.png";
 
 import { useTelaAcompanhante } from "./index.hook";
 import Botao from "../../components/Botao";
@@ -48,11 +48,7 @@ const TelaAcompanhante = () => {
   };
 
   return (
-    <div
-      className="tela-acompanhante"
-      style={{ backgroundImage: `url(${backgroundOnda})` }}
-    >
-
+    <div className="tela-acompanhante" style={{ backgroundImage: `url(${backgroundOnda})` }}>
       <Navbar />
 
       <header className="ta-header">
@@ -63,9 +59,14 @@ const TelaAcompanhante = () => {
         <div className="ta-dicionario__content">
           <h2 className="ta-dicionario__title">Dicionário</h2>
           <p className="ta-dicionario__text">
-            O dicionário da plataforma é uma ferramenta de apoio à leitura labial. Nele, você poderá pesquisar ou encontrar o nome de diferentes objetos e acessar um vídeo demonstrativo mostrando como realizar a leitura labial daquela palavra. Dessa forma, o recurso facilita o aprendizado e a prática da leitura labial de maneira visual e interativa.
+            O dicionário da plataforma é uma ferramenta de apoio à leitura labial. Nele, você poderá
+            pesquisar ou encontrar o nome de diferentes objetos e acessar um vídeo demonstrativo
+            mostrando como realizar a leitura labial daquela palavra. Dessa forma, o recurso
+            facilita o aprendizado e a prática da leitura labial de maneira visual e interativa.
           </p>
-          <button className="ta-dicionario__btn" onClick={() => navigate("/dicionario")}>Testar</button>
+          <button className="ta-dicionario__btn" onClick={() => navigate("/dicionario")}>
+            Testar
+          </button>
         </div>
         <div className="ta-dicionario__illustration">
           <img src={Bia} alt="Bia" />
@@ -79,8 +80,13 @@ const TelaAcompanhante = () => {
         <div className="ta-como-funciona__content">
           <h2 className="ta-como-funciona__title">Como Funciona?</h2>
           <p className="ta-como-funciona__text">
-            O acompanhante é um recurso de apoio desenvolvido para auxiliar a criança durante os níveis iniciais da aprendizagem. Ele atua como um suporte durante os exercícios, acompanhando seus movimentos e oferecendo estímulos, como vibrações e orientações, para facilitar a compreensão dos comandos e a realização das tarefas. Dessa forma, a criança consegue desenvolver suas habilidades de forma mais segura, interativa e adaptada ao seu ritmo de aprendizado, contando com um auxílio extra durante as primeiras etapas da experiência.
-
+            O acompanhante é um recurso de apoio desenvolvido para auxiliar a criança durante os
+            níveis iniciais da aprendizagem. Ele atua como um suporte durante os exercícios,
+            acompanhando seus movimentos e oferecendo estímulos, como vibrações e orientações, para
+            facilitar a compreensão dos comandos e a realização das tarefas. Dessa forma, a criança
+            consegue desenvolver suas habilidades de forma mais segura, interativa e adaptada ao seu
+            ritmo de aprendizado, contando com um auxílio extra durante as primeiras etapas da
+            experiência.
           </p>
         </div>
       </section>
@@ -141,8 +147,8 @@ const TelaAcompanhante = () => {
           <span className="ta-ver-atividades__tag">Continue evoluindo</span>
           <h2 className="ta-ver-atividades__title">Pronto para praticar?</h2>
           <p className="ta-ver-atividades__text">
-            Veja as próximas atividades disponíveis e continue avançando
-            no seu aprendizado de leitura labial.
+            Veja as próximas atividades disponíveis e continue avançando no seu aprendizado de
+            leitura labial.
           </p>
           <Botao
             texto="Ver atividades"

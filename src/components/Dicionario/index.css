@@ -8,11 +8,13 @@
   width: 280px;
   height: 260px;
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   overflow: visible;
   cursor: pointer;
   box-shadow: 0 4px 14px rgba(156, 140, 185, 0.15);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .dicionario-container:hover {
@@ -26,7 +28,7 @@
   top: 15px;
   bottom: 45px;
   width: 5px;
-  background-color: #7A3A8E;
+  background-color: #7a3a8e;
   border-radius: 8px;
   z-index: 1;
 }
@@ -111,45 +113,4 @@
 .dicionario-container:focus-within {
   outline: 3px solid #7a3a8e;
   outline-offset: 3px;
-}
-
-/* Tema escuro específico do cartão de dicionário. */
-:root[data-theme='dark'] #root .dicionario-container {
-  background: linear-gradient(145deg, #2a1d35 0%, #24182f 100%);
-  border-color: var(--lipai-border-subtle);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
-}
-
-:root[data-theme='dark'] #root .dicionario-container:hover {
-  border-color: rgba(214, 145, 242, 0.40);
-  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.25);
-}
-
-:root[data-theme='dark'] #root .dicionario-sidebar-detail {
-  background: linear-gradient(180deg, #d083f4, #8439ab);
-}
-
-:root[data-theme='dark'] #root .dicionario-video-placeholder {
-  background: #17111e;
-  border: 1px solid rgba(232, 208, 245, 0.08);
-}
-
-:root[data-theme='dark'] #root .placeholder-text {
-  color: #b99ac9;
-}
-
-:root[data-theme='dark'] #root .dicionario-text-container {
-  background: transparent;
-}
-
-:root[data-theme='dark'] #root .dicionario-title {
-  color: #ffffff;
-}
-
-:root[data-theme='dark'] #root .dicionario-description {
-  color: var(--lipai-text-muted);
-}
-
-:root[data-theme='dark'] #root .dicionario-video {
-  background: #100b15;
 }

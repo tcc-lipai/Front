@@ -1,5 +1,5 @@
-import React from 'react';
-import './index.css';
+import React from "react";
+import "./index.css";
 
 const Modal = ({ isOpen, onClose, onConfirm }) => {
   if (!isOpen) return null;
@@ -13,7 +13,7 @@ const Modal = ({ isOpen, onClose, onConfirm }) => {
 
         <h2 className="modal-title">Deseja mesmo sair da atividade?</h2>
         <p className="modal-subtitle">Tudo que você fez até agora não será salvo</p>
-        
+
         <div className="modal-actions">
           <button className="btn-back" onClick={onClose}>
             Voltar

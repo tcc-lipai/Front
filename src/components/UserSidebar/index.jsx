@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useUserSidebar } from './hook';
-import './index.css';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useUserSidebar } from "./index.hook";
+import "./index.css";
 
 export const UserSidebar = ({ activeSection, onSectionChange, onBackClick }) => {
   const { avatar, handleAvatarUpload } = useUserSidebar();
@@ -9,8 +9,8 @@ export const UserSidebar = ({ activeSection, onSectionChange, onBackClick }) => 
   const navigate = useNavigate();
 
   const user = {
-    name: 'User Silva Santos',
-    avatarUrl: ''
+    name: "User Silva Santos",
+    avatarUrl: "",
   };
 
   const fotoExibida = avatar || user?.avatarUrl;
@@ -20,28 +20,28 @@ export const UserSidebar = ({ activeSection, onSectionChange, onBackClick }) => 
   };
 
   const irParaPerfil = () => {
-    onSectionChange('perfil');
+    onSectionChange("perfil");
     setIsMenuOpen(false);
   };
 
   const irParaConfiguracoes = () => {
-    onSectionChange('configuracoes');
+    onSectionChange("configuracoes");
     setIsMenuOpen(false);
   };
 
   return (
     <>
       <button className="sidebar-mobile-toggle" onClick={toggleMenu} aria-label="Abrir menu">
-        {isMenuOpen ? '✕' : '☰'}
+        {isMenuOpen ? "✕" : "☰"}
       </button>
 
       {isMenuOpen && <div className="sidebar-overlay" onClick={toggleMenu}></div>}
 
-      <aside className={`sidebar-container ${isMenuOpen ? 'open' : ''}`}>
+      <aside className={`sidebar-container ${isMenuOpen ? "open" : ""}`}>
         <div className="sidebar-header">
           <button
             className="sidebar-back-button"
-            onClick={onBackClick || (() => navigate('/dashboard'))}
+            onClick={onBackClick || (() => navigate("/dashboard"))}
             aria-label="Voltar"
           >
             ←
@@ -65,22 +65,22 @@ export const UserSidebar = ({ activeSection, onSectionChange, onBackClick }) => 
               id="avatar-input"
               accept="image/*"
               onChange={handleAvatarUpload}
-              style={{ display: 'none' }}
+              style={{ display: "none" }}
             />
           </label>
         </div>
 
-        <h2 className="sidebar-user-name">{user?.name || 'Usuário'}</h2>
+        <h2 className="sidebar-user-name">{user?.name || "Usuário"}</h2>
 
         <nav className="sidebar-menu-list">
           <button
-            className={`sidebar-menu-item ${activeSection === 'perfil' ? 'sidebar-menu-item-active' : ''}`}
+            className={`sidebar-menu-item ${activeSection === "perfil" ? "sidebar-menu-item-active" : ""}`}
             onClick={irParaPerfil}
           >
             Perfil
           </button>
           <button
-            className={`sidebar-menu-item ${activeSection === 'configuracoes' ? 'sidebar-menu-item-active' : ''}`}
+            className={`sidebar-menu-item ${activeSection === "configuracoes" ? "sidebar-menu-item-active" : ""}`}
             onClick={irParaConfiguracoes}
           >
             Configurações

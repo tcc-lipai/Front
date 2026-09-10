@@ -1,37 +1,32 @@
 import { useState } from "react";
 import "./index.css";
-import { difficulties, statusOptions } from "./types";
+import { DIFICULDADES, STATUS } from "./index.types";
 
 export default function Filtro({
-  search,
-  setSearch,
-  difficulty,
-  setDifficulty,
+  busca,
+  setBusca,
+  dificuldade,
+  setDificuldade,
   status,
   setStatus,
-  toggleItem,
+  alternarItem,
 }) {
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const [openDifficulty, setOpenDifficulty] = useState(true);
-  const [openStatus, setOpenStatus] = useState(true);
+  const [abertoMobile, setAbertoMobile] = useState(false);
+  const [abertoDificuldade, setAbertoDificuldade] = useState(true);
+  const [abertoStatus, setAbertoStatus] = useState(true);
 
   return (
     <>
-      <button 
-        className="btn-filtro-flutuante"
-        onClick={() => setIsMobileOpen(true)}
-      >
+      <button className="btn-filtro-flutuante" onClick={() => setAbertoMobile(true)}>
         ☰ Filtros
       </button>
 
-      {isMobileOpen && (
-        <div className="filter-overlay" onClick={() => setIsMobileOpen(false)} />
-      )}
+      {abertoMobile && <div className="filter-overlay" onClick={() => setAbertoMobile(false)} />}
 
-      <aside className={`filter ${isMobileOpen ? "open" : ""}`}>
+      <aside className={`filter ${abertoMobile ? "open" : ""}`}>
         <div className="filter-header">
           <h2>Filtro</h2>
-          <button className="btn-fechar-filtro" onClick={() => setIsMobileOpen(false)}>
+          <button className="btn-fechar-filtro" onClick={() => setAbertoMobile(false)}>
             ✕
           </button>
         </div>
@@ -40,30 +35,28 @@ export default function Filtro({
           <input
             type="text"
             placeholder="Pesquisar"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            value={busca}
+            onChange={(evento) => setBusca(evento.target.value)}
           />
         </div>
 
         <div className="section">
           <button
             className="section-title"
-            onClick={() => setOpenDifficulty(!openDifficulty)}
+            onClick={() => setAbertoDificuldade((estado) => !estado)}
           >
             <span>Dificuldade</span>
-            <span>{openDifficulty ? "⌃" : "⌄"}</span>
+            <span>{abertoDificuldade ? "⌃" : "⌄"}</span>
           </button>
 
-          {openDifficulty && (
+          {abertoDificuldade && (
             <div className="options">
-              {difficulties.map((item) => (
+              {DIFICULDADES.map((item) => (
                 <label key={item}>
                   <input
                     type="checkbox"
-                    checked={difficulty.includes(item)}
-                    onChange={() =>
-                      toggleItem(item, difficulty, setDifficulty)
-                    }
+                    checked={dificuldade.includes(item)}
+                    onChange={() => alternarItem(item, dificuldade, setDificuldade)}
                   />
                   {item}
                 </label>
@@ -73,24 +66,19 @@ export default function Filtro({
         </div>
 
         <div className="section">
-          <button
-            className="section-title"
-            onClick={() => setOpenStatus(!openStatus)}
-          >
+          <button className="section-title" onClick={() => setAbertoStatus((estado) => !estado)}>
             <span>Status</span>
-            <span>{openStatus ? "⌃" : "⌄"}</span>
+            <span>{abertoStatus ? "⌃" : "⌄"}</span>
           </button>
 
-          {openStatus && (
+          {abertoStatus && (
             <div className="options">
-              {statusOptions.map((item) => (
+              {STATUS.map((item) => (
                 <label key={item}>
                   <input
                     type="checkbox"
                     checked={status.includes(item)}
-                    onChange={() =>
-                      toggleItem(item, status, setStatus)
-                    }
+                    onChange={() => alternarItem(item, status, setStatus)}
                   />
                   {item}
                 </label>

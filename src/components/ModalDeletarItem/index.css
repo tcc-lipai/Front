@@ -20,7 +20,7 @@
   max-width: 520px;
   text-align: center;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .modal-close-x {
@@ -39,7 +39,7 @@
 }
 
 .modal-close-x:hover {
-  color: #7B3F9E;
+  color: #7b3f9e;
 }
 
 .modal-title {

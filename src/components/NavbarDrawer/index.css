@@ -36,7 +36,7 @@
 .navbar-drawer-titulo {
   font-weight: 700;
   font-size: 16px;
-  color: #4C1D95;
+  color: #4c1d95;
 }
 
 .navbar-drawer-close {
@@ -45,7 +45,7 @@
   justify-content: center;
   background: none;
   border: none;
-  color: #6B7280;
+  color: #6b7280;
   cursor: pointer;
 }
 
@@ -71,12 +71,12 @@
 }
 
 .navbar-drawer-item:hover {
-  background-color: #F3EFFA;
+  background-color: #f3effa;
 }
 
 .navbar-drawer-item.active {
-  background-color: #EDE3FB;
-  color: #6B2FBF;
+  background-color: #ede3fb;
+  color: #6b2fbf;
 }
 
 .navbar-drawer-icon {
