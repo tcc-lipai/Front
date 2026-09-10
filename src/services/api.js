@@ -17,4 +17,18 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+// Sessão expirada / inválida: limpa o login e volta para a tela de entrada.
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      ["token", "role", "id", "nome", "email"].forEach((chave) => localStorage.removeItem(chave));
+      if (window.location.pathname !== "/login") {
+        window.location.assign("/login");
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
 export default api;

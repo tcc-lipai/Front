@@ -3,56 +3,19 @@ import { useNavigate } from "react-router-dom";
 import { UserSidebar } from "../../components/UserSidebar";
 import { useTheme } from "../../hooks/useTheme";
 import useLogout from "./index.hook";
-import api from "../../services/api";
+import {
+  buscarUsuario,
+  atualizarUsuario,
+  buscarProgresso,
+  contarAtividadesConcluidas,
+  calcularPercentualAtividades,
+} from "../../services/usuarioService";
+import { listarUnidades, contarLicoesDasUnidades } from "../../services/unidadeService";
 import { lerPreferencias, salvarPreferencias } from "../../services/preferenciasService";
 import "./index.css";
 
 const RAIO_CIRCULO = 40;
 const CIRCUNFERENCIA = 2 * Math.PI * RAIO_CIRCULO;
-
-function obterLista(dados, nomes) {
-  for (const nome of nomes) {
-    if (Array.isArray(dados?.[nome])) return dados[nome];
-  }
-  return [];
-}
-
-function contarLicoes(unidades) {
-  return unidades.reduce((total, unidade) => {
-    return (
-      total +
-      obterLista(unidade, ["LicoesFala", "licoesFala"]).length +
-      obterLista(unidade, ["LicoesAlternativa", "licoesAlternativa"]).length +
-      obterLista(unidade, ["LicoesVideo", "licoesVideo"]).length +
-      obterLista(unidade, ["LicoesVibracao", "licoesVibracao"]).length
-    );
-  }, 0);
-}
-
-function contarConcluidas(progresso) {
-  const alternativas = obterLista(progresso, ["Alternativas", "alternativas"]);
-  const falas = obterLista(progresso, ["Falas", "falas"]);
-
-  const atividadesConcluidas = [...alternativas, ...falas].filter((atividade) => {
-    const status = String(atividade.Status ?? atividade.status ?? "").toLowerCase();
-    return status === "concluido" || status === "concluida" || status === "completed";
-  });
-
-  return new Set(
-    atividadesConcluidas.map((atividade) => {
-      const tipo = atividade.Tipo ?? atividade.tipo ?? "";
-      const licaoId =
-        atividade.LicaoAlternativaId ??
-        atividade.licaoAlternativaId ??
-        atividade.LicaoFalaId ??
-        atividade.licaoFalaId ??
-        atividade.IdProgresso ??
-        atividade.idProgresso;
-
-      return `${tipo}:${licaoId}`;
-    })
-  ).size;
-}
 
 const TelaPerfil = () => {
   const [secaoAtiva, setSecaoAtiva] = useState("perfil");
@@ -79,41 +42,33 @@ const TelaPerfil = () => {
     let ativo = true;
 
     async function carregarPerfil() {
-      try {
-        const [perfilResposta, progressoResposta, unidadesResposta] = await Promise.allSettled([
-          api.get(`/Usuario/${usuarioId}`),
-          api.get(`/Progresso/usuario/${usuarioId}`),
-          api.get("/Unidades"),
-        ]);
+      const [perfilRes, progressoRes, unidadesRes] = await Promise.all([
+        buscarUsuario(usuarioId),
+        buscarProgresso(usuarioId),
+        listarUnidades(),
+      ]);
 
-        if (!ativo) return;
+      if (!ativo) return;
 
-        if (perfilResposta.status === "fulfilled") {
-          const perfil = perfilResposta.value.data;
-          setNome(perfil.Nome ?? perfil.nome ?? "");
-          setEmail(perfil.Email ?? perfil.email ?? "");
-          setDiagnostico(perfil.Diagnostico ?? perfil.diagnostico ?? "");
-          setNivelDificuldade(perfil.NivelDificuldade ?? perfil.nivelDificuldade ?? 1);
-        } else {
-          setNome(localStorage.getItem("nome") || "");
-          setEmail(localStorage.getItem("email") || "");
-        }
-
-        if (progressoResposta.status === "fulfilled" && unidadesResposta.status === "fulfilled") {
-          const concluidas = contarConcluidas(progressoResposta.value.data);
-          const unidades = Array.isArray(unidadesResposta.value.data)
-            ? unidadesResposta.value.data
-            : [];
-          const totalLicoes = contarLicoes(unidades);
-          setPercentualAtividades(
-            totalLicoes > 0 ? Math.min(100, Math.round((concluidas / totalLicoes) * 100)) : 0
-          );
-        }
-      } catch {
-        if (ativo) setMensagem("Não foi possível carregar todos os dados do perfil.");
-      } finally {
-        if (ativo) setCarregando(false);
+      if (perfilRes.sucesso) {
+        const perfil = perfilRes.data;
+        setNome(perfil.Nome ?? perfil.nome ?? "");
+        setEmail(perfil.Email ?? perfil.email ?? "");
+        setDiagnostico(perfil.Diagnostico ?? perfil.diagnostico ?? "");
+        setNivelDificuldade(perfil.NivelDificuldade ?? perfil.nivelDificuldade ?? 1);
+      } else {
+        setNome(localStorage.getItem("nome") || "");
+        setEmail(localStorage.getItem("email") || "");
+        setMensagem("Não foi possível carregar todos os dados do perfil.");
       }
+
+      if (progressoRes.sucesso && unidadesRes.sucesso) {
+        const concluidas = contarAtividadesConcluidas(progressoRes.data);
+        const totalLicoes = contarLicoesDasUnidades(unidadesRes.data);
+        setPercentualAtividades(calcularPercentualAtividades(concluidas, totalLicoes));
+      }
+
+      setCarregando(false);
     }
 
     carregarPerfil();
@@ -169,21 +124,22 @@ const TelaPerfil = () => {
     setSalvando(true);
     setMensagem("");
 
-    try {
-      await api.put(`/Usuario/${usuarioId}`, {
-        nome,
-        email,
-        senha,
-        diagnostico,
-        nivelDificuldade,
-      });
+    const resultado = await atualizarUsuario(usuarioId, {
+      nome,
+      email,
+      senha,
+      diagnostico,
+      nivelDificuldade,
+    });
+
+    if (resultado.sucesso) {
       setMensagem("Dados atualizados com sucesso.");
       setSenha("");
-    } catch (error) {
-      setMensagem(error.response?.data?.message || "Não foi possível atualizar o perfil.");
-    } finally {
-      setSalvando(false);
+    } else {
+      setMensagem(resultado.mensagem);
     }
+
+    setSalvando(false);
   };
 
   const handleSectionChange = (secao) => {
