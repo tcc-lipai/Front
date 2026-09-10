@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap");
 
 :root {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   color: #24122f;
   background: #fbf8ff;
   font-synthesis: none;
@@ -18,7 +18,7 @@
   --lipai-shadow: 0 14px 40px rgba(83, 40, 105, 0.1);
 }
 
-:root[data-theme='dark'] {
+:root[data-theme="dark"] {
   color: #ffffff;
   background: #140e19;
   --lipai-background: #140e19;
@@ -29,7 +29,7 @@
   --lipai-input: #130d18;
   --lipai-input-focus: #251730;
   --lipai-border: rgba(239, 220, 249, 0.34);
-  --lipai-border-subtle: rgba(239, 220, 249, 0.20);
+  --lipai-border-subtle: rgba(239, 220, 249, 0.2);
   --lipai-border-strong: rgba(231, 181, 255, 0.62);
   --lipai-text: #fffaff;
   --lipai-text-muted: #e2d6e8;
@@ -38,7 +38,7 @@
   --lipai-purple: #d080f6;
   --lipai-purple-dark: #9b4cc5;
   --lipai-purple-soft: rgba(208, 128, 246, 0.22);
-  --lipai-shadow: 0 16px 36px rgba(0, 0, 0, 0.30);
+  --lipai-shadow: 0 16px 36px rgba(0, 0, 0, 0.3);
 }
 
 * {
@@ -58,7 +58,9 @@ body,
 body {
   background: var(--lipai-background);
   color: var(--lipai-text);
-  transition: background-color 180ms ease, color 180ms ease;
+  transition:
+    background-color 180ms ease,
+    color 180ms ease;
 }
 
 button,

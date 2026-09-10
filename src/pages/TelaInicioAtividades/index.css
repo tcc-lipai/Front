@@ -11,7 +11,7 @@
 
 .topo-acoes {
   display: flex;
-  justify-content: space-between; 
+  justify-content: space-between;
   align-items: center;
   width: 100%;
   margin-bottom: 8px;
@@ -22,7 +22,7 @@
   display: flex;
   gap: 24px;
   align-items: flex-start;
-  margin-left: 90px; 
+  margin-left: 90px;
 }
 
 .principal {
@@ -46,7 +46,7 @@
 }
 
 .banner-texto {
-  max-width: 100%; 
+  max-width: 100%;
   color: white;
 }
 
@@ -84,9 +84,9 @@
   display: flex;
   gap: 16px;
   width: 100%;
-  overflow-x: auto; 
-  padding-bottom: 12px; 
-  -webkit-overflow-scrolling: touch; 
+  overflow-x: auto;
+  padding-bottom: 12px;
+  -webkit-overflow-scrolling: touch;
   scroll-behavior: smooth;
 }
 
@@ -106,18 +106,20 @@
 /* Novo nome da classe para evitar conflitos com outros CSS */
 .card-progresso {
   flex: 1 0 240px !important; /* REGRA DE OURO AQUI: Cresce para preencher a linha, mas não encolhe menos que 240px */
-  background-color: #ffffff !important; 
+  background-color: #ffffff !important;
   border-radius: 16px;
   padding: 12px 16px;
   display: flex !important;
-  flex-direction: row !important; 
+  flex-direction: row !important;
   align-items: center;
   justify-content: flex-start;
   text-align: left;
   gap: 12px;
   border: 1px solid rgba(93, 47, 120, 0.08);
-  box-shadow: 0 4px 14px rgba(93, 47, 120, 0.1); 
-  transition: box-shadow 0.15s ease, transform 0.15s ease;
+  box-shadow: 0 4px 14px rgba(93, 47, 120, 0.1);
+  transition:
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
 }
 
 .card-progresso:hover {
@@ -144,9 +146,15 @@
   flex: none;
 }
 
-.card-progresso:nth-child(1) img { background: #E1EFE0; }
-.card-progresso:nth-child(2) img { background: #F3ECCF; }
-.card-progresso:nth-child(3) img { background: #DCE9F0; }
+.card-progresso:nth-child(1) img {
+  background: #e1efe0;
+}
+.card-progresso:nth-child(2) img {
+  background: #f3eccf;
+}
+.card-progresso:nth-child(3) img {
+  background: #dce9f0;
+}
 
 .card-progresso span {
   display: block;
@@ -160,9 +168,18 @@
   margin: 0;
 }
 
-.card-progresso:nth-child(1) span, .card-progresso:nth-child(1) h3 { color: #3A7131; }
-.card-progresso:nth-child(2) span, .card-progresso:nth-child(2) h3 { color: #A8901F; }
-.card-progresso:nth-child(3) span, .card-progresso:nth-child(3) h3 { color: #2E6B86; }
+.card-progresso:nth-child(1) span,
+.card-progresso:nth-child(1) h3 {
+  color: #3a7131;
+}
+.card-progresso:nth-child(2) span,
+.card-progresso:nth-child(2) h3 {
+  color: #a8901f;
+}
+.card-progresso:nth-child(3) span,
+.card-progresso:nth-child(3) h3 {
+  color: #2e6b86;
+}
 
 h2 {
   color: #5b2f78;
@@ -209,7 +226,9 @@ h2 {
   color: #5b2f78;
   outline: none;
   box-sizing: border-box;
-  transition: box-shadow 0.2s ease, background 0.2s ease;
+  transition:
+    box-shadow 0.2s ease,
+    background 0.2s ease;
 }
 
 .filter input[type="text"]:focus,
@@ -268,13 +287,13 @@ h2 {
 /* === RESPONSIVIDADE === */
 @media (max-width: 1200px) {
   .conteudo {
-    flex-direction: column; 
+    flex-direction: column;
     gap: 24px;
   }
 
   .conteudo > .filter {
     position: fixed;
-    right: -100%; 
+    right: -100%;
     top: 0;
     width: 320px;
     max-width: 85vw;
@@ -297,7 +316,7 @@ h2 {
 
   .conteudo {
     gap: 16px;
-    width: auto; 
+    width: auto;
     box-sizing: border-box;
   }
 
@@ -308,11 +327,11 @@ h2 {
 
   .topo-acoes {
     width: 100%;
-    justify-content: flex-end; 
+    justify-content: flex-end;
   }
 
   .menu-espaco-placeholder {
-    display: none; 
+    display: none;
   }
 
   .infos {
@@ -326,9 +345,9 @@ h2 {
 
 @media (max-width: 768px) {
   .conteudo {
-    padding-left: 0; 
+    padding-left: 0;
     margin-left: 0;
-    width: 100%; 
+    width: 100%;
   }
 
   .topo-acoes {
@@ -344,16 +363,17 @@ h2 {
     padding: 20px;
     width: 100%;
     box-sizing: border-box;
-    text-align: left; 
+    text-align: left;
   }
 
   .banner-texto {
     display: flex;
     flex-direction: column;
-    align-items: flex-start; 
+    align-items: flex-start;
   }
 
-  h2, .infos {
+  h2,
+  .infos {
     width: 100%;
   }
 

@@ -1,18 +1,18 @@
 .container-redes {
-    display: flex;          
-    justify-content: center; 
-    align-items: center;       
-    gap: 16px;                
-    padding: 20px;            
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
 }
 
 .container-redes img {
-    width: 40px;              
-    height: auto;             
-    cursor: pointer;          
-    transition: transform 0.2s;
+  width: 40px;
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.2s;
 }
 
 .container-redes img:hover {
-    transform: scale(1.1);    
+  transform: scale(1.1);
 }

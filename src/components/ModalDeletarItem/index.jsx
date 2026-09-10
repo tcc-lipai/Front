@@ -1,6 +1,6 @@
-import React from 'react';
-import './index.css';
-import Botao from '../Botao';
+import React from "react";
+import "./index.css";
+import Botao from "../Botao";
 
 const ModalDeletar = ({ isOpen, onClose, onConfirm }) => {
   if (!isOpen) return null;
@@ -15,12 +15,7 @@ const ModalDeletar = ({ isOpen, onClose, onConfirm }) => {
         <h2 className="modal-title">Você realmente deseja deletar permanentemente esse item?</h2>
 
         <div className="modal-actions">
-          <Botao
-            texto="Sim"
-            corDeFundo="#9B59C3"
-            corTexto="#ffffff"
-            onClick={onConfirm}
-          />
+          <Botao texto="Sim" corDeFundo="#9B59C3" corTexto="#ffffff" onClick={onConfirm} />
           <Botao
             texto="Cancelar"
             corDeFundo="transparent"

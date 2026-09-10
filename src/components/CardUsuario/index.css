@@ -1,4 +1,3 @@
-
 .card-usuario {
   display: flex;
   align-items: center;
@@ -76,7 +75,6 @@
   align-items: center;
 }
 
-
 .btn-generico {
   padding: 8px 20px;
   border-radius: 20px;
@@ -101,32 +99,31 @@
   color: #ffffff;
 }
 
-
 @media (max-width: 600px) {
   .card-usuario {
-    flex-direction: column; 
-    text-align: center;     
-    padding: 20px 16px;     
+    flex-direction: column;
+    text-align: center;
+    padding: 20px 16px;
     gap: 12px;
   }
 
   .card-usuario__info {
-    align-items: center;    
+    align-items: center;
     width: 100%;
   }
 
   .card-usuario__badges {
-    justify-content: center; 
+    justify-content: center;
   }
 
   .card-usuario__acoes {
-    width: 100%;             
-    flex-direction: column;  
+    width: 100%;
+    flex-direction: column;
     gap: 8px;
   }
 
-  .card-usuario__acoes button, 
-  .card-usuario__acoes .btn-generico { 
-    width: 100%; 
+  .card-usuario__acoes button,
+  .card-usuario__acoes .btn-generico {
+    width: 100%;
   }
 }

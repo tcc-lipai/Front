@@ -94,9 +94,7 @@ const TelaCadastroUser = () => {
 
         <div className="cadastro-right">
           <h1>Crie sua conta!</h1>
-          <p className="subtitle">
-            Preencha seus dados para se registrar
-          </p>
+          <p className="subtitle">Preencha seus dados para se registrar</p>
 
           <form className="form-scroll" onSubmit={handleCadastro}>
             <div className="input-group">
@@ -172,7 +170,8 @@ const TelaCadastroUser = () => {
             </div>
 
             <span className="helper-text">
-              Este campo só deve ser preenchido se sua conta for vinculada a um profissional da saúde.
+              Este campo só deve ser preenchido se sua conta for vinculada a um profissional da
+              saúde.
             </span>
 
             {erro && (

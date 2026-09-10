@@ -3,25 +3,24 @@
   justify-content: center;
   align-items: center;
   padding: 20px;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
-
 .card {
-  background-color: #fbf5fc; 
-  border: 1px solid #f2e6f5; 
-  border-radius: 24px;      
-  width: 320px;             
-  height: 200px;             
+  background-color: #fbf5fc;
+  border: 1px solid #f2e6f5;
+  border-radius: 24px;
+  width: 320px;
+  height: 200px;
   display: flex;
-  justify-content: center;   
-  align-items: center;      
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03); 
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
 }
 
 .text {
-  color: #7d3c98;           
-  font-size: 4.5rem;         
-  font-weight: 700;         
-  letter-spacing: -1px;      
+  color: #7d3c98;
+  font-size: 4.5rem;
+  font-weight: 700;
+  letter-spacing: -1px;
 }

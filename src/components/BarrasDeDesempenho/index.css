@@ -1,92 +1,91 @@
 .barras-desempenho-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 22px; 
-    box-sizing: border-box;
-    padding: 10px 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  box-sizing: border-box;
+  padding: 10px 0;
 }
 
 .barra-item-linha {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    gap: 32px; 
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 32px;
 }
 
 .barra-lado-esquerdo {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    min-width: 130px; 
-    max-width: 130px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 130px;
+  max-width: 130px;
 }
 
 .barra-status-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    flex-shrink: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
 }
 
 .barra-label {
-    font-size: 15px;
-    font-weight: 500;
-      font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
 
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .barra-trilho-fundo {
-    flex: 1; 
-    height: 5px; 
-    background-color: #EDEDED; 
-    border-radius: 3px;
-    overflow: hidden;
+  flex: 1;
+  height: 5px;
+  background-color: #ededed;
+  border-radius: 3px;
+  overflow: hidden;
 }
 
 .barra-preenchimento {
-    height: 100%;
-    border-radius: 3px;
-    transition: width 0.4s ease-out;
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.4s ease-out;
 }
 
 .barras-empty-state {
-    font-style: italic;
-    font-size: 14px;
+  font-style: italic;
+  font-size: 14px;
 }
 /* LIPAI_THEME_DARK_COMPONENT: regras específicas para components/BarrasDeDesempenho/index.css. */
-:root[data-theme='dark'] #root .barras-desempenho-container {
+:root[data-theme="dark"] #root .barras-desempenho-container {
   background-color: var(--lipai-background);
   color: var(--lipai-text);
 }
-:root[data-theme='dark'] #root .barra-item-linha {
+:root[data-theme="dark"] #root .barra-item-linha {
   background-color: var(--lipai-surface);
   border-color: var(--lipai-border);
 }
-:root[data-theme='dark'] #root .barra-label {
+:root[data-theme="dark"] #root .barra-label {
   color: var(--lipai-text);
 }
-:root[data-theme='dark'] #root .barras-empty-state {
+:root[data-theme="dark"] #root .barras-empty-state {
   color: var(--lipai-text-muted);
 }
 
-
 /* Refinamento de contornos — barras de desempenho no modo escuro. */
-:root[data-theme='dark'] #root .barras-desempenho-container,
-:root[data-theme='dark'] #root .barra-item-linha {
+:root[data-theme="dark"] #root .barras-desempenho-container,
+:root[data-theme="dark"] #root .barra-item-linha {
   background: transparent !important;
   border: 0 !important;
 }
 
-:root[data-theme='dark'] #root .barra-label {
+:root[data-theme="dark"] #root .barra-label {
   color: #e2d6e8 !important;
 }
 
-:root[data-theme='dark'] #root .barra-trilho-fundo {
+:root[data-theme="dark"] #root .barra-trilho-fundo {
   background: #17111e !important;
   border: 0 !important;
-  box-shadow: inset 0 0 0 1px rgba(239, 220, 249, 0.10);
+  box-shadow: inset 0 0 0 1px rgba(239, 220, 249, 0.1);
 }

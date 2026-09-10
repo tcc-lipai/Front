@@ -39,7 +39,7 @@
 }
 
 .navbar-lp__links a:hover {
-  color: #7A3A8E;
+  color: #7a3a8e;
 }
 
 .navbar-lp__actions {
@@ -54,10 +54,10 @@
 
 .navbar-lp__btn-cadastrar {
   padding: 8px 20px;
-  border: 2px solid #7A3A8E;
+  border: 2px solid #7a3a8e;
   border-radius: 20px;
   background: transparent;
-  color: #7A3A8E;
+  color: #7a3a8e;
   font-weight: 600;
   font-size: 0.9rem;
   cursor: pointer;
@@ -73,7 +73,7 @@
   padding: 8px 20px;
   border: none;
   border-radius: 20px;
-  background: #7A3A8E;
+  background: #7a3a8e;
   color: #fff;
   font-weight: 600;
   font-size: 0.9rem;
@@ -106,7 +106,9 @@
   height: 3px;
   border-radius: 2px;
   background-color: #1a0533;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
 }
 
 .navbar-lp__hamburger.is-active span:nth-child(1) {
@@ -204,72 +206,71 @@
   }
 }
 /* LIPAI_THEME_DARK_COMPONENT: regras específicas para components/Navbar-landingpage/index.css. */
-:root[data-theme='dark'] #root .navbar-lp,
-:root[data-theme='dark'] #root .navbar-lp__logo,
-:root[data-theme='dark'] #root .navbar-lp__links,
-:root[data-theme='dark'] #root .navbar-lp__actions,
-:root[data-theme='dark'] #root .navbar-lp__actions--mobile,
-:root[data-theme='dark'] #root .navbar-lp__btn-cadastrar,
-:root[data-theme='dark'] #root .navbar-lp__btn-login,
-:root[data-theme='dark'] #root .navbar-lp__hamburger,
-:root[data-theme='dark'] #root .navbar-lp__overlay,
-:root[data-theme='dark'] #root .navbar-lp__actions--desktop,
-:root[data-theme='dark'] #root .navbar-lp__links--open {
+:root[data-theme="dark"] #root .navbar-lp,
+:root[data-theme="dark"] #root .navbar-lp__logo,
+:root[data-theme="dark"] #root .navbar-lp__links,
+:root[data-theme="dark"] #root .navbar-lp__actions,
+:root[data-theme="dark"] #root .navbar-lp__actions--mobile,
+:root[data-theme="dark"] #root .navbar-lp__btn-cadastrar,
+:root[data-theme="dark"] #root .navbar-lp__btn-login,
+:root[data-theme="dark"] #root .navbar-lp__hamburger,
+:root[data-theme="dark"] #root .navbar-lp__overlay,
+:root[data-theme="dark"] #root .navbar-lp__actions--desktop,
+:root[data-theme="dark"] #root .navbar-lp__links--open {
   background-color: var(--lipai-surface);
   border-color: var(--lipai-border);
 }
 
-
 /* Correção de acessibilidade visual — navegação pública no modo escuro. */
-:root[data-theme='dark'] #root .navbar-lp {
+:root[data-theme="dark"] #root .navbar-lp {
   background: #17111e !important;
   border-bottom: 1px solid var(--lipai-border-subtle);
 }
 
-:root[data-theme='dark'] #root .navbar-lp__logo {
+:root[data-theme="dark"] #root .navbar-lp__logo {
   background: transparent !important;
   color: #fffaff !important;
 }
 
-:root[data-theme='dark'] #root .navbar-lp__logo span {
+:root[data-theme="dark"] #root .navbar-lp__logo span {
   color: #e3a8ff !important;
 }
 
-:root[data-theme='dark'] #root .navbar-lp__links,
-:root[data-theme='dark'] #root .navbar-lp__actions,
-:root[data-theme='dark'] #root .navbar-lp__actions--mobile {
+:root[data-theme="dark"] #root .navbar-lp__links,
+:root[data-theme="dark"] #root .navbar-lp__actions,
+:root[data-theme="dark"] #root .navbar-lp__actions--mobile {
   background: transparent !important;
 }
 
-:root[data-theme='dark'] #root .navbar-lp__links a {
+:root[data-theme="dark"] #root .navbar-lp__links a {
   color: #e2d6e8 !important;
 }
 
-:root[data-theme='dark'] #root .navbar-lp__links a:hover {
+:root[data-theme="dark"] #root .navbar-lp__links a:hover {
   color: #ffffff !important;
 }
 
-:root[data-theme='dark'] #root .navbar-lp__btn-cadastrar {
+:root[data-theme="dark"] #root .navbar-lp__btn-cadastrar {
   background: #2a1d35 !important;
   border-color: var(--lipai-border-strong) !important;
   color: #fffaff !important;
 }
 
-:root[data-theme='dark'] #root .navbar-lp__btn-login {
+:root[data-theme="dark"] #root .navbar-lp__btn-login {
   background: linear-gradient(135deg, #d080f6, #9b4cc5) !important;
   color: #ffffff !important;
 }
 
-:root[data-theme='dark'] #root .navbar-lp__hamburger span {
+:root[data-theme="dark"] #root .navbar-lp__hamburger span {
   background: #fffaff !important;
 }
 
 @media (max-width: 768px) {
-  :root[data-theme='dark'] #root .navbar-lp__links {
+  :root[data-theme="dark"] #root .navbar-lp__links {
     background: #211727 !important;
   }
 
-  :root[data-theme='dark'] #root .navbar-lp__links li {
+  :root[data-theme="dark"] #root .navbar-lp__links li {
     border-bottom-color: var(--lipai-border-subtle);
   }
 }

@@ -10,7 +10,7 @@ function getInitialTheme() {
     return savedTheme;
   }
 
-return "light";
+  return "light";
 }
 
 export function ThemeProvider({ children }) {
@@ -31,7 +31,7 @@ export function ThemeProvider({ children }) {
         setTheme((current) => (current === "dark" ? "light" : "dark"));
       },
     }),
-    [theme],
+    [theme]
   );
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;

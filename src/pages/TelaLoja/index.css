@@ -9,8 +9,7 @@
   background-position: right bottom;
   background-size: 100% 100%;
   background-attachment: fixed;
-    font-family: 'Poppins', sans-serif;
-
+  font-family: "Poppins", sans-serif;
 }
 
 .tela-loja__conteudo {
@@ -31,7 +30,7 @@
 .tela-loja__painel {
   position: relative;
   flex: 1;
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 24px;
   padding: 32px;
   box-shadow: 0 4px 20px rgba(107, 47, 191, 0.06);
@@ -84,7 +83,7 @@
   width: 100%;
   max-width: 460px;
   background: var(--tl-fundo);
-  border: 1px solid #E5DCF7;
+  border: 1px solid #e5dcf7;
   border-radius: 999px;
   padding: 10px 18px;
   margin-bottom: 28px;
@@ -103,12 +102,12 @@
 }
 
 .tela-loja__busca input::placeholder {
-  color: #9CA3AF;
+  color: #9ca3af;
 }
 
 .tela-loja__busca svg {
   flex-shrink: 0;
-  color: #9CA3AF;
+  color: #9ca3af;
 }
 
 .tela-loja__grid {
@@ -175,6 +174,6 @@
 
 @media (max-width: 768px) {
   .tela-loja__conteudo {
-  margin-left: 0px;
-}
+    margin-left: 0px;
+  }
 }

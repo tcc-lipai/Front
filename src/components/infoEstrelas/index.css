@@ -18,18 +18,23 @@
   min-width: 140px;
   height: 42px;
   box-sizing: border-box;
-  transition: padding 0.2s ease, min-width 0.2s ease, height 0.2s ease;
+  transition:
+    padding 0.2s ease,
+    min-width 0.2s ease,
+    height 0.2s ease;
 }
 
 .star-icon {
   margin-right: 8px;
-  transition: width 0.2s ease, height 0.2s ease;
+  transition:
+    width 0.2s ease,
+    height 0.2s ease;
 }
 
 .xp-value {
   font-weight: bold;
   color: #4a5568;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   transition: font-size 0.2s ease;
 }
 
@@ -48,11 +53,16 @@
   width: 42px;
   height: 42px;
   cursor: pointer;
-  transition: transform 0.1s, width 0.2s ease, height 0.2s ease;
+  transition:
+    transform 0.1s,
+    width 0.2s ease,
+    height 0.2s ease;
 }
 
 .action-btn svg {
-  transition: width 0.2s ease, height 0.2s ease;
+  transition:
+    width 0.2s ease,
+    height 0.2s ease;
 }
 
 .action-btn:hover {

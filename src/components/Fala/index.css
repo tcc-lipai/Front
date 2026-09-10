@@ -1,56 +1,62 @@
 .fala-box {
-    width: 140px;
-    height: 120px;
-    border: none;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.25s ease;
-    outline: none;
+  width: 140px;
+  height: 120px;
+  border: none;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  outline: none;
+}
+
+.icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fala-box.idle {
+  background-color: #f5edfa;
+  color: #7e3af2;
+  cursor: pointer;
+}
+
+.fala-box.idle:hover {
+  background-color: #eddffa;
+  transform: scale(1.02);
+}
+
+.fala-box.recording {
+  background-color: #f5edfa;
+  color: #7e3af2;
+  cursor: wait;
+  animation: pulse-purple 1.5s infinite ease-in-out;
+}
+
+.fala-box.correct {
+  background-color: #e8f7ed;
+  color: #1e874b;
+  cursor: default;
+}
+
+.fala-box.incorrect {
+  background-color: #fbebeb;
+  color: #c83737;
+  cursor: default;
+}
+
+@keyframes pulse-purple {
+  0% {
+    opacity: 1;
   }
- 
-  .icon-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  50% {
+    opacity: 0.6;
   }
- 
-  .fala-box.idle {
-    background-color: #f5edfa;
-    color: #7e3af2;
-    cursor: pointer;
+  100% {
+    opacity: 1;
   }
- 
-  .fala-box.idle:hover {
-    background-color: #eddffa;
-    transform: scale(1.02);
-  }
- 
-  .fala-box.recording {
-    background-color: #f5edfa;
-    color: #7e3af2;
-    cursor: wait;
-    animation: pulse-purple 1.5s infinite ease-in-out;
-  }
- 
-  .fala-box.correct {
-    background-color: #e8f7ed;
-    color: #1e874b;
-    cursor: default;
-  }
- 
-  .fala-box.incorrect {
-    background-color: #fbebeb;
-    color: #c83737;
-    cursor: default;
-  }
- 
-  @keyframes pulse-purple {
-    0% { opacity: 1; }
-    50% { opacity: 0.6; }
-    100% { opacity: 1; }
-  }
+}
 
 .fala-wrapper {
   display: flex;
@@ -101,22 +107,21 @@
 }
 
 /* LIPAI_THEME_DARK_COMPONENT: regras específicas para components/Fala/index.css. */
-:root[data-theme='dark'] #root .icon-container,
-:root[data-theme='dark'] #root .fala-wrapper {
+:root[data-theme="dark"] #root .icon-container,
+:root[data-theme="dark"] #root .fala-wrapper {
   background-color: var(--lipai-background);
   color: var(--lipai-text);
 }
-:root[data-theme='dark'] #root .fala-box {
+:root[data-theme="dark"] #root .fala-box {
   background-color: var(--lipai-surface);
   border-color: var(--lipai-border);
 }
 
-
 /* Refinamento de contornos — componente de gravação no modo escuro. */
-:root[data-theme='dark'] #root :is(.fala-wrapper, .icon-container) {
+:root[data-theme="dark"] #root :is(.fala-wrapper, .icon-container) {
   background: transparent !important;
 }
 
-:root[data-theme='dark'] #root .fala-box {
+:root[data-theme="dark"] #root .fala-box {
   border: 0 !important;
 }

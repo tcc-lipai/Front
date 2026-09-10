@@ -55,9 +55,9 @@ export function useTelaInicioAtividades() {
   const atividadesFiltradas = useMemo(() => {
     return TODAS_ATIVIDADES_MOCK.filter((atividade) => {
       const batePesquisa = atividade.titulo.toLowerCase().includes(search.toLowerCase());
-      
+
       const bateDificuldade = difficulty.length === 0 || difficulty.includes(atividade.dificuldade);
-      
+
       const bateStatus = status.length === 0 || status.includes(atividade.status);
 
       return batePesquisa && bateDificuldade && bateStatus;

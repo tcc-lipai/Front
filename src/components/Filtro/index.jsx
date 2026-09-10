@@ -17,16 +17,11 @@ export default function Filtro({
 
   return (
     <>
-      <button 
-        className="btn-filtro-flutuante"
-        onClick={() => setIsMobileOpen(true)}
-      >
+      <button className="btn-filtro-flutuante" onClick={() => setIsMobileOpen(true)}>
         ☰ Filtros
       </button>
 
-      {isMobileOpen && (
-        <div className="filter-overlay" onClick={() => setIsMobileOpen(false)} />
-      )}
+      {isMobileOpen && <div className="filter-overlay" onClick={() => setIsMobileOpen(false)} />}
 
       <aside className={`filter ${isMobileOpen ? "open" : ""}`}>
         <div className="filter-header">
@@ -46,10 +41,7 @@ export default function Filtro({
         </div>
 
         <div className="section">
-          <button
-            className="section-title"
-            onClick={() => setOpenDifficulty(!openDifficulty)}
-          >
+          <button className="section-title" onClick={() => setOpenDifficulty(!openDifficulty)}>
             <span>Dificuldade</span>
             <span>{openDifficulty ? "⌃" : "⌄"}</span>
           </button>
@@ -61,9 +53,7 @@ export default function Filtro({
                   <input
                     type="checkbox"
                     checked={difficulty.includes(item)}
-                    onChange={() =>
-                      toggleItem(item, difficulty, setDifficulty)
-                    }
+                    onChange={() => toggleItem(item, difficulty, setDifficulty)}
                   />
                   {item}
                 </label>
@@ -73,10 +63,7 @@ export default function Filtro({
         </div>
 
         <div className="section">
-          <button
-            className="section-title"
-            onClick={() => setOpenStatus(!openStatus)}
-          >
+          <button className="section-title" onClick={() => setOpenStatus(!openStatus)}>
             <span>Status</span>
             <span>{openStatus ? "⌃" : "⌄"}</span>
           </button>
@@ -88,9 +75,7 @@ export default function Filtro({
                   <input
                     type="checkbox"
                     checked={status.includes(item)}
-                    onChange={() =>
-                      toggleItem(item, status, setStatus)
-                    }
+                    onChange={() => toggleItem(item, status, setStatus)}
                   />
                   {item}
                 </label>

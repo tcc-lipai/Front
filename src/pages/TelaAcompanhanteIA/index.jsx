@@ -8,7 +8,7 @@ import Botao from "../../components/Botao";
 import Modal from "../../components/ModalSair";
 import Vibracao from "../../components/Vibracao";
 
-const TelaAcompanhante = () => {
+const TelaAcompanhanteIA = () => {
   const [mostrarModalSair, setMostrarModalSair] = useState(false);
   const navigate = useNavigate(); // 2. Instanciando o navigate
 
@@ -38,18 +38,13 @@ const TelaAcompanhante = () => {
               </div>
             </div>
 
-            <button
-              className="btn-fechar"
-              onClick={() => setMostrarModalSair(true)}
-            >
+            <button className="btn-fechar" onClick={() => setMostrarModalSair(true)}>
               <X size={38} />
             </button>
           </div>
 
           <div className="acompanhante-texto">
-            <h2>
-              Pela vibração da sua voz, faça o blablabla entender as letras
-            </h2>
+            <h2>Pela vibração da sua voz, faça o blablabla entender as letras</h2>
           </div>
 
           <div className="vibracao-container">
@@ -70,4 +65,4 @@ const TelaAcompanhante = () => {
   );
 };
 
-export default TelaAcompanhante;
+export default TelaAcompanhanteIA;

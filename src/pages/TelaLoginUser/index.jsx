@@ -3,47 +3,47 @@ import "./index.css";
 import { useNavigate } from "react-router-dom";
 import Botao from "../../components/Botao";
 import { login } from "../../services/authService";
- 
+
 const TelaLoginUser = () => {
   const navigate = useNavigate();
- 
+
   const [form, setForm] = useState({ email: "", senha: "" });
   const [erro, setErro] = useState("");
   const [carregando, setCarregando] = useState(false);
- 
+
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
- 
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setErro("");
     setCarregando(true);
- 
+
     const resultado = await login(form.email, form.senha);
     setCarregando(false);
- 
+
     if (resultado.sucesso) {
       navigate("/dashboard");
     } else {
       setErro(resultado.mensagem);
     }
   };
- 
+
   return (
     <div className="login-page">
       <div className="bg-circle bg-circle-1"></div>
       <div className="bg-circle bg-circle-2"></div>
- 
+
       <div className="bg-triangle triangle-1"></div>
       <div className="bg-triangle triangle-2"></div>
       <div className="bg-triangle triangle-3"></div>
- 
+
       <div className="login-container">
         <div className="login-left">
           <h1>Entrar sua conta!</h1>
           <p className="subtitle">Preencha seus dados para entrar</p>
- 
+
           <form className="form-scroll" onSubmit={handleLogin}>
             <div className="input-group">
               <input
@@ -55,7 +55,7 @@ const TelaLoginUser = () => {
                 required
               />
             </div>
- 
+
             <div className="input-group">
               <input
                 type="password"
@@ -66,13 +66,13 @@ const TelaLoginUser = () => {
                 required
               />
             </div>
- 
+
             {erro && (
               <span className="helper-text" style={{ color: "#c0392b" }}>
                 {erro}
               </span>
             )}
- 
+
             <div className="btn-container">
               <Botao
                 texto={carregando ? "Entrando..." : "Entrar"}
@@ -81,7 +81,7 @@ const TelaLoginUser = () => {
                 onClick={handleLogin}
               />
             </div>
- 
+
             <div className="google-login">
               <span>Entre com google:</span>
               <img
@@ -91,7 +91,7 @@ const TelaLoginUser = () => {
             </div>
           </form>
         </div>
- 
+
         <div className="login-right">
           <div className="welcome-content">
             <h2>Olá de novo!</h2>
@@ -112,5 +112,5 @@ const TelaLoginUser = () => {
     </div>
   );
 };
- 
+
 export default TelaLoginUser;

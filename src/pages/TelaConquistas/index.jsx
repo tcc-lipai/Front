@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Conquistas from '../../components/Conquistas';
-import { listarConquistasUsuario } from '../../services/conquistaService';
-import { DEFAULT_CONQUISTA_DATA } from '../../components/Conquistas/types';
-import './index.css'
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Conquistas from "../../components/Conquistas";
+import { listarConquistasUsuario } from "../../services/conquistaService";
+import { DEFAULT_CONQUISTA_DATA } from "../../components/Conquistas/types";
+import "./index.css";
 
 const TelaConquistas = () => {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ const TelaConquistas = () => {
 
   useEffect(() => {
     async function carregarConquistas() {
-      const usuarioId = localStorage.getItem('id');
+      const usuarioId = localStorage.getItem("id");
       const resultado = await listarConquistasUsuario(usuarioId);
 
       if (resultado.sucesso) {
@@ -37,8 +37,20 @@ const TelaConquistas = () => {
     <div className="container-tela-conquistas">
       <div className="header-conquistas">
         <button onClick={() => navigate(-1)} className="btn-voltar-conquistas">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M15 18l-6-6 6-6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M15 18l-6-6 6-6"
+              stroke="white"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
         </button>
       </div>

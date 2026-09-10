@@ -4,7 +4,7 @@
 
 .container-tela-conquistas {
   min-height: 100vh;
-  background-color: #EADFF0;
+  background-color: #eadff0;
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
@@ -55,7 +55,7 @@
 .secao-grid-conquistas h2 {
   font-size: clamp(25px, 4vw, 20px);
   font-weight: 700;
-  color: #4A154B;
+  color: #4a154b;
   margin-bottom: 6px;
 }
 

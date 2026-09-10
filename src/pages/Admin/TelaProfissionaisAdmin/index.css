@@ -1,9 +1,8 @@
-
 .dashboard-admin {
   display: flex;
   min-height: 100vh;
   background-color: #f0e8f5;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .dashboard-admin__sidebar {
@@ -106,7 +105,9 @@
   font-size: 0.85rem;
   font-weight: 500;
   cursor: pointer;
-  transition: border-color 0.15s ease, background-color 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
 }
 
 .dashboard-admin__filtro-dropdown:hover {

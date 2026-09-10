@@ -54,18 +54,12 @@ const TelaAtividadesAdmin = () => {
             ))}
 
             {atividadesVisiveis.length === 0 && (
-              <p className="atividades-admin__vazio">
-                Nenhuma atividade encontrada.
-              </p>
+              <p className="atividades-admin__vazio">Nenhuma atividade encontrada.</p>
             )}
           </div>
 
           {podeVerMais && (
-            <button
-              type="button"
-              className="atividades-admin__ver-mais"
-              onClick={handleVerMais}
-            >
+            <button type="button" className="atividades-admin__ver-mais" onClick={handleVerMais}>
               Ver mais
               <ChevronDown size={16} />
             </button>

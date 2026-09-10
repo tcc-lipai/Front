@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 export const useDicionarioCard = () => {
   const [isActive, setIsActive] = useState(false);

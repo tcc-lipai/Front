@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { INITIAL_LESSON_STATS } from './types';
+import { useState } from "react";
+import { INITIAL_LESSON_STATS } from "./types";
 
 export const useLicaoConcluida = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,7 +10,7 @@ export const useLicaoConcluida = () => {
       setStats({
         percentage: lessonStats.percentage ?? 0,
         stars: lessonStats.stars ?? 0,
-        time: lessonStats.time ?? '00:00'
+        time: lessonStats.time ?? "00:00",
       });
     }
     setIsOpen(true);
@@ -24,6 +24,6 @@ export const useLicaoConcluida = () => {
     isOpen,
     lessonStats: stats,
     openLicaoConcluida,
-    closeLicaoConcluida
+    closeLicaoConcluida,
   };
 };

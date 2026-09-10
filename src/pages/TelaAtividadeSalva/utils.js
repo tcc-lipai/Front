@@ -19,6 +19,6 @@ export const TODAS_ATIVIDADES_MOCK = [
     tipo: "Áudio",
     progresso: 100,
     categoria: "recomendada",
-    salva: false, 
-  }
+    salva: false,
+  },
 ];

@@ -57,17 +57,14 @@ export function useTelaAtividadesAdmin() {
   const atividadesFiltradas = useMemo(() => {
     const termo = termoBusca.trim().toLowerCase();
     if (!termo) return atividades;
-    return atividades.filter((atividade) =>
-      atividade.titulo.toLowerCase().includes(termo)
-    );
+    return atividades.filter((atividade) => atividade.titulo.toLowerCase().includes(termo));
   }, [atividades, termoBusca]);
 
   const atividadesVisiveis = mostrarTodas
     ? atividadesFiltradas
     : atividadesFiltradas.slice(0, QUANTIDADE_INICIAL);
 
-  const podeVerMais =
-    !mostrarTodas && atividadesFiltradas.length > QUANTIDADE_INICIAL;
+  const podeVerMais = !mostrarTodas && atividadesFiltradas.length > QUANTIDADE_INICIAL;
 
   const handleBuscar = (event) => {
     setTermoBusca(event.target.value);

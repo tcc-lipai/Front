@@ -12,9 +12,9 @@ import { X } from "lucide-react";
 export default function TelaAtividadeAlternativa() {
   const [selecionada, setSelecionada] = useState(null);
   const [respondeu, setRespondeu] = useState(false);
-  
-  const navigate = useNavigate(); 
-  
+
+  const navigate = useNavigate();
+
   // 1. Iniciando o hook de feedback
   const { isOpen, feedbackText, feedbackType, openFeedback, closeFeedback } = useFeedback();
 
@@ -30,13 +30,13 @@ export default function TelaAtividadeAlternativa() {
   };
 
   const handleFechar = () => {
-    navigate(-1); 
+    navigate(-1);
   };
 
   // 2. Função para abrir o feedback com o texto e cor certos
   const handleAbrirFeedback = () => {
-    const alternativaEscolhida = alternativas.find(alt => alt.id === selecionada);
-    
+    const alternativaEscolhida = alternativas.find((alt) => alt.id === selecionada);
+
     if (alternativaEscolhida.correta) {
       openFeedback("Parabéns, você acertou!", FEEDBACK_TYPES.SUCCESS);
     } else {
@@ -81,8 +81,7 @@ export default function TelaAtividadeAlternativa() {
           <span className="questao-numero">Questão 1</span>
 
           <h2 className="pergunta">
-            Aqui vai a primeira pergunta para ser respondida pelo usuário
-            blaalala alalal alal?
+            Aqui vai a primeira pergunta para ser respondida pelo usuário blaalala alalal alal?
           </h2>
 
           <div className="linha-divisoria" />
@@ -138,13 +137,13 @@ export default function TelaAtividadeAlternativa() {
         </div>
       </div>
 
-      {/* 4. O modal de Feedback fica aqui, renderizado por cima de tudo */} 
-     <FeedbackCard 
-       isOpen={isOpen} 
-       onClose={closeFeedback} 
-       text={feedbackText} 
-       type={feedbackType} 
-       onNext={handleProximaAtividade} // Passamos o nome da função sem os parênteses
+      {/* 4. O modal de Feedback fica aqui, renderizado por cima de tudo */}
+      <FeedbackCard
+        isOpen={isOpen}
+        onClose={closeFeedback}
+        text={feedbackText}
+        type={feedbackType}
+        onNext={handleProximaAtividade} // Passamos o nome da função sem os parênteses
       />
     </div>
   );

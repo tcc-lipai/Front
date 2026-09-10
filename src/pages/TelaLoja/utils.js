@@ -4,7 +4,7 @@ export const ITENS_LOJA_MOCK = [
     title: "Bloqueio de ofensiva",
     description: "Protege sua sequência de dias mesmo se você faltar um dia.",
     price: 500,
-    tipo: "gelo", 
+    tipo: "gelo",
     isBlocked: false,
   },
   {
@@ -29,7 +29,7 @@ export const ITENS_LOJA_MOCK = [
     description: "Protege sua sequência de dias mesmo se você faltar um dia.",
     price: 500,
     tipo: "gelo",
-    isBlocked: true, 
+    isBlocked: true,
   },
   {
     id: "5",
@@ -60,7 +60,5 @@ export const ITENS_LOJA_MOCK = [
 export function filtrarItensPorBusca(itens, termo) {
   if (!termo) return itens;
   const termoNormalizado = termo.trim().toLowerCase();
-  return itens.filter((item) =>
-    item.title.toLowerCase().includes(termoNormalizado)
-  );
+  return itens.filter((item) => item.title.toLowerCase().includes(termoNormalizado));
 }

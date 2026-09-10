@@ -2,7 +2,7 @@
   width: 100%;
   height: 76px;
 
-  background-color: #EBE0FF; 
+  background-color: #ebe0ff;
   border-radius: 12px;
 
   display: flex;
@@ -33,17 +33,17 @@
   flex-direction: column;
   justify-content: space-between;
   min-width: 0;
-  
-  background: transparent !important; 
+
+  background: transparent !important;
 }
 
 .card-info p {
   margin: 0;
-  color: #462057; 
+  color: #462057;
   font-size: 10px;
   line-height: 1.2;
 
-  background: transparent !important; 
+  background: transparent !important;
 }
 
 .btn-card {
@@ -69,7 +69,7 @@
   }
 
   .card-info {
-    display: none; 
+    display: none;
   }
 
   .card-imagem {
@@ -87,37 +87,36 @@
   }
 }
 /* Correção de acessibilidade visual — cartão de exercício no modo escuro. */
-:root[data-theme='dark'] #root .card-exercicio {
+:root[data-theme="dark"] #root .card-exercicio {
   background: linear-gradient(145deg, #2a1d35, #24182f) !important;
   border: 1px solid var(--lipai-border-subtle);
   box-shadow: 0 7px 16px rgba(0, 0, 0, 0.15);
 }
 
-:root[data-theme='dark'] #root .card-imagem,
-:root[data-theme='dark'] #root .card-info {
+:root[data-theme="dark"] #root .card-imagem,
+:root[data-theme="dark"] #root .card-info {
   background: transparent !important;
 }
 
-:root[data-theme='dark'] #root .card-info p {
+:root[data-theme="dark"] #root .card-info p {
   color: #fffaff !important;
   font-weight: 600;
   opacity: 1 !important;
 }
 
-:root[data-theme='dark'] #root .btn-card {
+:root[data-theme="dark"] #root .btn-card {
   background: linear-gradient(135deg, #d080f6, #9b4cc5) !important;
   border: 1px solid rgba(255, 255, 255, 0.16) !important;
   color: #ffffff !important;
   font-weight: 700;
 }
 
-:root[data-theme='dark'] #root .card-imagem img {
+:root[data-theme="dark"] #root .card-imagem img {
   filter: brightness(1.18) contrast(1.08);
 }
 
-
 /* Refinamento de contornos — cartões de exercício no modo escuro. */
-:root[data-theme='dark'] #root .card-exercicio {
+:root[data-theme="dark"] #root .card-exercicio {
   border: 0 !important;
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15) !important;
 }

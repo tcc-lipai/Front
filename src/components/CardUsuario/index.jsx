@@ -1,21 +1,21 @@
-import React from 'react';
-import Botao from '../Botao';
-import './index.css';
+import React from "react";
+import Botao from "../Botao";
+import "./index.css";
 
 const CardUsuario = ({
-  tipo = 'paciente-admin',
-  nome = '',
-  descricao = '',
-  nivel = '',
-  status = 'ativo',
+  tipo = "paciente-admin",
+  nome = "",
+  descricao = "",
+  nivel = "",
+  status = "ativo",
   onEditar = () => {},
   onExcluir = () => {},
   onVer = () => {},
 }) => {
-  const isAtivo = status === 'ativo';
+  const isAtivo = status === "ativo";
 
   const renderBotoes = () => {
-    if (tipo === 'paciente-profissional') {
+    if (tipo === "paciente-profissional") {
       return (
         <div className="card-usuario__acoes">
           <Botao texto="Ver" variante="primario" onClick={onVer} />
@@ -32,23 +32,17 @@ const CardUsuario = ({
   };
 
   const renderBadges = () => {
-    if (tipo === 'profissional') return null;
+    if (tipo === "profissional") return null;
 
     return (
       <div className="card-usuario__badges">
-        {nivel && (
-          <span className="card-usuario__badge card-usuario__badge--nivel">
-            {nivel}
-          </span>
-        )}
+        {nivel && <span className="card-usuario__badge card-usuario__badge--nivel">{nivel}</span>}
         <span
           className={`card-usuario__badge ${
-            isAtivo
-              ? 'card-usuario__badge--ativo'
-              : 'card-usuario__badge--inativo'
+            isAtivo ? "card-usuario__badge--ativo" : "card-usuario__badge--inativo"
           }`}
         >
-          {isAtivo ? 'Ativo' : 'Não Ativo'}
+          {isAtivo ? "Ativo" : "Não Ativo"}
         </span>
       </div>
     );

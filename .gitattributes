@@ -1,0 +1,11 @@
+# Padroniza fim de linha em LF para todo o código-fonte,
+# independente do sistema operacional de quem clonar.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.woff binary
+*.woff2 binary
+*.ttf binary

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import './index.css';
+import "./index.css";
 import { Link } from "react-router-dom";
 
 const NavbarLandingPage = () => {
@@ -14,10 +14,26 @@ const NavbarLandingPage = () => {
       </a>
 
       <ul className={`navbar-lp__links ${menuOpen ? "navbar-lp__links--open" : ""}`}>
-        <li><a href="#home" onClick={closeMenu}>Home</a></li>
-        <li><a href="#sobre" onClick={closeMenu}>Sobre</a></li>
-        <li><a href="#participantes" onClick={closeMenu}>Equipe</a></li>
-        <li><a href="#contato" onClick={closeMenu}>Contato</a></li>
+        <li>
+          <a href="#home" onClick={closeMenu}>
+            Home
+          </a>
+        </li>
+        <li>
+          <a href="#sobre" onClick={closeMenu}>
+            Sobre
+          </a>
+        </li>
+        <li>
+          <a href="#participantes" onClick={closeMenu}>
+            Equipe
+          </a>
+        </li>
+        <li>
+          <a href="#contato" onClick={closeMenu}>
+            Contato
+          </a>
+        </li>
 
         <li className="navbar-lp__actions navbar-lp__actions--mobile">
           <Link to="/criar-conta" onClick={closeMenu}>
@@ -31,15 +47,11 @@ const NavbarLandingPage = () => {
 
       <div className="navbar-lp__actions navbar-lp__actions--desktop">
         <Link to="/criar-conta">
-          <button className="navbar-lp__btn-cadastrar">
-            Cadastrar
-          </button>
+          <button className="navbar-lp__btn-cadastrar">Cadastrar</button>
         </Link>
 
         <Link to="/login">
-          <button className="navbar-lp__btn-login">
-            Login
-          </button>
+          <button className="navbar-lp__btn-login">Login</button>
         </Link>
       </div>
 

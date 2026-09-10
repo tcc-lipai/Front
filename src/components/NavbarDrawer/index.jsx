@@ -1,9 +1,9 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { X } from 'lucide-react';
-import { NAV_ITEMS } from '../Navbar/index.types';
-import { useNavbarDrawer } from './index.hook';
-import './index.css';
+import React from "react";
+import { NavLink } from "react-router-dom";
+import { X } from "lucide-react";
+import { NAV_ITEMS } from "../Navbar/index.types";
+import { useNavbarDrawer } from "./index.hook";
+import "./index.css";
 
 export const NavbarDrawer = ({ isOpen, onClose }) => {
   useNavbarDrawer(isOpen, onClose);
@@ -12,7 +12,7 @@ export const NavbarDrawer = ({ isOpen, onClose }) => {
     <>
       {isOpen && <div className="navbar-drawer-overlay" onClick={onClose} />}
 
-      <nav className={`navbar-drawer ${isOpen ? 'open' : ''}`}>
+      <nav className={`navbar-drawer ${isOpen ? "open" : ""}`}>
         <div className="navbar-drawer-header">
           <span className="navbar-drawer-titulo">Menu</span>
           <button
@@ -33,9 +33,7 @@ export const NavbarDrawer = ({ isOpen, onClose }) => {
                 key={index}
                 to={item.path}
                 onClick={onClose}
-                className={({ isActive }) =>
-                  `navbar-drawer-item ${isActive ? 'active' : ''}`
-                }
+                className={({ isActive }) => `navbar-drawer-item ${isActive ? "active" : ""}`}
               >
                 <Icon className="navbar-drawer-icon" size={20} />
                 <span>{item.label}</span>

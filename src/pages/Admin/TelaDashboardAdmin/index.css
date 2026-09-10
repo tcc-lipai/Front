@@ -2,7 +2,7 @@
   display: flex;
   min-height: 100vh;
   background-color: #f0e8f5;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .dashboard-admin__sidebar {
@@ -105,7 +105,9 @@
   font-size: 0.85rem;
   font-weight: 500;
   cursor: pointer;
-  transition: border-color 0.15s ease, background-color 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
 }
 
 .dashboard-admin__filtro-dropdown:hover {
@@ -147,7 +149,6 @@
   opacity: 0.7;
 }
 
-
 @media (max-width: 768px) {
   .dashboard-admin__sidebar {
     width: 0;
@@ -155,7 +156,7 @@
 
   .dashboard-admin__main {
     padding: 20px 16px;
-     align-items: center;
+    align-items: center;
   }
 
   .dashboard-admin__header {

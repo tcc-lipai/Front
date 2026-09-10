@@ -18,10 +18,38 @@ const IconeChevron = () => (
 );
 
 const usuariosMock = [
-  { id: 1, nome: "Profissional 1", descricao: "lorem...", nivel: "Iniciante", status: "ativo", tipo: "paciente-admin" },
-  { id: 2, nome: "Profissional 2", descricao: "lorem...", nivel: "Intermediário", status: "inativo", tipo: "paciente-admin" },
-  { id: 3, nome: "Profissional 3", descricao: "lorem...", nivel: "Iniciante", status: "ativo", tipo: "paciente-admin" },
-  { id: 4, nome: "Profissional 4", descricao: "lorem...", nivel: "Avançado", status: "inativo", tipo: "paciente-admin" },
+  {
+    id: 1,
+    nome: "Profissional 1",
+    descricao: "lorem...",
+    nivel: "Iniciante",
+    status: "ativo",
+    tipo: "paciente-admin",
+  },
+  {
+    id: 2,
+    nome: "Profissional 2",
+    descricao: "lorem...",
+    nivel: "Intermediário",
+    status: "inativo",
+    tipo: "paciente-admin",
+  },
+  {
+    id: 3,
+    nome: "Profissional 3",
+    descricao: "lorem...",
+    nivel: "Iniciante",
+    status: "ativo",
+    tipo: "paciente-admin",
+  },
+  {
+    id: 4,
+    nome: "Profissional 4",
+    descricao: "lorem...",
+    nivel: "Avançado",
+    status: "inativo",
+    tipo: "paciente-admin",
+  },
 ];
 
 const ProfissionaisAdmin = () => {
@@ -33,7 +61,7 @@ const ProfissionaisAdmin = () => {
   const [nivelFiltro, setNivelFiltro] = useState("");
   const [consistenciaFiltro, setConsistenciaFiltro] = useState("");
 
-  const usuariosFiltrados = usuariosMock.filter(usuario => {
+  const usuariosFiltrados = usuariosMock.filter((usuario) => {
     const batePesquisa = usuario.nome.toLowerCase().includes(pesquisa.toLowerCase());
     const bateNivel = nivelFiltro === "" || usuario.nivel === nivelFiltro;
     const bateConsistencia = consistenciaFiltro === "" || usuario.status === consistenciaFiltro;
@@ -68,34 +96,116 @@ const ProfissionaisAdmin = () => {
 
             <div className="dashboard-admin__filtros">
               <div className="dropdown-container" style={{ position: "relative" }}>
-                <button 
+                <button
                   className="dashboard-admin__filtro-dropdown"
                   onClick={() => setMenuNivelAberto(!menuNivelAberto)}
                 >
                   {nivelFiltro || "Nível"} <IconeChevron />
                 </button>
                 {menuNivelAberto && (
-                  <ul className="dropdown-menu" style={{ position: "absolute", top: "100%", background: "#fff", border: "1px solid #ccc", listStyle: "none", padding: "8px", margin: 0, zIndex: 10, width: "100%" }}>
-                    <li className="dropdown-item" onClick={() => { setNivelFiltro(""); setMenuNivelAberto(false); }}>Todos</li>
-                    <li className="dropdown-item" onClick={() => { setNivelFiltro("Iniciante"); setMenuNivelAberto(false); }}>Iniciante</li>
-                    <li className="dropdown-item" onClick={() => { setNivelFiltro("Intermediário"); setMenuNivelAberto(false); }}>Intermediário</li>
-                    <li className="dropdown-item" onClick={() => { setNivelFiltro("Avançado"); setMenuNivelAberto(false); }}>Avançado</li>
+                  <ul
+                    className="dropdown-menu"
+                    style={{
+                      position: "absolute",
+                      top: "100%",
+                      background: "#fff",
+                      border: "1px solid #ccc",
+                      listStyle: "none",
+                      padding: "8px",
+                      margin: 0,
+                      zIndex: 10,
+                      width: "100%",
+                    }}
+                  >
+                    <li
+                      className="dropdown-item"
+                      onClick={() => {
+                        setNivelFiltro("");
+                        setMenuNivelAberto(false);
+                      }}
+                    >
+                      Todos
+                    </li>
+                    <li
+                      className="dropdown-item"
+                      onClick={() => {
+                        setNivelFiltro("Iniciante");
+                        setMenuNivelAberto(false);
+                      }}
+                    >
+                      Iniciante
+                    </li>
+                    <li
+                      className="dropdown-item"
+                      onClick={() => {
+                        setNivelFiltro("Intermediário");
+                        setMenuNivelAberto(false);
+                      }}
+                    >
+                      Intermediário
+                    </li>
+                    <li
+                      className="dropdown-item"
+                      onClick={() => {
+                        setNivelFiltro("Avançado");
+                        setMenuNivelAberto(false);
+                      }}
+                    >
+                      Avançado
+                    </li>
                   </ul>
                 )}
               </div>
 
               <div className="dropdown-container" style={{ position: "relative" }}>
-                <button 
+                <button
                   className="dashboard-admin__filtro-dropdown"
                   onClick={() => setMenuConsistenciaAberto(!menuConsistenciaAberto)}
                 >
                   {consistenciaFiltro || "Consistência"} <IconeChevron />
                 </button>
                 {menuConsistenciaAberto && (
-                  <ul className="dropdown-menu" style={{ position: "absolute", top: "100%", background: "#fff", border: "1px solid #ccc", listStyle: "none", padding: "8px", margin: 0, zIndex: 10, width: "100%" }}>
-                    <li className="dropdown-item" onClick={() => { setConsistenciaFiltro(""); setMenuConsistenciaAberto(false); }}>Todos</li>
-                    <li className="dropdown-item" onClick={() => { setConsistenciaFiltro("ativo"); setMenuConsistenciaAberto(false); }}>Ativo</li>
-                    <li className="dropdown-item" onClick={() => { setConsistenciaFiltro("inativo"); setMenuConsistenciaAberto(false); }}>Inativo</li>
+                  <ul
+                    className="dropdown-menu"
+                    style={{
+                      position: "absolute",
+                      top: "100%",
+                      background: "#fff",
+                      border: "1px solid #ccc",
+                      listStyle: "none",
+                      padding: "8px",
+                      margin: 0,
+                      zIndex: 10,
+                      width: "100%",
+                    }}
+                  >
+                    <li
+                      className="dropdown-item"
+                      onClick={() => {
+                        setConsistenciaFiltro("");
+                        setMenuConsistenciaAberto(false);
+                      }}
+                    >
+                      Todos
+                    </li>
+                    <li
+                      className="dropdown-item"
+                      onClick={() => {
+                        setConsistenciaFiltro("ativo");
+                        setMenuConsistenciaAberto(false);
+                      }}
+                    >
+                      Ativo
+                    </li>
+                    <li
+                      className="dropdown-item"
+                      onClick={() => {
+                        setConsistenciaFiltro("inativo");
+                        setMenuConsistenciaAberto(false);
+                      }}
+                    >
+                      Inativo
+                    </li>
                   </ul>
                 )}
               </div>
@@ -116,7 +226,7 @@ const ProfissionaisAdmin = () => {
                 />
               </li>
             ))}
-            
+
             {usuariosFiltrados.length === 0 && (
               <p style={{ textAlign: "center", width: "100%", padding: "20px" }}>
                 Nenhum profissional encontrado.

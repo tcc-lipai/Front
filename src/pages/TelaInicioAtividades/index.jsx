@@ -29,24 +29,20 @@ const TelaInicioAtividades = () => {
     status,
     setStatus,
     toggleItem,
-    atividadesFiltradas
+    atividadesFiltradas,
   } = useTelaInicioAtividades();
 
   const navigate = useNavigate();
 
-  const atividadesParaContinuar = atividadesFiltradas.filter(a => a.categoria === "continuar");
-  const atividadesRecomendadas = atividadesFiltradas.filter(a => a.categoria === "recomendada");
+  const atividadesParaContinuar = atividadesFiltradas.filter((a) => a.categoria === "continuar");
+  const atividadesRecomendadas = atividadesFiltradas.filter((a) => a.categoria === "recomendada");
 
   return (
-    <div
-      className="pagina-atividades"
-      style={{ backgroundImage: `url(${backgroundOnda})` }}
-    >
+    <div className="pagina-atividades" style={{ backgroundImage: `url(${backgroundOnda})` }}>
       <Navbar />
 
       <div className="conteudo">
         <section className="principal">
-
           <div className="topo-acoes">
             <div className="menu-espaco-placeholder"></div>
             <HeaderActions onOpenProfile={abrirPerfil} />
@@ -56,7 +52,11 @@ const TelaInicioAtividades = () => {
             <div className="banner-texto">
               <h1>Dicionário</h1>
               <p>
-                O dicionário da plataforma é uma ferramenta de apoio à leitura labial. Nele, você poderá pesquisar ou encontrar o nome de diferentes objetos e acessar um vídeo demonstrativo mostrando como realizar a leitura labial daquela palavra. Dessa forma, o recurso facilita o aprendizado e a prática da leitura labial de maneira visual e interativa.
+                O dicionário da plataforma é uma ferramenta de apoio à leitura labial. Nele, você
+                poderá pesquisar ou encontrar o nome de diferentes objetos e acessar um vídeo
+                demonstrativo mostrando como realizar a leitura labial daquela palavra. Dessa forma,
+                o recurso facilita o aprendizado e a prática da leitura labial de maneira visual e
+                interativa.
               </p>
               <Botao
                 texto="Testar"

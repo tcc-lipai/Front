@@ -10,7 +10,6 @@ import { useTelaDicionario } from "./index.hook";
 
 import backgroundOnda from "../../assets/img/background_onda.png";
 
-
 const TelaDicionario = () => {
   const {
     categoriaAtiva,
@@ -18,16 +17,13 @@ const TelaDicionario = () => {
     cardsFiltrados,
     drawerAberto,
     abrirPerfil,
-    fecharPerfil
+    fecharPerfil,
   } = useTelaDicionario();
 
   const categorias = ["Comida", "Escola", "Trabalho", "Natureza", "Saudações"];
 
   return (
-    <div
-      className="tela-dicionario"
-      style={{ backgroundImage: `url(${backgroundOnda})` }}
-    >
+    <div className="tela-dicionario" style={{ backgroundImage: `url(${backgroundOnda})` }}>
       <Navbar />
 
       <main className="tela-dicionario__conteudo">
@@ -61,10 +57,7 @@ const TelaDicionario = () => {
           <div className="tela-dicionario__grid">
             {cardsFiltrados.map((card) => (
               <div className="tela-dicionario__grid-item" key={card.id}>
-                <DicionarioCard
-                  titulo={card.titulo}
-                  descricao={card.descricao}
-                />
+                <DicionarioCard titulo={card.titulo} descricao={card.descricao} />
               </div>
             ))}
 

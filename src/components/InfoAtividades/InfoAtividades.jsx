@@ -1,10 +1,6 @@
 import { PenTool, Bookmark, ChevronRight } from "lucide-react";
 import { useInfoAtividade } from "./InfoAtividades.hook";
-import {
-  DIFICULDADES,
-  normalizarDificuldade,
-  truncarDescricao,
-} from "./InfoAtividades.utils";
+import { DIFICULDADES, normalizarDificuldade, truncarDescricao } from "./InfoAtividades.utils";
 import Botao from "../Botao";
 import "./InfoAtividades.css";
 
@@ -42,9 +38,7 @@ export default function InfoAtividade({
   const descricaoFormatada = truncarDescricao(descricao, limiteDescricao);
 
   return (
-    <article
-      className={`info-atividade ${modoAdmin ? "info-atividade--admin" : ""}`}
-    >
+    <article className={`info-atividade ${modoAdmin ? "info-atividade--admin" : ""}`}>
       {!modoAdmin && (
         <button
           type="button"
@@ -71,9 +65,7 @@ export default function InfoAtividade({
           <span className="info-atividade__badge info-atividade__badge--dificuldade">
             {dificuldadeFormatada}
           </span>
-          <span className="info-atividade__badge info-atividade__badge--tipo">
-            {tipo}
-          </span>
+          <span className="info-atividade__badge info-atividade__badge--tipo">{tipo}</span>
         </div>
 
         <div className="info-atividade__progresso-wrapper">

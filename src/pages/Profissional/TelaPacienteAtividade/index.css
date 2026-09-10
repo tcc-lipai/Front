@@ -1,131 +1,130 @@
 .atividade-detalhe-page-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    background-color: #F8EDFB;
-    font-family: 'Poppins', sans-serif;
-    box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f8edfb;
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
 }
 
 .atividade-detalhe-main-content {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 40px 20px;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px 20px;
 }
 
 .atividade-detalhe-card-background {
-    background-color: #FFFFFF;
-    width: 90%;
-    max-width: 1200px;
-    border-radius: 28px;
-    padding: 60px 80px;
-    box-shadow: 0 4px 20px rgba(70, 32, 87, 0.05);
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    gap: 40px; 
+  background-color: #ffffff;
+  width: 90%;
+  max-width: 1200px;
+  border-radius: 28px;
+  padding: 60px 80px;
+  box-shadow: 0 4px 20px rgba(70, 32, 87, 0.05);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
 }
 
 .atividade-detalhe-topo-card .info-atividade {
-    box-shadow: none !important;
-    padding: 0 0 30px 0 !important;
-    border-radius: 0 !important;
-    border-bottom: 1px solid #F1EAF4; 
+  box-shadow: none !important;
+  padding: 0 0 30px 0 !important;
+  border-radius: 0 !important;
+  border-bottom: 1px solid #f1eaf4;
 }
 
 .atividade-detalhe-topo-card .info-atividade__bookmark,
 .atividade-detalhe-topo-card .info-atividade__avancar {
-    display: none !important;
+  display: none !important;
 }
 
 .unidades-container-lista {
-    display: flex;
-    flex-direction: column;
-    gap: 45px; 
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 45px;
+  width: 100%;
 }
 
 .unidade-desempenho-block {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
 }
 
 .unidade-titulo-sub {
-    color: #462057;
-    font-size: 26px;
-    font-weight: bold;
-    margin: 0;
+  color: #462057;
+  font-size: 26px;
+  font-weight: bold;
+  margin: 0;
 }
 
 .unidade-barras-wrapper {
-    width: 100%;
+  width: 100%;
 }
 
 @media (max-width: 768px) {
-    .atividade-detalhe-card-background {
-        padding: 40px 30px;
-        gap: 30px;
-    }
-    
-    .unidades-container-lista {
-        gap: 35px;
-    }
+  .atividade-detalhe-card-background {
+    padding: 40px 30px;
+    gap: 30px;
+  }
+
+  .unidades-container-lista {
+    gap: 35px;
+  }
 }
 /* LIPAI_THEME_DARK_COMPONENT: regras específicas para pages/Profissional/TelaPacienteAtividade/index.css. */
-:root[data-theme='dark'] #root .atividade-detalhe-page-container,
-:root[data-theme='dark'] #root .atividade-detalhe-main-content,
-:root[data-theme='dark'] #root .unidades-container-lista,
-:root[data-theme='dark'] #root .unidade-barras-wrapper {
+:root[data-theme="dark"] #root .atividade-detalhe-page-container,
+:root[data-theme="dark"] #root .atividade-detalhe-main-content,
+:root[data-theme="dark"] #root .unidades-container-lista,
+:root[data-theme="dark"] #root .unidade-barras-wrapper {
   background-color: var(--lipai-background);
   color: var(--lipai-text);
 }
-:root[data-theme='dark'] #root .atividade-detalhe-card-background,
-:root[data-theme='dark'] #root .atividade-detalhe-topo-card {
+:root[data-theme="dark"] #root .atividade-detalhe-card-background,
+:root[data-theme="dark"] #root .atividade-detalhe-topo-card {
   background-color: var(--lipai-surface);
   border-color: var(--lipai-border);
 }
-:root[data-theme='dark'] #root .unidade-titulo-sub {
+:root[data-theme="dark"] #root .unidade-titulo-sub {
   color: var(--lipai-text);
 }
 
-
 /* Refinamento de contornos — detalhe profissional de atividade no modo escuro. */
-:root[data-theme='dark'] #root .atividade-detalhe-card-background {
+:root[data-theme="dark"] #root .atividade-detalhe-card-background {
   background: linear-gradient(145deg, #23182c, #1c1424) !important;
   border: 0 !important;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18) !important;
 }
 
-:root[data-theme='dark'] #root :is(.atividade-detalhe-topo-card, .unidades-container-lista, .unidade-barras-wrapper) {
+:root[data-theme="dark"]
+  #root
+  :is(.atividade-detalhe-topo-card, .unidades-container-lista, .unidade-barras-wrapper) {
   background: transparent !important;
   border: 0 !important;
 }
 
-:root[data-theme='dark'] #root .atividade-detalhe-topo-card .info-atividade {
+:root[data-theme="dark"] #root .atividade-detalhe-topo-card .info-atividade {
   border-bottom: 0 !important;
   padding-bottom: 12px !important;
 }
 
-:root[data-theme='dark'] #root .unidade-desempenho-block {
+:root[data-theme="dark"] #root .unidade-desempenho-block {
   border: 0 !important;
   padding: 0 !important;
 }
 
-
 /* Atividade do paciente — contexto delimitado por uma borda suave; barras permanecem livres de caixas internas. */
-:root[data-theme='dark'] #root .atividade-detalhe-card-background {
+:root[data-theme="dark"] #root .atividade-detalhe-card-background {
   background: transparent !important;
-  border: 1px solid rgba(225, 182, 244, 0.20) !important;
+  border: 1px solid rgba(225, 182, 244, 0.2) !important;
   box-shadow: none !important;
 }
 
-
 /* Contorno final de contexto: independente de regras globais que zeram border. */
-:root[data-theme='dark'] #root .atividade-detalhe-card-background {
+:root[data-theme="dark"] #root .atividade-detalhe-card-background {
   border: 0 !important;
   outline: 1px solid rgba(225, 182, 244, 0.28) !important;
   outline-offset: -1px;

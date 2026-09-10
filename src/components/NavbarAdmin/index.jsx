@@ -1,10 +1,10 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { Menu } from 'lucide-react';
-import { NAV_ITEMS } from './index.types';
-import { useNavbarProfissional } from './index.hook';
-import { NavbarDrawer } from '../NavbarDrawer';
-import './index.css';
+import React from "react";
+import { NavLink } from "react-router-dom";
+import { Menu } from "lucide-react";
+import { NAV_ITEMS } from "./index.types";
+import { useNavbarProfissional } from "./index.hook";
+import { NavbarDrawer } from "../NavbarDrawer";
+import "./index.css";
 
 const NavbarAdmin = () => {
   const { drawerAberto, abrirDrawer, fecharDrawer } = useNavbarProfissional();
@@ -28,7 +28,7 @@ const NavbarAdmin = () => {
               <NavLink
                 key={index}
                 to={item.path}
-                className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+                className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}
                 title={item.label}
               >
                 <Icon className="nav-icon" size={24} />

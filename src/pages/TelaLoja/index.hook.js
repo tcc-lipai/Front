@@ -6,10 +6,7 @@ export function useTelaLoja() {
   const [drawerAberto, setDrawerAberto] = useState(false);
 
   // Filtro memoizado por termo de pesquisa
-  const itensFiltrados = useMemo(
-    () => filtrarItensPorBusca(ITENS_LOJA_MOCK, busca),
-    [busca]
-  );
+  const itensFiltrados = useMemo(() => filtrarItensPorBusca(ITENS_LOJA_MOCK, busca), [busca]);
 
   const abrirPerfil = () => setDrawerAberto(true);
   const fecharPerfil = () => setDrawerAberto(false);

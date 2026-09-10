@@ -1,16 +1,16 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 export const useUserProfileDrawer = (onClose) => {
   const navigate = useNavigate();
 
   const handleEditProfileClick = () => {
-    onClose(); 
-    navigate('/perfil'); 
+    onClose();
+    navigate("/perfil");
   };
 
   const handleNotificacao = () => {
-    onClose(); 
-    navigate('/notificacoes'); 
+    onClose();
+    navigate("/notificacoes");
   };
 
   return {

@@ -6,10 +6,9 @@ import { UserProfileDrawer } from "../../components/UserProfileDrawer";
 import ProdutoLoja from "../../components/Produto-loja";
 import { useTelaLoja } from "./index.hook";
 
-import ImgPersonagem from "../../assets/img/menina-carrinho.png"; 
+import ImgPersonagem from "../../assets/img/menina-carrinho.png";
 
 import backgroundOnda from "../../assets/img/background_onda.png";
-
 
 import "./index.css";
 
@@ -25,11 +24,8 @@ const TelaLoja = () => {
   } = useTelaLoja();
 
   return (
-    <div
-      className="tela-loja"
-      style={{ backgroundImage: `url(${backgroundOnda})` }}
-    >
-      <Navbar /> 
+    <div className="tela-loja" style={{ backgroundImage: `url(${backgroundOnda})` }}>
+      <Navbar />
 
       <main className="tela-loja__conteudo">
         <div className="tela-loja__topo">
@@ -61,7 +57,7 @@ const TelaLoja = () => {
                     title={item.title}
                     description={item.description}
                     price={item.price}
-                    tipo={item.tipo} 
+                    tipo={item.tipo}
                     isBlocked={item.isBlocked}
                     onComprar={() => handleComprar(item)}
                   />
@@ -70,17 +66,15 @@ const TelaLoja = () => {
             </div>
 
             {itensFiltrados.length === 0 && (
-              <p className="tela-loja__vazio">
-                Nenhum item encontrado para “{busca}”.
-              </p>
+              <p className="tela-loja__vazio">Nenhum item encontrado para “{busca}”.</p>
             )}
           </div>
 
           <div className="tela-loja__painel-direita">
-            <img 
-              src={ImgPersonagem} 
-              alt="Personagem com carrinho de compras" 
-              className="tela-loja__ilustracao" 
+            <img
+              src={ImgPersonagem}
+              alt="Personagem com carrinho de compras"
+              className="tela-loja__ilustracao"
             />
           </div>
         </section>

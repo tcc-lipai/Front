@@ -28,16 +28,10 @@ const TelaInicioAtividadeUnidade = () => {
               className="tag-nivel"
             />
 
-            <Botao
-              texto="Escrita"
-              corDeFundo="#C8D0C8"
-              corTexto="#5A3273"
-              className="tag-nivel"
-            />
+            <Botao texto="Escrita" corDeFundo="#C8D0C8" corTexto="#5A3273" className="tag-nivel" />
           </div>
           <p className="descricao-atividade">
-            Aqui vai a descrição de como vai ser a atividade e o que será
-            cobrado
+            Aqui vai a descrição de como vai ser a atividade e o que será cobrado
           </p>
 
           <h2>Unidade 1</h2>
@@ -49,8 +43,6 @@ const TelaInicioAtividadeUnidade = () => {
               descricao="Descrição do exercício de vídeo"
               onComecar={() => navigate("/atividade/video/1")}
             />
-
-            
 
             {/* Apontando para a rota de alternativa/escrita real */}
             <CardExercicio

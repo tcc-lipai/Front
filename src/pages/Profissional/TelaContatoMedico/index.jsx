@@ -1,32 +1,32 @@
-import React, { useState } from 'react';
-import NavbarProfissional from '../../../components/NavbarProfissional';
-import Botao from '../../../components/Botao';
+import React, { useState } from "react";
+import NavbarProfissional from "../../../components/NavbarProfissional";
+import Botao from "../../../components/Botao";
 
-import './index.css';
+import "./index.css";
 
 const TelaContatoMedico = () => {
   const [formData, setFormData] = useState({
-    nome: '',
-    email: '',
-    mensagem: ''
+    nome: "",
+    email: "",
+    mensagem: "",
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
+    setFormData((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Dados do formulário:', formData);
-    alert('Mensagem enviada com sucesso!');
+    console.log("Dados do formulário:", formData);
+    alert("Mensagem enviada com sucesso!");
     setFormData({
-      nome: '',
-      email: '',
-      mensagem: ''
+      nome: "",
+      email: "",
+      mensagem: "",
     });
   };
 
@@ -36,7 +36,6 @@ const TelaContatoMedico = () => {
 
       <main className="content-container">
         <div className="card-contato">
-
           <div className="form-section">
             <h1 className="form-title">Está com Problemas?</h1>
             <p className="form-subtitle">
@@ -102,15 +101,24 @@ const TelaContatoMedico = () => {
             </div>
 
             <div className="social-media-links">
-              <a href="https://instagram.com" target="_blank" rel="noreferrer" className="social-icon">
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noreferrer"
+                className="social-icon"
+              >
                 i
               </a>
-              <a href="https://facebook.com" target="_blank" rel="noreferrer" className="social-icon">
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noreferrer"
+                className="social-icon"
+              >
                 f
               </a>
             </div>
           </div>
-
         </div>
       </main>
     </div>

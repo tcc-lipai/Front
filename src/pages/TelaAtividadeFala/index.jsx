@@ -42,10 +42,7 @@ const TelaAtividadeFala = () => {
               </div>
             </div>
 
-            <button
-              className="btn-fechar"
-              onClick={() => setMostrarModalSair(true)}
-            >
+            <button className="btn-fechar" onClick={() => setMostrarModalSair(true)}>
               <X size={38} />
             </button>
           </div>
@@ -65,12 +62,7 @@ const TelaAtividadeFala = () => {
           </div>
 
           <div className="atividade-botao">
-            <Botao
-              texto="Enviar"
-              corDeFundo="#9065A6"
-              corTexto="#FFFFFF"
-              onClick={handleEnviar}
-            />
+            <Botao texto="Enviar" corDeFundo="#9065A6" corTexto="#FFFFFF" onClick={handleEnviar} />
           </div>
         </div>
       </div>
