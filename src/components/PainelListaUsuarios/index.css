@@ -1,16 +1,16 @@
-.dashboard-admin {
+.lista-usuarios {
   display: flex;
   min-height: 100vh;
-  background-color: #f0e8f5;
+  background-color: var(--lipai-bg);
   font-family: "Poppins", sans-serif;
 }
 
-.dashboard-admin__sidebar {
+.lista-usuarios__sidebar {
   width: 90px;
   flex-shrink: 0;
 }
 
-.dashboard-admin__main {
+.lista-usuarios__main {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -19,103 +19,79 @@
   overflow-y: auto;
 }
 
-.dashboard-admin__header {
+.lista-usuarios__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.dashboard-admin__titulo {
+.lista-usuarios__titulo {
   font-size: 1.6rem;
   font-weight: 700;
-  color: #2d1a2e;
+  color: var(--lipai-text);
   margin: 0;
 }
 
-.dashboard-admin__container {
-  background-color: #ffffff;
+.lista-usuarios__container {
+  background-color: var(--lipai-surface);
   border-radius: 20px;
   padding: 24px;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  box-shadow: 0 2px 12px rgba(90, 30, 110, 0.06);
+  box-shadow: var(--lipai-shadow);
 }
 
-.dashboard-admin__controles {
+.lista-usuarios__controles {
   display: flex;
   align-items: center;
   gap: 12px;
   flex-wrap: wrap;
 }
 
-.dashboard-admin__pesquisa {
+.lista-usuarios__pesquisa {
   position: relative;
   flex: 1;
   min-width: 200px;
 }
 
-.dashboard-admin__input {
+.lista-usuarios__input {
   width: 100%;
   box-sizing: border-box;
   padding: 10px 40px 10px 16px;
   border-radius: 30px;
-  border: 1.5px solid #e0d5e8;
-  background-color: #faf7fc;
+  border: 1.5px solid var(--lipai-border);
+  background-color: var(--lipai-surface-2);
   font-size: 0.88rem;
-  color: #2d1a2e;
+  color: var(--lipai-text);
   outline: none;
   transition: border-color 0.15s ease;
 }
 
-.dashboard-admin__input::placeholder {
-  color: #b0a0ba;
+.lista-usuarios__input::placeholder {
+  color: var(--lipai-text-muted);
 }
 
-.dashboard-admin__input:focus {
-  border-color: #7b3f8c;
+.lista-usuarios__input:focus {
+  border-color: var(--lipai-primary);
 }
 
-.dashboard-admin__lupa {
+.lista-usuarios__lupa {
   position: absolute;
   right: 14px;
   top: 50%;
   transform: translateY(-50%);
-  color: #7b3f8c;
-  display: flex;
-  align-items: center;
+  color: var(--lipai-primary);
   pointer-events: none;
 }
 
-.dashboard-admin__filtros {
+.lista-usuarios__filtros {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
 }
 
-.dashboard-admin__filtro-dropdown {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 16px;
-  border-radius: 20px;
-  border: 1.5px solid #c8b8d8;
-  background-color: transparent;
-  color: #4a2060;
-  font-size: 0.85rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition:
-    border-color 0.15s ease,
-    background-color 0.15s ease;
-}
-
-.dashboard-admin__filtro-dropdown:hover {
-  border-color: #7b3f8c;
-  background-color: #f5eefa;
-}
-
-.dashboard-admin__lista {
+.lista-usuarios__lista {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -124,20 +100,31 @@
   gap: 12px;
 }
 
-.dashboard-admin__rodape {
+.lista-usuarios__vazio {
+  text-align: center;
+  width: 100%;
+  padding: 20px;
+  color: var(--lipai-text-muted);
+}
+
+.lista-usuarios__rodape {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding-top: 4px;
 }
 
-.dashboard-admin__ver-mais {
+.lista-usuarios__rodape:has(> :only-child) {
+  justify-content: center;
+}
+
+.lista-usuarios__ver-mais {
   display: flex;
   align-items: center;
   gap: 4px;
   background: none;
   border: none;
-  color: #4a2060;
+  color: var(--lipai-primary);
   font-size: 0.92rem;
   font-weight: 500;
   cursor: pointer;
@@ -145,41 +132,34 @@
   transition: opacity 0.15s ease;
 }
 
-.dashboard-admin__ver-mais:hover {
+.lista-usuarios__ver-mais:hover {
   opacity: 0.7;
 }
 
 @media (max-width: 768px) {
-  .dashboard-admin__sidebar {
+  .lista-usuarios__sidebar {
     width: 0;
   }
 
-  .dashboard-admin__main {
+  .lista-usuarios__main {
     padding: 20px 16px;
     align-items: center;
   }
 
-  .dashboard-admin__header {
-    display: flex;
-    align-items: center;
+  .lista-usuarios__header {
     justify-content: center;
     height: 44px;
     margin-top: 20px;
   }
 
-  .dashboard-admin__titulo {
-    margin: 0;
+  .lista-usuarios__titulo {
     text-align: center;
     font-size: 1.4rem;
   }
 
-  .dashboard-admin__rodape {
+  .lista-usuarios__rodape {
     flex-direction: column;
     gap: 12px;
     align-items: stretch;
-  }
-
-  .dashboard-admin__cadastrar {
-    text-align: center;
   }
 }

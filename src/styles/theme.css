@@ -35,8 +35,7 @@
     .atividade-overlay,
     .atividade-detalhe-page-container,
     .paciente-page-container,
-    .dashboard-admin,
-    .dashboard-medico
+    .lista-usuarios
   ) {
   background-color: var(--lipai-bg) !important;
   background-image: none !important;
@@ -89,8 +88,7 @@
     .cadastro-card,
     .login-container,
     .cadastro-container,
-    .dashboard-admin__container,
-    .dashboard-medico__container,
+    .lista-usuarios__container,
     .paciente-card-background,
     .atividade-detalhe-card-background,
     .conteudo-atividade,
@@ -104,7 +102,6 @@
     .navbar-drawer,
     .sidebar-container,
     .filter,
-    .dropdown-menu,
     .ta-dicionario,
     .ta-como-funciona,
     .ta-carousel__card,
@@ -130,8 +127,7 @@
     .card-icone-placeholder-figma,
     .tela-loja__busca,
     .busca-input-wrapper,
-    .dashboard-admin__pesquisa,
-    .dashboard-medico__pesquisa,
+    .lista-usuarios__pesquisa,
     .atividades-admin__busca,
     .fala-box,
     .option-item,
@@ -223,8 +219,7 @@
   :is(
     a:not([class*="btn"]),
     .ver-mais-btn,
-    .dashboard-admin__ver-mais,
-    .dashboard-medico__ver-mais,
+    .lista-usuarios__ver-mais,
     .atividades-admin__ver-mais
   ):not(.landing *) {
   color: var(--lipai-primary);
