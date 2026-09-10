@@ -1,8 +1,8 @@
 import { PenTool, Bookmark, ChevronRight } from "lucide-react";
-import { useInfoAtividade } from "./InfoAtividades.hook";
-import { DIFICULDADES, normalizarDificuldade, truncarDescricao } from "./InfoAtividades.utils";
+import { useInfoAtividade } from "./index.hook";
+import { DIFICULDADES, normalizarDificuldade, truncarDescricao } from "./index.utils";
 import Botao from "../Botao";
-import "./InfoAtividades.css";
+import "./index.css";
 
 export default function InfoAtividade({
   titulo = "Primeira Atividade",

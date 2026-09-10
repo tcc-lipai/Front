@@ -4,8 +4,8 @@ import "./index.css";
 
 import Botao from "../../components/Botao";
 import FeedbackCard from "../../components/FeedbackCard";
-import { useFeedback } from "../../components/FeedbackCard/hooks"; // <-- Ajuste o caminho conforme o seu projeto
-import { FEEDBACK_TYPES } from "../../components/FeedbackCard/types"; // <-- Ajuste o caminho conforme o seu projeto
+import { useFeedback } from "../../components/FeedbackCard/index.hook";
+import { FEEDBACK_TYPES } from "../../components/FeedbackCard/index.types";
 
 import { X } from "lucide-react";
 

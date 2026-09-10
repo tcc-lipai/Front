@@ -1,7 +1,7 @@
 import React from "react";
 // 1. Importamos o useNavigate para as rotas
 import { useNavigate } from "react-router-dom";
-import NavbarLandingPage from "../../components/Navbar-landingpage";
+import NavbarLandingPage from "../../components/NavbarLandingPage";
 import Footer from "../../components/Footer";
 import "./index.css";
 

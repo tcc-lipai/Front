@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar/index";
 import "./index.css";
-import { HeaderActions } from "../../components/infoEstrelas/index";
+import { HeaderActions } from "../../components/HeaderActions/index";
 import { UserProfileDrawer } from "../../components/UserProfileDrawer/index";
 import Conquistas from "../../components/Conquistas/index";
 import { useTelaDashboard } from "./index.hook";

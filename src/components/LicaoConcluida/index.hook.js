@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { INITIAL_LESSON_STATS } from "./types";
+import { INITIAL_LESSON_STATS } from "./index.types";
 
 export const useLicaoConcluida = () => {
   const [isOpen, setIsOpen] = useState(false);

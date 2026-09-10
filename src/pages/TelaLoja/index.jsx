@@ -1,9 +1,9 @@
 import React from "react";
 import { Search } from "lucide-react";
 import Navbar from "../../components/Navbar";
-import { HeaderActions } from "../../components/infoEstrelas";
+import { HeaderActions } from "../../components/HeaderActions";
 import { UserProfileDrawer } from "../../components/UserProfileDrawer";
-import ProdutoLoja from "../../components/Produto-loja";
+import ProdutoLoja from "../../components/ProdutoLoja";
 import { useTelaLoja } from "./index.hook";
 
 import ImgPersonagem from "../../assets/img/menina-carrinho.png";

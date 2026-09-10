@@ -1,5 +1,5 @@
 import React from "react";
-import { FEEDBACK_TYPES } from "./types";
+import { FEEDBACK_TYPES } from "./index.types";
 import "./index.css";
 
 const FeedbackCard = ({ isOpen, onClose, text, type = FEEDBACK_TYPES.DEFAULT, onNext }) => {

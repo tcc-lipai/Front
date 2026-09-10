@@ -1,7 +1,7 @@
 import React from "react";
 import { X, Bell, User } from "lucide-react";
 import { useUserProfileDrawer } from "./index.hook";
-import { formatPhone } from "./utils";
+import { formatPhone } from "./index.utils";
 import "./index.css";
 
 export const UserProfileDrawer = ({ isOpen, onClose, userData }) => {

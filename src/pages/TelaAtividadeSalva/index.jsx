@@ -1,8 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom"; // <-- 1. Importando o useNavigate
 import { Bookmark, X } from "lucide-react"; // <-- 2. Importando o ícone de X
-import Navbar from "../../components/Navbar_reta";
-import InfoAtividade from "../../components/InfoAtividades/InfoAtividades";
+import Navbar from "../../components/NavbarVoltar";
+import InfoAtividade from "../../components/InfoAtividades";
 import { useTelaAtividadeSalva } from "./index.hook";
 import "./index.css";
 

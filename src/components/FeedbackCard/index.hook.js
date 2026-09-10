@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FEEDBACK_TYPES } from "./types";
+import { FEEDBACK_TYPES } from "./index.types";
 
 export const useFeedback = () => {
   const [feedbackState, setFeedbackState] = useState({

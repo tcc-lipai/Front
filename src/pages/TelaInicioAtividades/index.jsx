@@ -4,9 +4,9 @@ import "./index.css";
 
 import Navbar from "../../components/Navbar";
 import Filtro from "../../components/Filtro";
-import InfoAtividade from "../../components/InfoAtividades/InfoAtividades";
+import InfoAtividade from "../../components/InfoAtividades";
 import Botao from "../../components/Botao";
-import { HeaderActions } from "../../components/infoEstrelas";
+import { HeaderActions } from "../../components/HeaderActions";
 import { UserProfileDrawer } from "../../components/UserProfileDrawer";
 
 import realizadas from "../../assets/img/realizadas.png";

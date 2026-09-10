@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./index.css";
-import { difficulties, statusOptions } from "./types";
+import { difficulties, statusOptions } from "./index.types";
 
 export default function Filtro({
   search,

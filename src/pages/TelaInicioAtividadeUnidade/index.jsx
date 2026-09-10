@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import CardExercicio from "../../components/CardExercicio";
-import Navbar from "../../components/Navbar_reta";
+import Navbar from "../../components/NavbarVoltar";
 import Botao from "../../components/Botao";
 
 import video from "../../assets/img/video.png";

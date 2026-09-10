@@ -1,6 +1,6 @@
 import React from "react";
 import "./index.css";
-import { useDicionarioCard } from "./hook";
+import { useDicionarioCard } from "./index.hook";
 
 export const DicionarioCard = ({
   titulo = "Laranja",

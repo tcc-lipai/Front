@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { DEFAULT_CONQUISTA_DATA } from "./types";
+import { DEFAULT_CONQUISTA_DATA } from "./index.types";
 
 export const useConquistas = () => {
   const [conquistaData, setConquistaData] = useState(DEFAULT_CONQUISTA_DATA);

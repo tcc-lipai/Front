@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserSidebar } from "../../components/UserSidebar";
 import { useTheme } from "../../hooks/useTheme";
-import useLogout from "./index.hooks";
+import useLogout from "./index.hook";
 import api from "../../services/api";
 import { lerPreferencias, salvarPreferencias } from "../../services/preferenciasService";
 import "./index.css";

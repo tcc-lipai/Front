@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RedesSociais from "../../components/RedesSociais";
-import { HeaderActions } from "../../components/infoEstrelas";
-import InfoAtividades from "../../components/InfoAtividades/InfoAtividades";
+import { HeaderActions } from "../../components/HeaderActions";
+import InfoAtividades from "../../components/InfoAtividades";
 import Navbar from "../../components/Navbar";
 import { UserProfileDrawer } from "../../components/UserProfileDrawer";
 import Bia from "../../assets/img/Bia.png";

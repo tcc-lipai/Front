@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { HeaderActions } from "../../../components/infoEstrelas";
+import { HeaderActions } from "../../../components/HeaderActions";
 import NavbarProfissional from "../../../components/NavbarProfissional";
 import CardUsuario from "../../../components/CardUsuario";
 import "./index.css";

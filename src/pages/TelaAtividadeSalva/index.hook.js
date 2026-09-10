@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TODAS_ATIVIDADES_MOCK } from "./utils";
+import { TODAS_ATIVIDADES_MOCK } from "./index.utils";
 
 export function useTelaAtividadeSalva() {
   const [atividades, setAtividades] = useState(TODAS_ATIVIDADES_MOCK);

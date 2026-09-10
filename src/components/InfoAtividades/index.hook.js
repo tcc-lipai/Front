@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { clampProgresso } from "./InfoAtividades.utils";
+import { clampProgresso } from "./index.utils";
 
 export function useInfoAtividade({
   progresso,

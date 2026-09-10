@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Conquistas from "../../components/Conquistas";
 import { listarConquistasUsuario } from "../../services/conquistaService";
-import { DEFAULT_CONQUISTA_DATA } from "../../components/Conquistas/types";
+import { DEFAULT_CONQUISTA_DATA } from "../../components/Conquistas/index.types";
 import "./index.css";
 
 const TelaConquistas = () => {

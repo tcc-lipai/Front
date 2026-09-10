@@ -1,7 +1,7 @@
 import React from "react";
 import { DicionarioCard } from "../../components/Dicionario";
 import Navbar from "../../components/Navbar";
-import { HeaderActions } from "../../components/infoEstrelas";
+import { HeaderActions } from "../../components/HeaderActions";
 import Botao from "../../components/Botao";
 import { UserProfileDrawer } from "../../components/UserProfileDrawer";
 import "./index.css";

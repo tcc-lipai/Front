@@ -1,6 +1,6 @@
 import React from "react";
 import { Search, ChevronDown } from "lucide-react";
-import InfoAtividade from "../../../components/InfoAtividades/InfoAtividades";
+import InfoAtividade from "../../../components/InfoAtividades";
 import NavbarAdmin from "../../../components/NavbarAdmin";
 import { UserProfileDrawer } from "../../../components/UserProfileDrawer";
 import { useTelaAtividadesAdmin } from "./index.hook";

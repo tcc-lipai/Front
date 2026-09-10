@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { ITENS_LOJA_MOCK, filtrarItensPorBusca } from "./utils";
+import { ITENS_LOJA_MOCK, filtrarItensPorBusca } from "./index.utils";
 
 export function useTelaLoja() {
   const [busca, setBusca] = useState("");

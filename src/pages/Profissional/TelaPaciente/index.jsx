@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../../../components/Navbar_reta";
+import Navbar from "../../../components/NavbarVoltar";
 import BarrasDeDesempenho from "../../../components/BarrasDeDesempenho";
-import InfoAtividades from "../../../components/InfoAtividades/InfoAtividades";
+import InfoAtividades from "../../../components/InfoAtividades";
 import "./index.css";
 
 const TelaPaciente = () => {
