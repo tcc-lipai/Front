@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import NavbarAdmin from "../../../components/NavbarAdmin";
+import Navbar, { NAV_ITENS_ADMIN } from "../../../components/Navbar";
 import CardUsuario from "../../../components/CardUsuario";
 import Botao from "../../../components/Botao";
 import "./index.css";
@@ -71,7 +71,7 @@ const ProfissionaisAdmin = () => {
   return (
     <div className="dashboard-admin">
       <aside className="dashboard-admin__sidebar">
-        <NavbarAdmin />
+        <Navbar itens={NAV_ITENS_ADMIN} />
       </aside>
 
       <main className="dashboard-admin__main">

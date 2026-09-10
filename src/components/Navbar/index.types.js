@@ -1,11 +1,20 @@
-import { Home, Dumbbell, Store, Users, BookA, Phone, Settings } from "lucide-react";
+import { Home, Dumbbell, Store, Users, BookA, Stethoscope, BookOpen, Phone } from "lucide-react";
 
-export const NAV_ITEMS = [
+export const NAV_ITENS_ALUNO = [
   { icon: Home, path: "/", label: "Dashboard" },
   { icon: Dumbbell, path: "/inicio-atividades", label: "Atividades" },
   { icon: Store, path: "/loja", label: "Loja" },
   { icon: Users, path: "/acompanhante", label: "Acompanhante" },
   { icon: BookA, path: "/dicionario", label: "Dicionário" },
-  // { icon: Phone, path: '/contato', label: 'Contato' },
-  // { icon: Settings, path: '/configuracoes', label: 'Configurações' },
+];
+
+export const NAV_ITENS_PROFISSIONAL = [
+  { icon: Home, path: "/dashboard-medico", label: "Início" },
+  { icon: Phone, path: "/contato-medico", label: "Contato" },
+];
+
+export const NAV_ITENS_ADMIN = [
+  { icon: Home, path: "/dashboard-admin", label: "Início" },
+  { icon: Stethoscope, path: "/profissional-admin", label: "Profissionais" },
+  { icon: BookOpen, path: "/atividades-admin", label: "Atividades" },
 ];

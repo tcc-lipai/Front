@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { HeaderActions } from "../../../components/HeaderActions";
-import NavbarProfissional from "../../../components/NavbarProfissional";
+import Navbar, { NAV_ITENS_PROFISSIONAL } from "../../../components/Navbar";
 import CardUsuario from "../../../components/CardUsuario";
 import "./index.css";
 
@@ -74,7 +74,7 @@ const DashboardMedico = () => {
   return (
     <div className="dashboard-medico">
       <aside className="dashboard-medico__sidebar">
-        <NavbarProfissional />
+        <Navbar itens={NAV_ITENS_PROFISSIONAL} />
       </aside>
 
       <main className="dashboard-medico__main">

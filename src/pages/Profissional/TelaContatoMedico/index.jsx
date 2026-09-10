@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import NavbarProfissional from "../../../components/NavbarProfissional";
+import Navbar, { NAV_ITENS_PROFISSIONAL } from "../../../components/Navbar";
 import Botao from "../../../components/Botao";
 
 import "./index.css";
@@ -32,7 +32,7 @@ const TelaContatoMedico = () => {
 
   return (
     <div className="page-layout">
-      <NavbarProfissional />
+      <Navbar itens={NAV_ITENS_PROFISSIONAL} />
 
       <main className="content-container">
         <div className="card-contato">
