@@ -105,23 +105,3 @@
     max-width: 280px;
   }
 }
-
-/* LIPAI_THEME_DARK_COMPONENT: regras específicas para components/Fala/index.css. */
-:root[data-theme="dark"] #root .icon-container,
-:root[data-theme="dark"] #root .fala-wrapper {
-  background-color: var(--lipai-background);
-  color: var(--lipai-text);
-}
-:root[data-theme="dark"] #root .fala-box {
-  background-color: var(--lipai-surface);
-  border-color: var(--lipai-border);
-}
-
-/* Refinamento de contornos — componente de gravação no modo escuro. */
-:root[data-theme="dark"] #root :is(.fala-wrapper, .icon-container) {
-  background: transparent !important;
-}
-
-:root[data-theme="dark"] #root .fala-box {
-  border: 0 !important;
-}

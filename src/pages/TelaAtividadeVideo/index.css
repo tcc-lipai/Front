@@ -144,39 +144,3 @@
     font-size: 1.8rem;
   }
 }
-/* LIPAI_THEME_DARK_COMPONENT: regras específicas para pages/TelaAtividadeVideo/index.css. */
-:root[data-theme="dark"] #root .atividade-container,
-:root[data-theme="dark"] #root .video-container {
-  background-color: var(--lipai-background);
-  color: var(--lipai-text);
-}
-:root[data-theme="dark"] #root .atividade-titulo {
-  color: var(--lipai-text);
-}
-
-/* Refinamento de contornos — Atividade de vídeo no modo escuro. */
-:root[data-theme="dark"] #root .atividade-overlay {
-  background: var(--lipai-background) !important;
-}
-
-:root[data-theme="dark"] #root .atividade-container {
-  background: linear-gradient(145deg, #23182c, #1c1424) !important;
-  border: 0 !important;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18) !important;
-}
-
-:root[data-theme="dark"] #root .video-container {
-  background: transparent !important;
-  border: 0 !important;
-}
-
-:root[data-theme="dark"] #root .video-placeholder {
-  background: #211727 !important;
-  border: 0 !important;
-  border-radius: 18px;
-  box-shadow: inset 0 0 0 1px rgba(239, 220, 249, 0.08);
-}
-
-:root[data-theme="dark"] #root :is(.atividade-conteudo h2, .atividade-conteudo p) {
-  color: #fffaff !important;
-}

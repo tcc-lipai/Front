@@ -86,37 +86,3 @@
     height: 42px;
   }
 }
-/* Correção de acessibilidade visual — cartão de exercício no modo escuro. */
-:root[data-theme="dark"] #root .card-exercicio {
-  background: linear-gradient(145deg, #2a1d35, #24182f) !important;
-  border: 1px solid var(--lipai-border-subtle);
-  box-shadow: 0 7px 16px rgba(0, 0, 0, 0.15);
-}
-
-:root[data-theme="dark"] #root .card-imagem,
-:root[data-theme="dark"] #root .card-info {
-  background: transparent !important;
-}
-
-:root[data-theme="dark"] #root .card-info p {
-  color: #fffaff !important;
-  font-weight: 600;
-  opacity: 1 !important;
-}
-
-:root[data-theme="dark"] #root .btn-card {
-  background: linear-gradient(135deg, #d080f6, #9b4cc5) !important;
-  border: 1px solid rgba(255, 255, 255, 0.16) !important;
-  color: #ffffff !important;
-  font-weight: 700;
-}
-
-:root[data-theme="dark"] #root .card-imagem img {
-  filter: brightness(1.18) contrast(1.08);
-}
-
-/* Refinamento de contornos — cartões de exercício no modo escuro. */
-:root[data-theme="dark"] #root .card-exercicio {
-  border: 0 !important;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15) !important;
-}
