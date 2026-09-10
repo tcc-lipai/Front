@@ -45,10 +45,8 @@ const TelaDicionario = () => {
                   key={cat}
                   texto={cat}
                   onClick={() => setCategoriaAtiva(cat)}
-                  className={`btn-filter ${isActive ? "btn-active" : "btn-inactive"}`}
-                  corFundo={isActive ? "#9c8cb9" : "transparent"}
-                  corTexto={isActive ? "#ffffff" : "#4a1565"}
-                  corBorda="#4a1565"
+                  variante={isActive ? "primario" : "secundario"}
+                  className="btn-filter"
                 />
               );
             })}

@@ -75,28 +75,10 @@
   align-items: center;
 }
 
-.btn-generico {
+.card-usuario__acoes .btn-generico {
   padding: 8px 20px;
   border-radius: 20px;
-  border: none;
   font-size: 0.88rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: opacity 0.15s ease;
-}
-
-.btn-generico:hover {
-  opacity: 0.85;
-}
-
-.btn-primario {
-  background-color: #7b3f8c;
-  color: #ffffff;
-}
-
-.btn-perigo {
-  background-color: #c0444b;
-  color: #ffffff;
 }
 
 @media (max-width: 600px) {

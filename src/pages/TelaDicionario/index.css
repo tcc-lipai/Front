@@ -66,23 +66,9 @@
   border-radius: 19px;
   font-size: 14px;
   font-weight: 600;
-  cursor: pointer;
   box-sizing: border-box;
   transition: all 0.2s ease-in-out;
-  border: 1.5px solid #4a1565;
   white-space: nowrap;
-}
-
-.btn-active {
-  background-color: #9c8cb9 !important;
-  border-color: #9c8cb9 !important;
-  color: #ffffff !important;
-}
-
-.btn-inactive {
-  background-color: transparent !important;
-  border-color: #4a1565 !important;
-  color: #4a1565 !important;
 }
 
 .tela-dicionario__grid {

@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+
 const TODAS_ATIVIDADES_MOCK = [
   {
     id: 1,
@@ -35,46 +36,40 @@ const TODAS_ATIVIDADES_MOCK = [
 export function useTelaInicioAtividades() {
   const [drawerAberto, setDrawerAberto] = useState(false);
 
-  // Estados que foram "elevados" do componente Filtro
-  const [search, setSearch] = useState("");
-  const [difficulty, setDifficulty] = useState([]);
+  // Estados do filtro (elevados do componente Filtro)
+  const [busca, setBusca] = useState("");
+  const [dificuldade, setDificuldade] = useState([]);
   const [status, setStatus] = useState([]);
 
   const abrirPerfil = () => setDrawerAberto(true);
   const fecharPerfil = () => setDrawerAberto(false);
 
-  const toggleItem = (value, state, setState) => {
-    if (state.includes(value)) {
-      setState(state.filter((item) => item !== value));
-      return;
-    }
-    setState([...state, value]);
+  const alternarItem = (valor, lista, setLista) => {
+    setLista(lista.includes(valor) ? lista.filter((item) => item !== valor) : [...lista, valor]);
   };
 
-  // Filtra as atividades com base nos estados atuais
   const atividadesFiltradas = useMemo(() => {
+    const termo = busca.toLowerCase();
     return TODAS_ATIVIDADES_MOCK.filter((atividade) => {
-      const batePesquisa = atividade.titulo.toLowerCase().includes(search.toLowerCase());
-
-      const bateDificuldade = difficulty.length === 0 || difficulty.includes(atividade.dificuldade);
-
+      const batePesquisa = atividade.titulo.toLowerCase().includes(termo);
+      const bateDificuldade =
+        dificuldade.length === 0 || dificuldade.includes(atividade.dificuldade);
       const bateStatus = status.length === 0 || status.includes(atividade.status);
-
       return batePesquisa && bateDificuldade && bateStatus;
     });
-  }, [search, difficulty, status]);
+  }, [busca, dificuldade, status]);
 
   return {
     drawerAberto,
     abrirPerfil,
     fecharPerfil,
-    search,
-    setSearch,
-    difficulty,
-    setDifficulty,
+    busca,
+    setBusca,
+    dificuldade,
+    setDificuldade,
     status,
     setStatus,
-    toggleItem,
+    alternarItem,
     atividadesFiltradas,
   };
 }

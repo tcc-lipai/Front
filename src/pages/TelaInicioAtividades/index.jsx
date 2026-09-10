@@ -22,13 +22,13 @@ const TelaInicioAtividades = () => {
     drawerAberto,
     abrirPerfil,
     fecharPerfil,
-    search,
-    setSearch,
-    difficulty,
-    setDifficulty,
+    busca,
+    setBusca,
+    dificuldade,
+    setDificuldade,
     status,
     setStatus,
-    toggleItem,
+    alternarItem,
     atividadesFiltradas,
   } = useTelaInicioAtividades();
 
@@ -127,13 +127,13 @@ const TelaInicioAtividades = () => {
         </section>
 
         <Filtro
-          search={search}
-          setSearch={setSearch}
-          difficulty={difficulty}
-          setDifficulty={setDifficulty}
+          busca={busca}
+          setBusca={setBusca}
+          dificuldade={dificuldade}
+          setDificuldade={setDificuldade}
           status={status}
           setStatus={setStatus}
-          toggleItem={toggleItem}
+          alternarItem={alternarItem}
         />
       </div>
 

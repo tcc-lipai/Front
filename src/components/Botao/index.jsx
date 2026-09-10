@@ -1,32 +1,39 @@
-import React from "react";
 import "./index.css";
 
+/**
+ * Botão padrão do LipAI.
+ *
+ * Uso recomendado: `variante` ("primario" | "secundario" | "perigo"), que já
+ * segue o tema (claro/escuro). As props de cor (corDeFundo/corTexto/corBorda)
+ * são um escape para casos pontuais e sobrescrevem a variante.
+ */
 const Botao = ({
   texto,
-  corDeFundo = "#4A154B",
-  corTexto = "#FFFFFF",
-  corBorda = "transparent",
-  variante,
-  onClick = () => {},
+  variante = "primario",
+  corDeFundo,
+  corTexto,
+  corBorda,
+  type = "button",
+  onClick,
   className = "",
+  ...resto
 }) => {
-  if (variante) {
-    return (
-      <button className={`btn-generico btn-${variante} ${className}`} onClick={onClick}>
-        {texto}
-      </button>
-    );
-  }
+  const temCorCustomizada = corDeFundo || corTexto || corBorda;
+  const estilo = temCorCustomizada
+    ? {
+        backgroundColor: corDeFundo,
+        color: corTexto,
+        border: corBorda ? `1.5px solid ${corBorda}` : undefined,
+      }
+    : undefined;
 
   return (
     <button
-      className={`btn-generico ${className}`}
-      style={{
-        backgroundColor: corDeFundo,
-        color: corTexto,
-        border: `1.5px solid ${corBorda}`,
-      }}
+      type={type}
+      className={`btn-generico btn-${variante} ${className}`.trim()}
+      style={estilo}
       onClick={onClick}
+      {...resto}
     >
       {texto}
     </button>
