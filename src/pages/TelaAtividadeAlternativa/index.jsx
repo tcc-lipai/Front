@@ -3,6 +3,7 @@ import "./index.css";
 
 import Botao from "../../components/Botao";
 import FeedbackCard from "../../components/FeedbackCard";
+import ConquistaToast from "../../components/ConquistaToast";
 import { useTelaAtividadeAlternativa } from "./index.hook";
 
 export default function TelaAtividadeAlternativa() {
@@ -18,6 +19,8 @@ export default function TelaAtividadeAlternativa() {
     handleAbrirFeedback,
     handleFechar,
     feedback,
+    novasConquistas,
+    handleDismissConquistas,
   } = useTelaAtividadeAlternativa();
 
   return (
@@ -113,6 +116,11 @@ export default function TelaAtividadeAlternativa() {
         text={feedback.feedbackText}
         type={feedback.feedbackType}
         onNext={feedback.handleProximaAtividade}
+      />
+
+      <ConquistaToast
+        conquistas={novasConquistas}
+        onDismiss={handleDismissConquistas}
       />
     </div>
   );

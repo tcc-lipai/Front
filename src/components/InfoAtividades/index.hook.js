@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { clampProgresso } from "./index.utils";
 
 export function useInfoAtividade({
@@ -10,6 +10,10 @@ export function useInfoAtividade({
   onExcluir,
 }) {
   const [salva, setSalva] = useState(salvaInicial);
+
+  useEffect(() => {
+    setSalva(salvaInicial);
+  }, [salvaInicial]);
 
   const progressoSeguro = clampProgresso(progresso);
 

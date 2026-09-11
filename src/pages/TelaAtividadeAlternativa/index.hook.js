@@ -28,6 +28,7 @@ export function useTelaAtividadeAlternativa() {
 
   const [carregando, setCarregando] = useState(true);
   const [erroCarga, setErroCarga] = useState("");
+  const [novasConquistas, setNovasConquistas] = useState([]);
   const [licao, setLicao] = useState(null);
   const [idProgresso, setIdProgresso] = useState(null);
 
@@ -80,6 +81,9 @@ export function useTelaAtividadeAlternativa() {
 
     if (res.sucesso) {
       setResultado(res.data);
+      if (res.data.novasConquistas && res.data.novasConquistas.length > 0) {
+        setNovasConquistas(res.data.novasConquistas);
+      }
     } else {
       setResultado({ correta: false, mensagem: res.mensagem });
     }
@@ -118,5 +122,7 @@ export function useTelaAtividadeAlternativa() {
     handleAbrirFeedback,
     handleFechar,
     feedback: { isOpen, feedbackText, feedbackType, closeFeedback, handleProximaAtividade },
+    novasConquistas,
+    handleDismissConquistas: () => setNovasConquistas([]),
   };
 }

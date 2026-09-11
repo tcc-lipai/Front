@@ -3,6 +3,7 @@ import { X } from "lucide-react";
 import Fala from "../../components/Fala";
 import Botao from "../../components/Botao";
 import Modal from "../../components/ModalSair";
+import ConquistaToast from "../../components/ConquistaToast";
 import { useTelaAtividadeFala } from "./index.hook";
 import "./index.css";
 
@@ -68,6 +69,8 @@ const TelaAtividadeFala = () => {
     refazer,
     sair,
     recarregar,
+    novasConquistas,
+    handleDismissConquistas,
   } = useTelaAtividadeFala();
 
   const instrucao =
@@ -144,6 +147,11 @@ const TelaAtividadeFala = () => {
           )}
         </div>
       </div>
+
+      <ConquistaToast
+        conquistas={novasConquistas}
+        onDismiss={handleDismissConquistas}
+      />
     </>
   );
 };

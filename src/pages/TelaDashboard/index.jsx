@@ -91,6 +91,18 @@ const TelaDashboard = () => {
   const diasSeguidos = usuario?.diasSeguidos ?? usuario?.DiasSeguidos ?? 0;
   const nome = usuario?.nome ?? usuario?.Nome ?? "";
 
+  const strikeDays = Array.from({ length: 9 }).map((_, index) => {
+    const offset = index - 4; // -4 to +4
+    const d = new Date();
+    d.setDate(d.getDate() + offset);
+    
+    const month = d.toLocaleDateString("pt-BR", { month: "short" }).toUpperCase().replace(".", "");
+    const num = d.getDate().toString().padStart(2, "0");
+    const isActive = offset <= 0 && offset > -diasSeguidos;
+
+    return { id: offset, month, num, isActive };
+  });
+
   return (
     <div className="dashboard-wrapper" style={{ backgroundImage: `url(${backgroundOnda})` }}>
       <Navbar />
@@ -120,9 +132,16 @@ const TelaDashboard = () => {
               ?
             </button>
           </div>
-          <div className="ofensiva-contador">
-            <strong>🔥 {diasSeguidos}</strong>
-            <span>{diasSeguidos === 1 ? "dia seguido" : "dias seguidos"}</span>
+          <div className="strike-days">
+            {strikeDays.map((day) => (
+              <div
+                key={day.id}
+                className={`strike-day ${day.isActive ? "strike-day--active" : ""}`}
+              >
+                <span className="strike-month">{day.month}</span>
+                <span className="strike-num">{day.num}</span>
+              </div>
+            ))}
           </div>
         </section>
 

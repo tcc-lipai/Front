@@ -19,6 +19,7 @@ export function useTelaAtividadeFala() {
   const [estadoFala, setEstadoFala] = useState("ocioso");
   const [resultado, setResultado] = useState(null);
   const [erroEnvio, setErroEnvio] = useState("");
+  const [novasConquistas, setNovasConquistas] = useState([]);
 
   const [mostrarModalSair, setMostrarModalSair] = useState(false);
 
@@ -88,6 +89,10 @@ export function useTelaAtividadeFala() {
 
       setResultado(res.data);
       setEstadoFala(res.data.correta ? "correto" : "incorreto");
+
+      if (res.data.novasConquistas && res.data.novasConquistas.length > 0) {
+        setNovasConquistas(res.data.novasConquistas);
+      }
     }
   }, [estadoFala, gravador, idProgresso]);
 
@@ -124,5 +129,7 @@ export function useTelaAtividadeFala() {
     refazer,
     sair,
     recarregar,
+    novasConquistas,
+    handleDismissConquistas: () => setNovasConquistas([]),
   };
 }

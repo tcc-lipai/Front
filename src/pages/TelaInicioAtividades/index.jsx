@@ -30,12 +30,25 @@ const TelaInicioAtividades = () => {
     setStatus,
     alternarItem,
     atividadesFiltradas,
+    carregando,
+    qtdRealizadas,
+    qtdSalvas,
+    qtdEmAndamento,
+    atividadesSalvasIds,
+    toggleSalvar,
   } = useTelaInicioAtividades();
 
   const navigate = useNavigate();
 
+  const irParaLicao = (atividade) => {
+    navigate(`/atividade/${atividade.tipo}/${atividade.licaoId}`);
+  };
+
   const atividadesParaContinuar = atividadesFiltradas.filter((a) => a.categoria === "continuar");
-  const atividadesRecomendadas = atividadesFiltradas.filter((a) => a.categoria === "recomendada");
+  // Recomendadas: não iniciadas (exclui as concluídas para não poluir)
+  const atividadesRecomendadas = atividadesFiltradas.filter(
+    (a) => a.categoria === "recomendada" && a.progresso < 100
+  );
 
   return (
     <div className="pagina-atividades" style={{ backgroundImage: `url(${backgroundOnda})` }}>
@@ -72,7 +85,7 @@ const TelaInicioAtividades = () => {
             <div className="card-progresso">
               <img src={realizadas} alt="" />
               <div>
-                <span>10 Atividades</span>
+                <span>{qtdRealizadas} {qtdRealizadas === 1 ? "Atividade" : "Atividades"}</span>
                 <h3>Realizadas</h3>
               </div>
             </div>
@@ -80,7 +93,7 @@ const TelaInicioAtividades = () => {
             <div className="card-progresso">
               <img src={salvas} alt="" />
               <div>
-                <span>08 Atividades</span>
+                <span>{qtdSalvas} {qtdSalvas === 1 ? "Atividade" : "Atividades"}</span>
                 <h3>Salvas</h3>
               </div>
             </div>
@@ -88,42 +101,49 @@ const TelaInicioAtividades = () => {
             <div className="card-progresso">
               <img src={revisadas} alt="" />
               <div>
-                <span>02 Atividades</span>
-                <h3>Revisadas</h3>
+                <span>{qtdEmAndamento} {qtdEmAndamento === 1 ? "Atividade" : "Atividades"}</span>
+                <h3>Em Andamento</h3>
               </div>
             </div>
           </div>
 
           <h2>Continuar Atividade</h2>
-          {atividadesParaContinuar.length > 0 ? (
-            atividadesParaContinuar.map((atividade) => (
-              <InfoAtividade
-                key={atividade.id}
-                titulo={atividade.titulo}
-                descricao={atividade.descricao}
-                dificuldade={atividade.dificuldade}
-                tipo={atividade.tipo}
-                progresso={atividade.progresso}
-              />
-            ))
-          ) : (
-            <p>Nenhuma atividade encontrada neste filtro.</p>
+          {carregando && <p className="secao-carregando">Carregando...</p>}
+          {!carregando && atividadesParaContinuar.length === 0 && (
+            <p>Nenhuma atividade em andamento. Comece uma abaixo!</p>
           )}
+          {atividadesParaContinuar.map((atividade) => (
+            <InfoAtividade
+              key={atividade.id}
+              titulo={atividade.titulo}
+              descricao={atividade.descricao}
+              dificuldade={atividade.dificuldade}
+              tipo={atividade.tipo}
+              progresso={atividade.progresso}
+              salva={atividadesSalvasIds.has(atividade.atividadeId ?? atividade.licaoId)}
+              onAvancar={() => irParaLicao(atividade)}
+              onToggleSalvar={(novoEstado) => toggleSalvar(atividade, novoEstado)}
+            />
+          ))}
 
           <h2>Recomendadas</h2>
-          {atividadesRecomendadas.length > 0 ? (
-            atividadesRecomendadas.map((atividade) => (
-              <InfoAtividade
-                key={atividade.id}
-                titulo={atividade.titulo}
-                descricao={atividade.descricao}
-                dificuldade={atividade.dificuldade}
-                tipo={atividade.tipo}
-              />
-            ))
-          ) : (
-            <p>Nenhuma atividade encontrada neste filtro.</p>
+          {carregando && <p className="secao-carregando">Carregando...</p>}
+          {!carregando && atividadesRecomendadas.length === 0 && (
+            <p>Nenhuma atividade disponível neste filtro.</p>
           )}
+          {atividadesRecomendadas.map((atividade) => (
+            <InfoAtividade
+              key={atividade.id}
+              titulo={atividade.titulo}
+              descricao={atividade.descricao}
+              dificuldade={atividade.dificuldade}
+              tipo={atividade.tipo}
+              progresso={atividade.progresso}
+              salva={atividadesSalvasIds.has(atividade.atividadeId ?? atividade.licaoId)}
+              onAvancar={() => irParaLicao(atividade)}
+              onToggleSalvar={(novoEstado) => toggleSalvar(atividade, novoEstado)}
+            />
+          ))}
         </section>
 
         <Filtro
