@@ -36,6 +36,10 @@
   opacity: 0.45;
 }
 
+.unidade-bloco {
+  display: block;
+}
+
 .grid-cards {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

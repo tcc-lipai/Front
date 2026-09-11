@@ -243,3 +243,100 @@
     min-width: 0;
   }
 }
+
+/* ---- Integração com a IA: instrução, erro e painel de resultado ---- */
+.fala-instrucao {
+  text-align: center;
+  color: var(--lipai-text-muted);
+  font-size: 0.9rem;
+  margin: 12px 0 0;
+}
+
+.fala-erro-msg {
+  text-align: center;
+  color: var(--lipai-danger);
+  font-size: 0.9rem;
+  margin: 12px auto 0;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.fala-resultado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 0 4px;
+}
+
+.fala-resultado__score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.1;
+}
+
+.fala-resultado__score strong {
+  font-size: 2.6rem;
+  font-weight: 800;
+  color: var(--lipai-primary);
+}
+
+.fala-resultado__score.acertou strong {
+  color: var(--lipai-success);
+}
+
+.fala-resultado__score span {
+  font-size: 0.85rem;
+  color: var(--lipai-text-muted);
+}
+
+.fala-fonemas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.fala-fonema {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.fala-fonema--correto {
+  background: rgba(63, 146, 86, 0.16);
+  color: var(--lipai-success);
+}
+
+.fala-fonema--atencao {
+  background: rgba(214, 158, 46, 0.18);
+  color: #b9791b;
+}
+
+.fala-fonema--incorreto {
+  background: rgba(192, 57, 43, 0.16);
+  color: var(--lipai-danger);
+}
+
+.fala-resultado__feedback {
+  max-width: 460px;
+  text-align: center;
+  color: var(--lipai-text);
+  font-size: 0.95rem;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.fala-resultado__acoes {
+  display: flex;
+  gap: 12px;
+}

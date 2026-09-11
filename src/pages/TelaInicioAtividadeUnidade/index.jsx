@@ -1,8 +1,7 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import CardExercicio from "../../components/CardExercicio";
 import Navbar from "../../components/NavbarVoltar";
-import Botao from "../../components/Botao";
+import { useTelaInicioAtividadeUnidade } from "./index.hook";
 
 import video from "../../assets/img/video.png";
 import atividade from "../../assets/img/atividade.png";
@@ -12,6 +11,7 @@ import "./index.css";
 
 const TelaInicioAtividadeUnidade = () => {
   const navigate = useNavigate();
+  const { carregando, erro, unidades } = useTelaInicioAtividadeUnidade();
 
   return (
     <>
@@ -19,105 +19,63 @@ const TelaInicioAtividadeUnidade = () => {
 
       <div className="container-atividade">
         <div className="conteudo-atividade">
-          <h1>Primeira Atividade</h1>
-          <div className="atividade-tags">
-            <Botao
-              texto="Iniciante"
-              corDeFundo="#B8E5B1"
-              corTexto="#5A3273"
-              className="tag-nivel"
-            />
-
-            <Botao texto="Escrita" corDeFundo="#C8D0C8" corTexto="#5A3273" className="tag-nivel" />
-          </div>
+          <h1>Atividades</h1>
           <p className="descricao-atividade">
-            Aqui vai a descrição de como vai ser a atividade e o que será cobrado
+            Escolha um exercício abaixo para praticar a leitura labial e a fala.
           </p>
 
-          <h2>Unidade 1</h2>
+          {carregando && <p className="descricao-atividade">Carregando unidades...</p>}
+          {!carregando && erro && <p className="descricao-atividade">{erro}</p>}
 
-          <div className="grid-cards">
-            {/* Apontando para a rota de vídeo real com um ID padrão (ex: 1) */}
-            <CardExercicio
-              imagem={<img src={video} alt="Vídeo" />}
-              descricao="Descrição do exercício de vídeo"
-              onComecar={() => navigate("/atividade/video/1")}
-            />
+          {!carregando && !erro && unidades.length === 0 && (
+            <p className="descricao-atividade">Nenhuma unidade cadastrada ainda.</p>
+          )}
 
-            {/* Apontando para a rota de alternativa/escrita real */}
-            <CardExercicio
-              imagem={<img src={atividade} alt="Atividade" />}
-              descricao="Descrição do exercício de escrita"
-              onComecar={() => navigate("/teste-atividade")}
-            />
+          {!carregando &&
+            !erro &&
+            unidades.map((unidade) => {
+              const temExercicio =
+                unidade.fala.length + unidade.video.length + unidade.alternativa.length > 0;
 
-            {/* Apontando para a rota de fala real com um ID padrão (ex: 1) */}
-            <CardExercicio
-              imagem={<img src={labios} alt="Pronúncia" />}
-              descricao="Descrição do exercício de pronúncia"
-              onComecar={() => navigate("/atividade/fala/1")}
-            />
+              return (
+                <section key={unidade.id} className="unidade-bloco">
+                  <h2>{unidade.nome}</h2>
 
-            <CardExercicio
-              imagem={<img src={atividade} alt="Atividade" />}
-              descricao="Descrição do exercício de escrita"
-              onComecar={() => navigate("/teste-atividade")}
-            />
+                  {!temExercicio ? (
+                    <p className="descricao-atividade">Esta unidade ainda não tem exercícios.</p>
+                  ) : (
+                    <div className="grid-cards">
+                      {unidade.video.map((licao) => (
+                        <CardExercicio
+                          key={`v-${licao.id}`}
+                          imagem={<img src={video} alt="Vídeo" />}
+                          descricao={licao.texto}
+                          onComecar={() => navigate(`/atividade/video/${licao.id}`)}
+                        />
+                      ))}
 
-            <CardExercicio
-              imagem={<img src={video} alt="Vídeo" />}
-              descricao="Descrição do exercício de vídeo"
-              onComecar={() => navigate("/atividade/video/1")}
-            />
+                      {unidade.alternativa.map((licao) => (
+                        <CardExercicio
+                          key={`a-${licao.id}`}
+                          imagem={<img src={atividade} alt="Interpretação" />}
+                          descricao={licao.texto}
+                          onComecar={() => navigate("/teste-atividade")}
+                        />
+                      ))}
 
-            <CardExercicio
-              imagem={<img src={labios} alt="Pronúncia" />}
-              descricao="Descrição do exercício de pronúncia"
-              onComecar={() => navigate("/atividade/fala/1")}
-            />
-          </div>
-
-          <div className="unidade-bloqueada">
-            <h2>Unidade 2</h2>
-          </div>
-
-          <div className="grid-cards">
-            <CardExercicio
-              imagem={<img src={video} alt="Vídeo" />}
-              descricao="Descrição do exercício de vídeo"
-              onComecar={() => navigate("/atividade/video/1")}
-            />
-
-            <CardExercicio
-              imagem={<img src={atividade} alt="Atividade" />}
-              descricao="Descrição do exercício de escrita"
-              onComecar={() => navigate("/teste-atividade")}
-            />
-
-            <CardExercicio
-              imagem={<img src={labios} alt="Pronúncia" />}
-              descricao="Descrição do exercício de pronúncia"
-              onComecar={() => navigate("/atividade/fala/1")}
-            />
-
-            <CardExercicio
-              imagem={<img src={atividade} alt="Atividade" />}
-              descricao="Descrição do exercício de escrita"
-              onComecar={() => navigate("/teste-atividade")}
-            />
-
-            <CardExercicio
-              imagem={<img src={video} alt="Vídeo" />}
-              descricao="Descrição do exercício de vídeo"
-              onComecar={() => navigate("/atividade/video/1")}
-            />
-
-            <CardExercicio
-              imagem={<img src={labios} alt="Pronúncia" />}
-              descricao="Descrição do exercício de pronúncia"
-              onComecar={() => navigate("/atividade/fala/1")}
-            />
-          </div>
+                      {unidade.fala.map((licao) => (
+                        <CardExercicio
+                          key={`f-${licao.id}`}
+                          imagem={<img src={labios} alt="Pronúncia" />}
+                          descricao={`Fale: "${licao.texto}"`}
+                          onComecar={() => navigate(`/atividade/fala/${licao.id}`)}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </section>
+              );
+            })}
         </div>
       </div>
     </>

@@ -58,6 +58,16 @@
   }
 }
 
+.fala-spinner {
+  animation: fala-girar 0.9s linear infinite;
+}
+
+@keyframes fala-girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .fala-wrapper {
   display: flex;
   flex-direction: column;
