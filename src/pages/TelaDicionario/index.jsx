@@ -1,4 +1,3 @@
-import React from "react";
 import { DicionarioCard } from "../../components/Dicionario";
 import Navbar from "../../components/Navbar";
 import { HeaderActions } from "../../components/HeaderActions";
@@ -12,6 +11,9 @@ import backgroundOnda from "../../assets/img/background_onda.png";
 
 const TelaDicionario = () => {
   const {
+    carregando,
+    erro,
+    categorias,
     categoriaAtiva,
     setCategoriaAtiva,
     cardsFiltrados,
@@ -19,8 +21,6 @@ const TelaDicionario = () => {
     abrirPerfil,
     fecharPerfil,
   } = useTelaDicionario();
-
-  const categorias = ["Comida", "Escola", "Trabalho", "Natureza", "Saudações"];
 
   return (
     <div className="tela-dicionario" style={{ backgroundImage: `url(${backgroundOnda})` }}>
@@ -37,34 +37,47 @@ const TelaDicionario = () => {
             Aprenda a leitura labial de diferentes palavras com vídeos demonstrativos.
           </p>
 
-          <div className="tela-dicionario__filtros">
-            {categorias.map((cat) => {
-              const isActive = categoriaAtiva === cat;
-              return (
-                <Botao
-                  key={cat}
-                  texto={cat}
-                  onClick={() => setCategoriaAtiva(cat)}
-                  variante={isActive ? "primario" : "secundario"}
-                  className="btn-filter"
-                />
-              );
-            })}
-          </div>
+          {carregando && <p className="tela-dicionario__vazio">Carregando...</p>}
+          {!carregando && erro && <p className="tela-dicionario__vazio">{erro}</p>}
 
-          <div className="tela-dicionario__grid">
-            {cardsFiltrados.map((card) => (
-              <div className="tela-dicionario__grid-item" key={card.id}>
-                <DicionarioCard titulo={card.titulo} descricao={card.descricao} />
+          {!carregando && !erro && (
+            <>
+              <div className="tela-dicionario__filtros">
+                {categorias.map((categoria) => {
+                  const id = categoria.idCategoria ?? categoria.IdCategoria;
+                  const nome = categoria.nome ?? categoria.Nome;
+                  const isActive = categoriaAtiva === id;
+                  return (
+                    <Botao
+                      key={id}
+                      texto={nome}
+                      onClick={() => setCategoriaAtiva(id)}
+                      variante={isActive ? "primario" : "secundario"}
+                      className="btn-filter"
+                    />
+                  );
+                })}
               </div>
-            ))}
 
-            {cardsFiltrados.length === 0 && (
-              <p className="tela-dicionario__vazio">
-                Nenhum card encontrado para a categoria "{categoriaAtiva}".
-              </p>
-            )}
-          </div>
+              <div className="tela-dicionario__grid">
+                {cardsFiltrados.map((palavra) => {
+                  const id = palavra.idPalavra ?? palavra.IdPalavra;
+                  return (
+                    <div className="tela-dicionario__grid-item" key={id}>
+                      <DicionarioCard
+                        titulo={palavra.nome ?? palavra.Nome}
+                        descricao={palavra.nomeCategoria ?? palavra.NomeCategoria ?? ""}
+                      />
+                    </div>
+                  );
+                })}
+
+                {cardsFiltrados.length === 0 && (
+                  <p className="tela-dicionario__vazio">Nenhuma palavra nesta categoria ainda.</p>
+                )}
+              </div>
+            </>
+          )}
         </section>
       </main>
 

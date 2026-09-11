@@ -59,7 +59,7 @@ const TelaInicioAtividadeUnidade = () => {
                           key={`a-${licao.id}`}
                           imagem={<img src={atividade} alt="Interpretação" />}
                           descricao={licao.texto}
-                          onComecar={() => navigate("/teste-atividade")}
+                          onComecar={() => navigate(`/atividade/alternativa/${licao.id}`)}
                         />
                       ))}
 

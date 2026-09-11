@@ -99,6 +99,14 @@ function AnimatedRoutes() {
           }
         />
         <Route
+          path="/contato"
+          element={
+            <PageTransition>
+              <TelaContato />
+            </PageTransition>
+          }
+        />
+        <Route
           path="/notificacoes"
           element={
             <PageTransition>
@@ -164,7 +172,7 @@ function AnimatedRoutes() {
           }
         />
         <Route
-          path="/teste-atividade"
+          path="/atividade/alternativa/:id"
           element={
             <PageTransition>
               <TelaAtividadeAlternativa />

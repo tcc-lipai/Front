@@ -1,20 +1,25 @@
-import React from "react";
 import { X, Bell, User } from "lucide-react";
 import { useUserProfileDrawer } from "./index.hook";
-import { formatPhone } from "./index.utils";
 import "./index.css";
 
-export const UserProfileDrawer = ({ isOpen, onClose, userData }) => {
-  const { handleEditProfileClick, handleNotificacao } = useUserProfileDrawer(onClose);
+const NIVEIS = {
+  1: "Iniciante",
+  2: "Básico",
+  3: "Intermediário",
+  4: "Avançado",
+};
 
-  const data = userData || {
-    username: "Username",
-    email: "username@gmail.com",
-    diagnostic: "Deficiência auditiva",
-    fullName: "User Silva Santos",
-    birthDate: "08/02/2000",
-    phone: "+55 11 1245 432",
-  };
+export const UserProfileDrawer = ({ isOpen, onClose }) => {
+  const { usuario, carregando, handleEditProfileClick, handleNotificacao } =
+    useUserProfileDrawer(onClose);
+
+  const nome = usuario?.nome ?? usuario?.Nome ?? "";
+  const email = usuario?.email ?? usuario?.Email ?? "";
+  const diagnostico = usuario?.diagnostico ?? usuario?.Diagnostico ?? "";
+  const nivel = usuario?.nivelDificuldade ?? usuario?.NivelDificuldade;
+  const nivelLabel = typeof nivel === "string" ? nivel : (NIVEIS[nivel] ?? "—");
+  const saldo = usuario?.saldoAtual ?? usuario?.SaldoAtual ?? 0;
+  const diasSeguidos = usuario?.diasSeguidos ?? usuario?.DiasSeguidos ?? 0;
 
   return (
     <>
@@ -35,22 +40,22 @@ export const UserProfileDrawer = ({ isOpen, onClose, userData }) => {
           <div className="avatar-circle">
             <User size={48} color="white" />
           </div>
-          <h2 className="username">{data.username}</h2>
-          <span className="user-email">{data.email}</span>
+          <h2 className="username">{carregando ? "Carregando..." : nome || "Usuário"}</h2>
+          <span className="user-email">{email}</span>
         </div>
 
         <div className="drawer-details">
           <p>
-            <strong>Diagnóstico:</strong> {data.diagnostic}
+            <strong>Diagnóstico:</strong> {diagnostico || "Não informado"}
           </p>
           <p>
-            <strong>Nome completo:</strong> {data.fullName}
+            <strong>Nível de dificuldade:</strong> {nivelLabel}
           </p>
           <p>
-            <strong>Data de nascimento:</strong> {data.birthDate}
+            <strong>Moedas:</strong> {saldo}
           </p>
           <p>
-            <strong>Telefone:</strong> {formatPhone(data.phone)}
+            <strong>Ofensiva:</strong> {diasSeguidos} dia(s) seguido(s)
           </p>
         </div>
 

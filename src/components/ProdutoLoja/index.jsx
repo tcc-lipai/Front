@@ -1,25 +1,21 @@
-import React from "react";
 import "./index.css";
 
 import IconGelo from "../../assets/img/IconGelo.jpg";
 import IconMoedas from "../../assets/img/IconMoedas.jpg";
 import IconBau from "../../assets/img/IconBau.jpg";
 
-export default function ProdutoLoja({ title, description, price, tipo, isBlocked = false }) {
-  const obterIcone = () => {
-    switch (tipo) {
-      case "gelo":
-        return IconGelo;
-      case "moedas":
-        return IconMoedas;
-      case "bau":
-        return IconBau;
-      default:
-        return null;
-    }
-  };
+const ICONES = { gelo: IconGelo, moedas: IconMoedas, bau: IconBau };
 
-  const iconeAtual = obterIcone();
+export default function ProdutoLoja({
+  title,
+  description,
+  price,
+  tipo,
+  isBlocked = false,
+  comprando = false,
+  onComprar,
+}) {
+  const iconeAtual = ICONES[tipo] ?? null;
 
   return (
     <div className={`card-produto-figma ${isBlocked ? "bloqueado" : ""}`}>
@@ -39,10 +35,16 @@ export default function ProdutoLoja({ title, description, price, tipo, isBlocked
           </div>
 
           <div className="card-preco-wrapper-figma">
-            <div className="card-botao-preco-figma">
-              <span className="preco-texto-figma">{price}</span>
+            <button
+              type="button"
+              className="card-botao-preco-figma"
+              onClick={onComprar}
+              disabled={comprando}
+              aria-label={`Comprar ${title} por ${price} moedas`}
+            >
+              <span className="preco-texto-figma">{comprando ? "..." : price}</span>
               <span className="preco-estrela-figma">⭐</span>
-            </div>
+            </button>
           </div>
         </div>
       </div>

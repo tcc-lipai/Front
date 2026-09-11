@@ -197,3 +197,12 @@
     padding: 0.2rem 0.75rem;
   }
 }
+
+.card-botao-preco-figma:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.card-produto-figma.bloqueado .card-botao-preco-figma {
+  cursor: not-allowed;
+}

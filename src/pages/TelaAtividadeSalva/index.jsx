@@ -1,18 +1,16 @@
-import React from "react";
-import { useNavigate } from "react-router-dom"; // <-- 1. Importando o useNavigate
-import { Bookmark, X } from "lucide-react"; // <-- 2. Importando o ícone de X
+import { useNavigate } from "react-router-dom";
+import { Bookmark, X } from "lucide-react";
 import Navbar from "../../components/NavbarVoltar";
 import InfoAtividade from "../../components/InfoAtividades";
 import { useTelaAtividadeSalva } from "./index.hook";
 import "./index.css";
 
 function TelaAtividadeSalva() {
-  const { atividades, handleToggleSalvar, handleAvancar } = useTelaAtividadeSalva();
-  const navigate = useNavigate(); // <-- 3. Inicializando a navegação
+  const { carregando, erro, atividades, handleRemover } = useTelaAtividadeSalva();
+  const navigate = useNavigate();
 
-  // 4. Criando a função para voltar/sair
   const handleSair = () => {
-    navigate(-1); // Volta para a tela anterior. Se quiser ir para o início, mude para navigate("/")
+    navigate(-1);
   };
 
   return (
@@ -20,7 +18,6 @@ function TelaAtividadeSalva() {
       <Navbar />
 
       <main className="tela-atividade-salva__painel">
-        {/* 5. Adicionando o botão de sair no cabeçalho */}
         <header
           className="tela-atividade-salva__cabecalho"
           style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}
@@ -44,28 +41,29 @@ function TelaAtividadeSalva() {
           labial.
         </p>
 
-        <div className="tela-atividade-salva__lista">
-          {atividades.length > 0 ? (
-            atividades.map((atividade) => (
-              <InfoAtividade
-                key={atividade.id}
-                titulo={atividade.titulo}
-                descricao={atividade.descricao}
-                dificuldade={atividade.dificuldade}
-                tipo={atividade.tipo}
-                progresso={atividade.progresso}
-                salva={atividade.salva}
-                // Ajuste importante: envelopando as funções para não executarem sozinhas ao renderizar
-                onAvancar={() => handleAvancar(atividade.id)}
-                onToggleSalvar={() => handleToggleSalvar(atividade.id)}
-              />
-            ))
-          ) : (
-            <div className="tela-atividade-salva__vazio">
-              <p>Você ainda não possui atividades salvas.</p>
-            </div>
-          )}
-        </div>
+        {carregando && <p className="tela-atividade-salva__vazio">Carregando...</p>}
+        {!carregando && erro && <p className="tela-atividade-salva__vazio">{erro}</p>}
+
+        {!carregando && !erro && (
+          <div className="tela-atividade-salva__lista">
+            {atividades.length > 0 ? (
+              atividades.map((atividade) => (
+                <InfoAtividade
+                  key={atividade.id}
+                  titulo={atividade.titulo}
+                  descricao={atividade.descricao}
+                  salva
+                  onAvancar={() => navigate("/atividades-unidades")}
+                  onToggleSalvar={handleRemover(atividade.id)}
+                />
+              ))
+            ) : (
+              <div className="tela-atividade-salva__vazio">
+                <p>Você ainda não possui atividades salvas.</p>
+              </div>
+            )}
+          </div>
+        )}
       </main>
     </div>
   );

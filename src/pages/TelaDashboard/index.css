@@ -409,3 +409,19 @@
   min-width: 0;
   box-sizing: border-box;
 }
+
+.ofensiva-contador {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.ofensiva-contador strong {
+  font-size: 2rem;
+  color: var(--lipai-primary);
+}
+
+.ofensiva-contador span {
+  color: var(--lipai-text-muted);
+  font-size: 0.9rem;
+}

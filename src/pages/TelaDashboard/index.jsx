@@ -1,10 +1,9 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../../components/Navbar/index";
+import Navbar from "../../components/Navbar";
 import "./index.css";
-import { HeaderActions } from "../../components/HeaderActions/index";
-import { UserProfileDrawer } from "../../components/UserProfileDrawer/index";
-import Conquistas from "../../components/Conquistas/index";
+import { HeaderActions } from "../../components/HeaderActions";
+import { UserProfileDrawer } from "../../components/UserProfileDrawer";
+import Conquistas from "../../components/Conquistas";
 import { useTelaDashboard } from "./index.hook";
 import backgroundOnda from "../../assets/img/background_onda.png";
 
@@ -43,26 +42,13 @@ const HeadphoneIcon = () => (
   </svg>
 );
 
-const strikeDays = [
-  { label: "MAR", day: "04" },
-  { label: "MAR", day: "04" },
-  { label: "MAR", day: "04" },
-  { label: "MAR", day: "04" },
-  { label: "MAR", day: "06", active: true },
-  { label: "MAR", day: "04" },
-  { label: "MAR", day: "04" },
-  { label: "MAR", day: "04" },
-  { label: "MAR", day: "04" },
-];
-
-const ActivityCard = ({ title, description, onComecar }) => (
+const ActivityCard = ({ titulo, onComecar }) => (
   <div className="activity-card">
     <div className="activity-icon">
       <HeadphoneIcon />
     </div>
     <div className="activity-info">
-      <h3 className="activity-title">{title}</h3>
-      <p className="activity-desc">{description}</p>
+      <h3 className="activity-title">{titulo}</h3>
       <button className="btn-comecar" onClick={onComecar}>
         Começar
       </button>
@@ -84,7 +70,16 @@ const PerformanceBar = ({ label, value, color }) => (
 );
 
 const TelaDashboard = () => {
-  const { drawerAberto, abrirPerfil, fecharPerfil } = useTelaDashboard();
+  const {
+    drawerAberto,
+    abrirPerfil,
+    fecharPerfil,
+    carregando,
+    usuario,
+    desempenho,
+    conquistas,
+    atividadesRecentes,
+  } = useTelaDashboard();
   const navigate = useNavigate();
 
   const handleAjudaOfensiva = () => {
@@ -93,16 +88,18 @@ const TelaDashboard = () => {
     );
   };
 
+  const diasSeguidos = usuario?.diasSeguidos ?? usuario?.DiasSeguidos ?? 0;
+  const nome = usuario?.nome ?? usuario?.Nome ?? "";
+
   return (
     <div className="dashboard-wrapper" style={{ backgroundImage: `url(${backgroundOnda})` }}>
       <Navbar />
 
       <div className="dashboard-main">
         <div className="dashboard-header">
-          <h1 className="dashboard-title">Dashboard</h1>
+          <h1 className="dashboard-title">{nome ? `Olá, ${nome}!` : "Dashboard"}</h1>
           <div className="header-right">
             <HeaderActions onOpenProfile={abrirPerfil} />
-
             <UserProfileDrawer isOpen={drawerAberto} onClose={fecharPerfil} />
           </div>
         </div>
@@ -123,29 +120,31 @@ const TelaDashboard = () => {
               ?
             </button>
           </div>
-          <div className="strike-days">
-            {strikeDays.map((d, i) => (
-              <div key={i} className={`strike-day${d.active ? " strike-day--active" : ""}`}>
-                <span className="strike-month">{d.label}</span>
-                <span className="strike-num">{d.day}</span>
-              </div>
-            ))}
+          <div className="ofensiva-contador">
+            <strong>🔥 {diasSeguidos}</strong>
+            <span>{diasSeguidos === 1 ? "dia seguido" : "dias seguidos"}</span>
           </div>
         </section>
 
         <section className="card-section">
           <h2 className="section-title">Atividades Recentes</h2>
+          {carregando && <p className="section-subtitle">Carregando...</p>}
+          {!carregando && atividadesRecentes.length === 0 && (
+            <p className="section-subtitle">
+              Nenhuma atividade disponível ainda.{" "}
+              <button className="ver-mais-btn" onClick={() => navigate("/inicio-atividades")}>
+                Ver todas
+              </button>
+            </p>
+          )}
           <div className="activities-grid">
-            <ActivityCard
-              title="Escutando"
-              description="lorem ldwadw vlalla blal dwaddw awddwadwadwadw dwadwa"
-              onComecar={() => navigate("/inicio-atividades")}
-            />
-            <ActivityCard
-              title="Escutando"
-              description="lorem ldwadw vlalla blal dwaddw awddwadwadwadw dwadwa"
-              onComecar={() => navigate("/inicio-atividades")}
-            />
+            {atividadesRecentes.map((atividade) => (
+              <ActivityCard
+                key={`${atividade.tipo}-${atividade.id}`}
+                titulo={atividade.titulo}
+                onComecar={() => navigate(`/atividade/${atividade.tipo}/${atividade.id}`)}
+              />
+            ))}
           </div>
         </section>
 
@@ -159,22 +158,33 @@ const TelaDashboard = () => {
               Ver mais
             </button>
           </div>
+          {!carregando && conquistas.length === 0 && (
+            <p className="section-subtitle">Você ainda não conquistou nenhuma medalha.</p>
+          )}
           <div className="conquistas-grid">
-            <Conquistas title="Semana Ouro" subtitle="Semana Ouro" />
-            <Conquistas title="Semana Ouro" subtitle="Semana Ouro" />
-            <Conquistas title="Semana Ouro" subtitle="Semana Ouro" />
-            <Conquistas title="Semana Ouro" subtitle="Semana Ouro" />
+            {conquistas.map((conquista) => (
+              <Conquistas
+                key={conquista.idConquista ?? conquista.IdConquista}
+                title={conquista.nome ?? conquista.Nome}
+                subtitle={conquista.descricao ?? conquista.Descricao}
+                iconeUrl={conquista.iconeUrl ?? conquista.IconeUrl}
+              />
+            ))}
           </div>
         </section>
 
         <section className="card-section">
           <h2 className="section-title">Desempenho</h2>
           <p className="section-subtitle">
-            Veja seu desempenho nas atividades de escuta, fala, interpretação e
+            Veja seu desempenho nas atividades de interpretação e fala.
           </p>
           <div className="perf-list">
-            <PerformanceBar label="Interpretação" value={70} color="#F0BFFF" />
-            <PerformanceBar label="Fala" value={90} color="#B78CC4" />
+            <PerformanceBar
+              label="Interpretação"
+              value={desempenho.interpretacao}
+              color="#F0BFFF"
+            />
+            <PerformanceBar label="Fala" value={desempenho.fala} color="#B78CC4" />
           </div>
         </section>
       </div>

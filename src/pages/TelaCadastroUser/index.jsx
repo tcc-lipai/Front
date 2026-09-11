@@ -3,11 +3,14 @@ import "./index.css";
 import { useNavigate } from "react-router-dom";
 import Botao from "../../components/Botao";
 import { cadastrarUsuario } from "../../services/usuarioService";
+import { login } from "../../services/authService";
 
+// Precisa bater com o enum NivelDificuldade do back-end.
 const NIVEIS = [
   { valor: 1, label: "Iniciante" },
-  { valor: 2, label: "Intermediário" },
-  { valor: 3, label: "Avançado" },
+  { valor: 2, label: "Básico" },
+  { valor: 3, label: "Intermediário" },
+  { valor: 4, label: "Avançado" },
 ];
 
 const TelaCadastroUser = () => {
@@ -54,12 +57,21 @@ const TelaCadastroUser = () => {
 
     setCarregando(true);
     const resultado = await cadastrarUsuario(payload);
+
+    if (!resultado.sucesso) {
+      setCarregando(false);
+      setErro(resultado.mensagem);
+      return;
+    }
+
+    // conta criada; entra automaticamente com as credenciais informadas
+    const loginResultado = await login(form.email, form.senha);
     setCarregando(false);
 
-    if (resultado.sucesso) {
+    if (loginResultado.sucesso) {
       navigate("/dashboard");
     } else {
-      setErro(resultado.mensagem);
+      navigate("/login");
     }
   };
 
