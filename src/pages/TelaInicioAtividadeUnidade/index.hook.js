@@ -9,12 +9,22 @@ function lista(objeto, ...nomes) {
 }
 
 function normalizarUnidade(unidade) {
+  const todasFala = lista(unidade, "licoesFala", "LicoesFala");
+  const falaAvulsa = todasFala.filter(
+    (l) => (l.atividadeFalaId ?? l.AtividadeFalaId ?? null) == null
+  );
+
   return {
     id: unidade.idUnidade ?? unidade.IdUnidade,
     nome: unidade.nome ?? unidade.Nome ?? "Unidade",
-    fala: lista(unidade, "licoesFala", "LicoesFala").map((l) => ({
+    fala: falaAvulsa.map((l) => ({
       id: l.idLicaoFala ?? l.IdLicaoFala,
       texto: l.fraseEsperada ?? l.FraseEsperada ?? "Exercício de fala",
+    })),
+    atividadesFala: lista(unidade, "atividadesFala", "AtividadesFala").map((af) => ({
+      id: af.idAtividadeFala ?? af.IdAtividadeFala,
+      nome: af.nome ?? af.Nome ?? "Atividade de fala",
+      totalExercicios: lista(af, "exercicios", "Exercicios").length,
     })),
     video: lista(unidade, "licoesVideo", "LicoesVideo").map((l) => ({
       id: l.idLicaoVideo ?? l.IdLicaoVideo,

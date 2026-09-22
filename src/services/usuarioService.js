@@ -72,7 +72,8 @@ export async function buscarProgresso(usuarioId) {
 export function contarAtividadesConcluidas(progresso) {
   const alternativas = progresso?.Alternativas ?? progresso?.alternativas ?? [];
   const falas = progresso?.Falas ?? progresso?.falas ?? [];
-  const concluidas = [...alternativas, ...falas].filter((item) => {
+  const videos = progresso?.Videos ?? progresso?.videos ?? [];
+  const concluidas = [...alternativas, ...falas, ...videos].filter((item) => {
     const status = String(item.Status ?? item.status ?? "").toLowerCase();
     return status === "concluido" || status === "concluida" || status === "completed";
   });
@@ -85,6 +86,8 @@ export function contarAtividadesConcluidas(progresso) {
         item.licaoAlternativaId ??
         item.LicaoFalaId ??
         item.licaoFalaId ??
+        item.LicaoVideoId ??
+        item.licaoVideoId ??
         item.IdProgresso ??
         item.idProgresso;
       return `${tipo}:${licaoId}`;

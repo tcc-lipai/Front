@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { useUserSidebar } from "./index.hook";
 import "./index.css";
 
-export const UserSidebar = ({ activeSection, onSectionChange, onBackClick }) => {
+export const UserSidebar = ({ activeSection, onSectionChange, onBackClick, nome }) => {
   const { avatar, handleAvatarUpload } = useUserSidebar();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
 
   const user = {
-    name: "User Silva Santos",
+    name: nome || localStorage.getItem("nome") || "Usuário",
     avatarUrl: "",
   };
 

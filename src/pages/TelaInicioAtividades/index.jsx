@@ -40,8 +40,8 @@ const TelaInicioAtividades = () => {
 
   const navigate = useNavigate();
 
-  const irParaLicao = (atividade) => {
-    navigate(`/atividade/${atividade.tipo}/${atividade.licaoId}`);
+  const irParaLicao = () => {
+    navigate("/atividades-unidades");
   };
 
   const atividadesParaContinuar = atividadesFiltradas.filter((a) => a.categoria === "continuar");
@@ -121,7 +121,7 @@ const TelaInicioAtividades = () => {
               tipo={atividade.tipo}
               progresso={atividade.progresso}
               salva={atividadesSalvasIds.has(atividade.atividadeId ?? atividade.licaoId)}
-              onAvancar={() => irParaLicao(atividade)}
+              onAvancar={irParaLicao}
               onToggleSalvar={(novoEstado) => toggleSalvar(atividade, novoEstado)}
             />
           ))}
@@ -140,7 +140,7 @@ const TelaInicioAtividades = () => {
               tipo={atividade.tipo}
               progresso={atividade.progresso}
               salva={atividadesSalvasIds.has(atividade.atividadeId ?? atividade.licaoId)}
-              onAvancar={() => irParaLicao(atividade)}
+              onAvancar={irParaLicao}
               onToggleSalvar={(novoEstado) => toggleSalvar(atividade, novoEstado)}
             />
           ))}

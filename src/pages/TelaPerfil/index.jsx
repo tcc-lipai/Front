@@ -186,6 +186,7 @@ const TelaPerfil = () => {
         activeSection={secaoAtiva}
         onSectionChange={handleSectionChange}
         onBackClick={() => navigate(-1)}
+        nome={nome}
       />
 
       <main className="perfil-main-content">

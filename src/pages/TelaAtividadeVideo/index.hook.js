@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { buscarLicaoVideo } from "../../services/licaoService";
+import { concluirVideo } from "../../services/progressoService";
 
 const ROTA_SAIDA = "/atividades-unidades";
 
@@ -34,7 +35,10 @@ export function useTelaAtividadeVideo() {
     };
   }, [licaoId]);
 
-  const handleFinalizar = () => navigate(ROTA_SAIDA);
+  const handleFinalizar = async () => {
+    if (licaoId) await concluirVideo(licaoId);
+    navigate(ROTA_SAIDA);
+  };
   const handleConfirmarSaida = () => navigate(ROTA_SAIDA);
 
   return {

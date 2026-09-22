@@ -17,6 +17,7 @@ import TelaInicioAtividades from "../pages/TelaInicioAtividades";
 import TelaInicioAtividadeUnidade from "../pages/TelaInicioAtividadeUnidade";
 import TelaAtividadeAlternativa from "../pages/TelaAtividadeAlternativa";
 import TelaAtividadeFala from "../pages/TelaAtividadeFala";
+import TelaAtividadeFalaSessao from "../pages/TelaAtividadeFalaSessao";
 import TelaAtividadeVideo from "../pages/TelaAtividadeVideo";
 import TelaAcompanhanteIA from "../pages/TelaAcompanhanteIA";
 import TelaLandingPage from "../pages/TelaLandingPage";
@@ -184,6 +185,14 @@ function AnimatedRoutes() {
           element={
             <PageTransition>
               <TelaAtividadeFala />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/atividade/fala-sessao/:id"
+          element={
+            <PageTransition>
+              <TelaAtividadeFalaSessao />
             </PageTransition>
           }
         />

@@ -35,6 +35,18 @@ export async function concluirAlternativa(idProgresso, respostaDada) {
   }
 }
 
+export async function concluirVideo(licaoId) {
+  try {
+    const response = await api.post(`/Progresso/video/${licaoId}/concluir`);
+    return { sucesso: true, data: response.data };
+  } catch (error) {
+    return {
+      sucesso: false,
+      mensagem: mensagemDeErro(error, "Não foi possível registrar a conclusão do vídeo."),
+    };
+  }
+}
+
 /** Percentuais de acerto em interpretação (alternativa) e fala. */
 export async function buscarDesempenho(usuarioId) {
   if (!usuarioId) return { sucesso: false, mensagem: "Usuário não identificado.", data: null };

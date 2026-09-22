@@ -35,42 +35,74 @@ const TelaInicioAtividadeUnidade = () => {
             !erro &&
             unidades.map((unidade) => {
               const temExercicio =
-                unidade.fala.length + unidade.video.length + unidade.alternativa.length > 0;
+                unidade.fala.length +
+                  unidade.atividadesFala.length +
+                  unidade.video.length +
+                  unidade.alternativa.length >
+                0;
 
               return (
                 <section key={unidade.id} className="unidade-bloco">
                   <h2>{unidade.nome}</h2>
 
-                  {!temExercicio ? (
+                  {!temExercicio && (
                     <p className="descricao-atividade">Esta unidade ainda não tem exercícios.</p>
-                  ) : (
-                    <div className="grid-cards">
-                      {unidade.video.map((licao) => (
-                        <CardExercicio
-                          key={`v-${licao.id}`}
-                          imagem={<img src={video} alt="Vídeo" />}
-                          descricao={licao.texto}
-                          onComecar={() => navigate(`/atividade/video/${licao.id}`)}
-                        />
-                      ))}
+                  )}
 
-                      {unidade.alternativa.map((licao) => (
-                        <CardExercicio
-                          key={`a-${licao.id}`}
-                          imagem={<img src={atividade} alt="Interpretação" />}
-                          descricao={licao.texto}
-                          onComecar={() => navigate(`/atividade/alternativa/${licao.id}`)}
-                        />
-                      ))}
+                  {unidade.video.length > 0 && (
+                    <div className="grupo-tipo-exercicio">
+                      <h3>Vídeo-aulas</h3>
+                      <div className="grid-cards">
+                        {unidade.video.map((licao) => (
+                          <CardExercicio
+                            key={`v-${licao.id}`}
+                            imagem={<img src={video} alt="Vídeo" />}
+                            descricao={licao.texto}
+                            onComecar={() => navigate(`/atividade/video/${licao.id}`)}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
 
-                      {unidade.fala.map((licao) => (
-                        <CardExercicio
-                          key={`f-${licao.id}`}
-                          imagem={<img src={labios} alt="Pronúncia" />}
-                          descricao={`Fale: "${licao.texto}"`}
-                          onComecar={() => navigate(`/atividade/fala/${licao.id}`)}
-                        />
-                      ))}
+                  {unidade.alternativa.length > 0 && (
+                    <div className="grupo-tipo-exercicio">
+                      <h3>Interpretação</h3>
+                      <div className="grid-cards">
+                        {unidade.alternativa.map((licao) => (
+                          <CardExercicio
+                            key={`a-${licao.id}`}
+                            imagem={<img src={atividade} alt="Interpretação" />}
+                            descricao={licao.texto}
+                            onComecar={() => navigate(`/atividade/alternativa/${licao.id}`)}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {(unidade.atividadesFala.length > 0 || unidade.fala.length > 0) && (
+                    <div className="grupo-tipo-exercicio">
+                      <h3>Fala</h3>
+                      <div className="grid-cards">
+                        {unidade.atividadesFala.map((atividadeFala) => (
+                          <CardExercicio
+                            key={`af-${atividadeFala.id}`}
+                            imagem={<img src={labios} alt="Pronúncia" />}
+                            descricao={`${atividadeFala.nome} · ${atividadeFala.totalExercicios} exercício${atividadeFala.totalExercicios === 1 ? "" : "s"}`}
+                            onComecar={() => navigate(`/atividade/fala-sessao/${atividadeFala.id}`)}
+                          />
+                        ))}
+
+                        {unidade.fala.map((licao) => (
+                          <CardExercicio
+                            key={`f-${licao.id}`}
+                            imagem={<img src={labios} alt="Pronúncia" />}
+                            descricao={`Fale: "${licao.texto}"`}
+                            onComecar={() => navigate(`/atividade/fala/${licao.id}`)}
+                          />
+                        ))}
+                      </div>
                     </div>
                   )}
                 </section>

@@ -138,6 +138,13 @@ export function useTelaInicioAtividades() {
             if (st === "Concluido" || st === 2) concluidas.add(chave);
           }
 
+          // Vídeos concluídos
+          for (const p of data?.Videos ?? data?.videos ?? []) {
+            const chave = `video-${p.LicaoVideoId ?? p.licaoVideoId}`;
+            const st = p.Status ?? p.status;
+            if (st === "Concluido" || st === 2) concluidas.add(chave);
+          }
+
           setProgressoIds({ emAndamento, concluidas });
           setQtdRealizadas(concluidas.size);
           setQtdEmAndamento(emAndamento.size);

@@ -40,6 +40,19 @@
   display: block;
 }
 
+.grupo-tipo-exercicio {
+  margin-bottom: 24px;
+}
+
+.grupo-tipo-exercicio h3 {
+  color: #8858a0;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin: 0 0 10px;
+}
+
 .grid-cards {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
