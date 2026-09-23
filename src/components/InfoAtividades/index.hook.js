@@ -20,13 +20,11 @@ export function useInfoAtividade({
   const handleToggleBookmark = useCallback(
     (event) => {
       event.stopPropagation();
-      setSalva((atual) => {
-        const novoValor = !atual;
-        onToggleSalvar?.(novoValor);
-        return novoValor;
-      });
+      const novoValor = !salva;
+      setSalva(novoValor);
+      onToggleSalvar?.(novoValor);
     },
-    [onToggleSalvar]
+    [salva, onToggleSalvar]
   );
 
   const handleAvancar = useCallback(() => {

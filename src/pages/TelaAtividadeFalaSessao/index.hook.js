@@ -89,14 +89,6 @@ export function useTelaAtividadeFalaSessao() {
         return;
       }
       setLicao(licaoRes.data);
-
-      const inicioRes = await iniciarFala(licaoId);
-      if (!ativo) return;
-      if (!inicioRes.sucesso) {
-        setErroCarga(inicioRes.mensagem);
-        return;
-      }
-      setIdProgresso(inicioRes.idProgresso);
     }
 
     carregarExercicio();
@@ -110,7 +102,18 @@ export function useTelaAtividadeFalaSessao() {
 
     if (estadoFala === "ocioso" || estadoFala === "erro") {
       const ok = await gravador.iniciar();
-      if (ok) setEstadoFala("gravando");
+      if (!ok) return;
+
+      // só registra o progresso quando o aluno de fato começa a gravar
+      const licaoId = idsExercicios[indiceAtual];
+      const inicioRes = await iniciarFala(licaoId);
+      if (!inicioRes.sucesso) {
+        gravador.cancelar();
+        setErroEnvio(inicioRes.mensagem);
+        return;
+      }
+      setIdProgresso(inicioRes.idProgresso);
+      setEstadoFala("gravando");
       return;
     }
 
@@ -141,7 +144,7 @@ export function useTelaAtividadeFalaSessao() {
         setNovasConquistas(res.data.novasConquistas);
       }
     }
-  }, [estadoFala, gravador, idProgresso]);
+  }, [estadoFala, gravador, idProgresso, idsExercicios, indiceAtual]);
 
   const proximo = useCallback(() => {
     if (indiceAtual + 1 >= idsExercicios.length) {

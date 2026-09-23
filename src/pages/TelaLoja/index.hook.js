@@ -17,7 +17,7 @@ function descricaoDoProduto(produto) {
   }
   if (tipo === "MultiplicadorMoedas") {
     const multiplicador = produto.valorMultiplicador ?? produto.ValorMultiplicador ?? 2;
-    return `Multiplica por ${multiplicador}x as moedas ganhas durante ${dias} dia(s).`;
+    return `Multiplica por ${multiplicador}x as moedas ganhas nas próximas 5 atividades.`;
   }
   return "Item especial para personalizar a sua experiência no LipAI.";
 }

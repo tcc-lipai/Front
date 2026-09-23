@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { listarUnidades } from "../../services/unidadeService";
-import { salvarAtividade, dessalvarAtividade } from "../../services/atividadeService";
+import { salvarItem, dessalvarItem, listarItensSalvos } from "../../services/atividadeService";
+import { buscarUsuario } from "../../services/usuarioService";
 import api from "../../services/api";
 
 const NIVEL_LABEL = {
@@ -26,19 +27,43 @@ function extrairLicoes(unidades = []) {
     // atividadeId de topo — usado para salvar/dessalvar
     const atividadeId = unidade.atividadeId ?? unidade.AtividadeId;
 
+    // Fala avulsa (sem atividade que a agrupe) — cai direto no exercício.
     const fala = unidade.licoesFala ?? unidade.LicoesFala ?? [];
     for (const l of fala) {
+      if ((l.atividadeFalaId ?? l.AtividadeFalaId ?? null) != null) continue;
       const id = l.idLicaoFala ?? l.IdLicaoFala;
       licoes.push({
         id: `fala-${id}`,
         licaoId: id,
         atividadeId,
         tipo: "fala",
+        tipoSalvar: "fala",
         titulo: `Fala: ${l.fraseEsperada ?? l.FraseEsperada ?? nome}`,
         descricao: `Pratique a pronúncia da frase "${l.fraseEsperada ?? l.FraseEsperada ?? ""}"`,
         dificuldade:
           NIVEL_LABEL[l.nivelDificuldade ?? l.NivelDificuldade] ?? "Básico",
         unidadeNome: nome,
+      });
+    }
+
+    // Atividade de fala (sessão com vários exercícios) — vira 1 card só.
+    const atividadesFala = unidade.atividadesFala ?? unidade.AtividadesFala ?? [];
+    for (const af of atividadesFala) {
+      const id = af.idAtividadeFala ?? af.IdAtividadeFala;
+      const exercicios = af.exercicios ?? af.Exercicios ?? [];
+      const exercicioIds = exercicios.map((e) => e.idLicaoFala ?? e.IdLicaoFala);
+
+      licoes.push({
+        id: `fala-sessao-${id}`,
+        licaoId: id,
+        atividadeId,
+        tipo: "fala",
+        tipoSalvar: "fala-sessao",
+        titulo: af.nome ?? af.Nome ?? "Atividade de fala",
+        descricao: `${exercicioIds.length} exercício${exercicioIds.length === 1 ? "" : "s"} de fala`,
+        dificuldade: NIVEL_LABEL[af.nivelDificuldade ?? af.NivelDificuldade] ?? "Básico",
+        unidadeNome: nome,
+        exercicioIds,
       });
     }
 
@@ -50,6 +75,7 @@ function extrairLicoes(unidades = []) {
         licaoId: id,
         atividadeId,
         tipo: "alternativa",
+        tipoSalvar: "alternativa",
         titulo: l.pergunta ?? l.Pergunta ?? `Interpretação — ${nome}`,
         descricao: `Escolha a alternativa correta entre as opções apresentadas.`,
         dificuldade: "Básico",
@@ -65,6 +91,7 @@ function extrairLicoes(unidades = []) {
         licaoId: id,
         atividadeId,
         tipo: "video",
+        tipoSalvar: "video",
         titulo: l.titulo ?? l.Titulo ?? `Vídeo — ${nome}`,
         descricao:
           l.videoDescricao ?? l.VideoDescricao ?? "Assista e aprenda com o vídeo.",
@@ -77,6 +104,32 @@ function extrairLicoes(unidades = []) {
   return licoes;
 }
 
+/**
+ * Calcula status/progresso de um item. Itens de sessão (exercicioIds definido)
+ * agregam o progresso de todos os exercícios que a compõem.
+ */
+function calcularProgressoItem(item, progressoIds) {
+  if (Array.isArray(item.exercicioIds) && item.exercicioIds.length > 0) {
+    const chaves = item.exercicioIds.map((id) => `fala-${id}`);
+    const concluidos = chaves.filter((c) => progressoIds.concluidas.has(c)).length;
+    const iniciados = chaves.filter(
+      (c) => progressoIds.concluidas.has(c) || progressoIds.emAndamento.has(c)
+    ).length;
+
+    if (concluidos === chaves.length) {
+      return { statusItem: "Realizada", progressoPct: 100 };
+    }
+    if (iniciados > 0) {
+      return { statusItem: "Em andamento", progressoPct: Math.round((concluidos / chaves.length) * 100) };
+    }
+    return { statusItem: "Não iniciada", progressoPct: 0 };
+  }
+
+  if (progressoIds.concluidas.has(item.id)) return { statusItem: "Realizada", progressoPct: 100 };
+  if (progressoIds.emAndamento.has(item.id)) return { statusItem: "Em andamento", progressoPct: 50 };
+  return { statusItem: "Não iniciada", progressoPct: 0 };
+}
+
 
 export function useTelaInicioAtividades() {
   const [drawerAberto, setDrawerAberto] = useState(false);
@@ -87,6 +140,7 @@ export function useTelaInicioAtividades() {
   const [todasLicoes, setTodasLicoes] = useState([]);
   const [progressoIds, setProgressoIds] = useState({ emAndamento: new Set(), concluidas: new Set() });
   const [carregando, setCarregando] = useState(true);
+  const [nivelUsuario, setNivelUsuario] = useState("");
 
   // contadores para os cards "Seu Progresso"
   const [qtdRealizadas, setQtdRealizadas] = useState(0);
@@ -115,6 +169,12 @@ export function useTelaInicioAtividades() {
       // 2. Busca progresso do usuário logado
       const usuarioId = localStorage.getItem("id");
       if (usuarioId) {
+        const resUsuario = await buscarUsuario(usuarioId);
+        if (resUsuario.sucesso) {
+          const nivel = resUsuario.data.nivelDificuldade ?? resUsuario.data.NivelDificuldade;
+          setNivelUsuario(NIVEL_LABEL[nivel] ?? nivel ?? "");
+        }
+
         try {
           const res = await api.get(`/Progresso/usuario/${usuarioId}`);
           const data = res.data;
@@ -152,17 +212,13 @@ export function useTelaInicioAtividades() {
           // progresso indisponível — trata tudo como "recomendada"
         }
 
-        // 3. Busca atividades salvas para o contador
-        try {
-          const resSalvas = await api.get("/Atividades/salvas");
-          const salvas = Array.isArray(resSalvas.data) ? resSalvas.data : [];
-          // guarda os IDs das atividades (de topo) salvas
-          const idsSet = new Set(
-            salvas.map((s) => s.idAtividade ?? s.IdAtividade ?? s.atividadeId ?? s.AtividadeId)
+        // 3. Busca itens salvos para o contador
+        const resSalvos = await listarItensSalvos();
+        if (resSalvos.sucesso) {
+          const chaves = new Set(
+            resSalvos.data.map((s) => `${s.tipoItem ?? s.TipoItem}:${s.itemId ?? s.ItemId}`)
           );
-          setAtividadesSalvasIds(idsSet);
-        } catch {
-          // ignora se falhar
+          setAtividadesSalvasIds(chaves);
         }
       }
 
@@ -172,29 +228,22 @@ export function useTelaInicioAtividades() {
     carregar();
   }, []);
 
-  /**
-   * Alterna salvar/dessalvar uma lição.
-   * Nota: o backend salva por Atividade de topo (não por lição).
-   * Aqui usamos o licaoId como atividadeId provisório — se o back expõe
-   * o atividadeId na listagem de unidades, use esse valor.
-   */
   const toggleSalvar = async (atividade, novoEstado) => {
-    // Cada lição pertence a uma unidade que pertence a uma Atividade.
-    // O backend salva por atividadeId (topo). Por ora usamos licaoId como proxy
-    // se não tivermos o atividadeId diretamente.
-    const atividadeId = atividade.atividadeId ?? atividade.licaoId;
+    const tipoItem = atividade.tipoSalvar ?? atividade.tipo;
+    const itemId = atividade.licaoId;
+    const chave = `${tipoItem}:${itemId}`;
 
     if (novoEstado) {
-      const res = await salvarAtividade(atividadeId);
+      const res = await salvarItem(tipoItem, itemId);
       if (res.sucesso) {
-        setAtividadesSalvasIds((prev) => new Set([...prev, atividadeId]));
+        setAtividadesSalvasIds((prev) => new Set([...prev, chave]));
       }
     } else {
-      const res = await dessalvarAtividade(atividadeId);
+      const res = await dessalvarItem(tipoItem, itemId);
       if (res.sucesso) {
         setAtividadesSalvasIds((prev) => {
           const copia = new Set(prev);
-          copia.delete(atividadeId);
+          copia.delete(chave);
           return copia;
         });
       }
@@ -208,33 +257,27 @@ export function useTelaInicioAtividades() {
       .filter((l) => {
         const batePesquisa = l.titulo.toLowerCase().includes(termo);
 
+        // Sem filtro manual de dificuldade escolhido: mostra só o nível do próprio usuário.
+        // Com filtro manual: respeita a escolha explícita do usuário.
         const bateDificuldade =
-          dificuldade.length === 0 || dificuldade.includes(l.dificuldade);
+          dificuldade.length > 0
+            ? dificuldade.includes(l.dificuldade)
+            : !nivelUsuario || l.dificuldade === nivelUsuario;
 
-        let statusItem = "Não iniciada";
-        if (progressoIds.concluidas.has(l.id)) statusItem = "Concluída";
-        else if (progressoIds.emAndamento.has(l.id)) statusItem = "Em andamento";
-
+        const { statusItem } = calcularProgressoItem(l, progressoIds);
         const bateStatus = status.length === 0 || status.includes(statusItem);
 
         return batePesquisa && bateDificuldade && bateStatus;
       })
       .map((l) => {
-        let categoria = "recomendada";
-        if (progressoIds.emAndamento.has(l.id)) categoria = "continuar";
-
-        let progressoPct = 0;
-        if (progressoIds.emAndamento.has(l.id)) progressoPct = 50;
-        if (progressoIds.concluidas.has(l.id)) progressoPct = 100;
+        const { statusItem, progressoPct } = calcularProgressoItem(l, progressoIds);
+        const categoria = statusItem === "Em andamento" ? "continuar" : "recomendada";
 
         return { ...l, categoria, progresso: progressoPct };
       });
-  }, [todasLicoes, progressoIds, busca, dificuldade, status]);
+  }, [todasLicoes, progressoIds, busca, dificuldade, status, nivelUsuario]);
 
-  // Calcula a quantidade real de cards (lições) que vão ficar com o bookmark roxo
-  const qtdSalvas = useMemo(() => {
-    return todasLicoes.filter((l) => atividadesSalvasIds.has(l.atividadeId ?? l.licaoId)).length;
-  }, [todasLicoes, atividadesSalvasIds]);
+  const qtdSalvas = atividadesSalvasIds.size;
 
   return {
     drawerAberto,

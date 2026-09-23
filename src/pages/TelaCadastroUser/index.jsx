@@ -36,6 +36,11 @@ const TelaCadastroUser = () => {
     e.preventDefault();
     setErro("");
 
+    if (!form.nome || !form.email || !form.senha || !form.confirmarSenha) {
+      setErro("Preencha todos os campos obrigatórios.");
+      return;
+    }
+
     if (form.senha !== form.confirmarSenha) {
       setErro("As senhas não coincidem.");
       return;
@@ -116,7 +121,6 @@ const TelaCadastroUser = () => {
                 placeholder="Nome"
                 value={form.nome}
                 onChange={handleChange}
-                required
               />
             </div>
 
@@ -127,7 +131,6 @@ const TelaCadastroUser = () => {
                 placeholder="Email"
                 value={form.email}
                 onChange={handleChange}
-                required
               />
             </div>
 
@@ -138,7 +141,6 @@ const TelaCadastroUser = () => {
                 placeholder="Senha"
                 value={form.senha}
                 onChange={handleChange}
-                required
               />
             </div>
 
@@ -149,7 +151,6 @@ const TelaCadastroUser = () => {
                 placeholder="Confirme sua senha"
                 value={form.confirmarSenha}
                 onChange={handleChange}
-                required
               />
             </div>
 
@@ -198,15 +199,6 @@ const TelaCadastroUser = () => {
                 corDeFundo="#8426ac"
                 corBorda=""
                 onClick={handleCadastro}
-              />
-            </div>
-
-            <div className="google-login">
-              <span>Crie uma conta com:</span>
-
-              <img
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg"
-                alt="Google"
               />
             </div>
           </form>

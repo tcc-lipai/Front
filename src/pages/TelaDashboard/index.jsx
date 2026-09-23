@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { Mic, HelpCircle, Video as VideoIcon } from "lucide-react";
 import Navbar from "../../components/Navbar";
 import "./index.css";
 import { HeaderActions } from "../../components/HeaderActions";
@@ -7,54 +8,29 @@ import Conquistas from "../../components/Conquistas";
 import { useTelaDashboard } from "./index.hook";
 import backgroundOnda from "../../assets/img/background_onda.png";
 
-const HeadphoneIcon = () => (
-  <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="32" cy="32" r="31" stroke="#7A3A8E" strokeWidth="2" fill="none" />
-    <path
-      d="M16 32C16 23.163 23.163 16 32 16C40.837 16 48 23.163 48 32"
-      stroke="#7A3A8E"
-      strokeWidth="2.5"
-      strokeLinecap="round"
-    />
-    <rect x="13" y="30" width="7" height="12" rx="3.5" fill="#7A3A8E" />
-    <rect x="44" y="30" width="7" height="12" rx="3.5" fill="#7A3A8E" />
-    <path
-      d="M26 34 Q32 30 38 34"
-      stroke="#7A3A8E"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      fill="none"
-    />
-    <path
-      d="M28 37 Q32 34 36 37"
-      stroke="#7A3A8E"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      fill="none"
-    />
-    <path
-      d="M30 40 Q32 38 34 40"
-      stroke="#7A3A8E"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      fill="none"
-    />
-  </svg>
-);
+const ICONE_POR_TIPO = {
+  fala: { Icone: Mic, cor: "#8A3FA0" },
+  alternativa: { Icone: HelpCircle, cor: "#E0932E" },
+  video: { Icone: VideoIcon, cor: "#4E8FD6" },
+};
 
-const ActivityCard = ({ titulo, onComecar }) => (
-  <div className="activity-card">
-    <div className="activity-icon">
-      <HeadphoneIcon />
+const ActivityCard = ({ titulo, tipo, onComecar }) => {
+  const { Icone, cor } = ICONE_POR_TIPO[tipo] ?? ICONE_POR_TIPO.fala;
+
+  return (
+    <div className="activity-card">
+      <div className="activity-icon" style={{ borderColor: cor }}>
+        <Icone size={28} color={cor} strokeWidth={2.2} />
+      </div>
+      <div className="activity-info">
+        <h3 className="activity-title">{titulo}</h3>
+        <button className="btn-comecar" onClick={onComecar}>
+          Começar
+        </button>
+      </div>
     </div>
-    <div className="activity-info">
-      <h3 className="activity-title">{titulo}</h3>
-      <button className="btn-comecar" onClick={onComecar}>
-        Começar
-      </button>
-    </div>
-  </div>
-);
+  );
+};
 
 const PerformanceBar = ({ label, value, color }) => (
   <div className="perf-row">
@@ -161,7 +137,8 @@ const TelaDashboard = () => {
               <ActivityCard
                 key={`${atividade.tipo}-${atividade.id}`}
                 titulo={atividade.titulo}
-                onComecar={() => navigate(`/atividade/${atividade.tipo}/${atividade.id}`)}
+                tipo={atividade.tipo}
+                onComecar={() => navigate("/atividades-unidades")}
               />
             ))}
           </div>

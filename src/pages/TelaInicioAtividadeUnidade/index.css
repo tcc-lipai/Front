@@ -1,63 +1,102 @@
 .container-atividade {
   min-height: 100vh;
-  background: #efe7f3;
+  background: var(--lipai-surface-2, #efe7f3);
   padding: 35px;
 }
 
 .conteudo-atividade {
-  background: #f8f8f8;
+  background: var(--lipai-surface, #f8f8f8);
   border-radius: 18px;
-  padding: 32px 40px;
+  padding: 32px 40px 40px;
+}
+
+.cabecalho-atividades {
+  margin-bottom: 12px;
 }
 
 .conteudo-atividade h1 {
-  color: #5a3273;
-  font-size: 24px;
+  color: var(--lipai-text, #5a3273);
+  font-size: 26px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.descricao-atividade {
+  color: var(--lipai-text-muted, #6f6377);
   margin-bottom: 8px;
-}
-
-.descricao-atividade {
-  color: #5a3273;
-  margin-bottom: 40px;
-}
-
-.descricao-atividade {
-  color: #5a3273;
-  margin-bottom: 40px;
-}
-
-.conteudo-atividade h2 {
-  color: #5a3273;
-  font-size: 20px;
-  margin: 35px 0 20px;
-}
-
-.unidade-bloqueada {
-  opacity: 0.45;
 }
 
 .unidade-bloco {
   display: block;
+  padding-top: 32px;
+  margin-top: 20px;
+  border-top: 1px solid var(--lipai-border, #ece2f2);
+}
+
+.unidade-bloco:first-of-type {
+  border-top: none;
+  margin-top: 8px;
+}
+
+.unidade-cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.unidade-numero {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #8a3fa0, #5a3273);
+  color: #fff;
+  font-weight: 800;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.unidade-cabecalho h2 {
+  color: var(--lipai-text, #2e1740);
+  font-size: 20px;
+  font-weight: 800;
+  margin: 0;
 }
 
 .grupo-tipo-exercicio {
-  margin-bottom: 24px;
+  margin-bottom: 26px;
+  padding-left: 54px;
 }
 
-.grupo-tipo-exercicio h3 {
-  color: #8858a0;
-  font-size: 14px;
-  font-weight: 600;
+.grupo-tipo-exercicio:last-child {
+  margin-bottom: 0;
+}
+
+.grupo-tipo-cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.grupo-tipo-cabecalho h3 {
+  color: var(--lipai-text-muted, #8858a0);
+  font-size: 13px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
-  margin: 0 0 10px;
+  letter-spacing: 0.04em;
+  margin: 0;
 }
 
 .grid-cards {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
 }
+
 .atividade-tags {
   display: flex;
   gap: 8px;
@@ -69,4 +108,18 @@
   padding: 4px 16px !important;
   font-size: 11px !important;
   min-width: auto !important;
+}
+
+@media (max-width: 640px) {
+  .conteudo-atividade {
+    padding: 24px 18px 32px;
+  }
+
+  .grupo-tipo-exercicio {
+    padding-left: 0;
+  }
+
+  .grid-cards {
+    grid-template-columns: 1fr;
+  }
 }

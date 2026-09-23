@@ -1,11 +1,21 @@
 import { useEffect, useState } from "react";
-import { listarAtividadesSalvas, dessalvarAtividade } from "../../services/atividadeService";
+import { listarItensSalvos, dessalvarItem } from "../../services/atividadeService";
 
-function normalizar(atividade) {
+const DESCRICAO_POR_TIPO = {
+  video: "Vídeo-aula de leitura labial.",
+  alternativa: "Atividade de interpretação.",
+  fala: "Exercício de pronúncia.",
+  "fala-sessao": "Atividade de fala.",
+};
+
+function normalizar(item) {
+  const tipoItem = item.tipoItem ?? item.TipoItem;
   return {
-    id: atividade.idAtividade ?? atividade.IdAtividade,
-    titulo: atividade.nome ?? atividade.Nome ?? "Atividade",
-    descricao: atividade.descricao ?? atividade.Descricao ?? "",
+    id: `${tipoItem}-${item.itemId ?? item.ItemId}`,
+    tipoItem,
+    itemId: item.itemId ?? item.ItemId,
+    titulo: item.titulo ?? item.Titulo ?? "Atividade",
+    descricao: DESCRICAO_POR_TIPO[tipoItem] ?? "",
   };
 }
 
@@ -18,7 +28,7 @@ export function useTelaAtividadeSalva() {
     let ativo = true;
 
     async function carregar() {
-      const resultado = await listarAtividadesSalvas();
+      const resultado = await listarItensSalvos();
       if (!ativo) return;
 
       if (resultado.sucesso) {
@@ -35,9 +45,9 @@ export function useTelaAtividadeSalva() {
     };
   }, []);
 
-  const handleRemover = (id) => async () => {
-    setAtividades((atual) => atual.filter((atividade) => atividade.id !== id));
-    await dessalvarAtividade(id);
+  const handleRemover = (tipoItem, itemId) => async () => {
+    setAtividades((atual) => atual.filter((a) => !(a.tipoItem === tipoItem && a.itemId === itemId)));
+    await dessalvarItem(tipoItem, itemId);
   };
 
   return { carregando, erro, atividades, handleRemover };

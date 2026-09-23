@@ -388,6 +388,10 @@ h2 {
     padding: 12px;
   }
 
+  .principal {
+    padding-bottom: 90px;
+  }
+
   .banner h1 {
     font-size: 20px;
   }
@@ -396,8 +400,15 @@ h2 {
     font-size: 13px;
   }
 
+  .infos {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    overflow-x: visible;
+  }
+
   .card-progresso {
-    flex: 0 0 220px !important; /* No mobile, volta a ter tamanho fixo para o scroll funcionar perfeito */
+    flex: unset !important;
+    width: 100% !important;
     padding: 10px 12px;
   }
 

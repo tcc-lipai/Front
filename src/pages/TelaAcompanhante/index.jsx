@@ -57,15 +57,14 @@ const TelaAcompanhante = () => {
 
       <section className="ta-dicionario">
         <div className="ta-dicionario__content">
-          <h2 className="ta-dicionario__title">Dicionário</h2>
+          <h2 className="ta-dicionario__title">Acompanhante</h2>
           <p className="ta-dicionario__text">
-            O dicionário da plataforma é uma ferramenta de apoio à leitura labial. Nele, você poderá
-            pesquisar ou encontrar o nome de diferentes objetos e acessar um vídeo demonstrativo
-            mostrando como realizar a leitura labial daquela palavra. Dessa forma, o recurso
-            facilita o aprendizado e a prática da leitura labial de maneira visual e interativa.
+            O acompanhante é um recurso pensado para apoiar a criança nos primeiros passos do
+            aprendizado, ficando ao lado dela durante os exercícios e ajudando a entender cada
+            comando por meio de estímulos visuais e vibrações.
           </p>
-          <button className="ta-dicionario__btn" onClick={() => navigate("/dicionario")}>
-            Testar
+          <button className="ta-dicionario__btn" onClick={() => navigate("/atividades-unidades")}>
+            Ver atividades
           </button>
         </div>
         <div className="ta-dicionario__illustration">

@@ -54,7 +54,7 @@ function TelaAtividadeSalva() {
                   descricao={atividade.descricao}
                   salva
                   onAvancar={() => navigate("/atividades-unidades")}
-                  onToggleSalvar={handleRemover(atividade.id)}
+                  onToggleSalvar={handleRemover(atividade.tipoItem, atividade.itemId)}
                 />
               ))
             ) : (

@@ -140,6 +140,24 @@
   color: var(--lipai-text);
 }
 
+/* estados da opção de resposta (alternativa) — precisam vencer o !important acima */
+:root[data-theme="dark"] .option-item.selected {
+  background-color: var(--lipai-primary-soft) !important;
+  border-color: var(--lipai-primary);
+}
+
+:root[data-theme="dark"] .option-item.correct {
+  background-color: rgba(76, 175, 80, 0.18) !important;
+  border-color: #4caf50;
+  color: #8fd99a;
+}
+
+:root[data-theme="dark"] .option-item.incorrect {
+  background-color: rgba(240, 82, 82, 0.18) !important;
+  border-color: #f05252;
+  color: #ff9b9b;
+}
+
 /* ---- Overlays de modal / drawer ------------------------------------- */
 :root[data-theme="dark"]
   :is(

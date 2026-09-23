@@ -1,88 +1,83 @@
 .card-exercicio {
-  width: 100%;
-  height: 76px;
+  --cor-destaque: #7a3a8e;
 
-  background-color: #ebe0ff;
-  border-radius: 12px;
+  width: 100%;
+  background-color: var(--lipai-surface, #fff);
+  border: 1px solid var(--lipai-border, #ece2f2);
+  border-radius: 16px;
+  border-left: 4px solid var(--cor-destaque);
 
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
 
-  padding: 10px 14px;
+  padding: 16px 18px;
   box-sizing: border-box;
+  box-shadow: 0 1px 2px rgba(80, 40, 100, 0.06);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.card-imagem {
+.card-exercicio:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(80, 40, 100, 0.12);
+}
+
+.card-exercicio__icone {
   flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--cor-destaque) 14%, transparent);
 
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.card-imagem img {
-  width: 38px;
-  height: 38px;
+.card-exercicio__icone img {
+  width: 24px;
+  height: 24px;
   object-fit: contain;
 }
 
-.card-info {
+.card-exercicio__info {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 2px;
   min-width: 0;
-
   background: transparent !important;
 }
 
-.card-info p {
+.card-exercicio__titulo {
+  color: var(--lipai-text, #2e1740);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.card-exercicio__descricao {
   margin: 0;
-  color: #462057;
-  font-size: 10px;
-  line-height: 1.2;
-
+  color: var(--lipai-text-muted, #6b5a7a);
+  font-size: 12px;
+  line-height: 1.3;
   background: transparent !important;
 }
 
-.btn-card {
-  align-self: flex-end;
-
-  width: 75px;
-  height: 22px;
-
-  border-radius: 20px;
-  font-size: 9px !important;
-  font-weight: 500;
-
-  padding: 4px 10px !important;
+.card-exercicio__botao {
+  flex-shrink: 0;
+  border-radius: 20px !important;
+  font-size: 12px !important;
+  font-weight: 600;
+  padding: 8px 18px !important;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 640px) {
   .card-exercicio {
-    width: 70px;
-    height: 70px;
-
-    justify-content: center;
-    padding: 0;
+    flex-wrap: wrap;
   }
 
-  .card-info {
-    display: none;
-  }
-
-  .card-imagem {
+  .card-exercicio__botao {
     width: 100%;
-    height: 100%;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .card-imagem img {
-    width: 42px;
-    height: 42px;
+    margin-left: 62px;
   }
 }

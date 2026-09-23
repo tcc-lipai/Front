@@ -1,3 +1,3 @@
-export const DIFICULDADES = ["Iniciante", "Intermediário", "Avançado"];
+export const DIFICULDADES = ["Iniciante", "Básico", "Intermediário", "Avançado"];
 
-export const STATUS = ["Realizada", "Em andamento", "Concluído"];
+export const STATUS = ["Não iniciada", "Em andamento", "Realizada"];

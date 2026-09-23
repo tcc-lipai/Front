@@ -18,6 +18,12 @@ const TelaLoginUser = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setErro("");
+
+    if (!form.email || !form.senha) {
+      setErro("Preencha o email e a senha para entrar.");
+      return;
+    }
+
     setCarregando(true);
 
     const resultado = await login(form.email, form.senha);
@@ -52,7 +58,6 @@ const TelaLoginUser = () => {
                 placeholder="Email"
                 value={form.email}
                 onChange={handleChange}
-                required
               />
             </div>
 
@@ -63,7 +68,6 @@ const TelaLoginUser = () => {
                 placeholder="Senha"
                 value={form.senha}
                 onChange={handleChange}
-                required
               />
             </div>
 
@@ -79,14 +83,6 @@ const TelaLoginUser = () => {
                 corDeFundo="#8426ac"
                 corBorda=""
                 onClick={handleLogin}
-              />
-            </div>
-
-            <div className="google-login">
-              <span>Entre com google:</span>
-              <img
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg"
-                alt="Google"
               />
             </div>
           </form>

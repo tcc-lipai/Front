@@ -30,7 +30,6 @@ export function useTelaAtividadeAlternativa() {
   const [erroCarga, setErroCarga] = useState("");
   const [novasConquistas, setNovasConquistas] = useState([]);
   const [licao, setLicao] = useState(null);
-  const [idProgresso, setIdProgresso] = useState(null);
 
   const [selecionada, setSelecionada] = useState(null);
   const [respondeu, setRespondeu] = useState(false);
@@ -49,15 +48,6 @@ export function useTelaAtividadeAlternativa() {
         return;
       }
       setLicao(normalizarLicao(licaoRes.data));
-
-      const inicioRes = await iniciarAlternativa(licaoId);
-      if (!ativo) return;
-      if (!inicioRes.sucesso) {
-        setErroCarga(inicioRes.mensagem);
-        setCarregando(false);
-        return;
-      }
-      setIdProgresso(inicioRes.idProgresso);
       setCarregando(false);
     }
 
@@ -75,7 +65,16 @@ export function useTelaAtividadeAlternativa() {
     if (selecionada === null || enviando) return;
     setEnviando(true);
 
-    const res = await concluirAlternativa(idProgresso, selecionada);
+    // só registra o progresso no momento em que o aluno de fato responde
+    const inicioRes = await iniciarAlternativa(licaoId);
+    if (!inicioRes.sucesso) {
+      setEnviando(false);
+      setResultado({ correta: false, mensagem: inicioRes.mensagem });
+      setRespondeu(true);
+      return;
+    }
+
+    const res = await concluirAlternativa(inicioRes.idProgresso, selecionada);
     setEnviando(false);
     setRespondeu(true);
 

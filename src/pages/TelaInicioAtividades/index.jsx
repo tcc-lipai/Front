@@ -11,7 +11,6 @@ import { UserProfileDrawer } from "../../components/UserProfileDrawer";
 
 import realizadas from "../../assets/img/realizadas.png";
 import salvas from "../../assets/img/salvas.png";
-import revisadas from "../../assets/img/revisadas.png";
 
 import { useTelaInicioAtividades } from "./index.hook";
 
@@ -33,7 +32,6 @@ const TelaInicioAtividades = () => {
     carregando,
     qtdRealizadas,
     qtdSalvas,
-    qtdEmAndamento,
     atividadesSalvasIds,
     toggleSalvar,
   } = useTelaInicioAtividades();
@@ -97,14 +95,6 @@ const TelaInicioAtividades = () => {
                 <h3>Salvas</h3>
               </div>
             </div>
-
-            <div className="card-progresso">
-              <img src={revisadas} alt="" />
-              <div>
-                <span>{qtdEmAndamento} {qtdEmAndamento === 1 ? "Atividade" : "Atividades"}</span>
-                <h3>Em Andamento</h3>
-              </div>
-            </div>
           </div>
 
           <h2>Continuar Atividade</h2>
@@ -120,7 +110,7 @@ const TelaInicioAtividades = () => {
               dificuldade={atividade.dificuldade}
               tipo={atividade.tipo}
               progresso={atividade.progresso}
-              salva={atividadesSalvasIds.has(atividade.atividadeId ?? atividade.licaoId)}
+              salva={atividadesSalvasIds.has(`${atividade.tipoSalvar ?? atividade.tipo}:${atividade.licaoId}`)}
               onAvancar={irParaLicao}
               onToggleSalvar={(novoEstado) => toggleSalvar(atividade, novoEstado)}
             />
@@ -139,7 +129,7 @@ const TelaInicioAtividades = () => {
               dificuldade={atividade.dificuldade}
               tipo={atividade.tipo}
               progresso={atividade.progresso}
-              salva={atividadesSalvasIds.has(atividade.atividadeId ?? atividade.licaoId)}
+              salva={atividadesSalvasIds.has(`${atividade.tipoSalvar ?? atividade.tipo}:${atividade.licaoId}`)}
               onAvancar={irParaLicao}
               onToggleSalvar={(novoEstado) => toggleSalvar(atividade, novoEstado)}
             />

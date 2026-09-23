@@ -51,58 +51,58 @@
   text-rendering: optimizeLegibility;
 }
 
-/* --- Tema escuro: carvão neutro --------------------------------------- */
+/* --- Tema escuro: roxo profundo (equilibrado com o claro) ------------- */
 :root[data-theme="dark"] {
-  --lipai-bg: #161719;
-  --lipai-surface: #1f2023;
-  --lipai-surface-2: #26282c;
-  --lipai-field: #202225;
+  --lipai-bg: #1c1526;
+  --lipai-surface: #271d33;
+  --lipai-surface-2: #32263f;
+  --lipai-field: #2b2038;
 
-  --lipai-border: rgba(255, 255, 255, 0.1);
-  --lipai-border-subtle: rgba(255, 255, 255, 0.06);
-  --lipai-border-strong: rgba(255, 255, 255, 0.18);
+  --lipai-border: rgba(198, 150, 230, 0.16);
+  --lipai-border-subtle: rgba(198, 150, 230, 0.09);
+  --lipai-border-strong: rgba(198, 150, 230, 0.26);
 
-  --lipai-text: #ededf0;
-  --lipai-text-muted: #a5a4ac;
+  --lipai-text: #f1ecf7;
+  --lipai-text-muted: #b6a7c6;
 
-  --lipai-primary: #b57ce0;
-  --lipai-primary-hover: #c79bec;
-  --lipai-primary-soft: rgba(181, 124, 224, 0.16);
-  --lipai-on-primary: #1c1420;
+  --lipai-primary: #c58cf0;
+  --lipai-primary-hover: #d5a8f5;
+  --lipai-primary-soft: rgba(197, 140, 240, 0.2);
+  --lipai-on-primary: #1c1224;
 
   --lipai-danger: #e57366;
   --lipai-success: #6bc98a;
 
-  --lipai-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-  --lipai-overlay: rgba(0, 0, 0, 0.6);
+  --lipai-shadow: 0 10px 30px rgba(12, 6, 20, 0.5);
+  --lipai-overlay: rgba(15, 8, 22, 0.65);
 
   color-scheme: dark;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --lipai-bg: #161719;
-    --lipai-surface: #1f2023;
-    --lipai-surface-2: #26282c;
-    --lipai-field: #202225;
+    --lipai-bg: #1c1526;
+    --lipai-surface: #271d33;
+    --lipai-surface-2: #32263f;
+    --lipai-field: #2b2038;
 
-    --lipai-border: rgba(255, 255, 255, 0.1);
-    --lipai-border-subtle: rgba(255, 255, 255, 0.06);
-    --lipai-border-strong: rgba(255, 255, 255, 0.18);
+    --lipai-border: rgba(198, 150, 230, 0.16);
+    --lipai-border-subtle: rgba(198, 150, 230, 0.09);
+    --lipai-border-strong: rgba(198, 150, 230, 0.26);
 
-    --lipai-text: #ededf0;
-    --lipai-text-muted: #a5a4ac;
+    --lipai-text: #f1ecf7;
+    --lipai-text-muted: #b6a7c6;
 
-    --lipai-primary: #b57ce0;
-    --lipai-primary-hover: #c79bec;
-    --lipai-primary-soft: rgba(181, 124, 224, 0.16);
-    --lipai-on-primary: #1c1420;
+    --lipai-primary: #c58cf0;
+    --lipai-primary-hover: #d5a8f5;
+    --lipai-primary-soft: rgba(197, 140, 240, 0.2);
+    --lipai-on-primary: #1c1224;
 
     --lipai-danger: #e57366;
     --lipai-success: #6bc98a;
 
-    --lipai-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-    --lipai-overlay: rgba(0, 0, 0, 0.6);
+    --lipai-shadow: 0 10px 30px rgba(12, 6, 20, 0.5);
+    --lipai-overlay: rgba(15, 8, 22, 0.65);
 
     color-scheme: dark;
   }

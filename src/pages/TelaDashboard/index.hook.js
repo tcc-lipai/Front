@@ -49,11 +49,28 @@ export function useTelaDashboard() {
       if (unidadesRes.sucesso) {
         const atividades = [];
         for (const unidade of unidadesRes.data) {
+          // Fala avulsa (sem atividade que a agrupe)
           for (const licaoFala of lista(unidade, "licoesFala", "LicoesFala")) {
+            if ((licaoFala.atividadeFalaId ?? licaoFala.AtividadeFalaId ?? null) != null) continue;
             atividades.push({
               tipo: "fala",
               id: licaoFala.idLicaoFala ?? licaoFala.IdLicaoFala,
               titulo: `Fale: "${licaoFala.fraseEsperada ?? licaoFala.FraseEsperada}"`,
+            });
+          }
+          // Atividade de fala (sessão com vários exercícios)
+          for (const af of lista(unidade, "atividadesFala", "AtividadesFala")) {
+            atividades.push({
+              tipo: "fala",
+              id: af.idAtividadeFala ?? af.IdAtividadeFala,
+              titulo: af.nome ?? af.Nome ?? "Atividade de fala",
+            });
+          }
+          for (const licaoAlternativa of lista(unidade, "licoesAlternativa", "LicoesAlternativa")) {
+            atividades.push({
+              tipo: "alternativa",
+              id: licaoAlternativa.idLicaoAlternativa ?? licaoAlternativa.IdLicaoAlternativa,
+              titulo: licaoAlternativa.pergunta ?? licaoAlternativa.Pergunta,
             });
           }
           for (const licaoVideo of lista(unidade, "licoesVideo", "LicoesVideo")) {
@@ -64,7 +81,7 @@ export function useTelaDashboard() {
             });
           }
         }
-        setAtividadesRecentes(atividades.slice(0, 2));
+        setAtividadesRecentes(atividades.slice(0, 6));
       }
 
       setCarregando(false);

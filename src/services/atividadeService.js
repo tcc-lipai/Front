@@ -18,38 +18,39 @@ export async function listarAtividades() {
   }
 }
 
-export async function salvarAtividade(atividadeId) {
+/** Salva um item específico (fala, fala-sessao, alternativa ou vídeo). */
+export async function salvarItem(tipoItem, itemId) {
   try {
-    await api.post("/Atividades/salvar", { atividadeId });
+    await api.post("/Atividades/item/salvar", { tipoItem, itemId });
     return { sucesso: true };
   } catch (error) {
     return {
       sucesso: false,
-      mensagem: mensagemDeErro(error, "Não foi possível salvar a atividade."),
+      mensagem: mensagemDeErro(error, "Não foi possível salvar o item."),
     };
   }
 }
 
-export async function dessalvarAtividade(atividadeId) {
+export async function dessalvarItem(tipoItem, itemId) {
   try {
-    await api.delete(`/Atividades/salvar/${atividadeId}`);
+    await api.delete(`/Atividades/item/salvar/${tipoItem}/${itemId}`);
     return { sucesso: true };
   } catch (error) {
     return {
       sucesso: false,
-      mensagem: mensagemDeErro(error, "Não foi possível remover a atividade salva."),
+      mensagem: mensagemDeErro(error, "Não foi possível remover o item salvo."),
     };
   }
 }
 
-export async function listarAtividadesSalvas() {
+export async function listarItensSalvos() {
   try {
-    const response = await api.get("/Atividades/salvas");
+    const response = await api.get("/Atividades/item/salvos");
     return { sucesso: true, data: response.data };
   } catch (error) {
     return {
       sucesso: false,
-      mensagem: mensagemDeErro(error, "Não foi possível carregar as atividades salvas."),
+      mensagem: mensagemDeErro(error, "Não foi possível carregar os itens salvos."),
       data: [],
     };
   }
