@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Mic, HelpCircle, Video as VideoIcon } from "lucide-react";
+import { Mic, HelpCircle, Video as VideoIcon, Flame } from "lucide-react";
 import Navbar from "../../components/Navbar";
 import "./index.css";
 import { HeaderActions } from "../../components/HeaderActions";
@@ -112,8 +112,11 @@ const TelaDashboard = () => {
             {strikeDays.map((day) => (
               <div
                 key={day.id}
-                className={`strike-day ${day.isActive ? "strike-day--active" : ""}`}
+                className={`strike-day ${day.isActive ? "strike-day--active" : ""} ${
+                  day.id === 0 ? "strike-day--hoje" : ""
+                }`}
               >
+                {day.id === 0 && day.isActive && <Flame size={16} className="strike-flame" />}
                 <span className="strike-month">{day.month}</span>
                 <span className="strike-num">{day.num}</span>
               </div>

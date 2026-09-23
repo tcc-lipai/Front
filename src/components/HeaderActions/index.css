@@ -12,16 +12,22 @@
   align-items: center;
   justify-content: center;
   background-color: #ffffff;
-  border: 1px solid #e2e8f0;
+  border: 1.5px solid var(--lipai-gold, #ffb020);
   border-radius: 20px;
   padding: 6px 30px;
   min-width: 140px;
   height: 42px;
   box-sizing: border-box;
+  box-shadow: 0 3px 0 rgba(255, 176, 32, 0.25);
   transition:
     padding 0.2s ease,
     min-width 0.2s ease,
-    height 0.2s ease;
+    height 0.2s ease,
+    transform 0.15s ease;
+}
+
+.star-counter:hover {
+  transform: translateY(-1px) scale(1.03);
 }
 
 .star-icon {

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Baloo+2:wght@600;700;800&display=swap");
 @import "./styles/theme.css";
 
 /* ==========================================================================
@@ -33,6 +33,14 @@
 
   --lipai-shadow: 0 10px 30px rgba(83, 40, 105, 0.1);
   --lipai-overlay: rgba(36, 16, 51, 0.45);
+
+  /* acentos "gamificados" — usados em streak, moedas, conquistas, destaques */
+  --lipai-gold: #ffb020;
+  --lipai-gold-dark: #d98f0a;
+  --lipai-streak: #ff7a45;
+  --lipai-accent-cyan: #34c3d9;
+  --lipai-accent-pink: #f2578f;
+  --lipai-font-display: "Baloo 2", "Poppins", sans-serif;
 
   /* aliases legados — mesmos valores, nomes antigos ainda usados no código */
   --lipai-background: var(--lipai-bg);
@@ -144,4 +152,74 @@ button {
 ::selection {
   background: var(--lipai-primary);
   color: var(--lipai-on-primary);
+}
+
+/* ==========================================================================
+   Camada "gamificada" — fonte de destaque, animações reutilizáveis
+   ========================================================================== */
+
+h1,
+h2 {
+  font-family: var(--lipai-font-display);
+}
+
+@keyframes lipai-pop-in {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes lipai-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes lipai-pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 176, 32, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(255, 176, 32, 0);
+  }
+}
+
+@keyframes lipai-wiggle {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-6deg);
+  }
+  75% {
+    transform: rotate(6deg);
+  }
+}
+
+@keyframes lipai-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.lipai-anim-pop {
+  animation: lipai-pop-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.lipai-anim-float {
+  animation: lipai-float 4s ease-in-out infinite;
 }

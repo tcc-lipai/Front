@@ -47,16 +47,18 @@
 
 .unidade-numero {
   flex-shrink: 0;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #8a3fa0, #5a3273);
+  background: linear-gradient(135deg, #c58cf0, #5a3273);
   color: #fff;
   font-weight: 800;
-  font-size: 16px;
+  font-family: var(--lipai-font-display, inherit);
+  font-size: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 4px 12px rgba(122, 58, 142, 0.35), 0 0 0 4px rgba(197, 140, 240, 0.18);
 }
 
 .unidade-cabecalho h2 {
