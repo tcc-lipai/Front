@@ -1,8 +1,14 @@
 # LipAI — contexto do projeto (pra passar pra outra IA)
 
-Documento gerado após uma sessão de trabalho cobrindo padronização do
-front-end, integração com IA e conexão completa do front com o back-end.
+Documento gerado após várias sessões de trabalho cobrindo padronização do
+front-end, integração com IA, conexão completa do front com o back-end e
+uma rodada extensa de QA/reformulação do fluxo de atividades do aluno.
 Serve como brief técnico para continuar o desenvolvimento.
+
+**Atualizado pela última vez em 2026-09-22**, cobrindo até o commit
+`0d44192` (Front) e `fc79fe3` (Backend). A seção 11 tem o detalhe da
+sessão mais recente; as seções 1-10 são do estado anterior e foram
+atualizadas onde ficaram desatualizadas (marcado no texto).
 
 ## 1. Visão geral — 3 repositórios
 
@@ -130,10 +136,10 @@ usadas pela `index.html` de teste, continuam intactas):
 | Repo | Branch | Status |
 |---|---|---|
 | Front | `padronizacao/padronizacao-geral` | **já mergeada na `main`** (PR #68) |
-| Front | `feat/integracao-atividade-fala` | sai da acima, 1 commit, não mergeada |
-| Front | `feat/integracao-completa-api` | sai da de fala, 2 commits, não mergeada — **branch atual** |
-| Backend | `feat/integracao-ia-completa` | sai da `main`, 3 commits, não mergeada |
-| LipAI_LLM | `feat/gateway-backend` | sai da `main`, 1 commit, não mergeada |
+| Front | `feat/integracao-atividade-fala` | sai da acima, não mergeada |
+| Front | `feat/integracao-completa-api` | sai da de fala, não mergeada — **branch atual**, HEAD em `0d44192` |
+| Backend | `feat/integracao-ia-completa` | sai da `main`, não mergeada — **branch atual**, HEAD em `fc79fe3` |
+| LipAI_LLM | `feat/gateway-backend` | sai da `main`, 1 commit, não mergeada (não mexida na sessão mais recente) |
 
 Ordem de merge recomendada: Backend e LipAI_LLM podem mergear a qualquer
 momento (não dependem de nada). No Front, a ordem tem que respeitar a
@@ -169,30 +175,47 @@ toda chamada de API falha com erro de conexão:
 `.env` do Front (`VITE_API_BASE_URL=https://localhost:7268/api`) — se não
 existir, o `api.js` já cai nesse valor como padrão.
 
-## 5. Modelo de dados do back-end (o que existe hoje)
+## 5. Modelo de dados do back-end (atualizado — ver seção 11 pro que mudou)
 
 - `Usuario` — `IdUsuario, Nome, Email, SenhaHash, Diagnostico,
   NivelDificuldade (enum: Iniciante=1, Basico=2, Intermediario=3,
   Avancado=4), SaldoAtual (moedas), DiasSeguidos, UltimaAtividadeData,
-  OfensivaCongeladaAte, MultiplicadorMoedasAte/Valor, ProfissionalId,
-  EstadoAdaptativoIA (json, novo)`
+  OfensivaCongeladaAte, MultiplicadorMoedasValor,
+  **MultiplicadorMoedasAtividadesRestantes (int?, substituiu
+  MultiplicadorMoedasAte — o multiplicador agora dura N atividades, não
+  N dias)**, ProfissionalId, EstadoAdaptativoIA (json)`
 - `Profissional` — login separado, tem `Pacientes` (lista de `Usuario`)
 - `Atividade` (categoria de topo, ex. "Leitura Labial") → tem `Unidades`
-- `Unidade` → tem `LicoesFala`, `LicoesVideo`, `LicoesAlternativa`,
-  `LicoesVibracao`
-- `LicaoFala { FraseEsperada, NivelDificuldade, ValorGanho }`
+- `Unidade` → tem `LicoesFala` (avulsas), `AtividadesFala` (agrupadas,
+  novo), `LicoesVideo`, `LicoesAlternativa`, `LicoesVibracao`
+- **`AtividadeFala` (novo)** `{ IdAtividadeFala, Nome, NivelDificuldade,
+  UnidadeId, Exercicios: List<LicaoFala> }` — agrupa vários exercícios de
+  fala numa sessão só (até ~8), navegada em `/atividade/fala-sessao/:id`
+  no front. `LicaoFala` ganhou `AtividadeFalaId (int?)` e `Ordem (int)`;
+  quando `AtividadeFalaId` é `null` a lição continua avulsa (rota antiga
+  `/atividade/fala/:id` ainda funciona pra essas).
+- `LicaoFala { FraseEsperada, NivelDificuldade, ValorGanho, AtividadeFalaId, Ordem }`
 - `LicaoVideo { Titulo, VideoDescricao, VideoUrl }`
 - `LicaoAlternativa { Pergunta, A, B, C, D, RespostaCerta, ValorGanho }`
-- `LicaoVibracao { Silaba, Instrucao }`
-- `ProgressoFala` / `ProgressoAlternativa` — 1 tentativa por lição por
-  usuário; `ProgressoFala` tem `ScoreAcustico, FeedbackIA,
-  DetalhesFonemasJson` (novos)
-- `AtividadeSalva` — **por Atividade de topo, não por lição** (ex.: salvar
-  "Leitura Labial" inteira, não uma lição específica)
+- `LicaoVibracao { Silaba, Instrucao }` — **conteúdo existe mas não há
+  fluxo de progresso pra vibração; ver seção 8**
+- `ProgressoFala` / `ProgressoAlternativa` / **`ProgressoVideo` (novo)** —
+  1 tentativa por lição por usuário; `ProgressoFala` tem `ScoreAcustico,
+  FeedbackIA, DetalhesFonemasJson`. `ProgressoVideo` só marca
+  concluído/não (sem nota, vídeo não tem `ValorGanho`).
+- **`ItemSalvo` (novo, substitui `AtividadeSalva`)** `{ UsuarioId,
+  TipoItem ("fala"|"fala-sessao"|"video"|"alternativa"), ItemId, DataSalva }`
+  — agora é por item específico, não por Atividade de topo inteira.
+  `Models/AtividadeSalva.cs` e `Dtos/AtividadeSalvaDto.cs` ainda existem
+  no repo mas **não são mais usados em lugar nenhum** (não consegui
+  apagar o arquivo por uma restrição de permissão da sessão — pode
+  apagar com segurança).
 - `Categoria` → `Palavra { Nome, VideoUrl }` (dicionário, catálogo global)
 - `Produto { Nome, Preco, Tipo (Cosmetico|BloqueioOfensiva|
   MultiplicadorMoedas), DuracaoDias, ValorMultiplicador }`,
-  `ProdutoUsuario` (histórico de compra)
+  `ProdutoUsuario` (histórico de compra). **Hoje só existem 2 produtos
+  cadastrados**: "Bloqueio de Ofensiva" (500 moedas, 1 dia) e
+  "Multiplicador de Moedas x2" (800 moedas, 5 atividades).
 - `Conquista`, `ConquistaUsuario`
 - `Notificacao { Descricao, Lida, DataCriacao }`
 - `MensagemContato` (só `Mensagem`; nome/email vêm do usuário logado)
@@ -211,13 +234,15 @@ POST   /Auth/login                              {email, senha} -> {token, role, 
 POST   /Usuario                                  cadastro (NÃO loga sozinho — front chama login depois)
 GET    /Usuario/{id}
 PUT    /Usuario/{id}
-GET    /Unidades                                 inclui LicoesFala/Video/Alternativa/Vibracao
+GET    /Unidades                                 inclui LicoesFala (avulsas)/AtividadesFala/Video/Alternativa/Vibracao
 GET    /Licao/fala/{id} | /video/{id} | /alternativa/{id} | /vibracao/{id}
 POST   /Progresso/fala/{licaoId}/iniciar
 POST   /Progresso/fala/{idProgresso}/concluir    multipart, campo "arquivo" -> nota+feedback+fonemas
-GET    /Progresso/fala/proximo-exercicio         motor adaptativo (novo)
+GET    /Progresso/fala/proximo-exercicio         motor adaptativo
 POST   /Progresso/alternativa/{licaoId}/iniciar
 POST   /Progresso/alternativa/{idProgresso}/concluir   {respostaDada: "a"|"b"|"c"|"d"}
+POST   /Progresso/video/{licaoId}/concluir       (novo) marca vídeo como assistido, sem "iniciar" separado
+GET    /Progresso/usuario/{usuarioId}            {alternativas, falas, videos} — progresso bruto do aluno
 GET    /Progresso/desempenho/{usuarioId}         {interpretacao, fala} em %
 GET    /Categoria                                dicionário (com Palavras)
 GET    /Dicionario?categoriaId=                  palavras (flat, com NomeCategoria)
@@ -226,14 +251,18 @@ POST   /Produto/comprar                          {produtoId, quantidade}
 GET    /Notificacoes/usuario/{usuarioId}
 PUT    /Notificacoes/{id}                        {lida: bool}
 GET    /Atividades                               (não "/Atividade" — nome do controller é plural!)
-POST   /Atividades/salvar                        {atividadeId}
-DELETE /Atividades/salvar/{atividadeId}
-GET    /Atividades/salvas
+POST   /Atividades/item/salvar                   {tipoItem, itemId} — substituiu /Atividades/salvar (que salvava a Atividade de topo inteira)
+DELETE /Atividades/item/salvar/{tipoItem}/{itemId}
+GET    /Atividades/item/salvos
 POST   /Contato                                   {mensagem}
 GET    /Conquista/usuario/{usuarioId}            {atingidas: [...], naoAtingidas: [...]}
 GET    /Ia/health
 GET    /Ia/dica-fonema?fonema=A
 ```
+
+**Removidos nessa sessão** (não existem mais, não usar): `POST/DELETE/GET
+/Atividades/salvar*` (nível de Atividade de topo) — trocados pelos
+`/Atividades/item/salvar*` acima.
 
 Todas exigem `Authorization: Bearer <token>` exceto login/cadastro/health.
 **Resposta em camelCase** (`idUsuario`, `nivelDificuldade`...) — o front
@@ -256,23 +285,41 @@ segurança.
 - Nomes em português no código (variáveis, props, classes CSS).
 - `React` não precisa ser importado (React 19 + JSX transform novo).
 
-## 8. O que NÃO foi feito ainda (pendências conhecidas)
+## 8. O que NÃO foi feito ainda (pendências conhecidas — atualizado)
 
 - **Admin** (gestão de usuários/atividades/lições/produtos/conquistas
   pelo painel) e **Profissional** (visão de pacientes) — telas ainda
-  usam dados mock, nunca foram ligadas à API.
-- `TelaInicioAtividades` (a tela com filtro lateral de dificuldade/status)
-  — ainda usa um array mock local, é redundante com
-  `TelaInicioAtividadeUnidade` (que já foi ligada à API).
-- Atividade de **vibração** e a tela `TelaAcompanhanteIA` — não foram
-  ligadas (não há endpoint de progresso pra vibração no back, só
-  `GET /Licao/vibracao/{id}` pra conteúdo).
+  usam dados mock, nunca foram ligadas à API. **Não mexido em nenhuma
+  sessão** — explicitamente fora de escopo por pedido do usuário.
+- ~~`TelaInicioAtividades` usa mock~~ **resolvido**: já usa dados reais,
+  com filtro de dificuldade/status funcionando de verdade e escopo
+  automático pelo nível do próprio usuário (ver seção 11).
+- Atividade de **vibração** e a tela `TelaAcompanhanteIA` (rota
+  `/atividade/acompanhante/:id`) — **continua não ligada**, e essa rota
+  é órfã (nenhum lugar do app navega pra ela hoje, então não é uma
+  armadilha visível pro usuário, só código morto). Ainda tem um texto de
+  placeholder esquecido no componente ("faça o blablabla entender as
+  letras") caso alguém decida terminar essa feature. A tela `/acompanhante`
+  (explicação geral do recurso, diferente da atividade em si) foi
+  corrigida nessa sessão — tinha um banner com texto de outra tela
+  colado por engano.
 - `TelaContatoMedico` (contato do profissional) — o endpoint
   `POST /Contato` exige role `"Usuario"`, então profissional não consegue
   usar; precisaria de ajuste no back se quiser abrir pra profissional.
 - Cadastro de paciente pelo admin (`TelaPacienteCadastro`) — o `<select>`
   de nível ainda tem valores errados (`facil/medio/dificil` em vez do
-  enum 1-4), igual o bug que foi corrigido no cadastro do aluno.
+  enum 1-4), igual o bug que foi corrigido no cadastro do aluno. Não
+  mexido (é tela de Admin).
+- **Vídeos são só placeholder em tudo** ("VÍDEO LEITURA LABIAL" cinza) —
+  dicionário, vídeo-aula de unidade, vídeo do exercício de interpretação.
+  `VideoUrl` existe no modelo mas nunca foi preenchido com nada real —
+  não é bug de código, é conteúdo/arquivo que falta produzir.
+- Botão de login/cadastro com Google foi **removido** (era decorativo,
+  sem OAuth por trás) — se quiser essa função de verdade, precisa
+  implementar OAuth do zero (não existe nada preparado pra isso hoje).
+- `Models/AtividadeSalva.cs` e `Dtos/AtividadeSalvaDto.cs` (Backend) —
+  código morto, não apagado por restrição de permissão da sessão (ver
+  seção 5).
 - Bundle do front está em ~550kB minificado — Vite avisa sobre isso;
   nada crítico, mas dá pra fazer code-splitting por rota no futuro.
 - Não há testes automatizados (unitários/integração) em nenhum dos 3
@@ -316,6 +363,141 @@ Após análise do código fonte da Inteligência Artificial (`LipAI_LLM`) e do B
 ### Progresso Back-end (`ProgressoController.cs`)
 - Centraliza toda a validação de segurança. Garante que o aluno tenha acesso (através do `RegraNivelService`) antes de iniciar/concluir qualquer atividade de fala ou alternativa.
 - A cada conclusão de atividade (`/concluir`), além de salvar o `ScoreAcustico` e `FeedbackIA` no banco, ele **calcula moedas** (`ValorGanho`), aplica eventuais multiplicadores ativos (`AplicarMultiplicador`), atualiza a ofensiva, e já injeta uma notificação de sucesso no banco de dados para o usuário ver.
+
+## 11. Sessão 2026-09-22 — reformulação do fluxo de atividades + QA geral
+
+Sessão focada só no **Front** e no **Backend** (LipAI_LLM não foi tocado).
+Commit final: Front `0d44192`, Backend `fc79fe3`.
+
+### 11.1 Ambiente rodando
+Os 4 serviços (Front, Backend, `app_mms`, `app_llm`) foram colocados pra
+rodar em background durante toda a sessão pra permitir testar cada
+mudança de verdade com Playwright (Chrome real, cadastro de usuário novo
+a cada teste, microfone falso alimentado por WAV quando precisava testar
+fala). **Nenhuma mudança foi considerada "pronta" sem passar por esse
+teste ponta a ponta.**
+
+### 11.2 QA completo do fluxo do aluno (login → cadastro → todas as telas)
+Percorrido tela por tela (login, cadastro, dashboard, perfil, notificações,
+conquistas, dicionário, loja, contato, atividades, salvos, acompanhante,
++ visão mobile 390px) e corrigido o que apareceu:
+- `UserSidebar` tinha o nome do usuário **fixo** no código
+  ("User Silva Santos") em vez de vir do usuário logado.
+- Atividade de vídeo não persistia conclusão nenhuma no banco (não
+  existia endpoint) — criado `POST /Progresso/video/{id}/concluir` +
+  model `ProgressoVideo`.
+- Bug de concorrência: clicar duas vezes rápido no bookmark de salvar
+  dava erro 500 (constraint de unicidade não tratada) — virou 400 tratado.
+- Filtro de dificuldade/status em `/inicio-atividades` **não funcionava
+  de verdade**: faltava a opção "Básico" na lista (a maior parte do
+  conteúdo é desse nível) e o status calculado internamente era
+  "Concluída" enquanto o filtro dizia "Concluído" — nunca batiam. Corrigido
+  + adicionado escopo automático: sem filtro manual, só mostra atividades
+  do nível do próprio usuário (achado um bug de tipo no meio disso: o
+  endpoint de usuário devolve nível como string sem acento "Basico", o
+  de lição devolve número — não normalizavam pro mesmo formato).
+- **Bug real e mais sério**: só *abrir* uma tela de alternativa ou fala
+  (sem responder/gravar nada) já criava um registro de progresso
+  "Em andamento" permanente — o back chamava `iniciar` no carregamento da
+  tela, não na primeira interação. Resultado: atividade sumia de
+  "Recomendadas" e ficava presa em "Continuar" pra sempre. Corrigido nos
+  3 lugares (`TelaAtividadeAlternativa`, `TelaAtividadeFala`,
+  `TelaAtividadeFalaSessao`) pra só chamar `iniciar*` no momento real da
+  ação (responder / começar a gravar).
+- "Salvar atividade" tinha um bug de contagem: o back só sabia salvar a
+  nível de **Atividade de topo** (existe uma só, "Leitura Labial"), então
+  marcar 1 card salvava a Atividade inteira e todo item dela contava como
+  salvo. Trocado por `ItemSalvo` (nível de item específico — ver seção 5).
+- Dashboard e a tela de início de atividades explodiam os exercícios de
+  fala agrupados (`AtividadeFala`) como cards individuais soltos em vez
+  de 1 card pra atividade inteira — mesmo bug nos dois lugares, corrigido.
+- Ícone do dashboard era sempre um fone de ouvido fixo pra qualquer tipo
+  de atividade (fala/vídeo/interpretação) — trocado por ícone+cor por
+  tipo (mic roxo / vídeo azul / interrogação laranja), reaproveitando o
+  mesmo esquema de cores da tela de unidades.
+- Removido botão "Entrar/Criar conta com Google" (decorativo, sem OAuth),
+  substituída validação de campo vazio nativa do navegador por mensagem
+  de erro própria (mesmo padrão visual dos outros erros).
+- Corrigido banner da tela `/acompanhante` que mostrava por engano o
+  texto do Dicionário colado ali.
+- Limpeza de dados de teste no banco: Conquistas ("QA Conquista …") e
+  Loja (produtos "string", "multiplica", 3x "QA Congela Ofensiva"
+  duplicados, "Baú Misterioso") — sobrou só o conteúdo real.
+- Mobile: cards de "Seu Progresso" estouravam a largura da tela (agora
+  em grid 2 colunas); botão flutuante "Filtros" sobrepunha conteúdo dos
+  cards (agora é só um ícone pequeno no canto).
+
+### 11.3 Reformulação da navegação e conteúdo de atividades
+Pedido explícito do usuário, em 3 rodadas (a 1ª tentativa da IA errou o
+entendimento e foi corrigida na 2ª — documentado aqui pra não repetir o
+mesmo erro): o fluxo final ficou:
+
+1. **`/inicio-atividades`** (tela com filtro lateral) — clicar num card
+   não abre mais o exercício direto, leva pra **`/atividades-unidades`**.
+2. **`/atividades-unidades`** — voltou a ser a "trilha" com cards que
+   abrem o exercício direto (não virou um nível extra de navegação como
+   a IA tentou na 1ª rodada), mas **redesenhada visualmente**: cada
+   unidade numerada, exercícios agrupados em seções por tipo (Vídeo-aulas
+   / Interpretação / Fala) com ícone e cor própria por seção, cards com
+   borda de destaque na cor do tipo.
+3. **Atividade de Fala agora é uma sessão com múltiplos exercícios**
+   (motivo do pedido: hoje uma "atividade" só tinha 1 exercício — o
+   usuário queria até uns 8 por atividade). Modelo novo `AtividadeFala`
+   (ver seção 5) + nova tela `TelaAtividadeFalaSessao` (rota
+   `/atividade/fala-sessao/:atividadeFalaId`) que percorre os exercícios
+   em sequência (mostra "Exercício X de N"), sem voltar pra lista entre
+   um e outro, terminando numa tela de resumo (acertos + moedas ganhas).
+   A tela antiga de 1 exercício só (`/atividade/fala/:id`) continua
+   existindo pra lições avulsas (sem `AtividadeFalaId`).
+
+### 11.4 Conteúdo do banco — só a Unidade 3 existe hoje
+A pedido do usuário, **as Unidades 1 e 2 (Saudações / Dia a dia) e uma
+unidade órfã de testes antigos foram apagadas do banco**, junto com todo
+progresso ligado a elas (~16 registros, incluindo histórico real da
+conta pessoal do usuário — ele confirmou explicitamente que queria isso).
+`SeedData.cs` foi simplificado pra não recriar essas unidades sozinho no
+próximo restart. **Hoje só existe:**
+- `Unidade 3 — Fonema A (Nível Básico)`, dentro da `Atividade`
+  "Leitura Labial" (`IdAtividade=14`), com:
+  - Vídeo: "Como pronunciar o som A"
+  - Interpretação: "Qual palavra a pessoa falou?" (Aba/Aço/Agir/Ágil)
+  - `AtividadeFala` "Fala A 1" com 5 exercícios: aba, acho, aço, agir, ágil
+
+Se for expandir conteúdo, o padrão pra seguir está em
+`Data/SeedData.cs` → `ObterOuCriarAtividadeFalaAsync` +
+`SeedExerciciosFalaAsync` (idempotente, migra lições avulsas antigas pra
+dentro de uma `AtividadeFala` automaticamente se já existirem). O usuário
+colou um documento grande de conteúdo pro fonema A (sílabas, palavras
+nível 2/3/4, frases, vocabulário avançado) que **ainda não foi todo
+inserido** — só as 5 palavras de nível básico entraram até agora.
+
+### 11.5 Loja — limpa e com regra nova
+Só 2 produtos existem hoje: **Bloqueio de Ofensiva** (500 moedas, protege
+a sequência de dias — já funcionava, só estava escondido no meio do
+lixo de teste) e **Multiplicador de Moedas x2** (800 moedas). Esse
+último mudou de regra: **era "1 dia" (baseado em data), virou "5
+atividades" (baseado em contador)**. Campo novo
+`Usuario.MultiplicadorMoedasAtividadesRestantes` — soma `+5` por compra,
+decrementa 1 a cada `Progresso/{alternativa|fala}/.../concluir`
+(correto ou errado, qualquer tentativa consome 1), e enquanto `> 0`
+dobra a pontuação ganha. Testado de ponta a ponta: comprou, respondeu
+certo, confirmou no banco `PontuacaoObtida=20` (base 10 × 2) e o
+contador caindo de 5 pra 4.
+
+### 11.6 Tema escuro — de "carvão neutro" pra roxo profundo
+O usuário achou o modo escuro anterior (cinza quase preto, "carvão
+neutro") desequilibrado com o claro. Paleta trocada em `src/index.css`
+(afeta os dois blocos: `:root[data-theme="dark"]` e
+`@media (prefers-color-scheme: dark)`) — fundo/superfícies foram de tons
+de cinza neutro pra tons de roxo escuro (`#1c1526` / `#271d33` /
+`#32263f`), bordas e texto secundário ganharam leve tom de roxo em vez de
+branco/cinza puro, `--lipai-primary` ficou um lilás mais vibrante
+(`#c58cf0`). Como o app inteiro usa só `var(--lipai-*)` (regra da fase de
+padronização anterior), a troca propagou sozinha pra tudo sem precisar
+mexer em CSS de tela nenhuma — só achei e corrigi um caso onde o modo
+escuro sobrescrevia com `!important` os estados de seleção/certo/errado
+das opções de alternativa (`.option-item.selected/.correct/.incorrect`
+ficavam sem cor nenhuma no escuro, parecia que o clique não funcionava).
 
 ## Histórico de Modificações (QA e Correções)
 - **Implementação do ConquistaToast**: Criado o componente e hook para exibir toast notifications dinâmicas ao desbloquear conquistas no Front-end, interligado com o retorno da API no `/concluir`.
