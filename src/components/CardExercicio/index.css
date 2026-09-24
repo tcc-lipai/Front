@@ -22,13 +22,32 @@
   box-shadow: 0 8px 20px rgba(80, 40, 100, 0.12);
 }
 
-.card-exercicio__icone {
+.card-exercicio__icone-wrapper {
+  position: relative;
   flex-shrink: 0;
+}
+
+.card-exercicio__icone {
   width: 46px;
   height: 46px;
   border-radius: 50%;
   background: color-mix(in srgb, var(--cor-destaque) 14%, transparent);
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-exercicio__selo {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--lipai-success, #3f9256);
+  border: 2px solid var(--lipai-surface, #fff);
+  color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;

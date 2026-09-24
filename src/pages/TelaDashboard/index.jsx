@@ -63,14 +63,26 @@ const TelaDashboard = () => {
   const ofensivaCongeladaAte = usuario?.ofensivaCongeladaAte ?? usuario?.OfensivaCongeladaAte ?? null;
   const usuarioId = localStorage.getItem("id");
 
+  // A sequência de "diasSeguidos" termina na última atividade registrada, não
+  // necessariamente hoje — se o aluno ainda não fez nada hoje, hoje não conta.
+  const ultima = ultimaAtividadeData ? new Date(ultimaAtividadeData) : null;
+  if (ultima) ultima.setHours(0, 0, 0, 0);
+
   const strikeDays = Array.from({ length: 9 }).map((_, index) => {
     const offset = index - 4; // -4 a +4, hoje no meio
     const d = new Date();
     d.setDate(d.getDate() + offset);
+    d.setHours(0, 0, 0, 0);
 
     const month = d.toLocaleDateString("pt-BR", { month: "short" }).toUpperCase().replace(".", "");
     const num = d.getDate().toString().padStart(2, "0");
-    const isActive = offset <= 0 && offset > -diasSeguidos;
+
+    let isActive = false;
+    if (ultima && d <= ultima) {
+      const distanciaDaUltima = Math.round((ultima - d) / 86400000);
+      isActive = distanciaDaUltima < diasSeguidos;
+    }
+
     const distancia = Math.abs(offset);
 
     return { id: offset, month, num, isActive, distancia };

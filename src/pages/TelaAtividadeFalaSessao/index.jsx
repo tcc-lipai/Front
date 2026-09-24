@@ -13,7 +13,7 @@ const CLASSE_FONEMA = {
   incorreto: "incorreto",
 };
 
-const ResultadoFala = ({ resultado, ultimoExercicio, onProximo, onSair }) => {
+const ResultadoFala = ({ resultado, ultimoExercicio, onProximo, onRefazer, onSair }) => {
   const score = Math.round(resultado.scoreAcustico ?? 0);
   const fonemas = Array.isArray(resultado.detalhesFonemas) ? resultado.detalhesFonemas : [];
 
@@ -48,6 +48,7 @@ const ResultadoFala = ({ resultado, ultimoExercicio, onProximo, onSair }) => {
 
       <div className="atividade-botao fala-resultado__acoes">
         <Botao texto={ultimoExercicio ? "Concluir" : "Próximo"} onClick={onProximo} />
+        <Botao texto="Refazer" variante="secundario" onClick={onRefazer} />
         <Botao texto="Sair" variante="secundario" onClick={onSair} />
       </div>
     </div>
@@ -165,6 +166,7 @@ const TelaAtividadeFalaSessao = () => {
                   resultado={resultado}
                   ultimoExercicio={ultimoExercicio}
                   onProximo={proximo}
+                  onRefazer={refazer}
                   onSair={sair}
                 />
               ) : (

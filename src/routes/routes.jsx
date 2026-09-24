@@ -2,6 +2,8 @@ import React from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 
+import RotaProtegida from "./RotaProtegida";
+
 import TelaLoginUser from "../pages/TelaLoginUser";
 import TelaCadastroUser from "../pages/TelaCadastroUser";
 import TelaDashboard from "../pages/TelaDashboard";
@@ -51,6 +53,23 @@ function AnimatedRoutes() {
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
+        {/* ---- Rotas públicas: landing, login e cadastro ---- */}
+        <Route
+          path="/"
+          element={
+            <PageTransition>
+              <TelaLandingPage />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/landingpage"
+          element={
+            <PageTransition>
+              <TelaLandingPage />
+            </PageTransition>
+          }
+        />
         <Route
           path="/login"
           element={
@@ -67,224 +86,260 @@ function AnimatedRoutes() {
             </PageTransition>
           }
         />
-        <Route
-          path="/landingpage"
-          element={
-            <PageTransition>
-              <TelaLandingPage />
-            </PageTransition>
-          }
-        />
-        <Route
-          path="/"
-          element={
-            <PageTransition>
-              <TelaDashboard />
-            </PageTransition>
-          }
-        />
+
+        {/* ---- Rotas protegidas: só quem está logado entra ---- */}
         <Route
           path="/dashboard"
           element={
-            <PageTransition>
-              <TelaDashboard />
-            </PageTransition>
+            <RotaProtegida>
+              <PageTransition>
+                <TelaDashboard />
+              </PageTransition>
+            </RotaProtegida>
           }
         />
         <Route
           path="/perfil"
           element={
-            <PageTransition>
-              <TelaPerfil />
-            </PageTransition>
+            <RotaProtegida>
+              <PageTransition>
+                <TelaPerfil />
+              </PageTransition>
+            </RotaProtegida>
           }
         />
         <Route
           path="/contato"
           element={
-            <PageTransition>
-              <TelaContato />
-            </PageTransition>
+            <RotaProtegida>
+              <PageTransition>
+                <TelaContato />
+              </PageTransition>
+            </RotaProtegida>
           }
         />
         <Route
           path="/notificacoes"
           element={
-            <PageTransition>
-              <TelaNotificacoes />
-            </PageTransition>
+            <RotaProtegida>
+              <PageTransition>
+                <TelaNotificacoes />
+              </PageTransition>
+            </RotaProtegida>
           }
         />
         <Route
           path="/conquistas"
           element={
-            <PageTransition>
-              <TelaConquistas />
-            </PageTransition>
+            <RotaProtegida>
+              <PageTransition>
+                <TelaConquistas />
+              </PageTransition>
+            </RotaProtegida>
           }
         />
         <Route
           path="/dicionario"
           element={
-            <PageTransition>
-              <TelaDicionario />
-            </PageTransition>
+            <RotaProtegida>
+              <PageTransition>
+                <TelaDicionario />
+              </PageTransition>
+            </RotaProtegida>
           }
         />
         <Route
           path="/loja"
           element={
-            <PageTransition>
-              <TelaLoja />
-            </PageTransition>
+            <RotaProtegida>
+              <PageTransition>
+                <TelaLoja />
+              </PageTransition>
+            </RotaProtegida>
           }
         />
 
         <Route
           path="/acompanhante"
           element={
-            <PageTransition>
-              <TelaAcompanhante />
-            </PageTransition>
+            <RotaProtegida>
+              <PageTransition>
+                <TelaAcompanhante />
+              </PageTransition>
+            </RotaProtegida>
           }
         />
         <Route
           path="/atividades-salvas"
           element={
-            <PageTransition>
-              <TelaAtividadeSalva />
-            </PageTransition>
+            <RotaProtegida>
+              <PageTransition>
+                <TelaAtividadeSalva />
+              </PageTransition>
+            </RotaProtegida>
           }
         />
         <Route
           path="/inicio-atividades"
           element={
-            <PageTransition>
-              <TelaInicioAtividades />
-            </PageTransition>
+            <RotaProtegida>
+              <PageTransition>
+                <TelaInicioAtividades />
+              </PageTransition>
+            </RotaProtegida>
           }
         />
         <Route
           path="/atividades-unidades"
           element={
-            <PageTransition>
-              <TelaInicioAtividadeUnidade />
-            </PageTransition>
+            <RotaProtegida>
+              <PageTransition>
+                <TelaInicioAtividadeUnidade />
+              </PageTransition>
+            </RotaProtegida>
           }
         />
         <Route
           path="/atividade/alternativa/:id"
           element={
-            <PageTransition>
-              <TelaAtividadeAlternativa />
-            </PageTransition>
+            <RotaProtegida>
+              <PageTransition>
+                <TelaAtividadeAlternativa />
+              </PageTransition>
+            </RotaProtegida>
           }
         />
         <Route
           path="/atividade/fala/:id"
           element={
-            <PageTransition>
-              <TelaAtividadeFala />
-            </PageTransition>
+            <RotaProtegida>
+              <PageTransition>
+                <TelaAtividadeFala />
+              </PageTransition>
+            </RotaProtegida>
           }
         />
         <Route
           path="/atividade/fala-sessao/:id"
           element={
-            <PageTransition>
-              <TelaAtividadeFalaSessao />
-            </PageTransition>
+            <RotaProtegida>
+              <PageTransition>
+                <TelaAtividadeFalaSessao />
+              </PageTransition>
+            </RotaProtegida>
           }
         />
         <Route
           path="/atividade/acompanhante/:id"
           element={
-            <PageTransition>
-              <TelaAcompanhanteIA />
-            </PageTransition>
+            <RotaProtegida>
+              <PageTransition>
+                <TelaAcompanhanteIA />
+              </PageTransition>
+            </RotaProtegida>
           }
         />
         <Route
           path="/atividade/video/:id"
           element={
-            <PageTransition>
-              <TelaAtividadeVideo />
-            </PageTransition>
+            <RotaProtegida>
+              <PageTransition>
+                <TelaAtividadeVideo />
+              </PageTransition>
+            </RotaProtegida>
           }
         />
 
         <Route
           path="/dashboard-medico"
           element={
-            <PageTransition>
-              <DashboardMedico />
-            </PageTransition>
+            <RotaProtegida>
+              <PageTransition>
+                <DashboardMedico />
+              </PageTransition>
+            </RotaProtegida>
           }
         />
         <Route
           path="/contato-medico"
           element={
-            <PageTransition>
-              <TelaContatoMedico />
-            </PageTransition>
+            <RotaProtegida>
+              <PageTransition>
+                <TelaContatoMedico />
+              </PageTransition>
+            </RotaProtegida>
           }
         />
         <Route
           path="/configuracoes-medico"
           element={
-            <PageTransition>
-              <TelaConfiguracoesMedico />
-            </PageTransition>
+            <RotaProtegida>
+              <PageTransition>
+                <TelaConfiguracoesMedico />
+              </PageTransition>
+            </RotaProtegida>
           }
         />
 
         <Route
           path="/dashboard-admin"
           element={
-            <PageTransition>
-              <DashboardAdmin />
-            </PageTransition>
+            <RotaProtegida>
+              <PageTransition>
+                <DashboardAdmin />
+              </PageTransition>
+            </RotaProtegida>
           }
         />
         <Route
           path="/profissional-admin"
           element={
-            <PageTransition>
-              <ProfissionaisAdmin />
-            </PageTransition>
+            <RotaProtegida>
+              <PageTransition>
+                <ProfissionaisAdmin />
+              </PageTransition>
+            </RotaProtegida>
           }
         />
         <Route
           path="/atividades-admin"
           element={
-            <PageTransition>
-              <TelaAtividadesAdmin />
-            </PageTransition>
+            <RotaProtegida>
+              <PageTransition>
+                <TelaAtividadesAdmin />
+              </PageTransition>
+            </RotaProtegida>
           }
         />
 
         <Route
           path="/cadastrar-paciente"
           element={
-            <PageTransition>
-              <CadastrarPaciente />
-            </PageTransition>
+            <RotaProtegida>
+              <PageTransition>
+                <CadastrarPaciente />
+              </PageTransition>
+            </RotaProtegida>
           }
         />
         <Route
           path="/tela-paciente"
           element={
-            <PageTransition>
-              <TelaPaciente />
-            </PageTransition>
+            <RotaProtegida>
+              <PageTransition>
+                <TelaPaciente />
+              </PageTransition>
+            </RotaProtegida>
           }
         />
         <Route
           path="/atividade-paciente/:id"
           element={
-            <PageTransition>
-              <TelaPacienteAtividade />
-            </PageTransition>
+            <RotaProtegida>
+              <PageTransition>
+                <TelaPacienteAtividade />
+              </PageTransition>
+            </RotaProtegida>
           }
         />
 

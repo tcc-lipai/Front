@@ -23,7 +23,7 @@ const TelaInicioAtividadeUnidade = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar destino="/inicio-atividades" />
 
       <div className="container-atividade">
         <div className="conteudo-atividade">
@@ -76,6 +76,7 @@ const TelaInicioAtividadeUnidade = () => {
                             imagem={<IconeTipo tipo="video" />}
                             descricao={licao.texto}
                             corDestaque={TIPOS.video.cor}
+                            concluida={licao.concluida}
                             onComecar={() => navigate(`/atividade/video/${licao.id}`)}
                           />
                         ))}
@@ -96,6 +97,7 @@ const TelaInicioAtividadeUnidade = () => {
                             imagem={<IconeTipo tipo="alternativa" />}
                             descricao={licao.texto}
                             corDestaque={TIPOS.alternativa.cor}
+                            concluida={licao.concluida}
                             onComecar={() => navigate(`/atividade/alternativa/${licao.id}`)}
                           />
                         ))}
@@ -117,6 +119,7 @@ const TelaInicioAtividadeUnidade = () => {
                             titulo={atividadeFala.nome}
                             descricao={`${atividadeFala.totalExercicios} exercício${atividadeFala.totalExercicios === 1 ? "" : "s"}`}
                             corDestaque={TIPOS.fala.cor}
+                            concluida={atividadeFala.concluida}
                             onComecar={() => navigate(`/atividade/fala-sessao/${atividadeFala.id}`)}
                           />
                         ))}
@@ -127,6 +130,7 @@ const TelaInicioAtividadeUnidade = () => {
                             imagem={<IconeTipo tipo="fala" />}
                             descricao={`Fale: "${licao.texto}"`}
                             corDestaque={TIPOS.fala.cor}
+                            concluida={licao.concluida}
                             onComecar={() => navigate(`/atividade/fala/${licao.id}`)}
                           />
                         ))}
