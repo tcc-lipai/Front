@@ -1,0 +1,206 @@
+.modal-ofensiva-container {
+  position: relative;
+  background-color: #ffffff;
+  border-radius: 24px;
+  padding: 36px 28px 28px;
+  width: 92%;
+  max-width: 380px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  font-family: "Poppins", sans-serif;
+}
+
+.ofensiva-modal-streak {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.ofensiva-modal-flame {
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: linear-gradient(135deg, #ff9d4d, #e0932e);
+  box-shadow: 0 4px 14px rgba(224, 147, 46, 0.35);
+}
+
+.ofensiva-modal-streak strong {
+  display: block;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #3a2148;
+  line-height: 1.1;
+}
+
+.ofensiva-modal-streak span {
+  font-size: 0.82rem;
+  color: #8a7594;
+}
+
+.ofensiva-cal-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.ofensiva-cal-nav span {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #3a2148;
+  text-transform: capitalize;
+}
+
+.ofensiva-cal-nav button {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(93, 47, 120, 0.08);
+  color: #5b2f78;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.ofensiva-cal-nav button:hover {
+  background: rgba(93, 47, 120, 0.16);
+}
+
+.ofensiva-cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-bottom: 4px;
+}
+
+.ofensiva-cal-grid--cabecalho span {
+  text-align: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #b09dc0;
+  padding-bottom: 4px;
+}
+
+.ofensiva-cal-dia {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  border-radius: 10px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #4a3358;
+  background: #f6f1fa;
+}
+
+.ofensiva-cal-dia--futuro {
+  color: #cfc2d8;
+  background: transparent;
+}
+
+.ofensiva-cal-dia--realizada {
+  background: linear-gradient(135deg, #ff9d4d, #e0932e);
+  color: #fff;
+}
+
+.ofensiva-cal-dia--congelada {
+  background: linear-gradient(135deg, #7fd3f0, #4e8fd6);
+  color: #fff;
+}
+
+.ofensiva-cal-dia--hoje {
+  box-shadow: 0 0 0 2px #7b3b93;
+}
+
+.ofensiva-cal-legenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.ofensiva-cal-legenda span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  color: #6f6377;
+}
+
+.ofensiva-legenda-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.ofensiva-legenda-dot--realizada {
+  background: linear-gradient(135deg, #ff9d4d, #e0932e);
+}
+
+.ofensiva-legenda-dot--congelada {
+  background: linear-gradient(135deg, #7fd3f0, #4e8fd6);
+}
+
+.ofensiva-legenda-dot--hoje {
+  background: #fff;
+  box-shadow: 0 0 0 2px #7b3b93;
+}
+
+@media (max-width: 420px) {
+  .modal-ofensiva-container {
+    padding: 28px 18px 22px;
+  }
+}
+
+/* Tema escuro: sobrescreve os textos/chips que usam cor fixa (spans não
+   entram na regra genérica de texto do theme.css). */
+:root[data-theme="dark"] .ofensiva-modal-streak strong {
+  color: var(--lipai-text);
+}
+
+:root[data-theme="dark"] .ofensiva-modal-streak span,
+:root[data-theme="dark"] .ofensiva-cal-grid--cabecalho span,
+:root[data-theme="dark"] .ofensiva-cal-legenda span {
+  color: var(--lipai-text-muted);
+}
+
+:root[data-theme="dark"] .ofensiva-cal-nav span {
+  color: var(--lipai-text);
+}
+
+:root[data-theme="dark"] .ofensiva-cal-nav button {
+  background: var(--lipai-surface-2);
+  color: var(--lipai-text);
+}
+
+:root[data-theme="dark"] .ofensiva-cal-dia {
+  background: var(--lipai-surface-2);
+  color: var(--lipai-text);
+}
+
+:root[data-theme="dark"] .ofensiva-cal-dia--futuro {
+  color: var(--lipai-text-muted);
+  background: transparent;
+}
+
+:root[data-theme="dark"] .ofensiva-cal-dia--realizada {
+  background: linear-gradient(135deg, #ff9d4d, #e0932e);
+  color: #fff;
+}
+
+:root[data-theme="dark"] .ofensiva-cal-dia--congelada {
+  background: linear-gradient(135deg, #7fd3f0, #4e8fd6);
+  color: #fff;
+}

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGravadorAudio } from "../../hooks/useGravadorAudio";
 import { buscarLicaoFala, iniciarFala, concluirFala } from "../../services/falaService";
@@ -22,6 +22,7 @@ export function useTelaAtividadeFala() {
   const [novasConquistas, setNovasConquistas] = useState([]);
 
   const [mostrarModalSair, setMostrarModalSair] = useState(false);
+  const promiseIniciarRef = useRef(null);
 
   useEffect(() => {
     let ativo = true;
@@ -60,15 +61,11 @@ export function useTelaAtividadeFala() {
       const ok = await gravador.iniciar();
       if (!ok) return;
 
-      // só registra o progresso quando o aluno de fato começa a gravar
-      const inicioRes = await iniciarFala(licaoId);
-      if (!inicioRes.sucesso) {
-        gravador.cancelar();
-        setErroEnvio(inicioRes.mensagem);
-        return;
-      }
-      setIdProgresso(inicioRes.idProgresso);
+      // grava já — só registra o progresso quando o aluno de fato começa a
+      // gravar, mas isso não pode atrasar o começo da gravação em si (senão
+      // fica um pedaço de silêncio antes da fala, atrapalhando a nota).
       setEstadoFala("gravando");
+      promiseIniciarRef.current = iniciarFala(licaoId);
       return;
     }
 
@@ -81,7 +78,16 @@ export function useTelaAtividadeFala() {
       }
 
       setEstadoFala("enviando");
-      const res = await concluirFala(idProgresso, blob);
+
+      const inicioRes = await promiseIniciarRef.current;
+      if (!inicioRes?.sucesso) {
+        setEstadoFala("erro");
+        setErroEnvio(inicioRes?.mensagem || "Não foi possível iniciar a atividade.");
+        return;
+      }
+      setIdProgresso(inicioRes.idProgresso);
+
+      const res = await concluirFala(inicioRes.idProgresso, blob);
       if (!res.sucesso) {
         setEstadoFala("erro");
         setErroEnvio(res.mensagem);
@@ -95,7 +101,7 @@ export function useTelaAtividadeFala() {
         setNovasConquistas(res.data.novasConquistas);
       }
     }
-  }, [estadoFala, gravador, idProgresso, licaoId]);
+  }, [estadoFala, gravador, licaoId]);
 
   const refazer = useCallback(async () => {
     setResultado(null);

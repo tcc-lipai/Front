@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGravadorAudio } from "../../hooks/useGravadorAudio";
 import { buscarLicaoFala, iniciarFala, concluirFala } from "../../services/falaService";
@@ -45,6 +45,7 @@ export function useTelaAtividadeFalaSessao() {
   const [sessaoConcluida, setSessaoConcluida] = useState(false);
 
   const [mostrarModalSair, setMostrarModalSair] = useState(false);
+  const promiseIniciarRef = useRef(null);
 
   useEffect(() => {
     let ativo = true;
@@ -104,16 +105,12 @@ export function useTelaAtividadeFalaSessao() {
       const ok = await gravador.iniciar();
       if (!ok) return;
 
-      // só registra o progresso quando o aluno de fato começa a gravar
+      // grava já — só registra o progresso quando o aluno de fato começa a
+      // gravar, mas isso não pode atrasar o começo da gravação em si (senão
+      // fica um pedaço de silêncio antes da fala, atrapalhando a nota).
       const licaoId = idsExercicios[indiceAtual];
-      const inicioRes = await iniciarFala(licaoId);
-      if (!inicioRes.sucesso) {
-        gravador.cancelar();
-        setErroEnvio(inicioRes.mensagem);
-        return;
-      }
-      setIdProgresso(inicioRes.idProgresso);
       setEstadoFala("gravando");
+      promiseIniciarRef.current = iniciarFala(licaoId);
       return;
     }
 
@@ -126,7 +123,16 @@ export function useTelaAtividadeFalaSessao() {
       }
 
       setEstadoFala("enviando");
-      const res = await concluirFala(idProgresso, blob);
+
+      const inicioRes = await promiseIniciarRef.current;
+      if (!inicioRes?.sucesso) {
+        setEstadoFala("erro");
+        setErroEnvio(inicioRes?.mensagem || "Não foi possível iniciar a atividade.");
+        return;
+      }
+      setIdProgresso(inicioRes.idProgresso);
+
+      const res = await concluirFala(inicioRes.idProgresso, blob);
       if (!res.sucesso) {
         setEstadoFala("erro");
         setErroEnvio(res.mensagem);
@@ -144,7 +150,7 @@ export function useTelaAtividadeFalaSessao() {
         setNovasConquistas(res.data.novasConquistas);
       }
     }
-  }, [estadoFala, gravador, idProgresso, idsExercicios, indiceAtual]);
+  }, [estadoFala, gravador, idsExercicios, indiceAtual]);
 
   const proximo = useCallback(() => {
     if (indiceAtual + 1 >= idsExercicios.length) {

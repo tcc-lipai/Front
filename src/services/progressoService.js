@@ -47,6 +47,22 @@ export async function concluirVideo(licaoId) {
   }
 }
 
+/** Histórico de dias de ofensiva (realizados/congelados) do usuário. */
+export async function buscarHistoricoOfensiva(usuarioId) {
+  if (!usuarioId) return { sucesso: false, mensagem: "Usuário não identificado.", data: [] };
+
+  try {
+    const response = await api.get(`/Progresso/ofensiva/${usuarioId}`);
+    return { sucesso: true, data: response.data };
+  } catch (error) {
+    return {
+      sucesso: false,
+      mensagem: mensagemDeErro(error, "Não foi possível carregar o histórico de ofensiva."),
+      data: [],
+    };
+  }
+}
+
 /** Percentuais de acerto em interpretação (alternativa) e fala. */
 export async function buscarDesempenho(usuarioId) {
   if (!usuarioId) return { sucesso: false, mensagem: "Usuário não identificado.", data: null };

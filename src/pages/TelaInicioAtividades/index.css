@@ -117,6 +117,8 @@
   gap: 12px;
   border: 1px solid rgba(93, 47, 120, 0.08);
   box-shadow: 0 4px 14px rgba(93, 47, 120, 0.1);
+  cursor: pointer;
+  font-family: inherit;
   transition:
     box-shadow 0.15s ease,
     transform 0.15s ease;
@@ -186,6 +188,104 @@ h2 {
   font-size: 18px;
   font-weight: 700;
   margin: 8px 0 4px;
+}
+
+/* === Unidades disponíveis === */
+.lista-unidades {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.card-unidade {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #ffffff;
+  border: 1px solid rgba(93, 47, 120, 0.08);
+  border-radius: 16px;
+  padding: 6px 8px 6px 16px;
+  box-shadow: 0 4px 14px rgba(93, 47, 120, 0.1);
+  transition:
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
+}
+
+.card-unidade:hover {
+  box-shadow: 0 6px 18px rgba(93, 47, 120, 0.15);
+  transform: translateY(-1px);
+}
+
+.card-unidade-conteudo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: transparent;
+  border: none;
+  padding: 8px 0;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.card-unidade-bookmark {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: #b8a9c0;
+  cursor: pointer;
+  transition:
+    color 0.15s ease,
+    background 0.15s ease;
+}
+
+.card-unidade-bookmark:hover {
+  background: rgba(93, 47, 120, 0.08);
+  color: #7a3a8e;
+}
+
+.card-unidade-bookmark.ativo {
+  color: #a8901f;
+}
+
+.card-unidade-numero {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #8458a7, #5b2f78);
+  color: #fff;
+  font-weight: 800;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-unidade-texto {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.card-unidade-texto h3 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #3a2148;
+}
+
+.card-unidade-texto span {
+  font-size: 12px;
+  color: var(--lipai-text-muted, #8a7594);
 }
 
 /* === Filtro === */
@@ -433,5 +533,52 @@ h2 {
 
   .conteudo > .filter.open {
     bottom: 0;
+  }
+}
+
+/* === Modal "Unidades realizadas" / "Unidades salvas" === */
+.modal-unidades-container {
+  position: relative;
+  background-color: #ffffff;
+  border-radius: 24px;
+  padding: 40px 32px;
+  width: 90%;
+  max-width: 480px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  font-family: "Poppins", sans-serif;
+}
+
+.modal-unidades-container .modal-title {
+  color: #3a2148;
+  font-size: 22px;
+  font-weight: 800;
+  margin: 0 0 20px;
+  text-align: left;
+}
+
+.modal-unidades-container .modal-subtitle {
+  color: #8a7594;
+  font-size: 15px;
+  margin: 0;
+  text-align: left;
+}
+
+.modal-lista-unidades {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal-lista-unidades .card-unidade {
+  width: 100%;
+  box-shadow: none;
+  border: 1px solid rgba(93, 47, 120, 0.1);
+}
+
+@media (max-width: 480px) {
+  .modal-unidades-container {
+    padding: 28px 20px;
   }
 }

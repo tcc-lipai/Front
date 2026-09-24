@@ -87,8 +87,16 @@
   justify-content: center;
 }
 
+.ofensiva-header-btns {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
 .strike-days {
   display: flex;
+  align-items: center;
   gap: 8px;
   flex-wrap: nowrap;
   overflow-x: auto;
@@ -101,17 +109,27 @@
 }
 
 .strike-day {
+  --dist: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-width: 60px;
-  padding: 10px 6px;
+  min-width: calc(60px - var(--dist) * 5px);
+  padding: calc(10px - var(--dist) * 1px) calc(6px - var(--dist) * 0.5px);
   border: 1.5px solid #e0d4f7;
   border-radius: 10px;
   background: #faf5ff;
   gap: 2px;
   flex: 1;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.strike-day--hoje {
+  min-width: 70px;
+  padding: 14px 8px;
+  border-width: 2px;
 }
 
 .strike-day--active {
@@ -125,16 +143,24 @@
 }
 
 .strike-month {
-  font-size: 0.65rem;
+  font-size: calc(0.65rem - var(--dist) * 0.03rem);
   color: #9b59b6;
   font-weight: 600;
   letter-spacing: 0.05em;
 }
 
 .strike-num {
-  font-size: 1.05rem;
+  font-size: calc(1.05rem - var(--dist) * 0.07rem);
   font-weight: 700;
   color: #4a154b;
+}
+
+.strike-day--hoje .strike-num {
+  font-size: 1.3rem;
+}
+
+.strike-day--hoje .strike-month {
+  font-size: 0.72rem;
 }
 
 .activities-grid {
@@ -319,9 +345,13 @@
     padding: 18px 16px;
   }
 
-  .strike-day {
-    min-width: 52px;
-    padding: 8px 4px;
+  .strike-day--hoje {
+    min-width: 58px;
+    padding: 10px 6px;
+  }
+
+  .strike-day--hoje .strike-num {
+    font-size: 1.1rem;
   }
 }
 
@@ -379,16 +409,13 @@
   }
 
   .strike-day {
-    min-width: 44px;
-    padding: 6px 2px;
+    min-width: calc(46px - var(--dist) * 4px);
+    padding: calc(8px - var(--dist) * 1px) calc(4px - var(--dist) * 0.4px);
   }
 
-  .strike-num {
-    font-size: 0.9rem;
-  }
-
-  .strike-month {
-    font-size: 0.55rem;
+  .strike-day--hoje {
+    min-width: 54px;
+    padding: 10px 5px;
   }
 }
 

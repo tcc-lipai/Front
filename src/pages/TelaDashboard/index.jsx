@@ -1,36 +1,28 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Mic, HelpCircle, Video as VideoIcon } from "lucide-react";
+import { CalendarDays } from "lucide-react";
 import Navbar from "../../components/Navbar";
 import "./index.css";
 import { HeaderActions } from "../../components/HeaderActions";
 import { UserProfileDrawer } from "../../components/UserProfileDrawer";
 import Conquistas from "../../components/Conquistas";
+import { OfensivaCalendarioModal } from "../../components/OfensivaCalendarioModal";
 import { useTelaDashboard } from "./index.hook";
 import backgroundOnda from "../../assets/img/background_onda.png";
 
-const ICONE_POR_TIPO = {
-  fala: { Icone: Mic, cor: "#8A3FA0" },
-  alternativa: { Icone: HelpCircle, cor: "#E0932E" },
-  video: { Icone: VideoIcon, cor: "#4E8FD6" },
-};
-
-const ActivityCard = ({ titulo, tipo, onComecar }) => {
-  const { Icone, cor } = ICONE_POR_TIPO[tipo] ?? ICONE_POR_TIPO.fala;
-
-  return (
-    <div className="activity-card">
-      <div className="activity-icon" style={{ borderColor: cor }}>
-        <Icone size={28} color={cor} strokeWidth={2.2} />
-      </div>
-      <div className="activity-info">
-        <h3 className="activity-title">{titulo}</h3>
-        <button className="btn-comecar" onClick={onComecar}>
-          Começar
-        </button>
-      </div>
+const UnidadeCard = ({ nome, totalAtividades, onComecar }) => (
+  <div className="activity-card">
+    <div className="activity-info">
+      <h3 className="activity-title">{nome}</h3>
+      <p className="section-subtitle">
+        {totalAtividades} {totalAtividades === 1 ? "atividade" : "atividades"}
+      </p>
+      <button className="btn-comecar" onClick={onComecar}>
+        Começar
+      </button>
     </div>
-  );
-};
+  </div>
+);
 
 const PerformanceBar = ({ label, value, color }) => (
   <div className="perf-row">
@@ -54,9 +46,10 @@ const TelaDashboard = () => {
     usuario,
     desempenho,
     conquistas,
-    atividadesRecentes,
+    unidadesDisponiveis,
   } = useTelaDashboard();
   const navigate = useNavigate();
+  const [calendarioAberto, setCalendarioAberto] = useState(false);
 
   const handleAjudaOfensiva = () => {
     alert(
@@ -66,17 +59,21 @@ const TelaDashboard = () => {
 
   const diasSeguidos = usuario?.diasSeguidos ?? usuario?.DiasSeguidos ?? 0;
   const nome = usuario?.nome ?? usuario?.Nome ?? "";
+  const ultimaAtividadeData = usuario?.ultimaAtividadeData ?? usuario?.UltimaAtividadeData ?? null;
+  const ofensivaCongeladaAte = usuario?.ofensivaCongeladaAte ?? usuario?.OfensivaCongeladaAte ?? null;
+  const usuarioId = localStorage.getItem("id");
 
   const strikeDays = Array.from({ length: 9 }).map((_, index) => {
-    const offset = index - 4; // -4 to +4
+    const offset = index - 4; // -4 a +4, hoje no meio
     const d = new Date();
     d.setDate(d.getDate() + offset);
-    
+
     const month = d.toLocaleDateString("pt-BR", { month: "short" }).toUpperCase().replace(".", "");
     const num = d.getDate().toString().padStart(2, "0");
     const isActive = offset <= 0 && offset > -diasSeguidos;
+    const distancia = Math.abs(offset);
 
-    return { id: offset, month, num, isActive };
+    return { id: offset, month, num, isActive, distancia };
   });
 
   return (
@@ -100,19 +97,32 @@ const TelaDashboard = () => {
                 Complete ao menos uma lição por dia, para manter a ofensiva.
               </p>
             </div>
-            <button
-              className="help-btn"
-              aria-label="Ajuda sobre ofensiva"
-              onClick={handleAjudaOfensiva}
-            >
-              ?
-            </button>
+            <div className="ofensiva-header-btns">
+              <button
+                type="button"
+                className="help-btn"
+                aria-label="Ver calendário de ofensiva"
+                onClick={() => setCalendarioAberto(true)}
+              >
+                <CalendarDays size={16} />
+              </button>
+              <button
+                className="help-btn"
+                aria-label="Ajuda sobre ofensiva"
+                onClick={handleAjudaOfensiva}
+              >
+                ?
+              </button>
+            </div>
           </div>
           <div className="strike-days">
             {strikeDays.map((day) => (
               <div
                 key={day.id}
-                className={`strike-day ${day.isActive ? "strike-day--active" : ""}`}
+                className={`strike-day ${day.isActive ? "strike-day--active" : ""} ${
+                  day.id === 0 ? "strike-day--hoje" : ""
+                }`}
+                style={{ "--dist": day.distancia }}
               >
                 <span className="strike-month">{day.month}</span>
                 <span className="strike-num">{day.num}</span>
@@ -122,22 +132,22 @@ const TelaDashboard = () => {
         </section>
 
         <section className="card-section">
-          <h2 className="section-title">Atividades Recentes</h2>
+          <h2 className="section-title">Unidades Disponíveis</h2>
           {carregando && <p className="section-subtitle">Carregando...</p>}
-          {!carregando && atividadesRecentes.length === 0 && (
+          {!carregando && unidadesDisponiveis.length === 0 && (
             <p className="section-subtitle">
-              Nenhuma atividade disponível ainda.{" "}
+              Nenhuma unidade disponível ainda.{" "}
               <button className="ver-mais-btn" onClick={() => navigate("/inicio-atividades")}>
                 Ver todas
               </button>
             </p>
           )}
           <div className="activities-grid">
-            {atividadesRecentes.map((atividade) => (
-              <ActivityCard
-                key={`${atividade.tipo}-${atividade.id}`}
-                titulo={atividade.titulo}
-                tipo={atividade.tipo}
+            {unidadesDisponiveis.map((unidade) => (
+              <UnidadeCard
+                key={unidade.id}
+                nome={unidade.nome}
+                totalAtividades={unidade.totalAtividades}
                 onComecar={() => navigate("/atividades-unidades")}
               />
             ))}
@@ -184,6 +194,15 @@ const TelaDashboard = () => {
           </div>
         </section>
       </div>
+
+      <OfensivaCalendarioModal
+        isOpen={calendarioAberto}
+        onClose={() => setCalendarioAberto(false)}
+        diasSeguidos={diasSeguidos}
+        ultimaAtividadeData={ultimaAtividadeData}
+        ofensivaCongeladaAte={ofensivaCongeladaAte}
+        usuarioId={usuarioId}
+      />
     </div>
   );
 };

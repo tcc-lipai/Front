@@ -17,7 +17,7 @@ export function useTelaDashboard() {
   const [usuario, setUsuario] = useState(null);
   const [desempenho, setDesempenho] = useState({ interpretacao: 0, fala: 0 });
   const [conquistas, setConquistas] = useState([]);
-  const [atividadesRecentes, setAtividadesRecentes] = useState([]);
+  const [unidadesDisponiveis, setUnidadesDisponiveis] = useState([]);
 
   useEffect(() => {
     let ativo = true;
@@ -47,41 +47,21 @@ export function useTelaDashboard() {
       }
 
       if (unidadesRes.sucesso) {
-        const atividades = [];
-        for (const unidade of unidadesRes.data) {
-          // Fala avulsa (sem atividade que a agrupe)
-          for (const licaoFala of lista(unidade, "licoesFala", "LicoesFala")) {
-            if ((licaoFala.atividadeFalaId ?? licaoFala.AtividadeFalaId ?? null) != null) continue;
-            atividades.push({
-              tipo: "fala",
-              id: licaoFala.idLicaoFala ?? licaoFala.IdLicaoFala,
-              titulo: `Fale: "${licaoFala.fraseEsperada ?? licaoFala.FraseEsperada}"`,
-            });
-          }
-          // Atividade de fala (sessão com vários exercícios)
-          for (const af of lista(unidade, "atividadesFala", "AtividadesFala")) {
-            atividades.push({
-              tipo: "fala",
-              id: af.idAtividadeFala ?? af.IdAtividadeFala,
-              titulo: af.nome ?? af.Nome ?? "Atividade de fala",
-            });
-          }
-          for (const licaoAlternativa of lista(unidade, "licoesAlternativa", "LicoesAlternativa")) {
-            atividades.push({
-              tipo: "alternativa",
-              id: licaoAlternativa.idLicaoAlternativa ?? licaoAlternativa.IdLicaoAlternativa,
-              titulo: licaoAlternativa.pergunta ?? licaoAlternativa.Pergunta,
-            });
-          }
-          for (const licaoVideo of lista(unidade, "licoesVideo", "LicoesVideo")) {
-            atividades.push({
-              tipo: "video",
-              id: licaoVideo.idLicaoVideo ?? licaoVideo.IdLicaoVideo,
-              titulo: licaoVideo.titulo ?? licaoVideo.Titulo,
-            });
-          }
-        }
-        setAtividadesRecentes(atividades.slice(0, 6));
+        const unidades = unidadesRes.data.map((unidade) => {
+          const falaAvulsa = lista(unidade, "licoesFala", "LicoesFala").filter(
+            (l) => (l.atividadeFalaId ?? l.AtividadeFalaId ?? null) == null
+          ).length;
+          const atividadesFala = lista(unidade, "atividadesFala", "AtividadesFala").length;
+          const alternativa = lista(unidade, "licoesAlternativa", "LicoesAlternativa").length;
+          const video = lista(unidade, "licoesVideo", "LicoesVideo").length;
+
+          return {
+            id: unidade.idUnidade ?? unidade.IdUnidade,
+            nome: unidade.nome ?? unidade.Nome ?? "Unidade",
+            totalAtividades: falaAvulsa + atividadesFala + alternativa + video,
+          };
+        });
+        setUnidadesDisponiveis(unidades);
       }
 
       setCarregando(false);
@@ -104,6 +84,6 @@ export function useTelaDashboard() {
     usuario,
     desempenho,
     conquistas,
-    atividadesRecentes,
+    unidadesDisponiveis,
   };
 }
