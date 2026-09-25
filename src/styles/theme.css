@@ -107,8 +107,7 @@
     .filter,
     .ta-dicionario,
     .ta-como-funciona,
-    .ta-carousel__card,
-    .ta-ver-atividades
+    .ta-beneficio-card
   ) {
   background-color: var(--lipai-surface) !important;
   background-image: none !important;

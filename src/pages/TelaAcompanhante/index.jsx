@@ -14,37 +14,39 @@ import backgroundOnda from "../../assets/img/background_onda.png";
 import { useTelaAcompanhante } from "./index.hook";
 import Botao from "../../components/Botao";
 
-const CARDS = [
+const BENEFICIOS = [
   {
     id: 0,
-    title: "Como funciona?",
-    text: "O acompanhante permanece ao lado da criança durante os exercícios, oferecendo suporte e orientação para que ela consiga realizar as atividades com mais facilidade.",
+    titulo: "Como funciona?",
+    texto:
+      "O acompanhante permanece ao lado da criança durante os exercícios, oferecendo suporte e orientação para que ela consiga realizar as atividades com mais facilidade.",
   },
   {
     id: 1,
-    title: "Por que ter um acompanhante é essencial?",
-    text: "O apoio do acompanhante ajuda a criança a compreender os exercícios, tornando o processo de aprendizagem mais seguro e interativo.",
+    titulo: "Por que ter um acompanhante é essencial?",
+    texto:
+      "O apoio do acompanhante ajuda a criança a compreender os exercícios, tornando o processo de aprendizagem mais seguro e interativo.",
   },
   {
     id: 2,
-    title: "Auxílio durante as atividades",
-    text: "Por meio de estímulos e vibrações, o acompanhante ajuda a criança a perceber os comandos e desenvolver suas habilidades nos exercícios básicos.",
+    titulo: "Auxílio durante as atividades",
+    texto:
+      "Por meio de estímulos e vibrações, o acompanhante ajuda a criança a perceber os comandos e desenvolver suas habilidades nos exercícios básicos.",
   },
 ];
 
 const TelaAcompanhante = () => {
-  const [activeIndex, setActiveIndex] = useState(1);
   const navigate = useNavigate();
-
   const { drawerAberto, abrirPerfil, fecharPerfil } = useTelaAcompanhante();
+  const [ativo, setAtivo] = useState(0);
 
-  const total = CARDS.length;
+  const total = BENEFICIOS.length;
 
-  const getPosition = (cardId) => {
-    const diff = (cardId - activeIndex + total) % total;
-    if (diff === 0) return "center";
-    if (diff === total - 1) return "left";
-    return "right";
+  const posicaoDoCard = (id) => {
+    const diff = (id - ativo + total) % total;
+    if (diff === 0) return "centro";
+    if (diff === total - 1) return "esquerda";
+    return "direita";
   };
 
   return (
@@ -90,42 +92,42 @@ const TelaAcompanhante = () => {
         </div>
       </section>
 
-      <section className="ta-carousel" aria-label="Por que ter um acompanhante">
-        <div className="ta-carousel__track">
-          {CARDS.map((card) => {
-            const pos = getPosition(card.id);
-            const isCenter = pos === "center";
+      <section className="ta-carrossel" aria-label="Por que ter um acompanhante">
+        <div className="ta-carrossel-trilho">
+          {BENEFICIOS.map((beneficio) => {
+            const posicao = posicaoDoCard(beneficio.id);
+            const estaNoCentro = posicao === "centro";
 
             return (
               <div
-                key={card.id}
-                className={`ta-carousel__card ta-carousel__card--${pos}`}
-                onClick={() => !isCenter && setActiveIndex(card.id)}
+                key={beneficio.id}
+                className={`ta-beneficio-card ta-beneficio-card--${posicao}`}
+                onClick={() => !estaNoCentro && setAtivo(beneficio.id)}
                 onKeyDown={(e) => {
-                  if (!isCenter && (e.key === "Enter" || e.key === " ")) {
-                    setActiveIndex(card.id);
+                  if (!estaNoCentro && (e.key === "Enter" || e.key === " ")) {
+                    setAtivo(beneficio.id);
                   }
                 }}
-                role={!isCenter ? "button" : undefined}
-                tabIndex={!isCenter ? 0 : undefined}
-                aria-label={!isCenter ? `Ver: ${card.title}` : undefined}
+                role={!estaNoCentro ? "button" : undefined}
+                tabIndex={!estaNoCentro ? 0 : undefined}
+                aria-label={!estaNoCentro ? `Ver: ${beneficio.titulo}` : undefined}
               >
-                <h3 className="ta-carousel__card-title">{card.title}</h3>
-                <p className="ta-carousel__card-text">{card.text}</p>
+                <h3>{beneficio.titulo}</h3>
+                <p>{beneficio.texto}</p>
               </div>
             );
           })}
         </div>
 
-        <div className="ta-carousel__dots" role="tablist">
-          {CARDS.map((card) => (
+        <div className="ta-carrossel-dots" role="tablist">
+          {BENEFICIOS.map((beneficio) => (
             <button
-              key={card.id}
-              className={`ta-carousel__dot${activeIndex === card.id ? " ta-carousel__dot--active" : ""}`}
-              onClick={() => setActiveIndex(card.id)}
+              key={beneficio.id}
+              className={`ta-carrossel-dot${ativo === beneficio.id ? " ta-carrossel-dot--ativo" : ""}`}
+              onClick={() => setAtivo(beneficio.id)}
               role="tab"
-              aria-selected={activeIndex === card.id}
-              aria-label={`Card ${card.id + 1}`}
+              aria-selected={ativo === beneficio.id}
+              aria-label={`Card ${beneficio.id + 1}`}
             />
           ))}
         </div>
