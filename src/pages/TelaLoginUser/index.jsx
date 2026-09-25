@@ -78,12 +78,7 @@ const TelaLoginUser = () => {
             )}
 
             <div className="btn-container">
-              <Botao
-                texto={carregando ? "Entrando..." : "Entrar"}
-                corDeFundo="#8426ac"
-                corBorda=""
-                onClick={handleLogin}
-              />
+              <Botao texto={carregando ? "Entrando..." : "Entrar"} onClick={handleLogin} />
             </div>
           </form>
         </div>
@@ -99,6 +94,7 @@ const TelaLoginUser = () => {
             <Botao
               texto="Cadastro"
               corDeFundo="transparent"
+              corTexto="white"
               corBorda="white"
               onClick={() => navigate("/criar-conta")}
             />

@@ -103,6 +103,7 @@ const TelaCadastroUser = () => {
             <Botao
               texto="Login"
               corDeFundo="transparent"
+              corTexto="white"
               corBorda="white"
               onClick={() => navigate("/login")}
             />
@@ -196,8 +197,6 @@ const TelaCadastroUser = () => {
             <div className="btn-container">
               <Botao
                 texto={carregando ? "Cadastrando..." : "Cadastrar-se"}
-                corDeFundo="#8426ac"
-                corBorda=""
                 onClick={handleCadastro}
               />
             </div>
