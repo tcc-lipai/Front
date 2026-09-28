@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useFeedback } from "../../components/FeedbackCard/index.hook";
 import { FEEDBACK_TYPES } from "../../components/FeedbackCard/index.types";
+import { useLicaoConcluida } from "../../components/LicaoConcluida/index.hook";
 import { buscarLicaoAlternativa } from "../../services/licaoService";
 import { iniciarAlternativa, concluirAlternativa } from "../../services/progressoService";
+import { formatarDuracao } from "../../utils/tempo";
 
 const ROTA_SAIDA = "/atividades-unidades";
 const LETRAS = ["a", "b", "c", "d"];
@@ -25,6 +27,7 @@ export function useTelaAtividadeAlternativa() {
   const { id: licaoId } = useParams();
   const navigate = useNavigate();
   const { isOpen, feedbackText, feedbackType, openFeedback, closeFeedback } = useFeedback();
+  const licaoConcluida = useLicaoConcluida();
 
   const [carregando, setCarregando] = useState(true);
   const [erroCarga, setErroCarga] = useState("");
@@ -35,6 +38,8 @@ export function useTelaAtividadeAlternativa() {
   const [respondeu, setRespondeu] = useState(false);
   const [enviando, setEnviando] = useState(false);
   const [resultado, setResultado] = useState(null);
+
+  const inicioRef = useRef(Date.now());
 
   useEffect(() => {
     let ativo = true;
@@ -104,8 +109,22 @@ export function useTelaAtividadeAlternativa() {
   };
 
   const handleProximaAtividade = () => {
-    navigate(ROTA_SAIDA);
+    const segundos = (Date.now() - inicioRef.current) / 1000;
+    licaoConcluida.openLicaoConcluida({
+      percentage: resultado?.correta ? 100 : 0,
+      stars: resultado?.pontuacaoObtida ?? 0,
+      time: formatarDuracao(segundos),
+    });
   };
+
+  const handleRefazer = () => {
+    setSelecionada(null);
+    setRespondeu(false);
+    setResultado(null);
+    inicioRef.current = Date.now();
+  };
+
+  const sair = () => navigate(ROTA_SAIDA);
 
   const handleFechar = () => navigate(-1);
 
@@ -121,6 +140,13 @@ export function useTelaAtividadeAlternativa() {
     handleAbrirFeedback,
     handleFechar,
     feedback: { isOpen, feedbackText, feedbackType, closeFeedback, handleProximaAtividade },
+    licaoConcluida: {
+      isOpen: licaoConcluida.isOpen,
+      stats: licaoConcluida.lessonStats,
+      onClose: licaoConcluida.closeLicaoConcluida,
+      onRetry: handleRefazer,
+      onExit: sair,
+    },
     novasConquistas,
     handleDismissConquistas: () => setNovasConquistas([]),
   };

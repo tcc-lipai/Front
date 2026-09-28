@@ -1,7 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGravadorAudio } from "../../hooks/useGravadorAudio";
+import { useFeedback } from "../../components/FeedbackCard/index.hook";
+import { FEEDBACK_TYPES } from "../../components/FeedbackCard/index.types";
+import { useLicaoConcluida } from "../../components/LicaoConcluida/index.hook";
 import { buscarLicaoFala, iniciarFala, concluirFala } from "../../services/falaService";
+import { formatarDuracao } from "../../utils/tempo";
 
 const ROTA_SAIDA = "/atividades-unidades";
 
@@ -9,6 +13,16 @@ export function useTelaAtividadeFala() {
   const { id: licaoId } = useParams();
   const navigate = useNavigate();
   const gravador = useGravadorAudio();
+  const {
+    isOpen,
+    feedbackText,
+    feedbackType,
+    feedbackStars,
+    feedbackPercentage,
+    openFeedback,
+    closeFeedback,
+  } = useFeedback();
+  const licaoConcluida = useLicaoConcluida();
 
   const [tentativaCarga, setTentativaCarga] = useState(0);
   const [carregando, setCarregando] = useState(true);
@@ -23,6 +37,7 @@ export function useTelaAtividadeFala() {
 
   const [mostrarModalSair, setMostrarModalSair] = useState(false);
   const promiseIniciarRef = useRef(null);
+  const inicioRef = useRef(Date.now());
 
   useEffect(() => {
     let ativo = true;
@@ -97,16 +112,27 @@ export function useTelaAtividadeFala() {
       setResultado(res.data);
       setEstadoFala(res.data.correta ? "correto" : "incorreto");
 
+      const texto = res.data.correta
+        ? res.data.feedback || "Boa pronúncia!"
+        : res.data.feedback || res.data.mensagem || "Quase lá. Tente de novo.";
+      openFeedback(
+        texto,
+        res.data.correta ? FEEDBACK_TYPES.SUCCESS : FEEDBACK_TYPES.ERROR,
+        res.data.pontuacaoObtida ?? 0,
+        Math.round(res.data.scoreAcustico ?? 0)
+      );
+
       if (res.data.novasConquistas && res.data.novasConquistas.length > 0) {
         setNovasConquistas(res.data.novasConquistas);
       }
     }
-  }, [estadoFala, gravador, licaoId]);
+  }, [estadoFala, gravador, licaoId, openFeedback]);
 
   const refazer = useCallback(async () => {
     setResultado(null);
     setErroEnvio("");
     setEstadoFala("ocioso");
+    inicioRef.current = Date.now();
 
     // o progresso anterior já foi concluído; abre uma nova tentativa
     const inicioRes = await iniciarFala(licaoId);
@@ -122,6 +148,15 @@ export function useTelaAtividadeFala() {
     navigate(ROTA_SAIDA);
   }, [gravador, navigate]);
 
+  const handleConcluir = useCallback(() => {
+    const segundos = (Date.now() - inicioRef.current) / 1000;
+    licaoConcluida.openLicaoConcluida({
+      percentage: resultado?.correta ? 100 : 0,
+      stars: resultado?.pontuacaoObtida ?? 0,
+      time: formatarDuracao(segundos),
+    });
+  }, [resultado, licaoConcluida]);
+
   return {
     carregando,
     erroCarga,
@@ -133,10 +168,27 @@ export function useTelaAtividadeFala() {
     mostrarModalSair,
     setMostrarModalSair,
     alternarGravacao,
+    handleConcluir,
     refazer,
     sair,
     recarregar,
     novasConquistas,
     handleDismissConquistas: () => setNovasConquistas([]),
+    feedback: {
+      isOpen,
+      feedbackText,
+      feedbackType,
+      feedbackStars,
+      feedbackPercentage,
+      closeFeedback,
+      handleProximaAtividade: handleConcluir,
+    },
+    licaoConcluida: {
+      isOpen: licaoConcluida.isOpen,
+      stats: licaoConcluida.lessonStats,
+      onClose: licaoConcluida.closeLicaoConcluida,
+      onRetry: refazer,
+      onExit: sair,
+    },
   };
 }

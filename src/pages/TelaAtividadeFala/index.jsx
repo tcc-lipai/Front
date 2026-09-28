@@ -3,56 +3,11 @@ import { X } from "lucide-react";
 import Fala from "../../components/Fala";
 import Botao from "../../components/Botao";
 import Modal from "../../components/ModalSair";
+import FeedbackCard from "../../components/FeedbackCard";
 import ConquistaToast from "../../components/ConquistaToast";
+import LicaoConcluida from "../../components/LicaoConcluida";
 import { useTelaAtividadeFala } from "./index.hook";
 import "./index.css";
-
-const CLASSE_FONEMA = {
-  correto: "correto",
-  atencao: "atencao",
-  incorreto: "incorreto",
-};
-
-const ResultadoFala = ({ resultado, onRefazer, onSair }) => {
-  const score = Math.round(resultado.scoreAcustico ?? 0);
-  const fonemas = Array.isArray(resultado.detalhesFonemas) ? resultado.detalhesFonemas : [];
-
-  return (
-    <div className="fala-resultado">
-      <div className={`fala-resultado__score ${resultado.correta ? "acertou" : "errou"}`}>
-        <strong>{score}%</strong>
-        <span>{resultado.correta ? "Boa pronúncia!" : "Quase lá"}</span>
-      </div>
-
-      {fonemas.length > 0 && (
-        <div className="fala-fonemas" aria-label="Desempenho por som">
-          {fonemas.map((fonema, indice) => (
-            <span
-              key={`${fonema.caractere}-${indice}`}
-              className={`fala-fonema fala-fonema--${CLASSE_FONEMA[fonema.status] || "atencao"}`}
-              title={`${Math.round(fonema.score ?? 0)}%`}
-            >
-              {fonema.caractere}
-            </span>
-          ))}
-        </div>
-      )}
-
-      {resultado.feedback && <p className="fala-resultado__feedback">{resultado.feedback}</p>}
-
-      {resultado.correta && resultado.pontuacaoObtida != null && (
-        <p className="fala-instrucao">
-          +{resultado.pontuacaoObtida} moedas · saldo {resultado.novoSaldo}
-        </p>
-      )}
-
-      <div className="atividade-botao fala-resultado__acoes">
-        <Botao texto="Refazer" variante="secundario" onClick={onRefazer} />
-        <Botao texto="Sair" onClick={onSair} />
-      </div>
-    </div>
-  );
-};
 
 const TelaAtividadeFala = () => {
   const {
@@ -66,19 +21,26 @@ const TelaAtividadeFala = () => {
     mostrarModalSair,
     setMostrarModalSair,
     alternarGravacao,
+    handleConcluir,
     refazer,
     sair,
     recarregar,
     novasConquistas,
     handleDismissConquistas,
+    feedback,
+    licaoConcluida,
   } = useTelaAtividadeFala();
+
+  const respondeu = !!resultado;
 
   const instrucao =
     estadoFala === "gravando"
       ? "Gravando... toque de novo para enviar."
       : estadoFala === "enviando"
         ? "Analisando a sua pronúncia..."
-        : "Toque no microfone e fale a frase acima.";
+        : respondeu
+          ? ""
+          : "Toque no microfone e fale a frase acima.";
 
   return (
     <>
@@ -88,12 +50,26 @@ const TelaAtividadeFala = () => {
         onConfirm={sair}
       />
 
+      <LicaoConcluida
+        isOpen={licaoConcluida.isOpen}
+        stats={licaoConcluida.stats}
+        onClose={licaoConcluida.onClose}
+        onRetry={licaoConcluida.onRetry}
+        onExit={licaoConcluida.onExit}
+      />
+
       <div className="atividade-overlay">
         <div className="atividade-container">
           <div className="atividade-header">
             <div className="atividade-titulo">
               <h1>Atividade de Fala</h1>
               <span>Pronúncia</span>
+            </div>
+
+            <div className="atividade-progresso">
+              <div className="barra-progresso">
+                <div className="progresso" style={{ width: respondeu ? "100%" : "0%" }} />
+              </div>
             </div>
 
             <button
@@ -124,29 +100,41 @@ const TelaAtividadeFala = () => {
                 <p>{frase || "—"}</p>
               </div>
 
-              {resultado ? (
-                <ResultadoFala resultado={resultado} onRefazer={refazer} onSair={sair} />
-              ) : (
-                <>
-                  <div className="fala-container">
-                    <Fala estado={estadoFala} onClick={alternarGravacao} />
-                  </div>
+              <div className="fala-container">
+                <Fala estado={estadoFala} onClick={alternarGravacao} disabled={respondeu} />
+              </div>
 
-                  <p className="fala-instrucao">{instrucao}</p>
+              {instrucao && <p className="fala-instrucao">{instrucao}</p>}
 
-                  {erroPermissao && (
-                    <p className="fala-erro-msg">
-                      Precisamos da permissão do microfone para esta atividade. Libere o acesso e
-                      tente de novo.
-                    </p>
-                  )}
-                  {erroEnvio && <p className="fala-erro-msg">{erroEnvio}</p>}
-                </>
+              {erroPermissao && (
+                <p className="fala-erro-msg">
+                  Precisamos da permissão do microfone para esta atividade. Libere o acesso e
+                  tente de novo.
+                </p>
+              )}
+              {erroEnvio && <p className="fala-erro-msg">{erroEnvio}</p>}
+
+              {respondeu && (
+                <div className="atividade-botao">
+                  <Botao texto="Próximo" variante="secundario" onClick={handleConcluir} />
+                </div>
               )}
             </>
           )}
         </div>
       </div>
+
+      <FeedbackCard
+        isOpen={feedback.isOpen}
+        onClose={feedback.closeFeedback}
+        text={feedback.feedbackText}
+        type={feedback.feedbackType}
+        stars={feedback.feedbackStars}
+        percentage={feedback.feedbackPercentage}
+        fonemas={resultado?.detalhesFonemas}
+        onNext={feedback.handleProximaAtividade}
+        onRetry={refazer}
+      />
 
       <ConquistaToast
         conquistas={novasConquistas}

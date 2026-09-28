@@ -1,6 +1,7 @@
 import "./index.css";
 import Botao from "../../components/Botao";
 import Modal from "../../components/ModalSair";
+import LicaoConcluida from "../../components/LicaoConcluida";
 import { useTelaAtividadeVideo } from "./index.hook";
 
 import { X } from "lucide-react";
@@ -16,6 +17,9 @@ const TelaAtividadeVideo = () => {
     setMostrarModalSair,
     handleFinalizar,
     handleConfirmarSaida,
+    progresso,
+    handleProgressoVideo,
+    licaoConcluida,
   } = useTelaAtividadeVideo();
 
   return (
@@ -24,6 +28,14 @@ const TelaAtividadeVideo = () => {
         isOpen={mostrarModalSair}
         onClose={() => setMostrarModalSair(false)}
         onConfirm={handleConfirmarSaida}
+      />
+
+      <LicaoConcluida
+        isOpen={licaoConcluida.isOpen}
+        stats={licaoConcluida.stats}
+        onClose={licaoConcluida.onClose}
+        onRetry={licaoConcluida.onRetry}
+        onExit={licaoConcluida.onExit}
       />
 
       <div className="atividade-overlay">
@@ -36,7 +48,7 @@ const TelaAtividadeVideo = () => {
 
             <div className="atividade-progresso">
               <div className="barra-progresso">
-                <div className="progresso"></div>
+                <div className="progresso" style={{ width: `${progresso}%` }}></div>
               </div>
             </div>
 
@@ -47,7 +59,12 @@ const TelaAtividadeVideo = () => {
 
           <div className="video-container">
             {videoUrl ? (
-              <video className="video-placeholder" src={videoUrl} controls />
+              <video
+                className="video-placeholder"
+                src={videoUrl}
+                controls
+                onTimeUpdate={handleProgressoVideo}
+              />
             ) : (
               <div className="video-placeholder">
                 <span>VÍDEO AULA</span>

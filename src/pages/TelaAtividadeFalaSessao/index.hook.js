@@ -1,8 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGravadorAudio } from "../../hooks/useGravadorAudio";
+import { useFeedback } from "../../components/FeedbackCard/index.hook";
+import { FEEDBACK_TYPES } from "../../components/FeedbackCard/index.types";
+import { useLicaoConcluida } from "../../components/LicaoConcluida/index.hook";
 import { buscarLicaoFala, iniciarFala, concluirFala } from "../../services/falaService";
 import { listarUnidades } from "../../services/unidadeService";
+import { formatarDuracao } from "../../utils/tempo";
 
 const ROTA_SAIDA = "/atividades-unidades";
 
@@ -27,6 +31,15 @@ export function useTelaAtividadeFalaSessao() {
   const { id: atividadeFalaId } = useParams();
   const navigate = useNavigate();
   const gravador = useGravadorAudio();
+  const {
+    isOpen,
+    feedbackText,
+    feedbackType,
+    feedbackStars,
+    feedbackPercentage,
+    openFeedback,
+    closeFeedback,
+  } = useFeedback();
 
   const [carregando, setCarregando] = useState(true);
   const [erroCarga, setErroCarga] = useState("");
@@ -46,6 +59,8 @@ export function useTelaAtividadeFalaSessao() {
 
   const [mostrarModalSair, setMostrarModalSair] = useState(false);
   const promiseIniciarRef = useRef(null);
+  const inicioRef = useRef(Date.now());
+  const licaoConcluida = useLicaoConcluida();
 
   useEffect(() => {
     let ativo = true;
@@ -141,16 +156,29 @@ export function useTelaAtividadeFalaSessao() {
 
       setResultado(res.data);
       setEstadoFala(res.data.correta ? "correto" : "incorreto");
-      setResultadosSessao((atual) => [
-        ...atual,
-        { correta: res.data.correta, pontuacaoObtida: res.data.pontuacaoObtida ?? 0 },
-      ]);
+      // guarda por índice do exercício — se o aluno refizer, o novo resultado
+      // substitui o anterior em vez de somar mais uma entrada na contagem.
+      setResultadosSessao((atual) => {
+        const copia = [...atual];
+        copia[indiceAtual] = { correta: res.data.correta, pontuacaoObtida: res.data.pontuacaoObtida ?? 0 };
+        return copia;
+      });
+
+      const texto = res.data.correta
+        ? res.data.feedback || "Boa pronúncia!"
+        : res.data.feedback || res.data.mensagem || "Quase lá. Tente de novo.";
+      openFeedback(
+        texto,
+        res.data.correta ? FEEDBACK_TYPES.SUCCESS : FEEDBACK_TYPES.ERROR,
+        res.data.pontuacaoObtida ?? 0,
+        Math.round(res.data.scoreAcustico ?? 0)
+      );
 
       if (res.data.novasConquistas && res.data.novasConquistas.length > 0) {
         setNovasConquistas(res.data.novasConquistas);
       }
     }
-  }, [estadoFala, gravador, idsExercicios, indiceAtual]);
+  }, [estadoFala, gravador, idsExercicios, indiceAtual, openFeedback]);
 
   const proximo = useCallback(() => {
     if (indiceAtual + 1 >= idsExercicios.length) {
@@ -184,8 +212,40 @@ export function useTelaAtividadeFalaSessao() {
     navigate(ROTA_SAIDA);
   }, [gravador, navigate]);
 
-  const totalCoins = resultadosSessao.reduce((soma, r) => soma + r.pontuacaoObtida, 0);
-  const totalCorretas = resultadosSessao.filter((r) => r.correta).length;
+  const resultadosValidos = resultadosSessao.filter(Boolean);
+  const somaCoins = resultadosValidos.reduce((soma, r) => soma + r.pontuacaoObtida, 0);
+  // arredonda pra 2 casas — soma de decimais em ponto flutuante (ex.: 5.998 x 5)
+  // gera erro tipo 29.990000000000002
+  const totalCoins = Math.round(somaCoins * 100) / 100;
+  const totalCorretas = resultadosValidos.filter((r) => r.correta).length;
+
+  const totalExercicios = idsExercicios.length;
+  const progressoPercent = sessaoConcluida
+    ? 100
+    : totalExercicios > 0
+      ? Math.round((indiceAtual / totalExercicios) * 100)
+      : 0;
+
+  useEffect(() => {
+    if (!sessaoConcluida) return;
+    const total = idsExercicios.length;
+    const segundos = (Date.now() - inicioRef.current) / 1000;
+    licaoConcluida.openLicaoConcluida({
+      percentage: total > 0 ? Math.round((totalCorretas / total) * 100) : 0,
+      stars: totalCoins,
+      time: formatarDuracao(segundos),
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sessaoConcluida]);
+
+  const refazerSessao = useCallback(() => {
+    setIndiceAtual(0);
+    setResultadosSessao([]);
+    setResultado(null);
+    setEstadoFala("ocioso");
+    setSessaoConcluida(false);
+    inicioRef.current = Date.now();
+  }, []);
 
   return {
     carregando,
@@ -193,7 +253,8 @@ export function useTelaAtividadeFalaSessao() {
     nomeAtividade,
     frase: licao?.fraseEsperada ?? licao?.FraseEsperada ?? "",
     indiceAtual,
-    totalExercicios: idsExercicios.length,
+    totalExercicios,
+    progressoPercent,
     estadoFala,
     resultado,
     erroEnvio,
@@ -209,5 +270,21 @@ export function useTelaAtividadeFalaSessao() {
     sessaoConcluida,
     totalCoins,
     totalCorretas,
+    feedback: {
+      isOpen,
+      feedbackText,
+      feedbackType,
+      feedbackStars,
+      feedbackPercentage,
+      closeFeedback,
+      handleProximaAtividade: proximo,
+    },
+    licaoConcluida: {
+      isOpen: licaoConcluida.isOpen,
+      stats: licaoConcluida.lessonStats,
+      onClose: licaoConcluida.closeLicaoConcluida,
+      onRetry: refazerSessao,
+      onExit: sair,
+    },
   };
 }

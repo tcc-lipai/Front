@@ -4,6 +4,7 @@ import "./index.css";
 import Botao from "../../components/Botao";
 import FeedbackCard from "../../components/FeedbackCard";
 import ConquistaToast from "../../components/ConquistaToast";
+import LicaoConcluida from "../../components/LicaoConcluida";
 import { useTelaAtividadeAlternativa } from "./index.hook";
 
 export default function TelaAtividadeAlternativa() {
@@ -19,6 +20,7 @@ export default function TelaAtividadeAlternativa() {
     handleAbrirFeedback,
     handleFechar,
     feedback,
+    licaoConcluida,
     novasConquistas,
     handleDismissConquistas,
   } = useTelaAtividadeAlternativa();
@@ -34,7 +36,7 @@ export default function TelaAtividadeAlternativa() {
 
           <div className="atividade-progresso">
             <div className="barra-progresso">
-              <div className="progresso" />
+              <div className="progresso" style={{ width: respondeu ? "100%" : "0%" }} />
             </div>
           </div>
 
@@ -116,6 +118,14 @@ export default function TelaAtividadeAlternativa() {
         text={feedback.feedbackText}
         type={feedback.feedbackType}
         onNext={feedback.handleProximaAtividade}
+      />
+
+      <LicaoConcluida
+        isOpen={licaoConcluida.isOpen}
+        stats={licaoConcluida.stats}
+        onClose={licaoConcluida.onClose}
+        onRetry={licaoConcluida.onRetry}
+        onExit={licaoConcluida.onExit}
       />
 
       <ConquistaToast
