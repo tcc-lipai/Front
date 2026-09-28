@@ -284,7 +284,7 @@ function AnimatedRoutes() {
         <Route
           path="/dashboard-admin"
           element={
-            <RotaProtegida>
+            <RotaProtegida papeis={["Admin"]}>
               <PageTransition>
                 <DashboardAdmin />
               </PageTransition>
@@ -294,7 +294,7 @@ function AnimatedRoutes() {
         <Route
           path="/profissional-admin"
           element={
-            <RotaProtegida>
+            <RotaProtegida papeis={["Admin"]}>
               <PageTransition>
                 <ProfissionaisAdmin />
               </PageTransition>
@@ -304,7 +304,7 @@ function AnimatedRoutes() {
         <Route
           path="/atividades-admin"
           element={
-            <RotaProtegida>
+            <RotaProtegida papeis={["Admin"]}>
               <PageTransition>
                 <TelaAtividadesAdmin />
               </PageTransition>
@@ -315,7 +315,17 @@ function AnimatedRoutes() {
         <Route
           path="/cadastrar-paciente"
           element={
-            <RotaProtegida>
+            <RotaProtegida papeis={["Admin"]}>
+              <PageTransition>
+                <CadastrarPaciente />
+              </PageTransition>
+            </RotaProtegida>
+          }
+        />
+        <Route
+          path="/editar-paciente/:id"
+          element={
+            <RotaProtegida papeis={["Admin"]}>
               <PageTransition>
                 <CadastrarPaciente />
               </PageTransition>

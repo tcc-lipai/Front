@@ -4,6 +4,43 @@ function mensagemDeErro(error, padrao) {
   return error.response?.data?.message || padrao;
 }
 
+// Precisa bater com o enum NivelDificuldade do back-end.
+export const NIVEIS_DIFICULDADE = [
+  { valor: 1, label: "Iniciante" },
+  { valor: 2, label: "Básico" },
+  { valor: 3, label: "Intermediário" },
+  { valor: 4, label: "Avançado" },
+];
+
+export function nomeNivelDificuldade(valor) {
+  return NIVEIS_DIFICULDADE.find((n) => n.valor === Number(valor))?.label ?? "";
+}
+
+export async function listarUsuarios() {
+  try {
+    const response = await api.get("/Usuario");
+    return { sucesso: true, data: response.data };
+  } catch (error) {
+    return {
+      sucesso: false,
+      mensagem: mensagemDeErro(error, "Não foi possível carregar os pacientes."),
+      data: [],
+    };
+  }
+}
+
+export async function excluirUsuario(usuarioId) {
+  try {
+    await api.delete(`/Usuario/${usuarioId}`);
+    return { sucesso: true };
+  } catch (error) {
+    return {
+      sucesso: false,
+      mensagem: mensagemDeErro(error, "Não foi possível excluir o paciente."),
+    };
+  }
+}
+
 export async function cadastrarUsuario(dados) {
   try {
     const response = await api.post("/Usuario", dados);

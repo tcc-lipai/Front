@@ -15,14 +15,8 @@ const ModalDeletar = ({ isOpen, onClose, onConfirm }) => {
         <h2 className="modal-title">Você realmente deseja deletar permanentemente esse item?</h2>
 
         <div className="modal-actions">
-          <Botao texto="Sim" corDeFundo="#9B59C3" corTexto="#ffffff" onClick={onConfirm} />
-          <Botao
-            texto="Cancelar"
-            corDeFundo="transparent"
-            corTexto="#333333"
-            corBorda="transparent"
-            onClick={onClose}
-          />
+          <Botao texto="Sim" variante="perigo" onClick={onConfirm} />
+          <Botao texto="Cancelar" variante="secundario" onClick={onClose} />
         </div>
       </div>
     </div>
