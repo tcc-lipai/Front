@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
+import { NIVEIS_DIFICULDADE } from "../../services/usuarioService";
 
+// mesmos 4 níveis do back-end (NIVEIS_DIFICULDADE), filtrando pelo rótulo
+// que já é o que usuario.nivel carrega (ver nomeNivelDificuldade)
 const NIVEIS = [
   { valor: "", rotulo: "Todos" },
-  { valor: "Iniciante", rotulo: "Iniciante" },
-  { valor: "Intermediário", rotulo: "Intermediário" },
-  { valor: "Avançado", rotulo: "Avançado" },
+  ...NIVEIS_DIFICULDADE.map((n) => ({ valor: n.label, rotulo: n.label })),
 ];
 
 const CONSISTENCIAS = [

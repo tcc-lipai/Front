@@ -4,6 +4,7 @@ import {
   buscarUsuario,
   cadastrarUsuario,
   atualizarUsuario,
+  valorNivelDificuldade,
 } from "../../../services/usuarioService";
 
 const FORM_VAZIO = {
@@ -42,7 +43,7 @@ export function useTelaPacienteCadastro() {
         nome: u.nome ?? u.Nome ?? "",
         email: u.email ?? u.Email ?? "",
         senha: "",
-        nivelDificuldade: String(u.nivelDificuldade ?? u.NivelDificuldade ?? ""),
+        nivelDificuldade: String(valorNivelDificuldade(u.nivelDificuldade ?? u.NivelDificuldade) ?? ""),
         diagnostico: u.diagnostico ?? u.Diagnostico ?? "",
         codigoProfissional: "",
       });
