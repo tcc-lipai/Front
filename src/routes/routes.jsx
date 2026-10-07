@@ -25,6 +25,7 @@ import TelaAcompanhanteIA from "../pages/TelaAcompanhanteIA";
 import TelaLandingPage from "../pages/TelaLandingPage";
 import DashboardMedico from "../pages/Profissional/TelaDashboardMedico";
 import CadastrarPaciente from "../pages/Admin/TelaPacienteCadastro";
+import TelaProfissionalCadastro from "../pages/Admin/TelaProfissionalCadastro";
 import TelaPaciente from "../pages/Profissional/TelaPaciente";
 import TelaPacienteAtividade from "../pages/Profissional/TelaPacienteAtividade";
 
@@ -33,6 +34,7 @@ import TelaContatoMedico from "../pages/Profissional/TelaContatoMedico";
 import DashboardAdmin from "../pages/Admin/TelaDashboardAdmin";
 import ProfissionaisAdmin from "../pages/Admin/TelaProfissionaisAdmin";
 import TelaAtividadesAdmin from "../pages/Admin/TelaAtividadesAdmin";
+import TelaUnidadeAdmin from "../pages/Admin/TelaUnidadeAdmin";
 
 const PageTransition = ({ children }) => {
   return (
@@ -253,7 +255,7 @@ function AnimatedRoutes() {
         <Route
           path="/dashboard-medico"
           element={
-            <RotaProtegida>
+            <RotaProtegida papeis={["Profissional"]}>
               <PageTransition>
                 <DashboardMedico />
               </PageTransition>
@@ -263,7 +265,7 @@ function AnimatedRoutes() {
         <Route
           path="/contato-medico"
           element={
-            <RotaProtegida>
+            <RotaProtegida papeis={["Profissional"]}>
               <PageTransition>
                 <TelaContatoMedico />
               </PageTransition>
@@ -273,7 +275,7 @@ function AnimatedRoutes() {
         <Route
           path="/configuracoes-medico"
           element={
-            <RotaProtegida>
+            <RotaProtegida papeis={["Profissional"]}>
               <PageTransition>
                 <TelaConfiguracoesMedico />
               </PageTransition>
@@ -313,6 +315,17 @@ function AnimatedRoutes() {
         />
 
         <Route
+          path="/atividades-admin/:id"
+          element={
+            <RotaProtegida papeis={["Admin"]}>
+              <PageTransition>
+                <TelaUnidadeAdmin />
+              </PageTransition>
+            </RotaProtegida>
+          }
+        />
+
+        <Route
           path="/cadastrar-paciente"
           element={
             <RotaProtegida papeis={["Admin"]}>
@@ -322,6 +335,27 @@ function AnimatedRoutes() {
             </RotaProtegida>
           }
         />
+        <Route
+          path="/cadastrar-profissional"
+          element={
+            <RotaProtegida papeis={["Admin"]}>
+              <PageTransition>
+                <TelaProfissionalCadastro />
+              </PageTransition>
+            </RotaProtegida>
+          }
+        />
+        <Route
+          path="/editar-profissional/:id"
+          element={
+            <RotaProtegida papeis={["Admin"]}>
+              <PageTransition>
+                <TelaProfissionalCadastro />
+              </PageTransition>
+            </RotaProtegida>
+          }
+        />
+
         <Route
           path="/editar-paciente/:id"
           element={

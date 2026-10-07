@@ -30,7 +30,14 @@ const TelaLoginUser = () => {
     setCarregando(false);
 
     if (resultado.sucesso) {
-      navigate("/dashboard");
+      const role = resultado.data?.role ?? resultado.data?.Role;
+      if (role === "Admin") {
+        navigate("/dashboard-admin");
+      } else if (role === "Profissional") {
+        navigate("/dashboard-medico");
+      } else {
+        navigate("/dashboard");
+      }
     } else {
       setErro(resultado.mensagem);
     }

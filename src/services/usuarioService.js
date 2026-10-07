@@ -1,7 +1,14 @@
 import api from "./api";
 
 function mensagemDeErro(error, padrao) {
-  return error.response?.data?.message || padrao;
+  const dados = error.response?.data;
+  if (dados?.message) return dados.message;
+  // erro de validação automática do ASP.NET Core (400 com { errors: { Campo: ["..."] } })
+  if (dados?.errors) {
+    const mensagens = Object.values(dados.errors).flat();
+    if (mensagens.length > 0) return mensagens.join(" ");
+  }
+  return padrao;
 }
 
 // Precisa bater com o enum NivelDificuldade do back-end.
@@ -12,8 +19,25 @@ export const NIVEIS_DIFICULDADE = [
   { valor: 4, label: "Avançado" },
 ];
 
+const NOME_PARA_VALOR_NIVEL = {
+  iniciante: 1,
+  basico: 2,
+  intermediario: 3,
+  avancado: 4,
+};
+
+// aceita o nível como número (1-4) ou como nome/rótulo ("Básico", "Basico", "Intermediario")
+export function valorNivelDificuldade(valor) {
+  if (valor == null || valor === "") return null;
+  const numero = Number(valor);
+  if (!Number.isNaN(numero)) return numero;
+  const chave = String(valor).normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+  return NOME_PARA_VALOR_NIVEL[chave] ?? null;
+}
+
 export function nomeNivelDificuldade(valor) {
-  return NIVEIS_DIFICULDADE.find((n) => n.valor === Number(valor))?.label ?? "";
+  const numero = valorNivelDificuldade(valor);
+  return NIVEIS_DIFICULDADE.find((n) => n.valor === numero)?.label ?? "";
 }
 
 export async function listarUsuarios() {
