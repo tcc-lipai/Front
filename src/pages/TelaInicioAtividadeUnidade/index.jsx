@@ -1,123 +1,145 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
+import { Mic, HelpCircle, Video as VideoIcon, Sparkles } from "lucide-react";
 import CardExercicio from "../../components/CardExercicio";
 import Navbar from "../../components/NavbarVoltar";
-import Botao from "../../components/Botao";
-
-import video from "../../assets/img/video.png";
-import atividade from "../../assets/img/atividade.png";
-import labios from "../../assets/img/labios.png";
+import { useTelaInicioAtividadeUnidade } from "./index.hook";
 
 import "./index.css";
 
+const TIPOS = {
+  video: { titulo: "Vídeo-aulas", cor: "#4E8FD6", Icone: VideoIcon },
+  alternativa: { titulo: "Interpretação", cor: "#E0932E", Icone: HelpCircle },
+  fala: { titulo: "Fala", cor: "#8A3FA0", Icone: Mic },
+};
+
+const IconeTipo = ({ tipo }) => {
+  const { cor, Icone } = TIPOS[tipo];
+  return <Icone size={22} color={cor} strokeWidth={2.2} />;
+};
+
 const TelaInicioAtividadeUnidade = () => {
   const navigate = useNavigate();
+  const { carregando, erro, unidades } = useTelaInicioAtividadeUnidade();
 
   return (
     <>
-      <Navbar />
+      <Navbar destino="/inicio-atividades" />
 
       <div className="container-atividade">
         <div className="conteudo-atividade">
-          <h1>Primeira Atividade</h1>
-          <div className="atividade-tags">
-            <Botao
-              texto="Iniciante"
-              corDeFundo="#B8E5B1"
-              corTexto="#5A3273"
-              className="tag-nivel"
-            />
-
-            <Botao texto="Escrita" corDeFundo="#C8D0C8" corTexto="#5A3273" className="tag-nivel" />
-          </div>
-          <p className="descricao-atividade">
-            Aqui vai a descrição de como vai ser a atividade e o que será cobrado
-          </p>
-
-          <h2>Unidade 1</h2>
-
-          <div className="grid-cards">
-            {/* Apontando para a rota de vídeo real com um ID padrão (ex: 1) */}
-            <CardExercicio
-              imagem={<img src={video} alt="Vídeo" />}
-              descricao="Descrição do exercício de vídeo"
-              onComecar={() => navigate("/atividade/video/1")}
-            />
-
-            {/* Apontando para a rota de alternativa/escrita real */}
-            <CardExercicio
-              imagem={<img src={atividade} alt="Atividade" />}
-              descricao="Descrição do exercício de escrita"
-              onComecar={() => navigate("/teste-atividade")}
-            />
-
-            {/* Apontando para a rota de fala real com um ID padrão (ex: 1) */}
-            <CardExercicio
-              imagem={<img src={labios} alt="Pronúncia" />}
-              descricao="Descrição do exercício de pronúncia"
-              onComecar={() => navigate("/atividade/fala/1")}
-            />
-
-            <CardExercicio
-              imagem={<img src={atividade} alt="Atividade" />}
-              descricao="Descrição do exercício de escrita"
-              onComecar={() => navigate("/teste-atividade")}
-            />
-
-            <CardExercicio
-              imagem={<img src={video} alt="Vídeo" />}
-              descricao="Descrição do exercício de vídeo"
-              onComecar={() => navigate("/atividade/video/1")}
-            />
-
-            <CardExercicio
-              imagem={<img src={labios} alt="Pronúncia" />}
-              descricao="Descrição do exercício de pronúncia"
-              onComecar={() => navigate("/atividade/fala/1")}
-            />
+          <div className="cabecalho-atividades">
+            <h1>Trilha de Atividades</h1>
+            <p className="descricao-atividade">
+              Escolha uma unidade e pratique a leitura labial e a fala por tipo de exercício.
+            </p>
           </div>
 
-          <div className="unidade-bloqueada">
-            <h2>Unidade 2</h2>
-          </div>
+          {carregando && <p className="descricao-atividade">Carregando unidades...</p>}
+          {!carregando && erro && <p className="descricao-atividade">{erro}</p>}
 
-          <div className="grid-cards">
-            <CardExercicio
-              imagem={<img src={video} alt="Vídeo" />}
-              descricao="Descrição do exercício de vídeo"
-              onComecar={() => navigate("/atividade/video/1")}
-            />
+          {!carregando && !erro && unidades.length === 0 && (
+            <p className="descricao-atividade">Nenhuma unidade cadastrada ainda.</p>
+          )}
 
-            <CardExercicio
-              imagem={<img src={atividade} alt="Atividade" />}
-              descricao="Descrição do exercício de escrita"
-              onComecar={() => navigate("/teste-atividade")}
-            />
+          {!carregando &&
+            !erro &&
+            unidades.map((unidade, indice) => {
+              const temExercicio =
+                unidade.fala.length +
+                  unidade.atividadesFala.length +
+                  unidade.video.length +
+                  unidade.alternativa.length >
+                0;
 
-            <CardExercicio
-              imagem={<img src={labios} alt="Pronúncia" />}
-              descricao="Descrição do exercício de pronúncia"
-              onComecar={() => navigate("/atividade/fala/1")}
-            />
+              return (
+                <section key={unidade.id} className="unidade-bloco">
+                  <div className="unidade-cabecalho">
+                    <span className="unidade-numero">{indice + 1}</span>
+                    <div>
+                      <h2>{unidade.nome}</h2>
+                      {!temExercicio && (
+                        <p className="descricao-atividade">Esta unidade ainda não tem exercícios.</p>
+                      )}
+                    </div>
+                  </div>
 
-            <CardExercicio
-              imagem={<img src={atividade} alt="Atividade" />}
-              descricao="Descrição do exercício de escrita"
-              onComecar={() => navigate("/teste-atividade")}
-            />
+                  {unidade.video.length > 0 && (
+                    <div className="grupo-tipo-exercicio">
+                      <div className="grupo-tipo-cabecalho">
+                        <IconeTipo tipo="video" />
+                        <h3>{TIPOS.video.titulo}</h3>
+                      </div>
+                      <div className="grid-cards">
+                        {unidade.video.map((licao) => (
+                          <CardExercicio
+                            key={`v-${licao.id}`}
+                            imagem={<IconeTipo tipo="video" />}
+                            descricao={licao.texto}
+                            corDestaque={TIPOS.video.cor}
+                            concluida={licao.concluida}
+                            onComecar={() => navigate(`/atividade/video/${licao.id}`)}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
 
-            <CardExercicio
-              imagem={<img src={video} alt="Vídeo" />}
-              descricao="Descrição do exercício de vídeo"
-              onComecar={() => navigate("/atividade/video/1")}
-            />
+                  {unidade.alternativa.length > 0 && (
+                    <div className="grupo-tipo-exercicio">
+                      <div className="grupo-tipo-cabecalho">
+                        <IconeTipo tipo="alternativa" />
+                        <h3>{TIPOS.alternativa.titulo}</h3>
+                      </div>
+                      <div className="grid-cards">
+                        {unidade.alternativa.map((licao) => (
+                          <CardExercicio
+                            key={`a-${licao.id}`}
+                            imagem={<IconeTipo tipo="alternativa" />}
+                            descricao={licao.texto}
+                            corDestaque={TIPOS.alternativa.cor}
+                            concluida={licao.concluida}
+                            onComecar={() => navigate(`/atividade/alternativa/${licao.id}`)}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
 
-            <CardExercicio
-              imagem={<img src={labios} alt="Pronúncia" />}
-              descricao="Descrição do exercício de pronúncia"
-              onComecar={() => navigate("/atividade/fala/1")}
-            />
-          </div>
+                  {(unidade.atividadesFala.length > 0 || unidade.fala.length > 0) && (
+                    <div className="grupo-tipo-exercicio">
+                      <div className="grupo-tipo-cabecalho">
+                        <IconeTipo tipo="fala" />
+                        <h3>{TIPOS.fala.titulo}</h3>
+                      </div>
+                      <div className="grid-cards">
+                        {unidade.atividadesFala.map((atividadeFala) => (
+                          <CardExercicio
+                            key={`af-${atividadeFala.id}`}
+                            imagem={<Sparkles size={22} color={TIPOS.fala.cor} strokeWidth={2.2} />}
+                            titulo={atividadeFala.nome}
+                            descricao={`${atividadeFala.totalExercicios} exercício${atividadeFala.totalExercicios === 1 ? "" : "s"}`}
+                            corDestaque={TIPOS.fala.cor}
+                            concluida={atividadeFala.concluida}
+                            onComecar={() => navigate(`/atividade/fala-sessao/${atividadeFala.id}`)}
+                          />
+                        ))}
+
+                        {unidade.fala.map((licao) => (
+                          <CardExercicio
+                            key={`f-${licao.id}`}
+                            imagem={<IconeTipo tipo="fala" />}
+                            descricao={`Fale: "${licao.texto}"`}
+                            corDestaque={TIPOS.fala.cor}
+                            concluida={licao.concluida}
+                            onComecar={() => navigate(`/atividade/fala/${licao.id}`)}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </section>
+              );
+            })}
         </div>
       </div>
     </>

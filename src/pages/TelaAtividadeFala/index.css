@@ -45,10 +45,11 @@
 }
 
 .progresso {
-  width: 30%;
+  width: 0%;
   height: 100%;
   background: #a965d1;
   border-radius: 20px;
+  transition: width 0.25s ease;
 }
 
 .btn-fechar {
@@ -243,3 +244,24 @@
     min-width: 0;
   }
 }
+
+/* ---- Integração com a IA: instrução, erro e painel de resultado ---- */
+.fala-instrucao {
+  text-align: center;
+  color: var(--lipai-text-muted);
+  font-size: 0.9rem;
+  margin: 12px 0 0;
+}
+
+.fala-erro-msg {
+  text-align: center;
+  color: var(--lipai-danger);
+  font-size: 0.9rem;
+  margin: 12px auto 0;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+

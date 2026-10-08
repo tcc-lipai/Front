@@ -1,10 +1,11 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { NIVEIS_DIFICULDADE } from "../../services/usuarioService";
 
+// mesmos 4 níveis do back-end (NIVEIS_DIFICULDADE), filtrando pelo rótulo
+// que já é o que usuario.nivel carrega (ver nomeNivelDificuldade)
 const NIVEIS = [
   { valor: "", rotulo: "Todos" },
-  { valor: "Iniciante", rotulo: "Iniciante" },
-  { valor: "Intermediário", rotulo: "Intermediário" },
-  { valor: "Avançado", rotulo: "Avançado" },
+  ...NIVEIS_DIFICULDADE.map((n) => ({ valor: n.label, rotulo: n.label })),
 ];
 
 const CONSISTENCIAS = [
@@ -13,10 +14,13 @@ const CONSISTENCIAS = [
   { valor: "inativo", rotulo: "Inativo" },
 ];
 
+const PAGINA_TAMANHO = 6;
+
 export function usePainelListaUsuarios(usuarios) {
   const [pesquisa, setPesquisa] = useState("");
   const [nivel, setNivel] = useState("");
   const [consistencia, setConsistencia] = useState("");
+  const [visiveis, setVisiveis] = useState(PAGINA_TAMANHO);
 
   const usuariosFiltrados = useMemo(() => {
     const termo = pesquisa.trim().toLowerCase();
@@ -28,6 +32,16 @@ export function usePainelListaUsuarios(usuarios) {
     });
   }, [usuarios, pesquisa, nivel, consistencia]);
 
+  // volta pra primeira leva sempre que o filtro muda, senão "Ver mais" já
+  // começaria expandido pra um resultado novo e menor
+  useEffect(() => {
+    setVisiveis(PAGINA_TAMANHO);
+  }, [pesquisa, nivel, consistencia]);
+
+  const usuariosVisiveis = usuariosFiltrados.slice(0, visiveis);
+  const temMais = visiveis < usuariosFiltrados.length;
+  const verMais = () => setVisiveis((v) => v + PAGINA_TAMANHO);
+
   return {
     pesquisa,
     setPesquisa,
@@ -35,7 +49,9 @@ export function usePainelListaUsuarios(usuarios) {
     setNivel,
     consistencia,
     setConsistencia,
-    usuariosFiltrados,
+    usuariosFiltrados: usuariosVisiveis,
+    temMais,
+    verMais,
     NIVEIS,
     CONSISTENCIAS,
   };

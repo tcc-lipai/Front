@@ -6,10 +6,12 @@ export const useFeedback = () => {
     isOpen: false,
     text: "",
     type: FEEDBACK_TYPES.DEFAULT,
+    stars: null,
+    percentage: null,
   });
 
-  const openFeedback = (text, type = FEEDBACK_TYPES.DEFAULT) => {
-    setFeedbackState({ isOpen: true, text, type });
+  const openFeedback = (text, type = FEEDBACK_TYPES.DEFAULT, stars = null, percentage = null) => {
+    setFeedbackState({ isOpen: true, text, type, stars, percentage });
   };
 
   const closeFeedback = () => {
@@ -20,6 +22,8 @@ export const useFeedback = () => {
     isOpen: feedbackState.isOpen,
     feedbackText: feedbackState.text,
     feedbackType: feedbackState.type,
+    feedbackStars: feedbackState.stars,
+    feedbackPercentage: feedbackState.percentage,
     openFeedback,
     closeFeedback,
   };

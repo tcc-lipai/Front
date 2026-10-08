@@ -24,7 +24,7 @@
   background-color: #f6dcfe;
   border-top-left-radius: 24px;
   border-top-right-radius: 24px;
-  padding: 24px;
+  padding: 32px 24px;
   box-shadow: 0px -4px 16px rgba(0, 0, 0, 0.1);
   font-family: "Poppins", sans-serif;
 
@@ -36,36 +36,201 @@
   transform: translateY(0);
 }
 
+.feedback-conteudo {
+  max-width: 560px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.feedback-icone {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  background: rgba(70, 32, 87, 0.1);
+  color: #462057;
+}
+
+.feedback-icone--success {
+  background: rgba(63, 146, 86, 0.16);
+  color: #1e874b;
+}
+
+.feedback-icone--error {
+  background: rgba(192, 57, 43, 0.16);
+  color: #c83737;
+}
+
+:root[data-theme="dark"] .feedback-icone--success {
+  background: rgba(76, 175, 80, 0.18);
+  color: #8fd99a;
+}
+
+:root[data-theme="dark"] .feedback-icone--error {
+  background: rgba(240, 82, 82, 0.18);
+  color: #ff9b9b;
+}
+
+.feedback-texto {
+  margin-bottom: 20px;
+}
+
 .feedback-header {
   font-size: 24px;
-  margin-top: 0;
+  margin: 0 0 8px;
   font-weight: bold;
   color: #462057;
-  margin-bottom: 12px;
 }
 
 .feedback-content {
   font-size: 16px;
   color: #462057;
-  word-break: break-all;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.feedback-stats {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.feedback-stat-card {
+  flex: 1;
+  max-width: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 14px 12px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1.5px solid rgba(70, 32, 87, 0.12);
+}
+
+.feedback-stat-card__valor {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 22px;
+  font-weight: 800;
+  color: #462057;
+}
+
+.feedback-stat-card__valor--moedas {
+  color: #b9791b;
+}
+
+.feedback-stat-card__rotulo {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #7c6a86;
+}
+
+.feedback-stars__icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.feedback-fonemas-bloco {
+  width: 100%;
   margin-bottom: 24px;
-  line-height: 1.4;
+}
+
+.feedback-fonemas-rotulo {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #7c6a86;
+  margin-bottom: 10px;
+}
+
+.feedback-fonemas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.feedback-fonema {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 1rem;
+  border: 1.5px solid transparent;
+}
+
+.feedback-fonema--correto {
+  background: rgba(63, 146, 86, 0.16);
+  border-color: rgba(63, 146, 86, 0.35);
+  color: #1e874b;
+}
+
+.feedback-fonema--atencao {
+  background: rgba(214, 158, 46, 0.18);
+  border-color: rgba(214, 158, 46, 0.4);
+  color: #b9791b;
+}
+
+.feedback-fonema--incorreto {
+  background: rgba(192, 57, 43, 0.16);
+  border-color: rgba(192, 57, 43, 0.35);
+  color: #c83737;
+}
+
+/* a regra genérica de texto claro no escuro venceria essas cores de status
+   (mesmo caso do microfone verde/vermelho), então precisam de override */
+:root[data-theme="dark"] .feedback-fonema--correto {
+  background: rgba(76, 175, 80, 0.18);
+  border-color: rgba(76, 175, 80, 0.4);
+  color: #8fd99a;
+}
+
+:root[data-theme="dark"] .feedback-fonema--atencao {
+  background: rgba(217, 164, 65, 0.2);
+  border-color: rgba(217, 164, 65, 0.45);
+  color: #f0c675;
+}
+
+:root[data-theme="dark"] .feedback-fonema--incorreto {
+  background: rgba(240, 82, 82, 0.18);
+  border-color: rgba(240, 82, 82, 0.4);
+  color: #ff9b9b;
 }
 
 .feedback-footer {
   display: flex;
-  justifycontent: flex-end;
-  display: flex;
-  justify-content: flex-end;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
 }
 
 .feedback-button {
+  flex: 1;
+  max-width: 220px;
   background-color: #d1c4e9;
   color: #462057;
   border: none;
-  padding: 10px 32px;
+  padding: 13px 24px;
   border-radius: 20px;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.2s;
@@ -73,4 +238,57 @@
 
 .feedback-button:hover {
   background-color: #c1b4df;
+}
+
+.feedback-button--secundario {
+  background-color: transparent;
+  color: #462057;
+  border: 1.5px solid #462057;
+}
+
+.feedback-button--secundario:hover {
+  background-color: rgba(70, 32, 87, 0.08);
+}
+
+:root[data-theme="dark"] .feedback-stat-card {
+  background: var(--lipai-surface-2);
+  border-color: var(--lipai-border);
+}
+
+:root[data-theme="dark"] .feedback-stat-card__rotulo,
+:root[data-theme="dark"] .feedback-fonemas-rotulo {
+  color: var(--lipai-text-muted) !important;
+}
+
+:root[data-theme="dark"] .feedback-button {
+  background-color: var(--lipai-surface-2);
+  color: var(--lipai-primary);
+}
+
+:root[data-theme="dark"] .feedback-button:hover {
+  background-color: var(--lipai-primary-soft);
+}
+
+:root[data-theme="dark"] .feedback-button--secundario {
+  background-color: transparent;
+  color: var(--lipai-primary);
+  border-color: var(--lipai-primary);
+}
+
+:root[data-theme="dark"] .feedback-button--secundario:hover {
+  background-color: var(--lipai-primary-soft);
+}
+
+@media (max-width: 480px) {
+  .feedback-stats {
+    flex-direction: row;
+  }
+
+  .feedback-footer {
+    flex-direction: column;
+  }
+
+  .feedback-button {
+    max-width: none;
+  }
 }

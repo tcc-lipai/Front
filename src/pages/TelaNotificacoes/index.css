@@ -79,13 +79,17 @@
 
 .card-notificacao {
   background-color: white;
+  border: none;
   border-radius: 12px;
   padding: 20px 24px;
+  width: 100%;
   display: flex;
   align-items: center;
   gap: 20px;
   box-shadow: 0 4px 12px rgba(131, 89, 151, 0.05);
   position: relative;
+  text-align: left;
+  cursor: pointer;
   transition: transform 0.2s ease;
 }
 

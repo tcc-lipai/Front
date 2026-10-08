@@ -1,33 +1,34 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Navbar from "../../components/Navbar";
 import Botao from "../../components/Botao";
 import RedesSociais from "../../components/RedesSociais";
+import { enviarMensagemContato } from "../../services/contatoService";
 import "./index.css";
 
 const TelaContato = () => {
-  const [formData, setFormData] = useState({
-    nome: "",
-    email: "",
-    mensagem: "",
-  });
+  const [formData, setFormData] = useState({ nome: "", email: "", mensagem: "" });
+  const [enviando, setEnviando] = useState(false);
+  const [status, setStatus] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Dados do formulário:", formData);
-    alert("Mensagem enviada com sucesso!");
-    setFormData({
-      nome: "",
-      email: "",
-      mensagem: "",
-    });
+    setStatus("");
+    setEnviando(true);
+
+    const resultado = await enviarMensagemContato(formData.mensagem);
+    setEnviando(false);
+
+    if (resultado.sucesso) {
+      setStatus("Mensagem enviada com sucesso!");
+      setFormData({ nome: "", email: "", mensagem: "" });
+    } else {
+      setStatus(resultado.mensagem);
+    }
   };
 
   return (
@@ -82,10 +83,16 @@ const TelaContato = () => {
                 />
               </div>
 
+              {status && (
+                <p role="status" className="form-subtitle">
+                  {status}
+                </p>
+              )}
+
               <Botao
-                texto="Enviar"
-                corDeFundo="#7b3b93"
-                corTexto="#ffffff"
+                type="submit"
+                texto={enviando ? "Enviando..." : "Enviar"}
+                disabled={enviando}
                 className="btn-enviar"
               />
             </form>

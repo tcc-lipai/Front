@@ -15,6 +15,8 @@ import "./index.css";
  * @param {object[]}  usuarios          { id, nome, descricao, nivel, status }
  * @param {string}    tipoCard          "paciente-admin" | "paciente-profissional"
  * @param {boolean}   mostrarHeaderActions
+ * @param {boolean}   carregando
+ * @param {string}    erro
  * @param {(usuario) => void} aoEditar
  * @param {(usuario) => void} aoExcluir
  * @param {(usuario) => void} aoVer
@@ -26,6 +28,8 @@ const PainelListaUsuarios = ({
   usuarios,
   tipoCard = "paciente-admin",
   mostrarHeaderActions = false,
+  carregando = false,
+  erro = "",
   aoEditar,
   aoExcluir,
   aoVer,
@@ -39,6 +43,8 @@ const PainelListaUsuarios = ({
     consistencia,
     setConsistencia,
     usuariosFiltrados,
+    temMais,
+    verMais,
     NIVEIS,
     CONSISTENCIAS,
   } = usePainelListaUsuarios(usuarios);
@@ -85,31 +91,39 @@ const PainelListaUsuarios = ({
             </div>
           </div>
 
-          <ul className="lista-usuarios__lista">
-            {usuariosFiltrados.map((usuario) => (
-              <li key={usuario.id} className="lista-usuarios__item">
-                <CardUsuario
-                  tipo={tipoCard}
-                  nome={usuario.nome}
-                  descricao={usuario.descricao}
-                  nivel={usuario.nivel}
-                  status={usuario.status}
-                  onEditar={aoEditar ? () => aoEditar(usuario) : undefined}
-                  onExcluir={aoExcluir ? () => aoExcluir(usuario) : undefined}
-                  onVer={aoVer ? () => aoVer(usuario) : undefined}
-                />
-              </li>
-            ))}
+          {erro && <p className="lista-usuarios__vazio">{erro}</p>}
 
-            {usuariosFiltrados.length === 0 && (
-              <p className="lista-usuarios__vazio">Nenhum resultado encontrado.</p>
-            )}
-          </ul>
+          {!erro && carregando && <p className="lista-usuarios__vazio">Carregando...</p>}
+
+          {!erro && !carregando && (
+            <ul className="lista-usuarios__lista">
+              {usuariosFiltrados.map((usuario) => (
+                <li key={usuario.id} className="lista-usuarios__item">
+                  <CardUsuario
+                    tipo={tipoCard}
+                    nome={usuario.nome}
+                    descricao={usuario.descricao}
+                    nivel={usuario.nivel}
+                    status={usuario.status}
+                    onEditar={aoEditar ? () => aoEditar(usuario) : undefined}
+                    onExcluir={aoExcluir ? () => aoExcluir(usuario) : undefined}
+                    onVer={aoVer ? () => aoVer(usuario) : undefined}
+                  />
+                </li>
+              ))}
+
+              {usuariosFiltrados.length === 0 && (
+                <p className="lista-usuarios__vazio">Nenhum resultado encontrado.</p>
+              )}
+            </ul>
+          )}
 
           <div className="lista-usuarios__rodape">
-            <button type="button" className="lista-usuarios__ver-mais">
-              Ver mais <ChevronDown size={16} />
-            </button>
+            {temMais && (
+              <button type="button" className="lista-usuarios__ver-mais" onClick={verMais}>
+                Ver mais <ChevronDown size={16} />
+              </button>
+            )}
             {rodape}
           </div>
         </div>

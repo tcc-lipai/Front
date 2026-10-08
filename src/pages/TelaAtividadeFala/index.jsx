@@ -1,71 +1,145 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./index.css";
-
 import { X } from "lucide-react";
 
 import Fala from "../../components/Fala";
 import Botao from "../../components/Botao";
 import Modal from "../../components/ModalSair";
+import FeedbackCard from "../../components/FeedbackCard";
+import ConquistaToast from "../../components/ConquistaToast";
+import LicaoConcluida from "../../components/LicaoConcluida";
+import { useTelaAtividadeFala } from "./index.hook";
+import "./index.css";
 
 const TelaAtividadeFala = () => {
-  const [mostrarModalSair, setMostrarModalSair] = useState(false);
-  const navigate = useNavigate();
+  const {
+    carregando,
+    erroCarga,
+    frase,
+    estadoFala,
+    resultado,
+    erroEnvio,
+    erroPermissao,
+    mostrarModalSair,
+    setMostrarModalSair,
+    alternarGravacao,
+    handleConcluir,
+    refazer,
+    sair,
+    recarregar,
+    novasConquistas,
+    handleDismissConquistas,
+    feedback,
+    licaoConcluida,
+  } = useTelaAtividadeFala();
 
-  const handleEnviar = () => {
-    navigate("/atividades-unidades");
-  };
+  const respondeu = !!resultado;
 
-  const handleConfirmarSaida = () => {
-    navigate("/atividades-unidades");
-  };
+  const instrucao =
+    estadoFala === "gravando"
+      ? "Gravando... toque de novo para enviar."
+      : estadoFala === "enviando"
+        ? "Analisando a sua pronúncia..."
+        : respondeu
+          ? ""
+          : "Toque no microfone e fale a frase acima.";
 
   return (
     <>
       <Modal
         isOpen={mostrarModalSair}
         onClose={() => setMostrarModalSair(false)}
-        onConfirm={handleConfirmarSaida}
+        onConfirm={sair}
+      />
+
+      <LicaoConcluida
+        isOpen={licaoConcluida.isOpen}
+        stats={licaoConcluida.stats}
+        onClose={licaoConcluida.onClose}
+        onRetry={licaoConcluida.onRetry}
+        onExit={licaoConcluida.onExit}
       />
 
       <div className="atividade-overlay">
         <div className="atividade-container">
           <div className="atividade-header">
             <div className="atividade-titulo">
-              <h1>Primeira Atividade</h1>
-              <span>Unidade 1</span>
+              <h1>Atividade de Fala</h1>
+              <span>Pronúncia</span>
             </div>
 
             <div className="atividade-progresso">
               <div className="barra-progresso">
-                <div className="progresso" />
+                <div className="progresso" style={{ width: respondeu ? "100%" : "0%" }} />
               </div>
             </div>
 
-            <button className="btn-fechar" onClick={() => setMostrarModalSair(true)}>
-              <X size={38} />
+            <button
+              className="btn-fechar"
+              onClick={() => setMostrarModalSair(true)}
+              aria-label="Sair da atividade"
+            >
+              <X size={32} />
             </button>
           </div>
 
-          <div className="fala-container">
-            <Fala />
-          </div>
+          {carregando && <p className="fala-instrucao">Carregando a atividade...</p>}
 
-          <div className="atividade-conteudo">
-            <span className="video-numero">Vídeo 1</span>
+          {!carregando && erroCarga && (
+            <div className="fala-erro-msg">
+              <p>{erroCarga}</p>
+              <Botao texto="Tentar de novo" onClick={recarregar} />
+            </div>
+          )}
 
-            <h2>Frase para ser falada:</h2>
-          </div>
+          {!carregando && !erroCarga && (
+            <>
+              <div className="atividade-conteudo">
+                <h2>Frase para ser falada:</h2>
+              </div>
 
-          <div className="frase-container">
-            <p>Frase para ser falada</p>
-          </div>
+              <div className="frase-container">
+                <p>{frase || "—"}</p>
+              </div>
 
-          <div className="atividade-botao">
-            <Botao texto="Enviar" corDeFundo="#9065A6" corTexto="#FFFFFF" onClick={handleEnviar} />
-          </div>
+              <div className="fala-container">
+                <Fala estado={estadoFala} onClick={alternarGravacao} disabled={respondeu} />
+              </div>
+
+              {instrucao && <p className="fala-instrucao">{instrucao}</p>}
+
+              {erroPermissao && (
+                <p className="fala-erro-msg">
+                  Precisamos da permissão do microfone para esta atividade. Libere o acesso e
+                  tente de novo.
+                </p>
+              )}
+              {erroEnvio && <p className="fala-erro-msg">{erroEnvio}</p>}
+
+              {respondeu && (
+                <div className="atividade-botao">
+                  <Botao texto="Próximo" variante="secundario" onClick={handleConcluir} />
+                </div>
+              )}
+            </>
+          )}
         </div>
       </div>
+
+      <FeedbackCard
+        isOpen={feedback.isOpen}
+        onClose={feedback.closeFeedback}
+        text={feedback.feedbackText}
+        type={feedback.feedbackType}
+        stars={feedback.feedbackStars}
+        percentage={feedback.feedbackPercentage}
+        fonemas={resultado?.detalhesFonemas}
+        onNext={feedback.handleProximaAtividade}
+        onRetry={refazer}
+      />
+
+      <ConquistaToast
+        conquistas={novasConquistas}
+        onDismiss={handleDismissConquistas}
+      />
     </>
   );
 };

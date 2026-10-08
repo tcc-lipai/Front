@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { clampProgresso } from "./index.utils";
 
 export function useInfoAtividade({
@@ -11,18 +11,20 @@ export function useInfoAtividade({
 }) {
   const [salva, setSalva] = useState(salvaInicial);
 
+  useEffect(() => {
+    setSalva(salvaInicial);
+  }, [salvaInicial]);
+
   const progressoSeguro = clampProgresso(progresso);
 
   const handleToggleBookmark = useCallback(
     (event) => {
       event.stopPropagation();
-      setSalva((atual) => {
-        const novoValor = !atual;
-        onToggleSalvar?.(novoValor);
-        return novoValor;
-      });
+      const novoValor = !salva;
+      setSalva(novoValor);
+      onToggleSalvar?.(novoValor);
     },
-    [onToggleSalvar]
+    [salva, onToggleSalvar]
   );
 
   const handleAvancar = useCallback(() => {

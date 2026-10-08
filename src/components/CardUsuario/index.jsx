@@ -25,6 +25,9 @@ const CardUsuario = ({
 
     return (
       <div className="card-usuario__acoes">
+        {tipo === "profissional" && onVer && (
+          <Botao texto="Pacientes" variante="secundario" onClick={onVer} />
+        )}
         <Botao texto="Editar" variante="primario" onClick={onEditar} />
         <Botao texto="Excluir" variante="perigo" onClick={onExcluir} />
       </div>

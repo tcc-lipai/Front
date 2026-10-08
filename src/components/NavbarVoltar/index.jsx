@@ -1,8 +1,15 @@
+import { useNavigate } from "react-router-dom";
 import "./index.css";
 
-function NavbarVoltar() {
+function NavbarVoltar({ destino }) {
+  const navigate = useNavigate();
+
   const voltar = () => {
-    window.history.back();
+    if (destino) {
+      navigate(destino);
+    } else {
+      window.history.back();
+    }
   };
 
   return (

@@ -1,19 +1,8 @@
 import { useState } from "react";
 import "./index.css";
-import { DIFICULDADES, STATUS } from "./index.types";
 
-export default function Filtro({
-  busca,
-  setBusca,
-  dificuldade,
-  setDificuldade,
-  status,
-  setStatus,
-  alternarItem,
-}) {
+export default function Filtro({ busca, setBusca }) {
   const [abertoMobile, setAbertoMobile] = useState(false);
-  const [abertoDificuldade, setAbertoDificuldade] = useState(true);
-  const [abertoStatus, setAbertoStatus] = useState(true);
 
   return (
     <>
@@ -34,57 +23,10 @@ export default function Filtro({
         <div className="search">
           <input
             type="text"
-            placeholder="Pesquisar"
+            placeholder="Pesquisar unidade"
             value={busca}
             onChange={(evento) => setBusca(evento.target.value)}
           />
-        </div>
-
-        <div className="section">
-          <button
-            className="section-title"
-            onClick={() => setAbertoDificuldade((estado) => !estado)}
-          >
-            <span>Dificuldade</span>
-            <span>{abertoDificuldade ? "⌃" : "⌄"}</span>
-          </button>
-
-          {abertoDificuldade && (
-            <div className="options">
-              {DIFICULDADES.map((item) => (
-                <label key={item}>
-                  <input
-                    type="checkbox"
-                    checked={dificuldade.includes(item)}
-                    onChange={() => alternarItem(item, dificuldade, setDificuldade)}
-                  />
-                  {item}
-                </label>
-              ))}
-            </div>
-          )}
-        </div>
-
-        <div className="section">
-          <button className="section-title" onClick={() => setAbertoStatus((estado) => !estado)}>
-            <span>Status</span>
-            <span>{abertoStatus ? "⌃" : "⌄"}</span>
-          </button>
-
-          {abertoStatus && (
-            <div className="options">
-              {STATUS.map((item) => (
-                <label key={item}>
-                  <input
-                    type="checkbox"
-                    checked={status.includes(item)}
-                    onChange={() => alternarItem(item, status, setStatus)}
-                  />
-                  {item}
-                </label>
-              ))}
-            </div>
-          )}
         </div>
       </aside>
     </>

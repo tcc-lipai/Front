@@ -1,7 +1,7 @@
 import { Home, Dumbbell, Store, Users, BookA, Stethoscope, BookOpen, Phone } from "lucide-react";
 
 export const NAV_ITENS_ALUNO = [
-  { icon: Home, path: "/", label: "Dashboard" },
+  { icon: Home, path: "/dashboard", label: "Dashboard" },
   { icon: Dumbbell, path: "/inicio-atividades", label: "Atividades" },
   { icon: Store, path: "/loja", label: "Loja" },
   { icon: Users, path: "/acompanhante", label: "Acompanhante" },

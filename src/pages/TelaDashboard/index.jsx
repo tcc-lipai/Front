@@ -1,68 +1,22 @@
-import React from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../../components/Navbar/index";
+import { CalendarDays } from "lucide-react";
+import Navbar from "../../components/Navbar";
 import "./index.css";
-import { HeaderActions } from "../../components/HeaderActions/index";
-import { UserProfileDrawer } from "../../components/UserProfileDrawer/index";
-import Conquistas from "../../components/Conquistas/index";
+import { HeaderActions } from "../../components/HeaderActions";
+import { UserProfileDrawer } from "../../components/UserProfileDrawer";
+import Conquistas from "../../components/Conquistas";
+import { OfensivaCalendarioModal } from "../../components/OfensivaCalendarioModal";
 import { useTelaDashboard } from "./index.hook";
 import backgroundOnda from "../../assets/img/background_onda.png";
 
-const HeadphoneIcon = () => (
-  <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="32" cy="32" r="31" stroke="#7A3A8E" strokeWidth="2" fill="none" />
-    <path
-      d="M16 32C16 23.163 23.163 16 32 16C40.837 16 48 23.163 48 32"
-      stroke="#7A3A8E"
-      strokeWidth="2.5"
-      strokeLinecap="round"
-    />
-    <rect x="13" y="30" width="7" height="12" rx="3.5" fill="#7A3A8E" />
-    <rect x="44" y="30" width="7" height="12" rx="3.5" fill="#7A3A8E" />
-    <path
-      d="M26 34 Q32 30 38 34"
-      stroke="#7A3A8E"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      fill="none"
-    />
-    <path
-      d="M28 37 Q32 34 36 37"
-      stroke="#7A3A8E"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      fill="none"
-    />
-    <path
-      d="M30 40 Q32 38 34 40"
-      stroke="#7A3A8E"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      fill="none"
-    />
-  </svg>
-);
-
-const strikeDays = [
-  { label: "MAR", day: "04" },
-  { label: "MAR", day: "04" },
-  { label: "MAR", day: "04" },
-  { label: "MAR", day: "04" },
-  { label: "MAR", day: "06", active: true },
-  { label: "MAR", day: "04" },
-  { label: "MAR", day: "04" },
-  { label: "MAR", day: "04" },
-  { label: "MAR", day: "04" },
-];
-
-const ActivityCard = ({ title, description, onComecar }) => (
+const UnidadeCard = ({ nome, totalAtividades, onComecar }) => (
   <div className="activity-card">
-    <div className="activity-icon">
-      <HeadphoneIcon />
-    </div>
     <div className="activity-info">
-      <h3 className="activity-title">{title}</h3>
-      <p className="activity-desc">{description}</p>
+      <h3 className="activity-title">{nome}</h3>
+      <p className="section-subtitle">
+        {totalAtividades} {totalAtividades === 1 ? "atividade" : "atividades"}
+      </p>
       <button className="btn-comecar" onClick={onComecar}>
         Começar
       </button>
@@ -84,8 +38,18 @@ const PerformanceBar = ({ label, value, color }) => (
 );
 
 const TelaDashboard = () => {
-  const { drawerAberto, abrirPerfil, fecharPerfil } = useTelaDashboard();
+  const {
+    drawerAberto,
+    abrirPerfil,
+    fecharPerfil,
+    carregando,
+    usuario,
+    desempenho,
+    conquistas,
+    unidadesDisponiveis,
+  } = useTelaDashboard();
   const navigate = useNavigate();
+  const [calendarioAberto, setCalendarioAberto] = useState(false);
 
   const handleAjudaOfensiva = () => {
     alert(
@@ -93,16 +57,46 @@ const TelaDashboard = () => {
     );
   };
 
+  const diasSeguidos = usuario?.diasSeguidos ?? usuario?.DiasSeguidos ?? 0;
+  const nome = usuario?.nome ?? usuario?.Nome ?? "";
+  const ultimaAtividadeData = usuario?.ultimaAtividadeData ?? usuario?.UltimaAtividadeData ?? null;
+  const ofensivaCongeladaAte = usuario?.ofensivaCongeladaAte ?? usuario?.OfensivaCongeladaAte ?? null;
+  const usuarioId = localStorage.getItem("id");
+
+  // A sequência de "diasSeguidos" termina na última atividade registrada, não
+  // necessariamente hoje — se o aluno ainda não fez nada hoje, hoje não conta.
+  const ultima = ultimaAtividadeData ? new Date(ultimaAtividadeData) : null;
+  if (ultima) ultima.setHours(0, 0, 0, 0);
+
+  const strikeDays = Array.from({ length: 9 }).map((_, index) => {
+    const offset = index - 4; // -4 a +4, hoje no meio
+    const d = new Date();
+    d.setDate(d.getDate() + offset);
+    d.setHours(0, 0, 0, 0);
+
+    const month = d.toLocaleDateString("pt-BR", { month: "short" }).toUpperCase().replace(".", "");
+    const num = d.getDate().toString().padStart(2, "0");
+
+    let isActive = false;
+    if (ultima && d <= ultima) {
+      const distanciaDaUltima = Math.round((ultima - d) / 86400000);
+      isActive = distanciaDaUltima < diasSeguidos;
+    }
+
+    const distancia = Math.abs(offset);
+
+    return { id: offset, month, num, isActive, distancia };
+  });
+
   return (
     <div className="dashboard-wrapper" style={{ backgroundImage: `url(${backgroundOnda})` }}>
       <Navbar />
 
       <div className="dashboard-main">
         <div className="dashboard-header">
-          <h1 className="dashboard-title">Dashboard</h1>
+          <h1 className="dashboard-title">{nome ? `Olá, ${nome}!` : "Dashboard"}</h1>
           <div className="header-right">
             <HeaderActions onOpenProfile={abrirPerfil} />
-
             <UserProfileDrawer isOpen={drawerAberto} onClose={fecharPerfil} />
           </div>
         </div>
@@ -115,37 +109,60 @@ const TelaDashboard = () => {
                 Complete ao menos uma lição por dia, para manter a ofensiva.
               </p>
             </div>
-            <button
-              className="help-btn"
-              aria-label="Ajuda sobre ofensiva"
-              onClick={handleAjudaOfensiva}
-            >
-              ?
-            </button>
+            <div className="ofensiva-header-btns">
+              <button
+                type="button"
+                className="help-btn"
+                aria-label="Ver calendário de ofensiva"
+                onClick={() => setCalendarioAberto(true)}
+              >
+                <CalendarDays size={16} />
+              </button>
+              <button
+                className="help-btn"
+                aria-label="Ajuda sobre ofensiva"
+                onClick={handleAjudaOfensiva}
+              >
+                ?
+              </button>
+            </div>
           </div>
           <div className="strike-days">
-            {strikeDays.map((d, i) => (
-              <div key={i} className={`strike-day${d.active ? " strike-day--active" : ""}`}>
-                <span className="strike-month">{d.label}</span>
-                <span className="strike-num">{d.day}</span>
+            {strikeDays.map((day) => (
+              <div
+                key={day.id}
+                className={`strike-day ${day.isActive ? "strike-day--active" : ""} ${
+                  day.id === 0 ? "strike-day--hoje" : ""
+                }`}
+                style={{ "--dist": day.distancia }}
+              >
+                <span className="strike-month">{day.month}</span>
+                <span className="strike-num">{day.num}</span>
               </div>
             ))}
           </div>
         </section>
 
         <section className="card-section">
-          <h2 className="section-title">Atividades Recentes</h2>
+          <h2 className="section-title">Unidades Disponíveis</h2>
+          {carregando && <p className="section-subtitle">Carregando...</p>}
+          {!carregando && unidadesDisponiveis.length === 0 && (
+            <p className="section-subtitle">
+              Nenhuma unidade disponível ainda.{" "}
+              <button className="ver-mais-btn" onClick={() => navigate("/inicio-atividades")}>
+                Ver todas
+              </button>
+            </p>
+          )}
           <div className="activities-grid">
-            <ActivityCard
-              title="Escutando"
-              description="lorem ldwadw vlalla blal dwaddw awddwadwadwadw dwadwa"
-              onComecar={() => navigate("/inicio-atividades")}
-            />
-            <ActivityCard
-              title="Escutando"
-              description="lorem ldwadw vlalla blal dwaddw awddwadwadwadw dwadwa"
-              onComecar={() => navigate("/inicio-atividades")}
-            />
+            {unidadesDisponiveis.map((unidade) => (
+              <UnidadeCard
+                key={unidade.id}
+                nome={unidade.nome}
+                totalAtividades={unidade.totalAtividades}
+                onComecar={() => navigate("/atividades-unidades")}
+              />
+            ))}
           </div>
         </section>
 
@@ -159,25 +176,45 @@ const TelaDashboard = () => {
               Ver mais
             </button>
           </div>
+          {!carregando && conquistas.length === 0 && (
+            <p className="section-subtitle">Você ainda não conquistou nenhuma medalha.</p>
+          )}
           <div className="conquistas-grid">
-            <Conquistas title="Semana Ouro" subtitle="Semana Ouro" />
-            <Conquistas title="Semana Ouro" subtitle="Semana Ouro" />
-            <Conquistas title="Semana Ouro" subtitle="Semana Ouro" />
-            <Conquistas title="Semana Ouro" subtitle="Semana Ouro" />
+            {conquistas.map((conquista) => (
+              <Conquistas
+                key={conquista.idConquista ?? conquista.IdConquista}
+                title={conquista.nome ?? conquista.Nome}
+                subtitle={conquista.descricao ?? conquista.Descricao}
+                iconeUrl={conquista.iconeUrl ?? conquista.IconeUrl}
+              />
+            ))}
           </div>
         </section>
 
         <section className="card-section">
           <h2 className="section-title">Desempenho</h2>
           <p className="section-subtitle">
-            Veja seu desempenho nas atividades de escuta, fala, interpretação e
+            Veja seu desempenho nas atividades de interpretação e fala.
           </p>
           <div className="perf-list">
-            <PerformanceBar label="Interpretação" value={70} color="#F0BFFF" />
-            <PerformanceBar label="Fala" value={90} color="#B78CC4" />
+            <PerformanceBar
+              label="Interpretação"
+              value={desempenho.interpretacao}
+              color="#F0BFFF"
+            />
+            <PerformanceBar label="Fala" value={desempenho.fala} color="#B78CC4" />
           </div>
         </section>
       </div>
+
+      <OfensivaCalendarioModal
+        isOpen={calendarioAberto}
+        onClose={() => setCalendarioAberto(false)}
+        diasSeguidos={diasSeguidos}
+        ultimaAtividadeData={ultimaAtividadeData}
+        ofensivaCongeladaAte={ofensivaCongeladaAte}
+        usuarioId={usuarioId}
+      />
     </div>
   );
 };

@@ -46,6 +46,18 @@
   cursor: default;
 }
 
+/* a regra genérica de superfície escura (com !important) vence essas duas
+   classes de estado, então precisam de override próprio aqui também */
+:root[data-theme="dark"] .fala-box.correct {
+  background-color: rgba(76, 175, 80, 0.18) !important;
+  color: #8fd99a !important;
+}
+
+:root[data-theme="dark"] .fala-box.incorrect {
+  background-color: rgba(240, 82, 82, 0.18) !important;
+  color: #ff9b9b !important;
+}
+
 @keyframes pulse-purple {
   0% {
     opacity: 1;
@@ -55,6 +67,16 @@
   }
   100% {
     opacity: 1;
+  }
+}
+
+.fala-spinner {
+  animation: fala-girar 0.9s linear infinite;
+}
+
+@keyframes fala-girar {
+  to {
+    transform: rotate(360deg);
   }
 }
 

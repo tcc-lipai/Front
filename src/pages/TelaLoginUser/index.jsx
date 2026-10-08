@@ -18,13 +18,26 @@ const TelaLoginUser = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setErro("");
+
+    if (!form.email || !form.senha) {
+      setErro("Preencha o email e a senha para entrar.");
+      return;
+    }
+
     setCarregando(true);
 
     const resultado = await login(form.email, form.senha);
     setCarregando(false);
 
     if (resultado.sucesso) {
-      navigate("/dashboard");
+      const role = resultado.data?.role ?? resultado.data?.Role;
+      if (role === "Admin") {
+        navigate("/dashboard-admin");
+      } else if (role === "Profissional") {
+        navigate("/dashboard-medico");
+      } else {
+        navigate("/dashboard");
+      }
     } else {
       setErro(resultado.mensagem);
     }
@@ -52,7 +65,6 @@ const TelaLoginUser = () => {
                 placeholder="Email"
                 value={form.email}
                 onChange={handleChange}
-                required
               />
             </div>
 
@@ -63,7 +75,6 @@ const TelaLoginUser = () => {
                 placeholder="Senha"
                 value={form.senha}
                 onChange={handleChange}
-                required
               />
             </div>
 
@@ -74,20 +85,7 @@ const TelaLoginUser = () => {
             )}
 
             <div className="btn-container">
-              <Botao
-                texto={carregando ? "Entrando..." : "Entrar"}
-                corDeFundo="#8426ac"
-                corBorda=""
-                onClick={handleLogin}
-              />
-            </div>
-
-            <div className="google-login">
-              <span>Entre com google:</span>
-              <img
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg"
-                alt="Google"
-              />
+              <Botao texto={carregando ? "Entrando..." : "Entrar"} onClick={handleLogin} />
             </div>
           </form>
         </div>
@@ -103,6 +101,7 @@ const TelaLoginUser = () => {
             <Botao
               texto="Cadastro"
               corDeFundo="transparent"
+              corTexto="white"
               corBorda="white"
               onClick={() => navigate("/criar-conta")}
             />

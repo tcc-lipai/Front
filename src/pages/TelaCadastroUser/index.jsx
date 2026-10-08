@@ -3,11 +3,14 @@ import "./index.css";
 import { useNavigate } from "react-router-dom";
 import Botao from "../../components/Botao";
 import { cadastrarUsuario } from "../../services/usuarioService";
+import { login } from "../../services/authService";
 
+// Precisa bater com o enum NivelDificuldade do back-end.
 const NIVEIS = [
   { valor: 1, label: "Iniciante" },
-  { valor: 2, label: "Intermediário" },
-  { valor: 3, label: "Avançado" },
+  { valor: 2, label: "Básico" },
+  { valor: 3, label: "Intermediário" },
+  { valor: 4, label: "Avançado" },
 ];
 
 const TelaCadastroUser = () => {
@@ -33,6 +36,11 @@ const TelaCadastroUser = () => {
     e.preventDefault();
     setErro("");
 
+    if (!form.nome || !form.email || !form.senha || !form.confirmarSenha) {
+      setErro("Preencha todos os campos obrigatórios.");
+      return;
+    }
+
     if (form.senha !== form.confirmarSenha) {
       setErro("As senhas não coincidem.");
       return;
@@ -54,12 +62,21 @@ const TelaCadastroUser = () => {
 
     setCarregando(true);
     const resultado = await cadastrarUsuario(payload);
+
+    if (!resultado.sucesso) {
+      setCarregando(false);
+      setErro(resultado.mensagem);
+      return;
+    }
+
+    // conta criada; entra automaticamente com as credenciais informadas
+    const loginResultado = await login(form.email, form.senha);
     setCarregando(false);
 
-    if (resultado.sucesso) {
+    if (loginResultado.sucesso) {
       navigate("/dashboard");
     } else {
-      setErro(resultado.mensagem);
+      navigate("/login");
     }
   };
 
@@ -86,6 +103,7 @@ const TelaCadastroUser = () => {
             <Botao
               texto="Login"
               corDeFundo="transparent"
+              corTexto="white"
               corBorda="white"
               onClick={() => navigate("/login")}
             />
@@ -104,7 +122,6 @@ const TelaCadastroUser = () => {
                 placeholder="Nome"
                 value={form.nome}
                 onChange={handleChange}
-                required
               />
             </div>
 
@@ -115,7 +132,6 @@ const TelaCadastroUser = () => {
                 placeholder="Email"
                 value={form.email}
                 onChange={handleChange}
-                required
               />
             </div>
 
@@ -126,7 +142,6 @@ const TelaCadastroUser = () => {
                 placeholder="Senha"
                 value={form.senha}
                 onChange={handleChange}
-                required
               />
             </div>
 
@@ -137,7 +152,6 @@ const TelaCadastroUser = () => {
                 placeholder="Confirme sua senha"
                 value={form.confirmarSenha}
                 onChange={handleChange}
-                required
               />
             </div>
 
@@ -183,18 +197,7 @@ const TelaCadastroUser = () => {
             <div className="btn-container">
               <Botao
                 texto={carregando ? "Cadastrando..." : "Cadastrar-se"}
-                corDeFundo="#8426ac"
-                corBorda=""
                 onClick={handleCadastro}
-              />
-            </div>
-
-            <div className="google-login">
-              <span>Crie uma conta com:</span>
-
-              <img
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg"
-                alt="Google"
               />
             </div>
           </form>

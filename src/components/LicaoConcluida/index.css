@@ -51,11 +51,15 @@
   width: 130px;
   height: 130px;
   border-radius: 50%;
-  border: 4px solid #8e44ad;
+  border: 4px solid var(--lipai-primary);
   display: flex;
   align-items: center;
   justify-content: center;
   background: radial-gradient(circle, #ffffff 60%, #f3e5f5 100%);
+}
+
+:root[data-theme="dark"] .licao-score-circle {
+  background: radial-gradient(circle, var(--lipai-surface-2) 60%, var(--lipai-surface) 100%);
 }
 
 .licao-score-text {
@@ -119,8 +123,8 @@
 }
 
 .licao-btn-retry {
-  background-color: #7d538c;
-  color: #ffffff;
+  background-color: var(--lipai-primary);
+  color: var(--lipai-on-primary);
   border: none;
   border-radius: 24px;
   padding: 14px 48px;
@@ -129,17 +133,17 @@
   cursor: pointer;
   flex: 1;
   max-width: 180px;
-  transition: background-color 0.2s;
+  transition: filter 0.2s;
 }
 
 .licao-btn-retry:hover {
-  background-color: #633f70;
+  filter: brightness(0.9);
 }
 
 .licao-btn-exit {
   background-color: #ffffff;
-  color: #7d538c;
-  border: 2px solid #7d538c;
+  color: var(--lipai-primary);
+  border: 2px solid var(--lipai-primary);
   border-radius: 24px;
   padding: 12px 48px;
   font-size: 18px;
@@ -153,5 +157,9 @@
 }
 
 .licao-btn-exit:hover {
-  background-color: #f3e5f5;
+  background-color: var(--lipai-primary-soft);
+}
+
+:root[data-theme="dark"] .licao-btn-exit {
+  background-color: var(--lipai-surface);
 }

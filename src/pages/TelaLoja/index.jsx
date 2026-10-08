@@ -21,6 +21,10 @@ const TelaLoja = () => {
     abrirPerfil,
     fecharPerfil,
     handleComprar,
+    carregando,
+    saldo,
+    mensagem,
+    comprandoId,
   } = useTelaLoja();
 
   return (
@@ -37,7 +41,14 @@ const TelaLoja = () => {
             <h1 className="tela-loja__titulo">Loja</h1>
             <p className="tela-loja__descricao">
               Faça as suas compras aqui e desbloqueie vantagens para acelerar o seu aprendizado.
+              Você tem <strong>{saldo}</strong> moedas.
             </p>
+
+            {mensagem && (
+              <p className="tela-loja__vazio" role="status">
+                {mensagem}
+              </p>
+            )}
 
             <div className="tela-loja__busca">
               <input
@@ -50,23 +61,30 @@ const TelaLoja = () => {
               <Search size={18} />
             </div>
 
-            <div className="tela-loja__grid">
-              {itensFiltrados.map((item) => (
-                <div className="tela-loja__grid-item" key={item.id}>
-                  <ProdutoLoja
-                    title={item.title}
-                    description={item.description}
-                    price={item.price}
-                    tipo={item.tipo}
-                    isBlocked={item.isBlocked}
-                    onComprar={() => handleComprar(item)}
-                  />
-                </div>
-              ))}
-            </div>
+            {carregando && <p className="tela-loja__vazio">Carregando produtos...</p>}
 
-            {itensFiltrados.length === 0 && (
-              <p className="tela-loja__vazio">Nenhum item encontrado para “{busca}”.</p>
+            {!carregando && (
+              <div className="tela-loja__grid">
+                {itensFiltrados.map((item) => (
+                  <div className="tela-loja__grid-item" key={item.id}>
+                    <ProdutoLoja
+                      title={item.title}
+                      description={item.description}
+                      price={item.price}
+                      tipo={item.tipo}
+                      isBlocked={item.isBlocked}
+                      comprando={comprandoId === item.id}
+                      onComprar={() => handleComprar(item)}
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {!carregando && itensFiltrados.length === 0 && (
+              <p className="tela-loja__vazio">
+                {busca ? `Nenhum item encontrado para "${busca}".` : "A loja ainda não tem itens."}
+              </p>
             )}
           </div>
 

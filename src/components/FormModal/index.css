@@ -1,0 +1,56 @@
+.form-modal {
+  position: relative;
+  background-color: var(--lipai-surface);
+  color: var(--lipai-text);
+  border-radius: 20px;
+  padding: 36px 28px 24px;
+  width: 90%;
+  max-width: 540px;
+  max-height: 88vh;
+  overflow-y: auto;
+  box-shadow: var(--lipai-shadow);
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-modal__titulo {
+  margin: 0 0 4px;
+  font-size: 1.4rem;
+  color: var(--lipai-text);
+}
+
+.form-modal__campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--lipai-text);
+}
+
+.form-modal__campo input,
+.form-modal__campo select,
+.form-modal__campo textarea {
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1.5px solid var(--lipai-border);
+  background-color: var(--lipai-surface-2);
+  color: var(--lipai-text);
+  font: inherit;
+  font-weight: 400;
+}
+
+.form-modal__erro {
+  color: var(--lipai-danger);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.form-modal__acoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 6px;
+}

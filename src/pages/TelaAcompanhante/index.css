@@ -146,124 +146,105 @@ body {
   margin: 0;
 }
 
-.ta-carousel {
+/* ---- Carrossel de benefícios (clicável) ---- */
+.ta-carrossel {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 18px;
   margin: 8px 0 32px;
   padding: 0 24px;
   box-sizing: border-box;
   width: 100%;
 }
 
-.ta-carousel__track {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  padding: 16px 0 20px;
-  box-sizing: border-box;
-}
-
-.ta-carousel__card {
-  background: #fff;
-  border-radius: 16px;
-  padding: 32px 28px;
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+.ta-carrossel-trilho {
   position: relative;
+  width: 100%;
+  height: 230px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.ta-carousel__card--center {
-  width: 520px;
-  min-height: 210px;
-  z-index: 3;
+.ta-beneficio-card {
+  position: absolute;
+  width: 480px;
+  max-width: 90%;
+  box-sizing: border-box;
+  background: #faf5ff;
+  border: 1px solid #e9d8fd;
+  border-radius: 12px;
+  padding: 22px 26px;
+  transition:
+    transform 0.35s ease,
+    opacity 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.ta-beneficio-card--centro {
+  transform: translateX(0) scale(1);
   opacity: 1;
-  filter: none;
-  box-shadow: 0 8px 32px rgba(124, 58, 237, 0.18);
+  z-index: 3;
+  box-shadow: 0 10px 26px rgba(122, 58, 142, 0.2);
+  cursor: default;
 }
 
-.ta-carousel__card--left,
-.ta-carousel__card--right {
-  width: 500px;
-  min-height: 180px;
+.ta-beneficio-card--esquerda,
+.ta-beneficio-card--direita {
+  opacity: 0.55;
   z-index: 1;
-  opacity: 0.5;
-  filter: blur(1.5px);
   cursor: pointer;
-  background: #f3eef9;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
 }
 
-.ta-carousel__card--left {
-  transform: scale(0.88) translateX(24px);
-  margin-right: -40px;
+.ta-beneficio-card--esquerda {
+  transform: translateX(-320px) scale(0.85);
 }
 
-.ta-carousel__card--right {
-  transform: scale(0.88) translateX(-24px);
-  margin-left: -40px;
+.ta-beneficio-card--direita {
+  transform: translateX(320px) scale(0.85);
 }
 
-.ta-carousel__card--left:hover,
-.ta-carousel__card--right:hover {
-  opacity: 0.72;
-  filter: blur(0.5px);
+.ta-beneficio-card--esquerda:hover,
+.ta-beneficio-card--direita:hover {
+  opacity: 0.85;
 }
 
-.ta-carousel__card--left:focus-visible,
-.ta-carousel__card--right:focus-visible {
-  outline: 2px solid #7c3aed;
-  outline-offset: 2px;
-  opacity: 0.8;
-  filter: none;
-}
-
-.ta-carousel__card-title {
-  font-size: 1rem;
+.ta-beneficio-card h3 {
+  font-size: 1.05rem;
   font-weight: 700;
-  color: #522566;
-  margin: 0 0 10px;
-  line-height: 1.3;
+  color: #7a3a8e;
+  margin: 0 0 8px;
 }
 
-.ta-carousel__card--center .ta-carousel__card-title {
-  font-size: 1.15rem;
-}
-
-.ta-carousel__card-text {
+.ta-beneficio-card p {
   font-size: 0.9rem;
-  color: #522566;
-  line-height: 1.6;
+  line-height: 1.55;
+  color: #666;
   margin: 0;
 }
 
-.ta-carousel__dots {
+.ta-carrossel-dots {
   display: flex;
   gap: 8px;
-  margin-top: 4px;
 }
 
-.ta-carousel__dot {
-  width: 8px;
-  height: 8px;
+.ta-carrossel-dot {
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
   border: none;
-  background-color: #d0b8f5;
+  background: #d8c6e6;
   cursor: pointer;
   padding: 0;
   transition:
-    background 0.25s,
-    transform 0.2s;
+    background 0.2s ease,
+    transform 0.2s ease;
 }
 
-.ta-carousel__dot--active {
-  background-color: #7c3aed;
-  transform: scale(1.3);
-}
-
-.ta-carousel__dot:focus-visible {
-  outline: 2px solid #7c3aed;
-  outline-offset: 2px;
+.ta-carrossel-dot--ativo {
+  background: #7a3a8e;
+  transform: scale(1.25);
 }
 
 .ta-atividades {
@@ -359,29 +340,20 @@ body {
 }
 
 @media (max-width: 1300px) {
-  .ta-carousel {
+  .ta-carrossel {
     padding: 0 20px;
   }
 
-  .ta-carousel__card--center {
+  .ta-beneficio-card {
     width: 420px;
-    min-height: 190px;
   }
 
-  .ta-carousel__card--left,
-  .ta-carousel__card--right {
-    width: 380px;
-    min-height: 170px;
+  .ta-beneficio-card--esquerda {
+    transform: translateX(-260px) scale(0.85);
   }
 
-  .ta-carousel__card--left {
-    transform: scale(0.88) translateX(20px);
-    margin-right: -32px;
-  }
-
-  .ta-carousel__card--right {
-    transform: scale(0.88) translateX(-20px);
-    margin-left: -32px;
+  .ta-beneficio-card--direita {
+    transform: translateX(260px) scale(0.85);
   }
 }
 
@@ -390,31 +362,21 @@ body {
     padding-left: 90px;
   }
 
-  .ta-carousel {
+  .ta-carrossel {
     padding: 0 16px;
   }
 
-  .ta-carousel__card--center {
-    width: 320px;
-    min-height: 180px;
-    padding: 26px 22px;
+  .ta-beneficio-card {
+    width: 340px;
+    padding: 20px 22px;
   }
 
-  .ta-carousel__card--left,
-  .ta-carousel__card--right {
-    width: 280px;
-    min-height: 150px;
-    padding: 22px 18px;
+  .ta-beneficio-card--esquerda {
+    transform: translateX(-200px) scale(0.85);
   }
 
-  .ta-carousel__card--left {
-    transform: scale(0.88) translateX(14px);
-    margin-right: -24px;
-  }
-
-  .ta-carousel__card--right {
-    transform: scale(0.88) translateX(-14px);
-    margin-left: -24px;
+  .ta-beneficio-card--direita {
+    transform: translateX(200px) scale(0.85);
   }
 }
 
@@ -463,26 +425,22 @@ body {
     text-align: center;
   }
 
-  .ta-carousel {
+  .ta-carrossel {
     padding: 0 14px;
   }
 
-  .ta-carousel__track {
-    padding: 12px 0 16px;
+  .ta-carrossel-trilho {
+    height: 260px;
   }
 
-  .ta-carousel__card--left,
-  .ta-carousel__card--right {
+  .ta-beneficio-card--esquerda,
+  .ta-beneficio-card--direita {
     display: none;
   }
 
-  .ta-carousel__card--center {
+  .ta-beneficio-card--centro {
     width: 100%;
     max-width: 340px;
-    min-height: auto;
-    margin: 0 auto;
-    padding: 24px 20px;
-    box-shadow: 0 6px 20px rgba(124, 58, 237, 0.15);
   }
 
   .ta-ver-atividades__title {
@@ -525,11 +483,11 @@ body {
     height: 170px;
   }
 
-  .ta-carousel {
+  .ta-carrossel {
     padding: 0 12px;
   }
 
-  .ta-carousel__card--center {
+  .ta-beneficio-card--centro {
     max-width: 280px;
     padding: 20px 16px;
   }

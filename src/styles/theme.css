@@ -69,6 +69,7 @@
     .card-section,
     .activity-card,
     .card-progresso,
+    .card-unidade,
     .banner,
     .tela-loja__painel,
     .tela-dicionario__painel,
@@ -95,6 +96,8 @@
     .atividade-container,
     .frase-container,
     .modal-container,
+    .modal-unidades-container,
+    .modal-ofensiva-container,
     .licao-modal,
     .feedback-container,
     .logout-modal,
@@ -104,8 +107,7 @@
     .filter,
     .ta-dicionario,
     .ta-como-funciona,
-    .ta-carousel__card,
-    .ta-ver-atividades
+    .ta-beneficio-card
   ) {
   background-color: var(--lipai-surface) !important;
   background-image: none !important;
@@ -138,6 +140,24 @@
   background-color: var(--lipai-surface-2) !important;
   border-color: var(--lipai-border);
   color: var(--lipai-text);
+}
+
+/* estados da opção de resposta (alternativa) — precisam vencer o !important acima */
+:root[data-theme="dark"] .option-item.selected {
+  background-color: var(--lipai-primary-soft) !important;
+  border-color: var(--lipai-primary);
+}
+
+:root[data-theme="dark"] .option-item.correct {
+  background-color: rgba(76, 175, 80, 0.18) !important;
+  border-color: #4caf50;
+  color: #8fd99a;
+}
+
+:root[data-theme="dark"] .option-item.incorrect {
+  background-color: rgba(240, 82, 82, 0.18) !important;
+  border-color: #f05252;
+  color: #ff9b9b;
 }
 
 /* ---- Overlays de modal / drawer ------------------------------------- */
