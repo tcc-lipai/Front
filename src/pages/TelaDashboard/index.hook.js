@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { buscarUsuario } from "../../services/usuarioService";
 import { buscarDesempenho } from "../../services/progressoService";
 import { listarConquistasUsuario } from "../../services/conquistaService";
-import { listarUnidades } from "../../services/unidadeService";
+import { listarUnidadesResumo } from "../../services/unidadeService";
 
 function lista(objeto, ...nomes) {
   for (const nome of nomes) {
@@ -28,7 +28,7 @@ export function useTelaDashboard() {
         buscarUsuario(usuarioId),
         buscarDesempenho(usuarioId),
         listarConquistasUsuario(usuarioId),
-        listarUnidades(),
+        listarUnidadesResumo(),
       ]);
       if (!ativo) return;
 
@@ -47,20 +47,11 @@ export function useTelaDashboard() {
       }
 
       if (unidadesRes.sucesso) {
-        const unidades = unidadesRes.data.map((unidade) => {
-          const falaAvulsa = lista(unidade, "licoesFala", "LicoesFala").filter(
-            (l) => (l.atividadeFalaId ?? l.AtividadeFalaId ?? null) == null
-          ).length;
-          const atividadesFala = lista(unidade, "atividadesFala", "AtividadesFala").length;
-          const alternativa = lista(unidade, "licoesAlternativa", "LicoesAlternativa").length;
-          const video = lista(unidade, "licoesVideo", "LicoesVideo").length;
-
-          return {
-            id: unidade.idUnidade ?? unidade.IdUnidade,
-            nome: unidade.nome ?? unidade.Nome ?? "Unidade",
-            totalAtividades: falaAvulsa + atividadesFala + alternativa + video,
-          };
-        });
+        const unidades = unidadesRes.data.map((unidade) => ({
+          id: unidade.idUnidade ?? unidade.IdUnidade,
+          nome: unidade.nome ?? unidade.Nome ?? "Unidade",
+          totalAtividades: unidade.totalAtividades ?? unidade.TotalAtividades ?? 0,
+        }));
         setUnidadesDisponiveis(unidades);
       }
 

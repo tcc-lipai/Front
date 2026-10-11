@@ -10,7 +10,7 @@ import {
   contarAtividadesConcluidas,
   calcularPercentualAtividades,
 } from "../../services/usuarioService";
-import { listarUnidades, contarLicoesDasUnidades } from "../../services/unidadeService";
+import { listarUnidadesResumo, contarLicoesDoResumo } from "../../services/unidadeService";
 import { lerPreferencias, salvarPreferencias } from "../../services/preferenciasService";
 import "./index.css";
 
@@ -45,7 +45,7 @@ const TelaPerfil = () => {
       const [perfilRes, progressoRes, unidadesRes] = await Promise.all([
         buscarUsuario(usuarioId),
         buscarProgresso(usuarioId),
-        listarUnidades(),
+        listarUnidadesResumo(),
       ]);
 
       if (!ativo) return;
@@ -64,7 +64,7 @@ const TelaPerfil = () => {
 
       if (progressoRes.sucesso && unidadesRes.sucesso) {
         const concluidas = contarAtividadesConcluidas(progressoRes.data);
-        const totalLicoes = contarLicoesDasUnidades(unidadesRes.data);
+        const totalLicoes = contarLicoesDoResumo(unidadesRes.data);
         setPercentualAtividades(calcularPercentualAtividades(concluidas, totalLicoes));
       }
 
