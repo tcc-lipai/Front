@@ -1,0 +1,79 @@
+.config-admin-card {
+  background-color: var(--lipai-surface);
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  box-shadow: var(--lipai-shadow);
+}
+
+.config-admin-card__info {
+  flex: 1;
+}
+
+.config-admin-card__titulo {
+  margin: 0 0 8px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--lipai-text);
+}
+
+.config-admin-card__descricao {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--lipai-text-muted);
+  line-height: 1.5;
+}
+
+.config-admin-switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 26px;
+  flex-shrink: 0;
+}
+
+.config-admin-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.config-admin-switch__trilho {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: var(--lipai-border);
+  border-radius: 34px;
+  transition: 0.2s;
+}
+
+.config-admin-switch__trilho::before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 4px;
+  bottom: 4px;
+  background-color: var(--lipai-surface);
+  border-radius: 50%;
+  transition: 0.2s;
+}
+
+.config-admin-switch input:checked + .config-admin-switch__trilho {
+  background-color: var(--lipai-primary);
+}
+
+.config-admin-switch input:checked + .config-admin-switch__trilho::before {
+  transform: translateX(22px);
+}
+
+@media (max-width: 768px) {
+  .config-admin-card {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+}

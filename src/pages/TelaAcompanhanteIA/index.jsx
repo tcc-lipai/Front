@@ -1,41 +1,50 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom"; // 1. Importado o hook
+import { useNavigate } from "react-router-dom";
 import "./index.css";
 
 import { X } from "lucide-react";
 
 import Botao from "../../components/Botao";
 import Modal from "../../components/ModalSair";
+import LicaoConcluida from "../../components/LicaoConcluida";
 import Vibracao from "../../components/Vibracao";
+import { useTelaAcompanhanteIA } from "./index.hook";
 
 const TelaAcompanhanteIA = () => {
-  const [mostrarModalSair, setMostrarModalSair] = useState(false);
-  const navigate = useNavigate(); // 2. Instanciando o navigate
-
-  const handleConfirmarSaida = () => {
-    navigate("/atividades-unidades"); // 3. Navegando para fora ao confirmar saída
-  };
+  const navigate = useNavigate();
+  const {
+    carregando,
+    erro,
+    silaba,
+    instrucao,
+    mostrarModalSair,
+    setMostrarModalSair,
+    handleFinalizar,
+    sair,
+    licaoConcluida,
+  } = useTelaAcompanhanteIA();
 
   return (
     <>
       <Modal
         isOpen={mostrarModalSair}
         onClose={() => setMostrarModalSair(false)}
-        onConfirm={handleConfirmarSaida}
+        onConfirm={sair}
+      />
+
+      <LicaoConcluida
+        isOpen={licaoConcluida.isOpen}
+        stats={licaoConcluida.stats}
+        onClose={licaoConcluida.onClose}
+        onRetry={licaoConcluida.onRetry}
+        onExit={licaoConcluida.onExit}
       />
 
       <div className="atividade-overlay">
         <div className="atividade-container">
           <div className="atividade-header">
             <div className="atividade-titulo">
-              <h1>Primeira Atividade</h1>
-              <span>Unidade 1</span>
-            </div>
-
-            <div className="atividade-progresso">
-              <div className="barra-progresso">
-                <div className="progresso" />
-              </div>
+              <h1>Acompanhante</h1>
+              <span>Vibração da voz</span>
             </div>
 
             <button className="btn-fechar" onClick={() => setMostrarModalSair(true)}>
@@ -43,22 +52,34 @@ const TelaAcompanhanteIA = () => {
             </button>
           </div>
 
-          <div className="acompanhante-texto">
-            <h2>Pela vibração da sua voz, faça o blablabla entender as letras</h2>
-          </div>
+          {carregando && (
+            <div className="acompanhante-texto">
+              <p>Carregando...</p>
+            </div>
+          )}
 
-          <div className="vibracao-container">
-            <Vibracao />
-          </div>
+          {!carregando && erro && (
+            <div className="acompanhante-texto">
+              <p>{erro}</p>
+              <Botao texto="Voltar" onClick={() => navigate("/atividades-unidades")} />
+            </div>
+          )}
 
-          <div className="atividade-botao">
-            <Botao
-              texto="Próximo"
-              corDeFundo="#9065A6"
-              corTexto="#FFFFFF"
-              onClick={() => navigate("/atividades-unidades")} // 4. Botão Próximo levando para a próxima etapa ou conclusão
-            />
-          </div>
+          {!carregando && !erro && (
+            <>
+              <div className="acompanhante-texto">
+                <h2>{instrucao || "Fale a sílaba apoiando a mão na garganta para sentir a vibração."}</h2>
+              </div>
+
+              <div className="vibracao-container">
+                <Vibracao silaba={silaba} />
+              </div>
+
+              <div className="atividade-botao">
+                <Botao texto="Concluir" onClick={handleFinalizar} />
+              </div>
+            </>
+          )}
         </div>
       </div>
     </>

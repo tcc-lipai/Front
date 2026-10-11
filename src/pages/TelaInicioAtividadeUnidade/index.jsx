@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { Mic, HelpCircle, Video as VideoIcon, Sparkles } from "lucide-react";
+import { Mic, HelpCircle, Video as VideoIcon, Sparkles, Heart } from "lucide-react";
 import CardExercicio from "../../components/CardExercicio";
 import Navbar from "../../components/NavbarVoltar";
+import DicaFonemaModal from "../../components/DicaFonemaModal";
 import { useTelaInicioAtividadeUnidade } from "./index.hook";
 
 import "./index.css";
@@ -10,6 +11,7 @@ const TIPOS = {
   video: { titulo: "Vídeo-aulas", cor: "#4E8FD6", Icone: VideoIcon },
   alternativa: { titulo: "Interpretação", cor: "#E0932E", Icone: HelpCircle },
   fala: { titulo: "Fala", cor: "#8A3FA0", Icone: Mic },
+  vibracao: { titulo: "Acompanhante", cor: "#D65C8A", Icone: Heart },
 };
 
 const IconeTipo = ({ tipo }) => {
@@ -19,7 +21,16 @@ const IconeTipo = ({ tipo }) => {
 
 const TelaInicioAtividadeUnidade = () => {
   const navigate = useNavigate();
-  const { carregando, erro, unidades } = useTelaInicioAtividadeUnidade();
+  const {
+    carregando,
+    erro,
+    unidades,
+    podeOutrosTipos,
+    podeVibracao,
+    comecarComDica,
+    dica,
+    fecharDica,
+  } = useTelaInicioAtividadeUnidade();
 
   return (
     <>
@@ -32,6 +43,12 @@ const TelaInicioAtividadeUnidade = () => {
             <p className="descricao-atividade">
               Escolha uma unidade e pratique a leitura labial e a fala por tipo de exercício.
             </p>
+            {!podeOutrosTipos && (
+              <p className="descricao-atividade">
+                Seu nível ainda é Iniciante: por enquanto só as atividades de Acompanhante estão
+                liberadas. As demais abrem a partir do nível Básico.
+              </p>
+            )}
           </div>
 
           {carregando && <p className="descricao-atividade">Carregando unidades...</p>}
@@ -44,12 +61,13 @@ const TelaInicioAtividadeUnidade = () => {
           {!carregando &&
             !erro &&
             unidades.map((unidade, indice) => {
-              const temExercicio =
-                unidade.fala.length +
-                  unidade.atividadesFala.length +
-                  unidade.video.length +
-                  unidade.alternativa.length >
-                0;
+              const mostrarVibracao = podeVibracao && unidade.vibracao.length > 0;
+              const mostrarVideo = podeOutrosTipos && unidade.video.length > 0;
+              const mostrarAlternativa = podeOutrosTipos && unidade.alternativa.length > 0;
+              const mostrarFala =
+                podeOutrosTipos && (unidade.atividadesFala.length > 0 || unidade.fala.length > 0);
+
+              const temExercicio = mostrarVibracao || mostrarVideo || mostrarAlternativa || mostrarFala;
 
               return (
                 <section key={unidade.id} className="unidade-bloco">
@@ -58,12 +76,39 @@ const TelaInicioAtividadeUnidade = () => {
                     <div>
                       <h2>{unidade.nome}</h2>
                       {!temExercicio && (
-                        <p className="descricao-atividade">Esta unidade ainda não tem exercícios.</p>
+                        <p className="descricao-atividade">
+                          Esta unidade ainda não tem exercícios liberados pro seu nível.
+                        </p>
                       )}
                     </div>
                   </div>
 
-                  {unidade.video.length > 0 && (
+                  {mostrarVibracao && (
+                    <div className="grupo-tipo-exercicio">
+                      <div className="grupo-tipo-cabecalho">
+                        <IconeTipo tipo="vibracao" />
+                        <h3>{TIPOS.vibracao.titulo}</h3>
+                      </div>
+                      <div className="grid-cards">
+                        {unidade.vibracao.map((licao) => (
+                          <CardExercicio
+                            key={`vb-${licao.id}`}
+                            imagem={<IconeTipo tipo="vibracao" />}
+                            descricao={`Sílaba: "${licao.texto}"`}
+                            corDestaque={TIPOS.vibracao.cor}
+                            concluida={licao.concluida}
+                            onComecar={() =>
+                              comecarComDica(unidade, () =>
+                                navigate(`/atividade/acompanhante/${licao.id}`)
+                              )
+                            }
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {mostrarVideo && (
                     <div className="grupo-tipo-exercicio">
                       <div className="grupo-tipo-cabecalho">
                         <IconeTipo tipo="video" />
@@ -77,14 +122,16 @@ const TelaInicioAtividadeUnidade = () => {
                             descricao={licao.texto}
                             corDestaque={TIPOS.video.cor}
                             concluida={licao.concluida}
-                            onComecar={() => navigate(`/atividade/video/${licao.id}`)}
+                            onComecar={() =>
+                              comecarComDica(unidade, () => navigate(`/atividade/video/${licao.id}`))
+                            }
                           />
                         ))}
                       </div>
                     </div>
                   )}
 
-                  {unidade.alternativa.length > 0 && (
+                  {mostrarAlternativa && (
                     <div className="grupo-tipo-exercicio">
                       <div className="grupo-tipo-cabecalho">
                         <IconeTipo tipo="alternativa" />
@@ -98,14 +145,18 @@ const TelaInicioAtividadeUnidade = () => {
                             descricao={licao.texto}
                             corDestaque={TIPOS.alternativa.cor}
                             concluida={licao.concluida}
-                            onComecar={() => navigate(`/atividade/alternativa/${licao.id}`)}
+                            onComecar={() =>
+                              comecarComDica(unidade, () =>
+                                navigate(`/atividade/alternativa/${licao.id}`)
+                              )
+                            }
                           />
                         ))}
                       </div>
                     </div>
                   )}
 
-                  {(unidade.atividadesFala.length > 0 || unidade.fala.length > 0) && (
+                  {mostrarFala && (
                     <div className="grupo-tipo-exercicio">
                       <div className="grupo-tipo-cabecalho">
                         <IconeTipo tipo="fala" />
@@ -120,7 +171,11 @@ const TelaInicioAtividadeUnidade = () => {
                             descricao={`${atividadeFala.totalExercicios} exercício${atividadeFala.totalExercicios === 1 ? "" : "s"}`}
                             corDestaque={TIPOS.fala.cor}
                             concluida={atividadeFala.concluida}
-                            onComecar={() => navigate(`/atividade/fala-sessao/${atividadeFala.id}`)}
+                            onComecar={() =>
+                              comecarComDica(unidade, () =>
+                                navigate(`/atividade/fala-sessao/${atividadeFala.id}`)
+                              )
+                            }
                           />
                         ))}
 
@@ -131,7 +186,9 @@ const TelaInicioAtividadeUnidade = () => {
                             descricao={`Fale: "${licao.texto}"`}
                             corDestaque={TIPOS.fala.cor}
                             concluida={licao.concluida}
-                            onComecar={() => navigate(`/atividade/fala/${licao.id}`)}
+                            onComecar={() =>
+                              comecarComDica(unidade, () => navigate(`/atividade/fala/${licao.id}`))
+                            }
                           />
                         ))}
                       </div>
@@ -142,6 +199,12 @@ const TelaInicioAtividadeUnidade = () => {
             })}
         </div>
       </div>
+
+      <DicaFonemaModal
+        fonema={dica?.fonema ?? null}
+        onContinuar={dica?.aoContinuar ?? (() => {})}
+        onFechar={fecharDica}
+      />
     </>
   );
 };

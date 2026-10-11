@@ -1,4 +1,4 @@
-import { Home, Dumbbell, Store, Users, BookA, Stethoscope, BookOpen, Phone } from "lucide-react";
+import { Home, Dumbbell, Store, Users, BookA, Stethoscope, BookOpen, Phone, Settings } from "lucide-react";
 
 export const NAV_ITENS_ALUNO = [
   { icon: Home, path: "/dashboard", label: "Dashboard" },
@@ -17,4 +17,5 @@ export const NAV_ITENS_ADMIN = [
   { icon: Home, path: "/dashboard-admin", label: "Início" },
   { icon: Stethoscope, path: "/profissional-admin", label: "Profissionais" },
   { icon: BookOpen, path: "/atividades-admin", label: "Atividades" },
+  { icon: Settings, path: "/configuracoes-admin", label: "Configurações" },
 ];

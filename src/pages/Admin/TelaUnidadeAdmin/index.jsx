@@ -81,12 +81,16 @@ const TITULOS = {
 const TelaUnidadeAdmin = () => {
   const h = useTelaUnidadeAdmin();
   const [abertos, setAbertos] = useState({});
+  const [filtroNivel, setFiltroNivel] = useState("");
 
   if (h.carregando) return <p className="lista-usuarios__vazio">Carregando...</p>;
   if (h.erro && !h.unidade) return <p className="lista-usuarios__vazio">{h.erro}</p>;
 
   const u = h.unidade;
-  const grupos = u.atividadesFala ?? [];
+  const todosGrupos = u.atividadesFala ?? [];
+  const grupos = filtroNivel
+    ? todosGrupos.filter((g) => valorNivelDificuldade(g.nivelDificuldade) === Number(filtroNivel))
+    : todosGrupos;
   const exercicioSemGrupo = (u.licoesFala ?? []).filter((l) => !l.atividadeFalaId);
 
   const { form } = h;
@@ -154,8 +158,30 @@ const TelaUnidadeAdmin = () => {
 
         <section className="lista-usuarios__container">
           <div className="lista-usuarios__controles">
-            <h2 style={{ margin: 0, color: "var(--lipai-text)" }}>Atividades de fala</h2>
-            <Botao texto="Nova atividade de fala" onClick={() => h.abrirForm("atividadeFala")} />
+            <h2 style={{ margin: 0, color: "var(--lipai-text)" }}>
+              Atividades de fala ({grupos.length}/{todosGrupos.length})
+            </h2>
+            <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+              <select
+                value={filtroNivel}
+                onChange={(e) => setFiltroNivel(e.target.value)}
+                style={{
+                  padding: "8px 12px",
+                  borderRadius: 8,
+                  border: "1px solid var(--lipai-border)",
+                  background: "var(--lipai-surface)",
+                  color: "var(--lipai-text)",
+                }}
+              >
+                <option value="">Todos os níveis</option>
+                {NIVEIS_DIFICULDADE.map((n) => (
+                  <option key={n.valor} value={n.valor}>
+                    {n.label}
+                  </option>
+                ))}
+              </select>
+              <Botao texto="Nova atividade de fala" onClick={() => h.abrirForm("atividadeFala")} />
+            </div>
           </div>
 
           {grupos.map((g) => {
@@ -210,7 +236,12 @@ const TelaUnidadeAdmin = () => {
               {exercicioSemGrupo.length} exercício(s) de fala sem atividade (edite um para vincular a uma atividade).
             </p>
           )}
-          {grupos.length === 0 && <p className="lista-usuarios__vazio">Nenhuma atividade de fala.</p>}
+          {grupos.length === 0 && todosGrupos.length === 0 && (
+            <p className="lista-usuarios__vazio">Nenhuma atividade de fala.</p>
+          )}
+          {grupos.length === 0 && todosGrupos.length > 0 && (
+            <p className="lista-usuarios__vazio">Nenhuma atividade de fala nesse nível.</p>
+          )}
         </section>
       </main>
 
