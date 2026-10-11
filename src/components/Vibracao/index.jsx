@@ -1,11 +1,11 @@
 import React from "react";
 import "./index.css";
 
-export default function Vibracao() {
+export default function Vibracao({ silaba = "Pa" }) {
   return (
     <div className="container">
       <div className="card">
-        <span className="text">Pa</span>
+        <span className="text">{silaba}</span>
       </div>
     </div>
   );

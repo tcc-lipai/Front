@@ -47,6 +47,21 @@ export async function concluirVideo(licaoId) {
   }
 }
 
+export async function concluirVibracao(licaoId) {
+  try {
+    const response = await api.post(`/Progresso/vibracao/${licaoId}/concluir`);
+    return { sucesso: true, data: response.data };
+  } catch (error) {
+    if (error.response?.status === 403) {
+      return { sucesso: false, mensagem: SEM_ACESSO };
+    }
+    return {
+      sucesso: false,
+      mensagem: mensagemDeErro(error, "Não foi possível registrar a conclusão da atividade."),
+    };
+  }
+}
+
 /** Histórico de dias de ofensiva (realizados/congelados) do usuário. */
 export async function buscarHistoricoOfensiva(usuarioId) {
   if (!usuarioId) return { sucesso: false, mensagem: "Usuário não identificado.", data: [] };

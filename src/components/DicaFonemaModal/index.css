@@ -1,0 +1,51 @@
+.dica-fonema-modal {
+  max-width: 620px;
+  max-height: 88vh;
+  overflow-y: auto;
+  text-align: left;
+}
+
+.dica-fonema-modal__icone {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+  background: rgba(70, 32, 87, 0.1);
+  color: var(--lipai-primary);
+}
+
+:root[data-theme="dark"] .dica-fonema-modal__icone {
+  background: var(--lipai-surface-2);
+}
+
+.dica-fonema-modal .modal-title {
+  text-align: center;
+}
+
+.dica-fonema-modal__subtitulo {
+  text-align: center;
+  color: var(--lipai-text-muted);
+  font-size: 0.9rem;
+  margin: 0 0 20px;
+}
+
+.dica-fonema-modal__texto {
+  background: var(--lipai-surface-2);
+  border-radius: 14px;
+  padding: 16px 18px;
+  color: var(--lipai-text);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  margin-bottom: 20px;
+}
+
+.dica-fonema-modal__texto p {
+  margin: 0 0 12px;
+}
+
+.dica-fonema-modal__texto p:last-child {
+  margin-bottom: 0;
+}
