@@ -35,6 +35,7 @@ import DashboardAdmin from "../pages/Admin/TelaDashboardAdmin";
 import ProfissionaisAdmin from "../pages/Admin/TelaProfissionaisAdmin";
 import TelaAtividadesAdmin from "../pages/Admin/TelaAtividadesAdmin";
 import TelaUnidadeAdmin from "../pages/Admin/TelaUnidadeAdmin";
+import TelaConfiguracoesAdmin from "../pages/Admin/TelaConfiguracoesAdmin";
 
 const PageTransition = ({ children }) => {
   return (
@@ -320,6 +321,17 @@ function AnimatedRoutes() {
             <RotaProtegida papeis={["Admin"]}>
               <PageTransition>
                 <TelaUnidadeAdmin />
+              </PageTransition>
+            </RotaProtegida>
+          }
+        />
+
+        <Route
+          path="/configuracoes-admin"
+          element={
+            <RotaProtegida papeis={["Admin"]}>
+              <PageTransition>
+                <TelaConfiguracoesAdmin />
               </PageTransition>
             </RotaProtegida>
           }
