@@ -1,8 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { Mic, HelpCircle, Video as VideoIcon, Sparkles, Heart } from "lucide-react";
+import { Mic, HelpCircle, Video as VideoIcon, Sparkles, Heart, TrendingUp } from "lucide-react";
 import CardExercicio from "../../components/CardExercicio";
+import Botao from "../../components/Botao";
 import Navbar from "../../components/NavbarVoltar";
 import DicaFonemaModal from "../../components/DicaFonemaModal";
+import { nomeNivelDificuldade } from "../../services/usuarioService";
 import { useTelaInicioAtividadeUnidade } from "./index.hook";
 
 import "./index.css";
@@ -19,17 +21,32 @@ const IconeTipo = ({ tipo }) => {
   return <Icone size={22} color={cor} strokeWidth={2.2} />;
 };
 
+/** Título de seção com a média de acerto (Fala/Interpretação) ou % concluído (Vídeo/Acompanhante) ao lado. */
+const TituloComMedia = ({ titulo, acerto, concluido }) => (
+  <h3>
+    {titulo}
+    {acerto != null && <span className="grupo-tipo-media"> · {acerto}% de acerto</span>}
+    {acerto == null && concluido != null && (
+      <span className="grupo-tipo-media"> · {concluido}% concluído</span>
+    )}
+  </h3>
+);
+
 const TelaInicioAtividadeUnidade = () => {
   const navigate = useNavigate();
   const {
     carregando,
     erro,
     unidades,
-    podeOutrosTipos,
-    podeVibracao,
+    nivelUsuario,
     comecarComDica,
     dica,
     fecharDica,
+    elegibilidade,
+    subindoNivel,
+    confirmarSubirNivel,
+    resultadoNivel,
+    fecharResultadoNivel,
   } = useTelaInicioAtividadeUnidade();
 
   return (
@@ -43,11 +60,26 @@ const TelaInicioAtividadeUnidade = () => {
             <p className="descricao-atividade">
               Escolha uma unidade e pratique a leitura labial e a fala por tipo de exercício.
             </p>
-            {!podeOutrosTipos && (
+            {nivelUsuario === 1 && (
               <p className="descricao-atividade">
                 Seu nível ainda é Iniciante: por enquanto só as atividades de Acompanhante estão
                 liberadas. As demais abrem a partir do nível Básico.
               </p>
+            )}
+
+            {elegibilidade?.elegivel && (
+              <div className="banner-subir-nivel">
+                <TrendingUp size={20} />
+                <span>
+                  Você completou o nível {nomeNivelDificuldade(elegibilidade.nivelAtual)} com nota
+                  suficiente! Pode subir pra {nomeNivelDificuldade(elegibilidade.proximoNivel)}.
+                </span>
+                <Botao
+                  texto={subindoNivel ? "Subindo..." : "Subir de nível"}
+                  onClick={confirmarSubirNivel}
+                  disabled={subindoNivel}
+                />
+              </div>
             )}
           </div>
 
@@ -61,20 +93,25 @@ const TelaInicioAtividadeUnidade = () => {
           {!carregando &&
             !erro &&
             unidades.map((unidade, indice) => {
-              const mostrarVibracao = podeVibracao && unidade.vibracao.length > 0;
-              const mostrarVideo = podeOutrosTipos && unidade.video.length > 0;
-              const mostrarAlternativa = podeOutrosTipos && unidade.alternativa.length > 0;
-              const mostrarFala =
-                podeOutrosTipos && (unidade.atividadesFala.length > 0 || unidade.fala.length > 0);
+              const mostrarVibracao = unidade.vibracao.length > 0;
+              const mostrarVideo = unidade.video.length > 0;
+              const mostrarAlternativa = unidade.alternativa.length > 0;
+              const mostrarFala = unidade.atividadesFala.length > 0 || unidade.fala.length > 0;
 
               const temExercicio = mostrarVibracao || mostrarVideo || mostrarAlternativa || mostrarFala;
+              const d = unidade.desempenho;
 
               return (
                 <section key={unidade.id} className="unidade-bloco">
                   <div className="unidade-cabecalho">
                     <span className="unidade-numero">{indice + 1}</span>
                     <div>
-                      <h2>{unidade.nome}</h2>
+                      <h2>
+                        {unidade.nome}
+                        {d?.acertoGeralUnidade != null && (
+                          <span className="unidade-media"> · {d.acertoGeralUnidade}% de acerto</span>
+                        )}
+                      </h2>
                       {!temExercicio && (
                         <p className="descricao-atividade">
                           Esta unidade ainda não tem exercícios liberados pro seu nível.
@@ -87,7 +124,7 @@ const TelaInicioAtividadeUnidade = () => {
                     <div className="grupo-tipo-exercicio">
                       <div className="grupo-tipo-cabecalho">
                         <IconeTipo tipo="vibracao" />
-                        <h3>{TIPOS.vibracao.titulo}</h3>
+                        <TituloComMedia titulo={TIPOS.vibracao.titulo} acerto={null} concluido={d?.concluidoVibracao} />
                       </div>
                       <div className="grid-cards">
                         {unidade.vibracao.map((licao) => (
@@ -112,7 +149,7 @@ const TelaInicioAtividadeUnidade = () => {
                     <div className="grupo-tipo-exercicio">
                       <div className="grupo-tipo-cabecalho">
                         <IconeTipo tipo="video" />
-                        <h3>{TIPOS.video.titulo}</h3>
+                        <TituloComMedia titulo={TIPOS.video.titulo} acerto={null} concluido={d?.concluidoVideo} />
                       </div>
                       <div className="grid-cards">
                         {unidade.video.map((licao) => (
@@ -135,7 +172,7 @@ const TelaInicioAtividadeUnidade = () => {
                     <div className="grupo-tipo-exercicio">
                       <div className="grupo-tipo-cabecalho">
                         <IconeTipo tipo="alternativa" />
-                        <h3>{TIPOS.alternativa.titulo}</h3>
+                        <TituloComMedia titulo={TIPOS.alternativa.titulo} acerto={d?.acertoInterpretacao} />
                       </div>
                       <div className="grid-cards">
                         {unidade.alternativa.map((licao) => (
@@ -145,6 +182,7 @@ const TelaInicioAtividadeUnidade = () => {
                             descricao={licao.texto}
                             corDestaque={TIPOS.alternativa.cor}
                             concluida={licao.concluida}
+                            acerto={licao.acerto}
                             onComecar={() =>
                               comecarComDica(unidade, () =>
                                 navigate(`/atividade/alternativa/${licao.id}`)
@@ -160,7 +198,7 @@ const TelaInicioAtividadeUnidade = () => {
                     <div className="grupo-tipo-exercicio">
                       <div className="grupo-tipo-cabecalho">
                         <IconeTipo tipo="fala" />
-                        <h3>{TIPOS.fala.titulo}</h3>
+                        <TituloComMedia titulo={TIPOS.fala.titulo} acerto={d?.acertoFala} />
                       </div>
                       <div className="grid-cards">
                         {unidade.atividadesFala.map((atividadeFala) => (
@@ -168,9 +206,10 @@ const TelaInicioAtividadeUnidade = () => {
                             key={`af-${atividadeFala.id}`}
                             imagem={<Sparkles size={22} color={TIPOS.fala.cor} strokeWidth={2.2} />}
                             titulo={atividadeFala.nome}
-                            descricao={`${atividadeFala.totalExercicios} exercício${atividadeFala.totalExercicios === 1 ? "" : "s"}`}
+                            descricao={`${atividadeFala.nivel} · ${atividadeFala.totalExercicios} exercício${atividadeFala.totalExercicios === 1 ? "" : "s"}`}
                             corDestaque={TIPOS.fala.cor}
                             concluida={atividadeFala.concluida}
+                            acerto={atividadeFala.acerto}
                             onComecar={() =>
                               comecarComDica(unidade, () =>
                                 navigate(`/atividade/fala-sessao/${atividadeFala.id}`)
@@ -186,6 +225,7 @@ const TelaInicioAtividadeUnidade = () => {
                             descricao={`Fale: "${licao.texto}"`}
                             corDestaque={TIPOS.fala.cor}
                             concluida={licao.concluida}
+                            acerto={licao.acerto}
                             onComecar={() =>
                               comecarComDica(unidade, () => navigate(`/atividade/fala/${licao.id}`))
                             }
@@ -205,6 +245,35 @@ const TelaInicioAtividadeUnidade = () => {
         onContinuar={dica?.aoContinuar ?? (() => {})}
         onFechar={fecharDica}
       />
+
+      {resultadoNivel && (
+        <div className="modal-overlay" onClick={fecharResultadoNivel}>
+          <div className="modal-container" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close-x" onClick={fecharResultadoNivel} aria-label="Fechar">
+              &times;
+            </button>
+            {resultadoNivel.sucesso ? (
+              <>
+                <h2 className="modal-title">Parabéns, você subiu de nível!</h2>
+                <p className="descricao-atividade" style={{ textAlign: "center" }}>
+                  Seu novo nível é {nomeNivelDificuldade(resultadoNivel.novoNivel)}. Novas
+                  atividades acabaram de ser liberadas.
+                </p>
+              </>
+            ) : (
+              <>
+                <h2 className="modal-title">Ainda não dá pra subir de nível</h2>
+                <p className="descricao-atividade" style={{ textAlign: "center" }}>
+                  {resultadoNivel.mensagem}
+                </p>
+              </>
+            )}
+            <div className="modal-actions">
+              <Botao texto="Entendi" onClick={fecharResultadoNivel} />
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };

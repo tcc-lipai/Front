@@ -16,6 +16,7 @@ function camposDoForm(tipo, atividadesFala) {
       { name: "titulo", label: "Título", required: true },
       { name: "videoDescricao", label: "Descrição", textarea: true },
       { name: "videoUrl", label: "URL do vídeo", required: true },
+      { name: "nivelDificuldade", label: "Nível", required: true, options: OPCOES_NIVEL },
     ];
   }
   if (tipo === "alternativa") {
@@ -28,6 +29,7 @@ function camposDoForm(tipo, atividadesFala) {
       { name: "respostaCerta", label: "Resposta certa", required: true, options: OPCOES_RESPOSTA },
       { name: "videoUrl", label: "URL do vídeo (opcional)" },
       { name: "valorGanho", label: "Moedas ao acertar", type: "number" },
+      { name: "nivelDificuldade", label: "Nível", required: true, options: OPCOES_NIVEL },
     ];
   }
   if (tipo === "fala") {
@@ -51,15 +53,22 @@ function camposDoForm(tipo, atividadesFala) {
 function valoresIniciais(tipo, item, grupoId) {
   if (!item) {
     if (tipo === "fala") return { nivelDificuldade: "", valorGanho: 0, atividadeFalaId: grupoId ?? "" };
-    if (tipo === "alternativa") return { valorGanho: 0 };
+    if (tipo === "alternativa") return { valorGanho: 0, nivelDificuldade: "" };
+    if (tipo === "video") return { nivelDificuldade: "" };
     return {};
   }
   const nivel = String(valorNivelDificuldade(item.nivelDificuldade) ?? "");
-  if (tipo === "video") return { titulo: item.titulo, videoDescricao: item.videoDescricao, videoUrl: item.videoUrl };
+  if (tipo === "video") {
+    return {
+      titulo: item.titulo, videoDescricao: item.videoDescricao, videoUrl: item.videoUrl,
+      nivelDificuldade: nivel,
+    };
+  }
   if (tipo === "alternativa") {
     return {
       pergunta: item.pergunta, a: item.a, b: item.b, c: item.c, d: item.d,
       respostaCerta: item.respostaCerta, videoUrl: item.videoUrl, valorGanho: item.valorGanho,
+      nivelDificuldade: nivel,
     };
   }
   if (tipo === "fala") {
@@ -120,7 +129,9 @@ const TelaUnidadeAdmin = () => {
               <li key={v.idLicaoVideo} className="card-usuario">
                 <div className="card-usuario__info">
                   <h3 className="card-usuario__nome">{v.titulo}</h3>
-                  <p className="card-usuario__descricao">{v.videoUrl}</p>
+                  <p className="card-usuario__descricao">
+                    {nomeNivelDificuldade(v.nivelDificuldade)} · {v.videoUrl}
+                  </p>
                 </div>
                 <div className="card-usuario__acoes">
                   <Botao texto="Editar" variante="secundario" onClick={() => h.abrirForm("video", v)} />
@@ -143,7 +154,7 @@ const TelaUnidadeAdmin = () => {
                 <div className="card-usuario__info">
                   <h3 className="card-usuario__nome">{a.pergunta}</h3>
                   <p className="card-usuario__descricao">
-                    Resposta: {String(a.respostaCerta).toUpperCase()} · {a.valorGanho} moedas
+                    {nomeNivelDificuldade(a.nivelDificuldade)} · Resposta: {String(a.respostaCerta).toUpperCase()} · {a.valorGanho} moedas
                   </p>
                 </div>
                 <div className="card-usuario__acoes">

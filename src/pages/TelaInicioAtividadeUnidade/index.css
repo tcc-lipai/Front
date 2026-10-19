@@ -66,6 +66,31 @@
   margin: 0;
 }
 
+.unidade-media {
+  color: var(--lipai-text-muted, #8858a0);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.banner-subir-nivel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  background: color-mix(in srgb, var(--lipai-primary, #8a3fa0) 12%, transparent);
+  border: 1px solid var(--lipai-primary, #8a3fa0);
+  color: var(--lipai-text, #2e1740);
+  border-radius: 14px;
+  padding: 14px 18px;
+  margin-top: 12px;
+}
+
+.banner-subir-nivel span {
+  flex: 1;
+  min-width: 200px;
+  font-size: 14px;
+}
+
 .grupo-tipo-exercicio {
   margin-bottom: 26px;
   padding-left: 54px;
@@ -89,6 +114,12 @@
   text-transform: uppercase;
   letter-spacing: 0.04em;
   margin: 0;
+}
+
+.grupo-tipo-media {
+  text-transform: none;
+  font-weight: 600;
+  letter-spacing: normal;
 }
 
 .grid-cards {

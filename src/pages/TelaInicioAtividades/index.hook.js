@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { listarUnidades } from "../../services/unidadeService";
 import { salvarItem, dessalvarItem, listarItensSalvos } from "../../services/atividadeService";
+import { buscarDesempenho, buscarDesempenhoPorUnidade } from "../../services/progressoService";
 import api from "../../services/api";
 
 /**
@@ -142,6 +143,9 @@ export function useTelaInicioAtividades() {
 
   const [atividadesSalvasIds, setAtividadesSalvasIds] = useState(new Set());
 
+  const [desempenhoTipos, setDesempenhoTipos] = useState(null);
+  const [desempenhoUnidades, setDesempenhoUnidades] = useState([]);
+
   const [modalAberto, setModalAberto] = useState(null); // "realizadas" | "salvas" | null
 
   const abrirPerfil = () => setDrawerAberto(true);
@@ -201,6 +205,13 @@ export function useTelaInicioAtividades() {
           );
           setAtividadesSalvasIds(chaves);
         }
+
+        const [resDesempenho, resDesempenhoUnidades] = await Promise.all([
+          buscarDesempenho(usuarioId),
+          buscarDesempenhoPorUnidade(usuarioId),
+        ]);
+        if (resDesempenho.sucesso) setDesempenhoTipos(resDesempenho.data);
+        if (resDesempenhoUnidades.sucesso) setDesempenhoUnidades(resDesempenhoUnidades.data);
       }
 
       setCarregando(false);
@@ -245,7 +256,35 @@ export function useTelaInicioAtividades() {
   );
   const unidadesSalvas = useMemo(() => resumoUnidades.filter((u) => u.salva), [resumoUnidades]);
 
+  // BarrasDeDesempenho calcula (acertos/total)*100 — como já guardamos os
+  // percentuais prontos, passamos total=100 pra ele só reexibir o valor.
+  const barrasPorTipo = useMemo(() => {
+    if (!desempenhoTipos) return [];
+    return [
+      { label: "Fala", acertos: desempenhoTipos.fala ?? desempenhoTipos.Fala ?? 0, total: 100 },
+      {
+        label: "Interpretação",
+        acertos: desempenhoTipos.interpretacao ?? desempenhoTipos.Interpretacao ?? 0,
+        total: 100,
+      },
+    ];
+  }, [desempenhoTipos]);
+
+  const barrasPorUnidade = useMemo(
+    () =>
+      desempenhoUnidades
+        .filter((u) => (u.acertoGeralUnidade ?? u.AcertoGeralUnidade) != null)
+        .map((u) => ({
+          label: u.nome ?? u.Nome,
+          acertos: u.acertoGeralUnidade ?? u.AcertoGeralUnidade,
+          total: 100,
+        })),
+    [desempenhoUnidades]
+  );
+
   return {
+    barrasPorTipo,
+    barrasPorUnidade,
     drawerAberto,
     abrirPerfil,
     fecharPerfil,

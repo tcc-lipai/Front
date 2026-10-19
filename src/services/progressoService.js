@@ -93,3 +93,46 @@ export async function buscarDesempenho(usuarioId) {
     };
   }
 }
+
+/** Desempenho (acerto/conclusão por tipo) de cada unidade, pro usuário logado. */
+export async function buscarDesempenhoPorUnidade(usuarioId) {
+  if (!usuarioId) return { sucesso: false, mensagem: "Usuário não identificado.", data: [] };
+
+  try {
+    const response = await api.get(`/Progresso/desempenho-unidades/${usuarioId}`);
+    return { sucesso: true, data: Array.isArray(response.data) ? response.data : [] };
+  } catch (error) {
+    return {
+      sucesso: false,
+      mensagem: mensagemDeErro(error, "Não foi possível carregar o desempenho por unidade."),
+      data: [],
+    };
+  }
+}
+
+/** Se o usuário logado já pode subir de nível (completou o nível atual com 70%+ de acerto). */
+export async function buscarElegibilidadeNivel() {
+  try {
+    const response = await api.get("/Progresso/nivel/elegibilidade");
+    return { sucesso: true, data: response.data };
+  } catch (error) {
+    return {
+      sucesso: false,
+      mensagem: mensagemDeErro(error, "Não foi possível verificar sua elegibilidade de nível."),
+      data: null,
+    };
+  }
+}
+
+/** Sobe o usuário logado pro próximo nível (back-end revalida antes de aplicar). */
+export async function subirNivel() {
+  try {
+    const response = await api.post("/Progresso/nivel/subir");
+    return { sucesso: true, data: response.data };
+  } catch (error) {
+    return {
+      sucesso: false,
+      mensagem: mensagemDeErro(error, "Você ainda não completou os requisitos pra subir de nível."),
+    };
+  }
+}

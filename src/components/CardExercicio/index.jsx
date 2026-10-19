@@ -8,6 +8,7 @@ const CardExercicio = ({
   descricao,
   corDestaque = "#7A3A8E",
   concluida = false,
+  acerto = null,
   onComecar,
 }) => {
   return (
@@ -24,6 +25,17 @@ const CardExercicio = ({
       <div className="card-exercicio__info">
         {titulo && <strong className="card-exercicio__titulo">{titulo}</strong>}
         <p className="card-exercicio__descricao">{descricao}</p>
+        {concluida && acerto != null && (
+          <div className="card-exercicio__acerto" title={`Nível de acerto: ${Math.round(acerto)}%`}>
+            <div className="card-exercicio__acerto-trilho">
+              <div
+                className="card-exercicio__acerto-preenchimento"
+                style={{ width: `${Math.min(Math.round(acerto), 100)}%` }}
+              />
+            </div>
+            <span className="card-exercicio__acerto-valor">{Math.round(acerto)}%</span>
+          </div>
+        )}
       </div>
 
       <Botao

@@ -90,6 +90,33 @@
   scroll-behavior: smooth;
 }
 
+.painel-desempenho {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.painel-desempenho__bloco {
+  flex: 1 1 280px;
+  background: var(--lipai-surface, #fff);
+  border: 1px solid var(--lipai-border, #ece2f2);
+  border-radius: 14px;
+  padding: 16px 18px;
+}
+
+.painel-desempenho__bloco h3 {
+  margin: 0 0 10px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--lipai-text, #462057);
+}
+
+.painel-desempenho__unidades {
+  max-height: 260px;
+  overflow-y: auto;
+}
+
 /* Scroll customizado para .infos */
 .infos::-webkit-scrollbar {
   height: 6px;

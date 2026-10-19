@@ -19,7 +19,13 @@ export const TIPOS = {
 };
 
 function corpoVideo(unidadeId, v) {
-  return { UnidadeId: unidadeId, Titulo: v.titulo, VideoDescricao: v.videoDescricao ?? "", VideoUrl: v.videoUrl };
+  return {
+    UnidadeId: unidadeId,
+    Titulo: v.titulo,
+    VideoDescricao: v.videoDescricao ?? "",
+    VideoUrl: v.videoUrl,
+    NivelDificuldade: Number(v.nivelDificuldade),
+  };
 }
 
 function corpoAlternativa(unidadeId, v) {
@@ -33,6 +39,7 @@ function corpoAlternativa(unidadeId, v) {
     D: v.d,
     RespostaCerta: v.respostaCerta,
     ValorGanho: Number(v.valorGanho || 0),
+    NivelDificuldade: Number(v.nivelDificuldade),
   };
 }
 

@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { listarUnidades } from "../../services/unidadeService";
-import { buscarUsuario, valorNivelDificuldade } from "../../services/usuarioService";
+import { buscarUsuario, valorNivelDificuldade, nomeNivelDificuldade } from "../../services/usuarioService";
+import {
+  buscarDesempenhoPorUnidade,
+  buscarElegibilidadeNivel,
+  subirNivel as subirNivelServico,
+} from "../../services/progressoService";
 import api from "../../services/api";
 
 function lista(objeto, ...nomes) {
@@ -15,10 +20,19 @@ function extrairFonema(nomeUnidade) {
   return match ? match[1].toUpperCase() : null;
 }
 
-function normalizarUnidade(unidade, concluidas) {
+/** true se o conteúdo (nivelItem) está liberado pro nível do usuário (acesso cumulativo). */
+function nivelLiberado(nivelItem, nivelUsuario) {
+  const nivel = valorNivelDificuldade(nivelItem);
+  if (nivel == null || nivelUsuario == null) return true;
+  return nivelUsuario >= nivel;
+}
+
+function normalizarUnidade(unidade, concluidas, nivelUsuario, desempenho) {
   const todasFala = lista(unidade, "licoesFala", "LicoesFala");
   const falaAvulsa = todasFala.filter(
-    (l) => (l.atividadeFalaId ?? l.AtividadeFalaId ?? null) == null
+    (l) =>
+      (l.atividadeFalaId ?? l.AtividadeFalaId ?? null) == null &&
+      nivelLiberado(l.nivelDificuldade ?? l.NivelDificuldade, nivelUsuario)
   );
 
   const vibracao = lista(unidade, "licoesVibracao", "LicoesVibracao").map((l) => {
@@ -30,23 +44,28 @@ function normalizarUnidade(unidade, concluidas) {
     };
   });
 
-  const video = lista(unidade, "licoesVideo", "LicoesVideo").map((l) => {
-    const id = l.idLicaoVideo ?? l.IdLicaoVideo;
-    return {
-      id,
-      texto: l.titulo ?? l.Titulo ?? "Vídeo-aula",
-      concluida: concluidas.video.has(id),
-    };
-  });
+  const video = lista(unidade, "licoesVideo", "LicoesVideo")
+    .filter((l) => nivelLiberado(l.nivelDificuldade ?? l.NivelDificuldade, nivelUsuario))
+    .map((l) => {
+      const id = l.idLicaoVideo ?? l.IdLicaoVideo;
+      return {
+        id,
+        texto: l.titulo ?? l.Titulo ?? "Vídeo-aula",
+        concluida: concluidas.video.has(id),
+      };
+    });
 
-  const alternativa = lista(unidade, "licoesAlternativa", "LicoesAlternativa").map((l) => {
-    const id = l.idLicaoAlternativa ?? l.IdLicaoAlternativa;
-    return {
-      id,
-      texto: l.pergunta ?? l.Pergunta ?? "Exercício de interpretação",
-      concluida: concluidas.alternativa.has(id),
-    };
-  });
+  const alternativa = lista(unidade, "licoesAlternativa", "LicoesAlternativa")
+    .filter((l) => nivelLiberado(l.nivelDificuldade ?? l.NivelDificuldade, nivelUsuario))
+    .map((l) => {
+      const id = l.idLicaoAlternativa ?? l.IdLicaoAlternativa;
+      return {
+        id,
+        texto: l.pergunta ?? l.Pergunta ?? "Exercício de interpretação",
+        concluida: concluidas.alternativa.has(id),
+        acerto: concluidas.alternativa.get(id) ?? null,
+      };
+    });
 
   const fala = falaAvulsa.map((l) => {
     const id = l.idLicaoFala ?? l.IdLicaoFala;
@@ -54,20 +73,29 @@ function normalizarUnidade(unidade, concluidas) {
       id,
       texto: l.fraseEsperada ?? l.FraseEsperada ?? "Exercício de fala",
       concluida: concluidas.fala.has(id),
+      acerto: concluidas.fala.get(id) ?? null,
     };
   });
 
-  const atividadesFala = lista(unidade, "atividadesFala", "AtividadesFala").map((af) => {
-    const exercicios = lista(af, "exercicios", "Exercicios");
-    const idsExercicios = exercicios.map((e) => e.idLicaoFala ?? e.IdLicaoFala);
-    return {
-      id: af.idAtividadeFala ?? af.IdAtividadeFala,
-      nome: af.nome ?? af.Nome ?? "Atividade de fala",
-      totalExercicios: idsExercicios.length,
-      concluida:
-        idsExercicios.length > 0 && idsExercicios.every((id) => concluidas.fala.has(id)),
-    };
-  });
+  const atividadesFala = lista(unidade, "atividadesFala", "AtividadesFala")
+    .filter((af) => nivelLiberado(af.nivelDificuldade ?? af.NivelDificuldade, nivelUsuario))
+    .map((af) => {
+      const exercicios = lista(af, "exercicios", "Exercicios");
+      const idsExercicios = exercicios.map((e) => e.idLicaoFala ?? e.IdLicaoFala);
+      const scores = idsExercicios
+        .map((id) => concluidas.fala.get(id))
+        .filter((score) => score != null);
+      return {
+        id: af.idAtividadeFala ?? af.IdAtividadeFala,
+        nome: af.nome ?? af.Nome ?? "Atividade de fala",
+        nivel: nomeNivelDificuldade(af.nivelDificuldade ?? af.NivelDificuldade),
+        totalExercicios: idsExercicios.length,
+        concluida:
+          idsExercicios.length > 0 && idsExercicios.every((id) => concluidas.fala.has(id)),
+        acerto:
+          scores.length > 0 ? scores.reduce((soma, s) => soma + s, 0) / scores.length : null,
+      };
+    });
 
   const nome = unidade.nome ?? unidade.Nome ?? "Unidade";
   const temAlgumConcluido =
@@ -87,6 +115,91 @@ function normalizarUnidade(unidade, concluidas) {
     atividadesFala,
     video,
     alternativa,
+    desempenho: desempenho ?? null,
+  };
+}
+
+/** Busca tudo que a tela precisa (sem tocar em estado do React). */
+async function buscarDadosTela() {
+  const usuarioId = localStorage.getItem("id");
+
+  let nivel = null;
+  if (usuarioId) {
+    const resUsuario = await buscarUsuario(usuarioId);
+    if (resUsuario.sucesso) {
+      nivel = valorNivelDificuldade(
+        resUsuario.data.nivelDificuldade ?? resUsuario.data.NivelDificuldade
+      );
+    }
+  }
+
+  const [resultado, resDesempenho, resElegibilidade] = await Promise.all([
+    listarUnidades(),
+    usuarioId ? buscarDesempenhoPorUnidade(usuarioId) : Promise.resolve({ sucesso: false, data: [] }),
+    buscarElegibilidadeNivel(),
+  ]);
+
+  if (!resultado.sucesso) {
+    return { erro: resultado.mensagem };
+  }
+
+  const desempenhoPorUnidade = new Map();
+  if (resDesempenho.sucesso) {
+    for (const d of resDesempenho.data) {
+      desempenhoPorUnidade.set(d.unidadeId ?? d.UnidadeId, d);
+    }
+  }
+
+  const concluidas = {
+    alternativa: new Map(),
+    fala: new Map(),
+    video: new Set(),
+    vibracao: new Set(),
+  };
+
+  if (usuarioId) {
+    try {
+      const res = await api.get(`/Progresso/usuario/${usuarioId}`);
+      const data = res.data;
+
+      for (const p of data?.Alternativas ?? data?.alternativas ?? []) {
+        const status = p.Status ?? p.status;
+        const correta = p.Correta ?? p.correta;
+        if ((status === "Concluido" || status === 2) && correta) {
+          concluidas.alternativa.set(p.LicaoAlternativaId ?? p.licaoAlternativaId, 100);
+        }
+      }
+      for (const p of data?.Falas ?? data?.falas ?? []) {
+        const status = p.Status ?? p.status;
+        const correta = p.Correta ?? p.correta;
+        if ((status === "Concluido" || status === 2) && correta) {
+          const score = p.ScoreAcustico ?? p.scoreAcustico;
+          concluidas.fala.set(p.LicaoFalaId ?? p.licaoFalaId, score != null ? Math.round(score) : 100);
+        }
+      }
+      for (const p of data?.Videos ?? data?.videos ?? []) {
+        const status = p.Status ?? p.status;
+        if (status === "Concluido" || status === 2) {
+          concluidas.video.add(p.LicaoVideoId ?? p.licaoVideoId);
+        }
+      }
+      for (const p of data?.Vibracoes ?? data?.vibracoes ?? []) {
+        const status = p.Status ?? p.status;
+        if (status === "Concluido" || status === 2) {
+          concluidas.vibracao.add(p.LicaoVibracaoId ?? p.licaoVibracaoId);
+        }
+      }
+    } catch {
+      // progresso indisponível — segue sem marcar nada como concluído
+    }
+  }
+
+  return {
+    nivel,
+    elegibilidade: resElegibilidade.sucesso ? resElegibilidade.data : null,
+    unidades: resultado.data.map((u) =>
+      normalizarUnidade(u, concluidas, nivel, desempenhoPorUnidade.get(u.idUnidade ?? u.IdUnidade))
+    ),
   };
 }
 
@@ -94,84 +207,28 @@ export function useTelaInicioAtividadeUnidade() {
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState("");
   const [unidades, setUnidades] = useState([]);
-  const [podeOutrosTipos, setPodeOutrosTipos] = useState(true);
-  const [podeVibracao, setPodeVibracao] = useState(true);
+  const [nivelUsuario, setNivelUsuario] = useState(null);
   const [dica, setDica] = useState(null);
+  const [elegibilidade, setElegibilidade] = useState(null);
+  const [subindoNivel, setSubindoNivel] = useState(false);
+  const [resultadoNivel, setResultadoNivel] = useState(null);
 
   useEffect(() => {
     let ativo = true;
 
     async function carregar() {
-      const usuarioId = localStorage.getItem("id");
-
-      let nivel = null;
-      if (usuarioId) {
-        const resUsuario = await buscarUsuario(usuarioId);
-        if (resUsuario.sucesso) {
-          nivel = valorNivelDificuldade(
-            resUsuario.data.nivelDificuldade ?? resUsuario.data.NivelDificuldade
-          );
-        }
-      }
-      if (!ativo) return;
-      // Iniciante (1) só acompanhante; Básico (2) em diante libera o resto também
-      setPodeOutrosTipos(nivel !== 1);
-      setPodeVibracao(nivel === 1 || nivel === 2 || nivel == null);
-
-      const resultado = await listarUnidades();
+      const dados = await buscarDadosTela();
       if (!ativo) return;
 
-      if (!resultado.sucesso) {
-        setErro(resultado.mensagem);
+      if (dados.erro) {
+        setErro(dados.erro);
         setCarregando(false);
         return;
       }
 
-      const concluidas = {
-        alternativa: new Set(),
-        fala: new Set(),
-        video: new Set(),
-        vibracao: new Set(),
-      };
-
-      if (usuarioId) {
-        try {
-          const res = await api.get(`/Progresso/usuario/${usuarioId}`);
-          const data = res.data;
-
-          for (const p of data?.Alternativas ?? data?.alternativas ?? []) {
-            const status = p.Status ?? p.status;
-            const correta = p.Correta ?? p.correta;
-            if ((status === "Concluido" || status === 2) && correta) {
-              concluidas.alternativa.add(p.LicaoAlternativaId ?? p.licaoAlternativaId);
-            }
-          }
-          for (const p of data?.Falas ?? data?.falas ?? []) {
-            const status = p.Status ?? p.status;
-            const correta = p.Correta ?? p.correta;
-            if ((status === "Concluido" || status === 2) && correta) {
-              concluidas.fala.add(p.LicaoFalaId ?? p.licaoFalaId);
-            }
-          }
-          for (const p of data?.Videos ?? data?.videos ?? []) {
-            const status = p.Status ?? p.status;
-            if (status === "Concluido" || status === 2) {
-              concluidas.video.add(p.LicaoVideoId ?? p.licaoVideoId);
-            }
-          }
-          for (const p of data?.Vibracoes ?? data?.vibracoes ?? []) {
-            const status = p.Status ?? p.status;
-            if (status === "Concluido" || status === 2) {
-              concluidas.vibracao.add(p.LicaoVibracaoId ?? p.licaoVibracaoId);
-            }
-          }
-        } catch {
-          // progresso indisponível — segue sem marcar nada como concluído
-        }
-      }
-
-      if (!ativo) return;
-      setUnidades(resultado.data.map((u) => normalizarUnidade(u, concluidas)));
+      setNivelUsuario(dados.nivel);
+      setElegibilidade(dados.elegibilidade);
+      setUnidades(dados.unidades);
       setCarregando(false);
     }
 
@@ -195,14 +252,42 @@ export function useTelaInicioAtividadeUnidade() {
     setDica(null);
   }
 
+  async function confirmarSubirNivel() {
+    setSubindoNivel(true);
+    const res = await subirNivelServico();
+
+    if (!res.sucesso) {
+      setSubindoNivel(false);
+      setResultadoNivel({ sucesso: false, mensagem: res.mensagem });
+      return;
+    }
+
+    setResultadoNivel({ sucesso: true, novoNivel: res.data.novoNivel ?? res.data.NovoNivel });
+
+    const dados = await buscarDadosTela();
+    setSubindoNivel(false);
+    if (dados.erro) return;
+    setNivelUsuario(dados.nivel);
+    setElegibilidade(dados.elegibilidade);
+    setUnidades(dados.unidades);
+  }
+
+  function fecharResultadoNivel() {
+    setResultadoNivel(null);
+  }
+
   return {
     carregando,
     erro,
     unidades,
-    podeOutrosTipos,
-    podeVibracao,
+    nivelUsuario,
     comecarComDica,
     dica,
     fecharDica,
+    elegibilidade,
+    subindoNivel,
+    confirmarSubirNivel,
+    resultadoNivel,
+    fecharResultadoNivel,
   };
 }

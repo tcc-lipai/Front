@@ -82,6 +82,37 @@
   background: transparent !important;
 }
 
+.card-exercicio__acerto {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  background: transparent !important;
+}
+
+.card-exercicio__acerto-trilho {
+  flex: 1;
+  height: 4px;
+  min-width: 40px;
+  border-radius: 3px;
+  background: var(--lipai-border, #ece2f2);
+  overflow: hidden;
+}
+
+.card-exercicio__acerto-preenchimento {
+  height: 100%;
+  border-radius: 3px;
+  background: var(--cor-destaque);
+  transition: width 0.3s ease-out;
+}
+
+.card-exercicio__acerto-valor {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--cor-destaque);
+}
+
 .card-exercicio__botao {
   flex-shrink: 0;
   border-radius: 20px !important;

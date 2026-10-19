@@ -6,20 +6,23 @@ const BarrasDeDesempenho = ({ dados = [], className = "" }) => {
     return <p className="barras-empty-state">Nenhum dado de desempenho disponível.</p>;
   }
 
-  const obterCoresPorLabel = (label) => {
+  // só a cor do preenchimento/bolinha muda por tipo — o texto usa a cor
+  // padrão do tema (--lipai-text) pra ficar legível tanto no claro quanto
+  // no escuro.
+  const obterCorPorLabel = (label) => {
     const nomeLimpo = label.toLowerCase().trim();
 
     if (nomeLimpo.includes("interpretação") || nomeLimpo.includes("interpretacao")) {
-      return { preenchimento: "#F0BFFF", texto: "#7A3A8E" };
+      return "#F0BFFF";
     }
     if (nomeLimpo.includes("fala")) {
-      return { preenchimento: "#B78CC4", texto: "#7A3A8E" };
+      return "#B78CC4";
     }
     if (nomeLimpo.includes("video") || nomeLimpo.includes("vídeo")) {
-      return { preenchimento: "#705578", texto: "#462057" };
+      return "#8A6E92";
     }
 
-    return { preenchimento: "#7A3A8E", texto: "#462057" };
+    return "#8A3FA0";
   };
 
   return (
@@ -30,16 +33,13 @@ const BarrasDeDesempenho = ({ dados = [], className = "" }) => {
         const porcentagem = total > 0 ? Math.round((acertos / total) * 100) : 0;
         const larguraCss = `${Math.min(porcentagem, 100)}%`;
 
-        const cores = obterCoresPorLabel(label);
+        const cor = obterCorPorLabel(label);
 
         return (
           <div key={index} className="barra-item-linha">
             <div className="barra-lado-esquerdo">
-              <span
-                className="barra-status-dot"
-                style={{ backgroundColor: cores.preenchimento }}
-              ></span>
-              <span className="barra-label" style={{ color: cores.texto }}>
+              <span className="barra-status-dot" style={{ backgroundColor: cor }}></span>
+              <span className="barra-label" title={label}>
                 {label}
               </span>
             </div>
@@ -49,10 +49,12 @@ const BarrasDeDesempenho = ({ dados = [], className = "" }) => {
                 className="barra-preenchimento"
                 style={{
                   width: larguraCss,
-                  backgroundColor: cores.preenchimento,
+                  backgroundColor: cor,
                 }}
               ></div>
             </div>
+
+            <span className="barra-porcentagem">{porcentagem}%</span>
           </div>
         );
       })}

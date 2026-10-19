@@ -6,6 +6,7 @@ import "./index.css";
 import Navbar from "../../components/Navbar";
 import Filtro from "../../components/Filtro";
 import Botao from "../../components/Botao";
+import BarrasDeDesempenho from "../../components/BarrasDeDesempenho";
 import { HeaderActions } from "../../components/HeaderActions";
 import { UserProfileDrawer } from "../../components/UserProfileDrawer";
 
@@ -70,6 +71,8 @@ const ListaUnidadesModal = ({ titulo, unidades, vazio, onFechar, onIrParaUnidade
 
 const TelaInicioAtividades = () => {
   const {
+    barrasPorTipo,
+    barrasPorUnidade,
     drawerAberto,
     abrirPerfil,
     fecharPerfil,
@@ -140,6 +143,26 @@ const TelaInicioAtividades = () => {
               </div>
             </button>
           </div>
+
+          {(barrasPorTipo.length > 0 || barrasPorUnidade.length > 0) && (
+            <>
+              <span className="painel-progresso-titulo">Seu desempenho</span>
+              <div className="painel-desempenho">
+                {barrasPorTipo.length > 0 && (
+                  <div className="painel-desempenho__bloco">
+                    <h3>Por tipo de atividade</h3>
+                    <BarrasDeDesempenho dados={barrasPorTipo} />
+                  </div>
+                )}
+                {barrasPorUnidade.length > 0 && (
+                  <div className="painel-desempenho__bloco painel-desempenho__unidades">
+                    <h3>Por unidade</h3>
+                    <BarrasDeDesempenho dados={barrasPorUnidade} />
+                  </div>
+                )}
+              </div>
+            </>
+          )}
 
           <h2>Unidades disponíveis</h2>
           {carregando && <p className="secao-carregando">Carregando...</p>}
