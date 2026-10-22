@@ -6,7 +6,6 @@ import {
   atualizarUsuario,
   valorNivelDificuldade,
 } from "../../../services/usuarioService";
-import { buscarProfissional } from "../../../services/profissionalService";
 
 const FORM_VAZIO = {
   nome: "",
@@ -41,17 +40,9 @@ export function useTelaPacienteCadastro() {
       }
       const u = res.data;
 
-      // preenche o código do profissional atual: sem isso, salvar a edição mandaria ""
-      // e o back-end desvincularia o paciente do profissional sem ninguém pedir
-      let codigoProfissional = "";
-      const profissionalId = u.profissionalId ?? u.ProfissionalId;
-      if (profissionalId) {
-        const resProf = await buscarProfissional(profissionalId);
-        if (!ativo) return;
-        if (resProf.sucesso) {
-          codigoProfissional = resProf.data.codigoAcesso ?? resProf.data.CodigoAcesso ?? "";
-        }
-      }
+      // preenche os códigos dos profissionais atuais (até 3): sem isso, salvar a edição mandaria ""
+      // e o back-end desvincularia o paciente de todos sem ninguém pedir
+      const codigoProfissional = (u.codigosProfissionais ?? u.CodigosProfissionais ?? []).join(", ");
 
       setForm({
         nome: u.nome ?? u.Nome ?? "",

@@ -362,6 +362,24 @@ próxima sessão consiga de fato abrir o Chrome e testar visualmente.
 - **Pendências novas**: não há formulário de Vibração no admin; vídeos do
   dicionário/interpretação/vídeo-aula ainda sem conteúdo (previsto pela equipe).
 
+### Sessão de 2026-10-22 (parte 4) — até 3 profissionais por aluno
+
+- **Modelo**: `Usuario.ProfissionalId` virou a tabela de vínculo
+  `VinculosProfissional (UsuarioId, ProfissionalId, DataVinculo)`, máximo 3 por
+  aluno (`VinculoProfissional.Maximo`). Migration `VinculosProfissional` copia os
+  vínculos antigos antes de apagar a coluna. Excluir aluno ou profissional apaga
+  só os vínculos (cascade).
+- **Aluno** (Perfil → Configurações → "Profissionais vinculados", componente
+  `ProfissionaisVinculados`): lista os vinculados (n/3), vincula por código,
+  desvincula com confirmação. API: `GET /Usuario/meus-profissionais`,
+  `POST /Usuario/vincular-profissional`, `DELETE /Usuario/meus-profissionais/{id}`.
+- **Admin**: no cadastro/edição do paciente o campo aceita até 3 códigos
+  separados por vírgula e **substitui o conjunto**; vazio desvincula de todos.
+- Todas as checagens "é paciente deste profissional" (acompanhamento, progresso,
+  conquistas, notificações) passaram a olhar a tabela de vínculos.
+- Conta de demonstração do profissional: `prof.demo@lipai.com` / `Prof@12345`
+  (código TCRD7H), já vinculada ao aluno `gaelpinhoarthur@gmail.com`.
+
 ## 3. Como rodar tudo localmente
 
 ```bash

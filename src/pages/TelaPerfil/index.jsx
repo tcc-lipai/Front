@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserSidebar } from "../../components/UserSidebar";
+import ProfissionaisVinculados from "../../components/ProfissionaisVinculados";
 import { useTheme } from "../../hooks/useTheme";
 import useLogout from "./index.hook";
 import {
@@ -321,6 +322,10 @@ const TelaPerfil = () => {
                 </label>
               </div>
             </div>
+          </div>
+
+          <div className="prof-vinc-wrapper">
+            <ProfissionaisVinculados />
           </div>
 
           <div className="logout-section-wrapper">

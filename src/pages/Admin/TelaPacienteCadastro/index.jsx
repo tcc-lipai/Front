@@ -91,7 +91,7 @@ const CadastrarPaciente = () => {
               </div>
 
               <div className="form-group input-opcional">
-                <label htmlFor="codigoProfissional">Código do profissional:</label>
+                <label htmlFor="codigoProfissional">Código(s) do profissional:</label>
                 <input
                   type="text"
                   id="codigoProfissional"
@@ -99,7 +99,7 @@ const CadastrarPaciente = () => {
                   value={form.codigoProfissional}
                   onChange={handleChange}
                 />
-                <span className="label-opcional">*Opcional</span>
+                <span className="label-opcional">*Opcional · até 3 profissionais, separados por vírgula</span>
               </div>
 
               {erro && <span className="cadastro-erro">{erro}</span>}

@@ -171,3 +171,49 @@ export function calcularPercentualAtividades(concluidas, total) {
   if (!Number.isFinite(total) || total <= 0) return 0;
   return Math.min(100, Math.round((concluidas / total) * 100));
 }
+
+/** Profissionais vinculados ao aluno logado (e o limite máximo). */
+export async function listarMeusProfissionais() {
+  try {
+    const response = await api.get("/Usuario/meus-profissionais");
+    const d = response.data;
+    const lista = d.profissionais ?? d.Profissionais ?? [];
+    return {
+      sucesso: true,
+      data: {
+        maximo: d.maximo ?? d.Maximo ?? 3,
+        profissionais: lista.map((p) => ({
+          id: p.idProfissional ?? p.IdProfissional,
+          nome: p.nome ?? p.Nome,
+          email: p.email ?? p.Email,
+          registro: p.registro ?? p.Registro,
+        })),
+      },
+    };
+  } catch (error) {
+    return {
+      sucesso: false,
+      mensagem: mensagemDeErro(error, "Não foi possível carregar os profissionais vinculados."),
+    };
+  }
+}
+
+/** Vincula o aluno logado a um profissional pelo código de acesso. */
+export async function vincularProfissional(codigoProfissional) {
+  try {
+    const response = await api.post("/Usuario/vincular-profissional", { codigoProfissional });
+    return { sucesso: true, nome: response.data?.profissional ?? response.data?.Profissional };
+  } catch (error) {
+    return { sucesso: false, mensagem: mensagemDeErro(error, "Não foi possível vincular o profissional.") };
+  }
+}
+
+/** Remove o vínculo do aluno logado com um profissional. */
+export async function desvincularProfissional(profissionalId) {
+  try {
+    await api.delete(`/Usuario/meus-profissionais/${profissionalId}`);
+    return { sucesso: true };
+  } catch (error) {
+    return { sucesso: false, mensagem: mensagemDeErro(error, "Não foi possível desvincular o profissional.") };
+  }
+}

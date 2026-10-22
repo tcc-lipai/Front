@@ -1,0 +1,150 @@
+.prof-vinc {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  background: var(--lipai-surface, #fff);
+  border: 1px solid var(--lipai-border, #e7dcf1);
+  border-radius: 20px;
+  padding: 24px 28px;
+  box-sizing: border-box;
+}
+
+.prof-vinc__topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.prof-vinc__topo .config-card-title {
+  margin: 0;
+}
+
+.prof-vinc__contador {
+  background: var(--lipai-primary-soft, #f1e6f8);
+  color: var(--lipai-primary, #7a3a8e);
+  font-weight: 700;
+  font-size: 13px;
+  padding: 4px 12px;
+  border-radius: 999px;
+}
+
+.prof-vinc__vazio {
+  color: var(--lipai-text-muted, #6f6377);
+  font-size: 14px;
+  margin: 0;
+}
+
+.prof-vinc__lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.prof-vinc__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--lipai-surface-2, #f5eefb);
+  border-radius: 14px;
+  padding: 10px 14px;
+}
+
+.prof-vinc__avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--lipai-primary, #7a3a8e);
+  color: var(--lipai-on-primary, #fff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.prof-vinc__dados {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+  color: var(--lipai-text, #241033);
+}
+
+.prof-vinc__dados small {
+  color: var(--lipai-text-muted, #6f6377);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.prof-vinc__remover {
+  background: transparent;
+  border: none;
+  color: var(--lipai-danger, #c0392b);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  display: flex;
+}
+
+.prof-vinc__remover:hover {
+  background: color-mix(in srgb, var(--lipai-danger, #c0392b) 12%, transparent);
+}
+
+.prof-vinc__form {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.prof-vinc__form input {
+  flex: 1;
+  min-width: 180px;
+  height: 42px;
+  border: 1px solid var(--lipai-border-strong, #d8c6e6);
+  border-radius: 999px;
+  padding: 0 18px;
+  background: var(--lipai-field, #fff);
+  color: var(--lipai-text, #241033);
+  font-family: inherit;
+  text-transform: uppercase;
+}
+
+.prof-vinc__form input:disabled {
+  opacity: 0.6;
+  text-transform: none;
+}
+
+.prof-vinc__form button {
+  height: 42px;
+  padding: 0 24px;
+  border: none;
+  border-radius: 999px;
+  background: var(--lipai-primary, #7a3a8e);
+  color: var(--lipai-on-primary, #fff);
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.prof-vinc__form button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.prof-vinc__msg {
+  margin: 0;
+  font-size: 14px;
+}
+
+.prof-vinc__msg--ok {
+  color: var(--lipai-success, #3f9256);
+}
+
+.prof-vinc__msg--erro {
+  color: var(--lipai-danger, #c0392b);
+}
