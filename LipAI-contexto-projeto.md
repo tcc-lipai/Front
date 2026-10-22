@@ -6,8 +6,9 @@ criação de conteúdo pedagógico real (26 fonemas) e otimizações de
 performance. Serve como brief técnico para a próxima IA/pessoa dar
 continuidade — leia antes de sugerir próximos passos.
 
-**Atualizado em**: 2026-10-19 (última sessão: expansão de conteúdo de fala
-por nível, tela de Configurações do Admin, otimização de carregamento).
+**Atualizado em**: 2026-10-22 (última sessão: correção do acesso cumulativo
+por nível em Fala/Interpretação/Vídeo, sistema de progressão de nível,
+exibição de nível de acerto e gráficos de desempenho).
 
 ## 1. Visão geral — 3 repositórios
 
@@ -107,21 +108,26 @@ Antes só usavam dados mock. Agora:
   (`ProfissionalController.GetPacientes` agora retorna `Email` e
   `UltimaAtividadeData` também).
 
-### Sessão atual — conteúdo pedagógico por fonema + nível de acesso + performance
+### Sessão de 2026-10-19 — conteúdo pedagógico por fonema + nível de acesso + performance
 
 Essa foi a sessão mais substancial depois da integração inicial. Resumo:
 
 **1. Sistema de nível de acesso (já existia no código, só faltava conteúdo
-pra valer a pena)** — `Services/RegraNivelService.cs`:
+pra valer a pena — e tinha um bug, ver sessão de 2026-10-22 mais abaixo)**
+— `Services/RegraNivelService.cs` HOJE:
 ```csharp
-PodeAcessarVibracao(nivel) => nivel == Iniciante || nivel == Basico;
-PodeAcessarOutrosTipos(nivel) => nivel != Iniciante;
+PodeAcessarVibracao(nivel) => true; // vibração = nível 1, sempre liberada
+PodeAcessarConteudo(nivelUsuario, nivelConteudo) => (int)nivelUsuario >= (int)nivelConteudo;
 ```
-Ou seja: usuário **Iniciante** só pode fazer atividades de **Vibração**
-(Acompanhante); a partir de **Básico** libera fala/vídeo/alternativa. Isso
-é aplicado tanto no back (`LicaoController.VerificarAcesso`,
-`ProgressoController`) quanto no front (`TelaInicioAtividadeUnidade`, que
-mostra um banner explicando a restrição pro Iniciante).
+Acesso **cumulativo**: usuário só vê/acessa Fala, Interpretação e Vídeo com
+nível `<=` o seu (Iniciante só Vibração, já que o conteúdo de Fala/
+Interpretação/Vídeo começa em Básico). Aplicado no back
+(`LicaoController.VerificarAcesso`, `ProgressoController`) e no front
+(`TelaInicioAtividadeUnidade`, que filtra o conteúdo por nível antes de
+exibir e mostra um banner pro Iniciante). **A versão binária antiga
+(`PodeAcessarOutrosTipos`, só bloqueava Iniciante sem olhar o nível do
+conteúdo) ainda existe no código só pro motor adaptativo de fala — ver
+sessão de 2026-10-22.**
 
 **2. Conteúdo real criado para as 26 unidades (fonema A → Z)**:
 - Fonte: `LipAI_LLM/banco_conteudo.json` (extraído dos `.docx` de
@@ -191,6 +197,91 @@ foi um caso raro de sobrecarga; vale considerar adicionar um
 `CancellationToken` propagado do front (abortar a chamada HTTP se o
 usuário navegar pra longe) como melhoria futura.
 
+### Sessão de 2026-10-22 — acesso cumulativo por nível, progressão e desempenho
+
+O usuário reportou, com print em mãos, um usuário **Básico** vendo e
+conseguindo acessar grupos de Fala **Intermediário e Avançado** — bug real.
+Investigando: `RegraNivelService.PodeAcessarOutrosTipos` só checava
+`nivel != Iniciante`, nunca comparava com o nível do conteúdo específico.
+Além disso `LicaoVideo` e `LicaoAlternativa` **nem tinham campo de nível**
+no banco (só `LicaoFala` tinha). Essa sessão corrigiu isso e foi além,
+implementando progressão de nível e exibição de desempenho:
+
+**1. Acesso cumulativo de verdade**:
+- Migration `AdicionaNivelVideoAlternativa`: `NivelDificuldade` adicionado
+  em `LicaoVideo` e `LicaoAlternativa` (as 2 linhas pré-existentes foram
+  marcadas como Básico por default).
+- `RegraNivelService.PodeAcessarConteudo(nivelUsuario, nivelConteudo)` —
+  substitui a checagem binária pra Fala/Alternativa/Vídeo (ver seção 1).
+  Aplicado em `LicaoController` (os 3 `Get*PorId` passaram a buscar a
+  lição ANTES de checar acesso, pra comparar nível real) e em
+  `ProgressoController` (`IniciarAlternativa`, `IniciarFala`, e
+  `ConcluirVideo`, que **não tinha NENHUMA checagem de nível antes** —
+  bug de segurança à parte, corrigido também).
+- Front (`TelaInicioAtividadeUnidade/index.hook.js`): `atividadesFala`,
+  `licoesAlternativa` e `licoesVideo` agora são filtrados por
+  `nivelDificuldade <= nivelUsuario` antes de normalizar pra exibição —
+  antes a tela só escondia a SEÇÃO inteira por um booleano genérico,
+  mostrando tudo dentro dela sem filtro nenhum.
+
+**2. Progressão de nível** (`ProgressoController.cs`, novo):
+- `GET /Progresso/nivel/elegibilidade` e `POST /Progresso/nivel/subir`.
+- Regra: usuário sobe de nível quando completa **100% do conteúdo do
+  nível atual** (Fala + Alternativa + Vídeo, "sem contar os anteriores" —
+  filtro `NivelDificuldade == nivelAtual`, não `<=`) com **média de acerto
+  >= 70%** entre Fala+Alternativa (Vídeo só precisa estar concluído, não
+  tem "acerto"). Pra Iniciante→Básico o gate é só completar 100% da
+  Vibração (não tem conceito de acerto nela).
+- `POST /nivel/subir` **revalida tudo de novo no servidor** antes de
+  aplicar — nunca confia em flag do front.
+- Front: botão "Subir de nível" em `TelaInicioAtividadeUnidade`, aparece
+  só quando elegível, mostra o nível de destino.
+
+**3. Nível de acerto exibido em 3 níveis de granularidade** — métrica
+usada em todo lugar: razão de tentativas `Correta=true` entre as
+concluídas (mesma lógica que `GET /Progresso/desempenho` já usava pro
+Dashboard, só que agora também por unidade/tipo/grupo). Vídeo e Vibração
+**nunca** mostram "% de acerto" (não têm certo/errado), só "% concluído".
+- Por atividade individual concluída: barra + porcentagem no
+  `CardExercicio` (prop nova `acerto`) — pra Fala usa o `ScoreAcustico`
+  real da tentativa, pra Alternativa é binário (100/0).
+- Por grupo de Fala (`AtividadeFala`) e por tipo dentro da unidade: média
+  calculada via `GET /Progresso/desempenho-unidades/{id}` (novo endpoint,
+  agregação feita no banco com `COUNT`/`GroupBy`, não traz linha por
+  linha pro client).
+- Por unidade inteira: mesmo endpoint, campo `AcertoGeralUnidade`
+  (combina Fala+Alternativa, exclui Vídeo/Vibração).
+
+**4. Gráficos de desempenho** em `TelaInicioAtividades` (tela "Seu
+progresso"): reusa o componente `BarrasDeDesempenho`, que já existia mas
+tinha 2 bugs achados nesta sessão — cor de texto fixa pensada só pro modo
+claro (ficava ilegível no escuro, já que a maioria do app roda em dark
+mode) e a porcentagem calculada mas **nunca renderizada** (`<span>`
+faltando). Os dois corrigidos; agora o texto usa `var(--lipai-text)` e a
+% aparece ao lado de cada barra.
+
+**5. Incidente de build no meio da sessão (sem gravidade)**: ao renomear
+uma função dentro de `BarrasDeDesempenho.jsx`, o HMR do Vite pegou o
+arquivo entre a mudança da declaração e a do call site — gerou um erro
+transiente no console do navegador (`obterCoresPorLabel is not defined`).
+Resolvido no próprio fluxo normal de edição (segunda edição corrigiu o
+call site); registrado aqui só porque apareceu no log do Vite durante a
+verificação, não porque seja um problema persistente.
+
+Tudo commitado e enviado direto pra `main` no Front e no Backend. O
+LipAI_LLM não teve mudança nesta sessão, só foi sincronizado localmente
+com o que já estava em `origin/main` (tinha sido mergeado por PR
+separadamente, fora desta sessão).
+
+**Ainda não testado visualmente num navegador real** — a sessão não tinha
+nenhuma ferramenta de automação de browser disponível. Verificação foi
+100% via chamadas diretas à API (login como usuário de teste, promoção de
+nível pelo Admin, checagem de 403 em conteúdo acima do nível, checagem de
+elegibilidade/subida de nível, comparação de tempos do endpoint resumido).
+**Setup em andamento**: o dono do projeto vai instalar o Playwright MCP
+(`claude mcp add playwright -- npx -y @playwright/mcp@latest`) pra que a
+próxima sessão consiga de fato abrir o Chrome e testar visualmente.
+
 ## 3. Como rodar tudo localmente
 
 ```bash
@@ -240,8 +331,8 @@ na seção 2.
 - `AtividadeFala` **(novo)** — agrupa `LicaoFala` por nome + nível
   (`{Nome, NivelDificuldade, UnidadeId, Exercicios: List<LicaoFala>}`)
 - `LicaoFala { FraseEsperada, NivelDificuldade, ValorGanho, AtividadeFalaId (novo, nullable), Ordem (novo) }`
-- `LicaoVideo { Titulo, VideoDescricao, VideoUrl }`
-- `LicaoAlternativa { Pergunta, A, B, C, D, RespostaCerta, ValorGanho }`
+- `LicaoVideo { Titulo, VideoDescricao, VideoUrl, NivelDificuldade (novo em 2026-10-22) }`
+- `LicaoAlternativa { Pergunta, A, B, C, D, RespostaCerta, ValorGanho, NivelDificuldade (novo em 2026-10-22) }`
 - `LicaoVibracao { Silaba, Instrucao }`
 - `ProgressoFala` / `ProgressoAlternativa` / `ProgressoVideo` /
   `ProgressoVibracao` **(novo)** — 1 registro por tentativa/conclusão por
@@ -285,7 +376,10 @@ POST   /Progresso/fala/{licaoId}/iniciar  ·  POST .../concluir           multip
 POST   /Progresso/video/{licaoId}/concluir
 POST   /Progresso/vibracao/{licaoId}/concluir                            NOVO
 GET    /Progresso/fala/proximo-exercicio                                 motor adaptativo
-GET    /Progresso/desempenho/{usuarioId}                                 {interpretacao, fala} em %
+GET    /Progresso/desempenho/{usuarioId}                                 {interpretacao, fala} em % (geral da conta)
+GET    /Progresso/desempenho-unidades/{usuarioId}                        NOVO (2026-10-22) — acerto/concluído por unidade e por tipo
+GET    /Progresso/nivel/elegibilidade                                    NOVO (2026-10-22) — {nivelAtual, proximoNivel, elegivel}
+POST   /Progresso/nivel/subir                                            NOVO (2026-10-22) — revalida no servidor e aplica
 GET    /Progresso/usuario/{usuarioId}                                    inclui Alternativas/Falas/Videos/Vibracoes
 GET    /Progresso/ofensiva/{usuarioId}
 
@@ -358,25 +452,41 @@ segurança.
    só a unidade que o usuário abre (`GET /Unidades/{id}`, que já existe),
    em vez das 26 de uma vez; (b) paginar os grupos de fala dentro de uma
    unidade (hoje uma letra como "T" manda ~150 exercícios de uma vez).
-5. **`TelaContatoMedico`** (contato do profissional) — `POST /Contato`
+5. **Nenhuma verificação visual em navegador real ainda** — tudo desde o
+   início do projeto foi verificado via API/Playwright headless em sessões
+   anteriores, mas a sessão de 2026-10-22 (acesso por nível, progressão,
+   acerto, gráficos) só foi testada via chamadas de API, sem abrir o app
+   de fato num Chrome. O dono do projeto está configurando o Playwright
+   MCP pra próxima sessão conseguir fazer isso — **primeira coisa a fazer
+   assim que a ferramenta estiver disponível**: abrir
+   `TelaInicioAtividadeUnidade` logado como usuário Básico e conferir que
+   só aparece conteúdo até Básico, e que a barra de acerto/gráficos
+   realmente renderizam como esperado.
+6. **`TelaContatoMedico`** (contato do profissional) — `POST /Contato`
    exige role `"Usuario"`, profissional não consegue usar. Precisa ajuste
    no back se quiser abrir pra profissional.
-6. **Lint pré-existente**: 15 erros (`react-hooks/purity`,
+7. **Lint pré-existente**: 15 erros (`react-hooks/purity`,
    `useRef(Date.now())` chamado durante o render) em `TelaAtividadeAlternativa`,
    `TelaAtividadeFala`, `TelaAtividadeFalaSessao`, `TelaAtividadeVideo` —
-   já existiam antes desta sessão (vieram de um PR anterior), não quebram
-   nada em runtime, mas é dívida técnica fácil de limpar.
-7. Bundle do front está em ~550kB minificado — Vite avisa sobre isso;
+   já existiam antes da sessão de 2026-10-19 (vieram de um PR anterior),
+   não quebram nada em runtime, mas é dívida técnica fácil de limpar.
+8. Bundle do front está em ~550kB minificado — Vite avisa sobre isso;
    nada crítico, mas dá pra fazer code-splitting por rota no futuro.
-8. Não há testes automatizados (unitários/integração) em nenhum dos 3
+9. Não há testes automatizados (unitários/integração) em nenhum dos 3
    repos — tudo foi verificado manualmente (ver seção 8), mas isso não
    fica no CI.
-9. O "motor adaptativo" (`/ia/proximo-exercicio`, repetição espaçada por
-   fonema) é um sistema de conteúdo **paralelo** ao sistema estático de
-   `Unidade`/`AtividadeFala`/`LicaoFala` criado nesta sessão — os dois
-   coexistem hoje e usam a mesma fonte (`banco_conteudo.json`), mas não
-   estão unificados. Vale decidir, em algum momento, se o fluxo do aluno
-   deve usar um, o outro, ou os dois pra coisas diferentes.
+10. O "motor adaptativo" (`/ia/proximo-exercicio`, repetição espaçada por
+    fonema) é um sistema de conteúdo **paralelo** ao sistema estático de
+    `Unidade`/`AtividadeFala`/`LicaoFala`. Os dois coexistem hoje e usam a
+    mesma fonte (`banco_conteudo.json`), mas não estão unificados. O
+    motor adaptativo também ainda usa a checagem binária antiga de nível
+    (`PodeAcessarOutrosTipos`, não a cumulativa nova) porque não tem uma
+    lição específica pra comparar — vale revisar se isso é um problema
+    real (ele já bloqueia Iniciante corretamente, só não escala por nível
+    pros demais, mas também não tem "níveis" de conteúdo fixo pra
+    comparar, já que gera dinamicamente). Vale decidir, em algum momento,
+    se o fluxo do aluno deve usar o motor adaptativo, o sistema estático,
+    ou os dois pra coisas diferentes.
 
 ## 8. Como foi verificado (pra próxima pessoa/IA confiar no que está aqui)
 
@@ -392,19 +502,32 @@ Cada fase foi testada de verdade, não só lida:
   automático → dashboard → dicionário → loja (compra real) →
   notificações → atividades salvas → interpretação → vídeo → contato —
   11 rotas, zero erro de console, zero 5xx.
-- **Conteúdo por fonema (sessão atual)**: criado via chamadas reais à API
+- **Conteúdo por fonema (sessão de 2026-10-19)**: criado via chamadas reais à API
   Admin (não script local só gerando JSON) — verificado item a item: sem
   duplicados em nenhuma das 26 unidades (checado B, T, M em detalhe),
   níveis de dificuldade corretos por grupo, total de 2.981 exercícios de
   fala confirmado por query real no banco.
-- **Progresso de vibração (sessão atual)**: testado end-to-end com usuário
+- **Progresso de vibração (sessão de 2026-10-19)**: testado end-to-end com usuário
   de teste — conclusão de vibração funcionando pra Iniciante, acesso a
   fala bloqueado (403) pra Iniciante, liberado depois de promover pra
   Básico via Admin, e `GetProgressoUsuario` devolvendo `Vibracoes`
   corretamente. Usuário de teste revertido pra Iniciante no final.
-- **Endpoint resumido (sessão atual)**: comparado lado a lado com o
-  completo na mesma chamada — 2553ms vs 161ms, mesmos 26 registros,
+- **Endpoint resumido (sessão de 2026-10-19)**: comparado lado a lado com
+  o completo na mesma chamada — 2553ms vs 161ms, mesmos 26 registros,
   números de contagem conferidos manualmente.
+- **Acesso cumulativo por nível (sessão de 2026-10-22)**: usuário de teste
+  promovido/rebaixado via Admin entre Iniciante/Básico/Intermediário,
+  confirmando em cada nível: 403 em `GET /Licao/fala/{id}` e
+  `POST /Progresso/.../iniciar` pra conteúdo acima do nível, 200 pra
+  conteúdo no nível ou abaixo, e `ConcluirVideo` (que antes não tinha
+  checagem nenhuma) bloqueando corretamente. `GET /Progresso/nivel/
+  elegibilidade` testado retornando `elegivel: false` com usuário recém-
+  criado e `POST /nivel/subir` retornando 400 nessa condição (rejeita
+  tentativa sem ter completado o nível). **Não testado**: o caminho
+  "completo e elegível" de ponta a ponta (exigiria terminar todo o
+  conteúdo de um nível inteiro com um usuário de teste, não foi feito por
+  tempo — a lógica foi validada por inspeção de código + os casos de
+  borda acima).
 
 ## 9. Detalhes internos: Motor Adaptativo e Controllers
 
@@ -452,8 +575,14 @@ Cada fase foi testada de verdade, não só lida:
   (`facil/medio/dificil`) **já corrigido** — usa `NIVEIS_DIFICULDADE` real.
 - **`TelaInicioAtividades`**: já não usa mais array mock — conectada à
   API junto com o resto do fluxo do aluno.
-- **Sessão atual**: ver seção 2 ("Sessão atual") pra tudo que foi feito
-  — conteúdo por fonema, progresso de vibração, dica de fonema, filtro de
-  nível no admin, tela de configurações do admin, endpoint resumido de
-  unidades, e o incidente de travamento do backend (investigado e
-  resolvido).
+- **Sessão de 2026-10-19**: conteúdo por fonema, progresso de vibração,
+  dica de fonema, filtro de nível no admin, tela de configurações do
+  admin, endpoint resumido de unidades, e o incidente de travamento do
+  backend (investigado e resolvido). Ver seção 2.
+- **Sessão de 2026-10-22**: corrigido o bug de acesso por nível não
+  cumulativo (usuário Básico via conteúdo de qualquer nível), adicionado
+  `NivelDificuldade` em Vídeo/Alternativa (faltava), sistema de
+  progressão de nível, exibição de acerto em 3 granularidades (atividade/
+  tipo/unidade) e gráficos de desempenho — incluindo 2 bugs corrigidos no
+  componente `BarrasDeDesempenho` (texto ilegível no modo escuro, % nunca
+  renderizada). Ver seção 2.
