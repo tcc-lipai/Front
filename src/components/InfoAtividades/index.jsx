@@ -13,6 +13,9 @@ export default function InfoAtividade({
   salva = false,
   limiteDescricao = 140,
   modoAdmin = false,
+  semSalvar = false,
+  badges = null,
+  rotuloAbrir = null,
   onAvancar,
   onToggleSalvar,
   onEditar,
@@ -39,7 +42,7 @@ export default function InfoAtividade({
 
   return (
     <article className={`info-atividade ${modoAdmin ? "info-atividade--admin" : ""}`}>
-      {!modoAdmin && (
+      {!modoAdmin && !semSalvar && (
         <button
           type="button"
           className={`info-atividade__bookmark ${
@@ -62,10 +65,25 @@ export default function InfoAtividade({
         <p className="info-atividade__descricao">{descricaoFormatada}</p>
 
         <div className="info-atividade__badges">
-          <span className="info-atividade__badge info-atividade__badge--dificuldade">
-            {dificuldadeFormatada}
-          </span>
-          <span className="info-atividade__badge info-atividade__badge--tipo">{tipo}</span>
+          {badges ? (
+            badges.map((texto, i) => (
+              <span
+                key={texto}
+                className={`info-atividade__badge ${
+                  i === 0 ? "info-atividade__badge--dificuldade" : "info-atividade__badge--tipo"
+                }`}
+              >
+                {texto}
+              </span>
+            ))
+          ) : (
+            <>
+              <span className="info-atividade__badge info-atividade__badge--dificuldade">
+                {dificuldadeFormatada}
+              </span>
+              <span className="info-atividade__badge info-atividade__badge--tipo">{tipo}</span>
+            </>
+          )}
         </div>
 
         <div className="info-atividade__progresso-wrapper">
@@ -106,7 +124,7 @@ export default function InfoAtividade({
           type="button"
           className="info-atividade__avancar"
           onClick={handleAvancar}
-          aria-label={`Abrir atividade ${titulo}`}
+          aria-label={rotuloAbrir ?? `Abrir atividade ${titulo}`}
         >
           <ChevronRight />
         </button>

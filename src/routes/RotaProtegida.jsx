@@ -15,7 +15,9 @@ function RotaProtegida({ children, papeis }) {
   if (papeis && papeis.length > 0) {
     const role = localStorage.getItem("role");
     if (!papeis.includes(role)) {
-      return <Navigate to="/dashboard" replace />;
+      // manda cada perfil de volta pra sua própria área (senão o profissional cairia na tela do aluno)
+      const inicio = role === "Admin" ? "/dashboard-admin" : role === "Profissional" ? "/dashboard-medico" : "/dashboard";
+      return <Navigate to={inicio} replace />;
     }
   }
 

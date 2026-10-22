@@ -4,24 +4,28 @@ import { useHeaderActions } from "./index.hook";
 import "./index.css";
 
 export const HeaderActions = ({ onOpenProfile }) => {
-  const { xp, hasNotification, handleNotificationClick } = useHeaderActions();
+  const { ehAluno, xp, hasNotification, handleNotificationClick } = useHeaderActions();
 
   return (
     <div className="header-actions-container">
-      <div className="star-counter">
-        <Star className="star-icon" color="#FFC107" fill="#FFC107" size={20} />
-        <span className="xp-value">{xp}</span>
-      </div>
+      {ehAluno && (
+        <div className="star-counter">
+          <Star className="star-icon" color="#FFC107" fill="#FFC107" size={20} />
+          <span className="xp-value">{xp}</span>
+        </div>
+      )}
 
       <div className="buttons-wrapper">
-        <button
-          type="button"
-          className={`action-btn notification-btn ${hasNotification ? "active" : ""}`}
-          onClick={handleNotificationClick}
-          aria-label="Notificações"
-        >
-          <Bell size={20} color="white" fill="white" />
-        </button>
+        {ehAluno && (
+          <button
+            type="button"
+            className={`action-btn notification-btn ${hasNotification ? "active" : ""}`}
+            onClick={handleNotificationClick}
+            aria-label="Notificações"
+          >
+            <Bell size={20} color="white" fill="white" />
+          </button>
+        )}
 
         <button
           type="button"

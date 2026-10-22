@@ -18,8 +18,8 @@
   display: flex;
   align-items: center;
   gap: 14px;
-  min-width: 130px;
-  max-width: 130px;
+  min-width: 156px;
+  max-width: 156px;
 }
 
 .barra-status-dot {

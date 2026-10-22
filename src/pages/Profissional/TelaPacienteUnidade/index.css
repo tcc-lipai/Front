@@ -75,3 +75,15 @@
     gap: 35px;
   }
 }
+
+.unidade-estado {
+  text-align: center;
+  color: #6c5375;
+  margin: 20px 0;
+}
+
+.unidade-legenda {
+  color: #6c5375;
+  font-size: 13px;
+  margin: 0;
+}

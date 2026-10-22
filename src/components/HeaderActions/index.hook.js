@@ -8,8 +8,11 @@ export const useHeaderActions = () => {
   const [temNaoLida, setTemNaoLida] = useState(false);
   const navigate = useNavigate();
   const usuarioId = localStorage.getItem("id");
+  // moedas e notificações são do aluno; profissional/admin não têm (e a API devolveria 403)
+  const ehAluno = localStorage.getItem("role") === "Usuario";
 
   useEffect(() => {
+    if (!ehAluno) return;
     let ativo = true;
 
     async function carregar() {
@@ -33,13 +36,14 @@ export const useHeaderActions = () => {
     return () => {
       ativo = false;
     };
-  }, [usuarioId]);
+  }, [usuarioId, ehAluno]);
 
   const handleNotificationClick = () => {
     navigate("/notificacoes");
   };
 
   return {
+    ehAluno,
     xp: saldo,
     hasNotification: temNaoLida,
     handleNotificationClick,

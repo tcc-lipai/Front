@@ -27,7 +27,7 @@ const DashboardMedico = lazy(() => import("../pages/Profissional/TelaDashboardMe
 const CadastrarPaciente = lazy(() => import("../pages/Admin/TelaPacienteCadastro"));
 const TelaProfissionalCadastro = lazy(() => import("../pages/Admin/TelaProfissionalCadastro"));
 const TelaPaciente = lazy(() => import("../pages/Profissional/TelaPaciente"));
-const TelaPacienteAtividade = lazy(() => import("../pages/Profissional/TelaPacienteAtividade"));
+const TelaPacienteUnidade = lazy(() => import("../pages/Profissional/TelaPacienteUnidade"));
 
 const TelaConfiguracoesMedico = lazy(() => import("../pages/Profissional/TelaConfiguracoesMedico"));
 const TelaContatoMedico = lazy(() => import("../pages/Profissional/TelaContatoMedico"));
@@ -94,7 +94,7 @@ function AnimatedRoutes() {
         <Route
           path="/dashboard"
           element={
-            <RotaProtegida>
+            <RotaProtegida papeis={["Usuario"]}>
               <PageTransition>
                 <TelaDashboard />
               </PageTransition>
@@ -104,7 +104,7 @@ function AnimatedRoutes() {
         <Route
           path="/perfil"
           element={
-            <RotaProtegida>
+            <RotaProtegida papeis={["Usuario"]}>
               <PageTransition>
                 <TelaPerfil />
               </PageTransition>
@@ -114,7 +114,7 @@ function AnimatedRoutes() {
         <Route
           path="/contato"
           element={
-            <RotaProtegida>
+            <RotaProtegida papeis={["Usuario"]}>
               <PageTransition>
                 <TelaContato />
               </PageTransition>
@@ -124,7 +124,7 @@ function AnimatedRoutes() {
         <Route
           path="/notificacoes"
           element={
-            <RotaProtegida>
+            <RotaProtegida papeis={["Usuario"]}>
               <PageTransition>
                 <TelaNotificacoes />
               </PageTransition>
@@ -134,7 +134,7 @@ function AnimatedRoutes() {
         <Route
           path="/conquistas"
           element={
-            <RotaProtegida>
+            <RotaProtegida papeis={["Usuario"]}>
               <PageTransition>
                 <TelaConquistas />
               </PageTransition>
@@ -144,7 +144,7 @@ function AnimatedRoutes() {
         <Route
           path="/dicionario"
           element={
-            <RotaProtegida>
+            <RotaProtegida papeis={["Usuario"]}>
               <PageTransition>
                 <TelaDicionario />
               </PageTransition>
@@ -154,7 +154,7 @@ function AnimatedRoutes() {
         <Route
           path="/loja"
           element={
-            <RotaProtegida>
+            <RotaProtegida papeis={["Usuario"]}>
               <PageTransition>
                 <TelaLoja />
               </PageTransition>
@@ -165,7 +165,7 @@ function AnimatedRoutes() {
         <Route
           path="/acompanhante"
           element={
-            <RotaProtegida>
+            <RotaProtegida papeis={["Usuario"]}>
               <PageTransition>
                 <TelaAcompanhante />
               </PageTransition>
@@ -175,7 +175,7 @@ function AnimatedRoutes() {
         <Route
           path="/atividades-salvas"
           element={
-            <RotaProtegida>
+            <RotaProtegida papeis={["Usuario"]}>
               <PageTransition>
                 <TelaAtividadeSalva />
               </PageTransition>
@@ -185,7 +185,7 @@ function AnimatedRoutes() {
         <Route
           path="/inicio-atividades"
           element={
-            <RotaProtegida>
+            <RotaProtegida papeis={["Usuario"]}>
               <PageTransition>
                 <TelaInicioAtividades />
               </PageTransition>
@@ -195,7 +195,7 @@ function AnimatedRoutes() {
         <Route
           path="/atividades-unidades"
           element={
-            <RotaProtegida>
+            <RotaProtegida papeis={["Usuario"]}>
               <PageTransition>
                 <TelaInicioAtividadeUnidade />
               </PageTransition>
@@ -205,7 +205,7 @@ function AnimatedRoutes() {
         <Route
           path="/atividade/alternativa/:id"
           element={
-            <RotaProtegida>
+            <RotaProtegida papeis={["Usuario"]}>
               <PageTransition>
                 <TelaAtividadeAlternativa />
               </PageTransition>
@@ -215,7 +215,7 @@ function AnimatedRoutes() {
         <Route
           path="/atividade/fala/:id"
           element={
-            <RotaProtegida>
+            <RotaProtegida papeis={["Usuario"]}>
               <PageTransition>
                 <TelaAtividadeFala />
               </PageTransition>
@@ -225,7 +225,7 @@ function AnimatedRoutes() {
         <Route
           path="/atividade/fala-sessao/:id"
           element={
-            <RotaProtegida>
+            <RotaProtegida papeis={["Usuario"]}>
               <PageTransition>
                 <TelaAtividadeFalaSessao />
               </PageTransition>
@@ -235,7 +235,7 @@ function AnimatedRoutes() {
         <Route
           path="/atividade/acompanhante/:id"
           element={
-            <RotaProtegida>
+            <RotaProtegida papeis={["Usuario"]}>
               <PageTransition>
                 <TelaAcompanhanteIA />
               </PageTransition>
@@ -245,7 +245,7 @@ function AnimatedRoutes() {
         <Route
           path="/atividade/video/:id"
           element={
-            <RotaProtegida>
+            <RotaProtegida papeis={["Usuario"]}>
               <PageTransition>
                 <TelaAtividadeVideo />
               </PageTransition>
@@ -379,9 +379,9 @@ function AnimatedRoutes() {
           }
         />
         <Route
-          path="/tela-paciente"
+          path="/paciente/:id"
           element={
-            <RotaProtegida>
+            <RotaProtegida papeis={["Profissional"]}>
               <PageTransition>
                 <TelaPaciente />
               </PageTransition>
@@ -389,11 +389,11 @@ function AnimatedRoutes() {
           }
         />
         <Route
-          path="/atividade-paciente/:id"
+          path="/paciente/:id/unidade/:unidadeId"
           element={
-            <RotaProtegida>
+            <RotaProtegida papeis={["Profissional"]}>
               <PageTransition>
-                <TelaPacienteAtividade />
+                <TelaPacienteUnidade />
               </PageTransition>
             </RotaProtegida>
           }

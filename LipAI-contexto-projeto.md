@@ -331,6 +331,37 @@ próxima sessão consiga de fato abrir o Chrome e testar visualmente.
   uma modalidade "treino livre/revisão" por fonema fraco, que não depende
   de nível fixo. Nada foi mudado no código.
 
+### Sessão de 2026-10-22 (parte 3) — área do profissional + testes ponta a ponta
+
+- **Área do profissional (baseada no Figma)**: painel "Seus Pacientes" →
+  "Ver" abre `/paciente/:id` (perfil, nível, Ativo/Não ativo, diagnóstico,
+  *Desempenho Geral* com Interpretação/Fala = % de acerto e Vídeo/Acompanhante
+  = % concluído, busca de unidades e uma lista com **unidades** — no lugar de
+  "atividades" — com status e barra de progresso) → seta abre
+  `/paciente/:id/unidade/:unidadeId` (desempenho da unidade por tipo e um bloco
+  por grupo de fala com acerto, exercícios concluídos e nota média).
+  Rotas antigas `/tela-paciente` e `/atividade-paciente/:id` (eram mock) saíram.
+- **Backend**: `AcompanhamentoController` novo —
+  `GET /api/Acompanhamento/paciente/{id}/unidades` e `.../unidades/{unidadeId}`.
+  Só considera o conteúdo liberado pro nível do paciente; um grupo de fala só
+  conta como concluído quando todos os exercícios foram acertados. Autorização:
+  aluno só o próprio, profissional só pacientes vinculados, admin qualquer.
+- **Guardas de rota**: rotas do aluno agora exigem papel `Usuario`; quem tenta
+  entrar na área errada volta pra própria (profissional → `/dashboard-medico`).
+  `HeaderActions`/`UserProfileDrawer` só buscam moedas/notificações pra aluno
+  (antes o profissional gerava uma enxurrada de 403).
+- **Correções da bateria de testes**: acerto por unidade nunca passa de 100%;
+  conquista "Colecionador" + `novasConquistas` devolvidas por fala/alternativa/
+  vídeo/compra (toast na Loja); `/Unidades/resumo` por nível do aluno e mesma
+  contagem no Dashboard e em "Seu progresso"; excluir unidade/grupo (409 com
+  mensagem se já há progresso); editar paciente no admin não desvincula mais do
+  profissional; sessão de conta apagada volta pro login; nome/e-mail da sessão
+  acompanham o que o admin alterou; grupo de fala vazio não aparece pro aluno;
+  aquecimento do Ollama/MMS no startup (`app_llm.py`, commit local no
+  LipAI_LLM ainda sem push); animação de abrir/fechar unidade na trilha.
+- **Pendências novas**: não há formulário de Vibração no admin; vídeos do
+  dicionário/interpretação/vídeo-aula ainda sem conteúdo (previsto pela equipe).
+
 ## 3. Como rodar tudo localmente
 
 ```bash
