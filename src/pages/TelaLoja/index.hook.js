@@ -42,6 +42,7 @@ export function useTelaLoja() {
   const [saldo, setSaldo] = useState(0);
   const [mensagem, setMensagem] = useState("");
   const [comprandoId, setComprandoId] = useState(null);
+  const [novasConquistas, setNovasConquistas] = useState([]);
 
   const usuarioId = localStorage.getItem("id");
 
@@ -93,6 +94,8 @@ export function useTelaLoja() {
       setSaldo(resultado.data.novoSaldo ?? resultado.data.NovoSaldo ?? saldo - item.price);
       setMensagem(`"${item.title}" comprado com sucesso!`);
       setTentativaCarga((n) => n + 1);
+      const ganhas = resultado.data.novasConquistas ?? resultado.data.NovasConquistas ?? [];
+      if (ganhas.length > 0) setNovasConquistas(ganhas);
     } else {
       setMensagem(resultado.mensagem);
     }
@@ -110,5 +113,7 @@ export function useTelaLoja() {
     saldo,
     mensagem,
     comprandoId,
+    novasConquistas,
+    limparConquistas: () => setNovasConquistas([]),
   };
 }

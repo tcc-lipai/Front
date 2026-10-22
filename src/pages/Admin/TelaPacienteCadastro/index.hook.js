@@ -6,6 +6,7 @@ import {
   atualizarUsuario,
   valorNivelDificuldade,
 } from "../../../services/usuarioService";
+import { buscarProfissional } from "../../../services/profissionalService";
 
 const FORM_VAZIO = {
   nome: "",
@@ -39,13 +40,26 @@ export function useTelaPacienteCadastro() {
         return;
       }
       const u = res.data;
+
+      // preenche o código do profissional atual: sem isso, salvar a edição mandaria ""
+      // e o back-end desvincularia o paciente do profissional sem ninguém pedir
+      let codigoProfissional = "";
+      const profissionalId = u.profissionalId ?? u.ProfissionalId;
+      if (profissionalId) {
+        const resProf = await buscarProfissional(profissionalId);
+        if (!ativo) return;
+        if (resProf.sucesso) {
+          codigoProfissional = resProf.data.codigoAcesso ?? resProf.data.CodigoAcesso ?? "";
+        }
+      }
+
       setForm({
         nome: u.nome ?? u.Nome ?? "",
         email: u.email ?? u.Email ?? "",
         senha: "",
         nivelDificuldade: String(valorNivelDificuldade(u.nivelDificuldade ?? u.NivelDificuldade) ?? ""),
         diagnostico: u.diagnostico ?? u.Diagnostico ?? "",
-        codigoProfissional: "",
+        codigoProfissional,
       });
       setCarregando(false);
     }

@@ -4,6 +4,7 @@ import Navbar from "../../components/Navbar";
 import { HeaderActions } from "../../components/HeaderActions";
 import { UserProfileDrawer } from "../../components/UserProfileDrawer";
 import ProdutoLoja from "../../components/ProdutoLoja";
+import ConquistaToast from "../../components/ConquistaToast";
 import { useTelaLoja } from "./index.hook";
 
 import ImgPersonagem from "../../assets/img/menina-carrinho.png";
@@ -25,6 +26,8 @@ const TelaLoja = () => {
     saldo,
     mensagem,
     comprandoId,
+    novasConquistas,
+    limparConquistas,
   } = useTelaLoja();
 
   return (
@@ -99,6 +102,7 @@ const TelaLoja = () => {
       </main>
 
       <UserProfileDrawer isOpen={drawerAberto} onClose={fecharPerfil} />
+      <ConquistaToast conquistas={novasConquistas} onDismiss={limparConquistas} />
     </div>
   );
 };

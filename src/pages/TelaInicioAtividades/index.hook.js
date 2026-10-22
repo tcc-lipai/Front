@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
-import { listarUnidades } from "../../services/unidadeService";
+import { listarUnidades, listarUnidadesResumo } from "../../services/unidadeService";
+import { buscarUsuario, valorNivelDificuldade } from "../../services/usuarioService";
 import { salvarItem, dessalvarItem, listarItensSalvos } from "../../services/atividadeService";
 import { buscarDesempenho, buscarDesempenhoPorUnidade } from "../../services/progressoService";
 import api from "../../services/api";
@@ -9,21 +10,27 @@ import api from "../../services/api";
  * id da unidade dona de cada item — usado para calcular o status/"salva" por
  * unidade (não mostramos mais atividades avulsas nesta tela, só o resumo).
  */
-function extrairLicoes(unidades = []) {
+function extrairLicoes(unidades = [], nivelUsuario = null) {
   const licoes = [];
+  // acesso cumulativo: só conta o que o nível do aluno já libera
+  const liberado = (item) => {
+    const nivel = valorNivelDificuldade(item.nivelDificuldade ?? item.NivelDificuldade);
+    return nivel == null || nivelUsuario == null || nivelUsuario >= nivel;
+  };
 
   for (const unidade of unidades) {
     const unidadeId = unidade.idUnidade ?? unidade.IdUnidade;
 
     const fala = unidade.licoesFala ?? unidade.LicoesFala ?? [];
     for (const l of fala) {
-      if ((l.atividadeFalaId ?? l.AtividadeFalaId ?? null) != null) continue;
+      if ((l.atividadeFalaId ?? l.AtividadeFalaId ?? null) != null || !liberado(l)) continue;
       const id = l.idLicaoFala ?? l.IdLicaoFala;
       licoes.push({ id: `fala-${id}`, licaoId: id, tipoSalvar: "fala", unidadeId });
     }
 
     const atividadesFala = unidade.atividadesFala ?? unidade.AtividadesFala ?? [];
     for (const af of atividadesFala) {
+      if (!liberado(af)) continue;
       const id = af.idAtividadeFala ?? af.IdAtividadeFala;
       const exercicios = af.exercicios ?? af.Exercicios ?? [];
       const exercicioIds = exercicios.map((e) => e.idLicaoFala ?? e.IdLicaoFala);
@@ -38,12 +45,14 @@ function extrairLicoes(unidades = []) {
 
     const alt = unidade.licoesAlternativa ?? unidade.LicoesAlternativa ?? [];
     for (const l of alt) {
+      if (!liberado(l)) continue;
       const id = l.idLicaoAlternativa ?? l.IdLicaoAlternativa;
       licoes.push({ id: `alternativa-${id}`, licaoId: id, tipoSalvar: "alternativa", unidadeId });
     }
 
     const video = unidade.licoesVideo ?? unidade.LicoesVideo ?? [];
     for (const l of video) {
+      if (!liberado(l)) continue;
       const id = l.idLicaoVideo ?? l.IdLicaoVideo;
       licoes.push({ id: `video-${id}`, licaoId: id, tipoSalvar: "video", unidadeId });
     }
@@ -52,22 +61,17 @@ function extrairLicoes(unidades = []) {
   return licoes;
 }
 
-/** Resumo básico de cada unidade (nome + total de atividades que ela tem). */
-function extrairUnidades(unidades = []) {
-  return unidades.map((unidade) => {
-    const fala = (unidade.licoesFala ?? unidade.LicoesFala ?? []).filter(
-      (l) => (l.atividadeFalaId ?? l.AtividadeFalaId ?? null) == null
-    ).length;
-    const atividadesFala = (unidade.atividadesFala ?? unidade.AtividadesFala ?? []).length;
-    const alternativa = (unidade.licoesAlternativa ?? unidade.LicoesAlternativa ?? []).length;
-    const video = (unidade.licoesVideo ?? unidade.LicoesVideo ?? []).length;
-
-    return {
-      id: unidade.idUnidade ?? unidade.IdUnidade,
-      nome: unidade.nome ?? unidade.Nome ?? "Unidade",
-      totalAtividades: fala + atividadesFala + alternativa + video,
-    };
-  });
+/**
+ * Resumo básico de cada unidade (nome + total de atividades). O total vem do
+ * /Unidades/resumo — o mesmo número que o Dashboard mostra, já filtrado pelo
+ * nível do aluno e contando também as atividades de Acompanhante.
+ */
+function extrairUnidades(resumo = []) {
+  return resumo.map((unidade) => ({
+    id: unidade.idUnidade ?? unidade.IdUnidade,
+    nome: unidade.nome ?? unidade.Nome ?? "Unidade",
+    totalAtividades: unidade.totalAtividades ?? unidade.TotalAtividades ?? 0,
+  }));
 }
 
 /**
@@ -158,13 +162,26 @@ export function useTelaInicioAtividades() {
     async function carregar() {
       setCarregando(true);
 
-      const resUnidades = await listarUnidades();
-      if (resUnidades.sucesso) {
-        setTodasLicoes(extrairLicoes(resUnidades.data));
-        setUnidadesBase(extrairUnidades(resUnidades.data));
+      const usuarioId = localStorage.getItem("id");
+
+      let nivelUsuario = null;
+      if (usuarioId) {
+        const resUsuario = await buscarUsuario(usuarioId);
+        if (resUsuario.sucesso) {
+          nivelUsuario = valorNivelDificuldade(
+            resUsuario.data.nivelDificuldade ?? resUsuario.data.NivelDificuldade
+          );
+        }
       }
 
-      const usuarioId = localStorage.getItem("id");
+      const [resUnidades, resResumo] = await Promise.all([listarUnidades(), listarUnidadesResumo()]);
+      if (resUnidades.sucesso) {
+        setTodasLicoes(extrairLicoes(resUnidades.data, nivelUsuario));
+      }
+      if (resResumo.sucesso) {
+        setUnidadesBase(extrairUnidades(resResumo.data));
+      }
+
       if (usuarioId) {
         try {
           const res = await api.get(`/Progresso/usuario/${usuarioId}`);
