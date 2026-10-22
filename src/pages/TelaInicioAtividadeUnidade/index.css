@@ -180,3 +180,13 @@
 .unidade-seta.aberta {
   transform: rotate(180deg);
 }
+
+/* conteúdo da unidade abre/fecha com animação de altura; o overflow só fica oculto durante a animação */
+.unidade-conteudo {
+  overflow: hidden;
+}
+
+.unidade-conteudo {
+  padding: 6px;
+  margin: -6px;
+}

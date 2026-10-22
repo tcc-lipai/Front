@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
 import { Mic, HelpCircle, Video as VideoIcon, Sparkles, Heart, TrendingUp, ChevronDown } from "lucide-react";
 import CardExercicio from "../../components/CardExercicio";
 import Botao from "../../components/Botao";
@@ -149,7 +150,17 @@ const TelaInicioAtividadeUnidade = () => {
                     <ChevronDown size={20} className={resumo.aberta ? "unidade-seta aberta" : "unidade-seta"} />
                   </button>
 
-                  {resumo.aberta && mostrarVibracao && (
+                  <AnimatePresence>
+                    {resumo.aberta && (
+                      <motion.div
+                        key="conteudo"
+                        className="unidade-conteudo"
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
+                      >
+                  {mostrarVibracao && (
                     <div className="grupo-tipo-exercicio">
                       <div className="grupo-tipo-cabecalho">
                         <IconeTipo tipo="vibracao" />
@@ -174,7 +185,7 @@ const TelaInicioAtividadeUnidade = () => {
                     </div>
                   )}
 
-                  {resumo.aberta && mostrarVideo && (
+                  {mostrarVideo && (
                     <div className="grupo-tipo-exercicio">
                       <div className="grupo-tipo-cabecalho">
                         <IconeTipo tipo="video" />
@@ -197,7 +208,7 @@ const TelaInicioAtividadeUnidade = () => {
                     </div>
                   )}
 
-                  {resumo.aberta && mostrarAlternativa && (
+                  {mostrarAlternativa && (
                     <div className="grupo-tipo-exercicio">
                       <div className="grupo-tipo-cabecalho">
                         <IconeTipo tipo="alternativa" />
@@ -223,7 +234,7 @@ const TelaInicioAtividadeUnidade = () => {
                     </div>
                   )}
 
-                  {resumo.aberta && mostrarFala && (
+                  {mostrarFala && (
                     <div className="grupo-tipo-exercicio">
                       <div className="grupo-tipo-cabecalho">
                         <IconeTipo tipo="fala" />
@@ -263,6 +274,9 @@ const TelaInicioAtividadeUnidade = () => {
                       </div>
                     </div>
                   )}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </section>
               );
             })}
