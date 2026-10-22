@@ -12,11 +12,15 @@ export default function ConquistaToast({ conquistas = [], onDismiss }) {
   const [visivel, setVisivel] = useState(false);
   const [indice, setIndice] = useState(0);
 
-  useEffect(() => {
-    if (conquistas.length === 0) return;
-    setIndice(0);
-    setVisivel(true);
-  }, [conquistas]);
+  // nova lista de conquistas: reinicia o toast (ajuste de estado durante o render)
+  const [conquistasAnteriores, setConquistasAnteriores] = useState(conquistas);
+  if (conquistasAnteriores !== conquistas) {
+    setConquistasAnteriores(conquistas);
+    if (conquistas.length > 0) {
+      setIndice(0);
+      setVisivel(true);
+    }
+  }
 
   useEffect(() => {
     if (!visivel) return;

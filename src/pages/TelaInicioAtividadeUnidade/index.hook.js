@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { listarUnidades } from "../../services/unidadeService";
+import { useCallback, useEffect, useState } from "react";
+import { listarUnidadesResumo, buscarUnidade } from "../../services/unidadeService";
 import { buscarUsuario, valorNivelDificuldade, nomeNivelDificuldade } from "../../services/usuarioService";
 import {
   buscarDesempenhoPorUnidade,
@@ -119,8 +119,12 @@ function normalizarUnidade(unidade, concluidas, nivelUsuario, desempenho) {
   };
 }
 
-/** Busca tudo que a tela precisa (sem tocar em estado do React). */
-async function buscarDadosTela() {
+/**
+ * Busca o que a tela precisa pra listar as unidades SEM trazer o conteúdo delas:
+ * nível, elegibilidade, resumo (nomes) e o progresso/desempenho do aluno. O
+ * conteúdo de cada unidade só é baixado quando ela é aberta (buscarUnidade).
+ */
+async function buscarBase() {
   const usuarioId = localStorage.getItem("id");
 
   let nivel = null;
@@ -133,14 +137,14 @@ async function buscarDadosTela() {
     }
   }
 
-  const [resultado, resDesempenho, resElegibilidade] = await Promise.all([
-    listarUnidades(),
+  const [resumo, resDesempenho, resElegibilidade] = await Promise.all([
+    listarUnidadesResumo(),
     usuarioId ? buscarDesempenhoPorUnidade(usuarioId) : Promise.resolve({ sucesso: false, data: [] }),
     buscarElegibilidadeNivel(),
   ]);
 
-  if (!resultado.sucesso) {
-    return { erro: resultado.mensagem };
+  if (!resumo.sucesso) {
+    return { erro: resumo.mensagem };
   }
 
   const desempenhoPorUnidade = new Map();
@@ -197,27 +201,49 @@ async function buscarDadosTela() {
   return {
     nivel,
     elegibilidade: resElegibilidade.sucesso ? resElegibilidade.data : null,
-    unidades: resultado.data.map((u) =>
-      normalizarUnidade(u, concluidas, nivel, desempenhoPorUnidade.get(u.idUnidade ?? u.IdUnidade))
-    ),
+    resumo: resumo.data.map((u) => ({
+      id: u.idUnidade ?? u.IdUnidade,
+      nome: u.nome ?? u.Nome ?? "Unidade",
+    })),
+    concluidas,
+    desempenhoPorUnidade,
   };
 }
 
 export function useTelaInicioAtividadeUnidade() {
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState("");
-  const [unidades, setUnidades] = useState([]);
-  const [nivelUsuario, setNivelUsuario] = useState(null);
+  const [base, setBase] = useState(null);
+  // conteúdo já baixado de cada unidade aberta: { [id]: { carregando } | { erro } | { dados } }
+  const [detalhes, setDetalhes] = useState({});
+  const [abertas, setAbertas] = useState(() => new Set());
   const [dica, setDica] = useState(null);
-  const [elegibilidade, setElegibilidade] = useState(null);
   const [subindoNivel, setSubindoNivel] = useState(false);
   const [resultadoNivel, setResultadoNivel] = useState(null);
+
+  const carregarUnidade = useCallback(async (idUnidade, baseAtual) => {
+    setDetalhes((atual) => ({ ...atual, [idUnidade]: { carregando: true } }));
+    const res = await buscarUnidade(idUnidade);
+    setDetalhes((atual) => ({
+      ...atual,
+      [idUnidade]: res.sucesso
+        ? {
+            dados: normalizarUnidade(
+              res.data,
+              baseAtual.concluidas,
+              baseAtual.nivel,
+              baseAtual.desempenhoPorUnidade.get(idUnidade)
+            ),
+          }
+        : { erro: res.mensagem },
+    }));
+  }, []);
 
   useEffect(() => {
     let ativo = true;
 
     async function carregar() {
-      const dados = await buscarDadosTela();
+      const dados = await buscarBase();
       if (!ativo) return;
 
       if (dados.erro) {
@@ -226,17 +252,42 @@ export function useTelaInicioAtividadeUnidade() {
         return;
       }
 
-      setNivelUsuario(dados.nivel);
-      setElegibilidade(dados.elegibilidade);
-      setUnidades(dados.unidades);
+      setBase(dados);
       setCarregando(false);
+
+      // abre só a primeira unidade; as outras são baixadas quando o aluno abrir
+      const primeira = dados.resumo[0]?.id;
+      if (primeira != null) {
+        setAbertas(new Set([primeira]));
+        carregarUnidade(primeira, dados);
+      }
     }
 
     carregar();
     return () => {
       ativo = false;
     };
-  }, []);
+  }, [carregarUnidade]);
+
+  function alternarUnidade(idUnidade) {
+    const jaAberta = abertas.has(idUnidade);
+    setAbertas((atual) => {
+      const novo = new Set(atual);
+      if (jaAberta) novo.delete(idUnidade);
+      else novo.add(idUnidade);
+      return novo;
+    });
+    if (!jaAberta && !detalhes[idUnidade]?.dados && base) {
+      carregarUnidade(idUnidade, base);
+    }
+  }
+
+  const unidades = (base?.resumo ?? []).map((u) => ({
+    id: u.id,
+    nome: u.nome,
+    aberta: abertas.has(u.id),
+    ...(detalhes[u.id] ?? {}),
+  }));
 
   // se for a primeira vez do usuário na unidade, mostra a dica do fonema antes
   // de deixar ele abrir a atividade de verdade
@@ -264,12 +315,13 @@ export function useTelaInicioAtividadeUnidade() {
 
     setResultadoNivel({ sucesso: true, novoNivel: res.data.novoNivel ?? res.data.NovoNivel });
 
-    const dados = await buscarDadosTela();
+    const dados = await buscarBase();
     setSubindoNivel(false);
     if (dados.erro) return;
-    setNivelUsuario(dados.nivel);
-    setElegibilidade(dados.elegibilidade);
-    setUnidades(dados.unidades);
+    setBase(dados);
+    // o nível mudou: o que cada unidade mostra muda junto, então rebaixa só as abertas
+    setDetalhes({});
+    abertas.forEach((id) => carregarUnidade(id, dados));
   }
 
   function fecharResultadoNivel() {
@@ -280,11 +332,12 @@ export function useTelaInicioAtividadeUnidade() {
     carregando,
     erro,
     unidades,
-    nivelUsuario,
+    alternarUnidade,
+    nivelUsuario: base?.nivel ?? null,
     comecarComDica,
     dica,
     fecharDica,
-    elegibilidade,
+    elegibilidade: base?.elegibilidade ?? null,
     subindoNivel,
     confirmarSubirNivel,
     resultadoNivel,

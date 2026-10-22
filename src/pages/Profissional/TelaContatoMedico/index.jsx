@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import Navbar, { NAV_ITENS_PROFISSIONAL } from "../../../components/Navbar";
 import Botao from "../../../components/Botao";
+import { enviarMensagemContato } from "../../../services/contatoService";
 
 import "./index.css";
 
 const TelaContatoMedico = () => {
   const [formData, setFormData] = useState({
-    nome: "",
-    email: "",
+    nome: localStorage.getItem("nome") || "",
+    email: localStorage.getItem("email") || "",
     mensagem: "",
   });
+  const [enviando, setEnviando] = useState(false);
+  const [status, setStatus] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,15 +22,20 @@ const TelaContatoMedico = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Dados do formulário:", formData);
-    alert("Mensagem enviada com sucesso!");
-    setFormData({
-      nome: "",
-      email: "",
-      mensagem: "",
-    });
+    setStatus("");
+    setEnviando(true);
+
+    const resultado = await enviarMensagemContato(formData.mensagem);
+    setEnviando(false);
+
+    if (resultado.sucesso) {
+      setStatus("Mensagem enviada com sucesso!");
+      setFormData((atual) => ({ ...atual, mensagem: "" }));
+    } else {
+      setStatus(resultado.mensagem);
+    }
   };
 
   return (
@@ -82,8 +90,16 @@ const TelaContatoMedico = () => {
                 />
               </div>
 
+              {status && (
+                <p role="status" className="form-subtitle">
+                  {status}
+                </p>
+              )}
+
               <Botao
-                texto="Enviar"
+                type="submit"
+                texto={enviando ? "Enviando..." : "Enviar"}
+                disabled={enviando}
                 corDeFundo="#7b3b93"
                 corTexto="#ffffff"
                 className="btn-enviar"

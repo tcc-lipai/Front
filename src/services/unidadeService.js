@@ -41,6 +41,19 @@ export async function listarUnidadesResumo() {
   }
 }
 
+/** Uma unidade com todo o conteúdo (usada pra abrir uma unidade sob demanda). */
+export async function buscarUnidade(unidadeId) {
+  try {
+    const response = await api.get(`/Unidades/${unidadeId}`);
+    return { sucesso: true, data: response.data };
+  } catch (error) {
+    return {
+      sucesso: false,
+      mensagem: error.response?.data?.message || "Não foi possível carregar a unidade.",
+    };
+  }
+}
+
 /** Soma as lições de todas as unidades (fala, alternativa, vídeo e vibração). */
 export function contarLicoesDasUnidades(unidades = []) {
   return unidades.reduce(

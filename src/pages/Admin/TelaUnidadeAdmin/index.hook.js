@@ -65,17 +65,25 @@ export function useTelaUnidadeAdmin() {
   const [form, setForm] = useState(null);
   const [paraExcluir, setParaExcluir] = useState(null);
 
-  const carregar = useCallback(async () => {
-    setCarregando(true);
-    const res = await buscarUnidadeAdmin(id);
-    if (!res.sucesso) setErro(res.mensagem);
-    else setUnidade(res.data);
-    setCarregando(false);
-  }, [id]);
+  // recarga manual (pós-edição): incrementa o contador e o efeito busca de novo
+  const [recarga, setRecarga] = useState(0);
+  const carregar = useCallback(() => setRecarga((n) => n + 1), []);
 
   useEffect(() => {
-    carregar();
-  }, [carregar]);
+    let ativo = true;
+
+    (async () => {
+      const res = await buscarUnidadeAdmin(id);
+      if (!ativo) return;
+      if (!res.sucesso) setErro(res.mensagem);
+      else setUnidade(res.data);
+      setCarregando(false);
+    })();
+
+    return () => {
+      ativo = false;
+    };
+  }, [recarga, id]);
 
   const salvar = async (valores) => {
     const { tipo, item } = form;

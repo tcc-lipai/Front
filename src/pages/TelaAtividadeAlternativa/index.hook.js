@@ -39,7 +39,10 @@ export function useTelaAtividadeAlternativa() {
   const [enviando, setEnviando] = useState(false);
   const [resultado, setResultado] = useState(null);
 
-  const inicioRef = useRef(Date.now());
+  const inicioRef = useRef(null);
+  useEffect(() => {
+    inicioRef.current = Date.now();
+  }, []);
 
   useEffect(() => {
     let ativo = true;

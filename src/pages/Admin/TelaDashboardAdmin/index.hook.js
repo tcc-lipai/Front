@@ -28,22 +28,25 @@ export function useTelaDashboardAdmin() {
   const [pacienteParaExcluir, setPacienteParaExcluir] = useState(null);
   const [excluindo, setExcluindo] = useState(false);
 
-  const carregar = useCallback(async () => {
-    setCarregando(true);
-    setErro("");
-    const res = await listarUsuarios();
-    if (!res.sucesso) {
-      setErro(res.mensagem);
-      setCarregando(false);
-      return;
-    }
-    setPacientes(res.data.map(mapearPaciente));
-    setCarregando(false);
-  }, []);
-
   useEffect(() => {
-    carregar();
-  }, [carregar]);
+    let ativo = true;
+
+    (async () => {
+      const res = await listarUsuarios();
+      if (!ativo) return;
+      if (!res.sucesso) {
+        setErro(res.mensagem);
+        setCarregando(false);
+        return;
+      }
+      setPacientes(res.data.map(mapearPaciente));
+      setCarregando(false);
+    })();
+
+    return () => {
+      ativo = false;
+    };
+  }, []);
 
   const abrirCadastro = useCallback(() => navigate("/cadastrar-paciente"), [navigate]);
   const abrirEdicao = useCallback((paciente) => navigate(`/editar-paciente/${paciente.id}`), [navigate]);

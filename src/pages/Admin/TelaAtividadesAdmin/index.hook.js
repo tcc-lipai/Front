@@ -19,19 +19,29 @@ export function useTelaAtividadesAdmin() {
   const [unidadeEditando, setUnidadeEditando] = useState(null);
   const [unidadeParaExcluir, setUnidadeParaExcluir] = useState(null);
 
-  const carregar = useCallback(async () => {
-    setCarregando(true);
-    setErro("");
-    const [resUnidades, resAtividades] = await Promise.all([listarUnidadesAdmin(), listarAtividades()]);
-    if (!resUnidades.sucesso) setErro(resUnidades.mensagem);
-    else setUnidades(resUnidades.data);
-    if (resAtividades.sucesso) setAtividades(resAtividades.data);
-    setCarregando(false);
-  }, []);
+  // recarga manual (pós-edição): incrementa o contador e o efeito busca de novo
+  const [recarga, setRecarga] = useState(0);
+  const carregar = useCallback(() => setRecarga((n) => n + 1), []);
 
   useEffect(() => {
-    carregar();
-  }, [carregar]);
+    let ativo = true;
+
+    (async () => {
+      const [resUnidades, resAtividades] = await Promise.all([listarUnidadesAdmin(), listarAtividades()]);
+      if (!ativo) return;
+      if (!resUnidades.sucesso) setErro(resUnidades.mensagem);
+      else {
+        setErro("");
+        setUnidades(resUnidades.data);
+      }
+      if (resAtividades.sucesso) setAtividades(resAtividades.data);
+      setCarregando(false);
+    })();
+
+    return () => {
+      ativo = false;
+    };
+  }, [recarga]);
 
   const salvarUnidade = async (valores) => {
     const dados = { Nome: valores.nome, AtividadeId: Number(valores.atividadeId) };

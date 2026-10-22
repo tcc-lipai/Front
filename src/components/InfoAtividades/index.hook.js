@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { clampProgresso } from "./index.utils";
 
 export function useInfoAtividade({
@@ -11,9 +11,11 @@ export function useInfoAtividade({
 }) {
   const [salva, setSalva] = useState(salvaInicial);
 
-  useEffect(() => {
+  const [salvaInicialAnterior, setSalvaInicialAnterior] = useState(salvaInicial);
+  if (salvaInicialAnterior !== salvaInicial) {
+    setSalvaInicialAnterior(salvaInicial);
     setSalva(salvaInicial);
-  }, [salvaInicial]);
+  }
 
   const progressoSeguro = clampProgresso(progresso);
 

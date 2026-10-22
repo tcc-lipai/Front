@@ -4,28 +4,10 @@ import { useGravadorAudio } from "../../hooks/useGravadorAudio";
 import { useFeedback } from "../../components/FeedbackCard/index.hook";
 import { FEEDBACK_TYPES } from "../../components/FeedbackCard/index.types";
 import { useLicaoConcluida } from "../../components/LicaoConcluida/index.hook";
-import { buscarLicaoFala, iniciarFala, concluirFala } from "../../services/falaService";
-import { listarUnidades } from "../../services/unidadeService";
+import { buscarAtividadeFala, buscarLicaoFala, iniciarFala, concluirFala } from "../../services/falaService";
 import { formatarDuracao } from "../../utils/tempo";
 
 const ROTA_SAIDA = "/atividades-unidades";
-
-function extrairAtividade(unidades, atividadeFalaId) {
-  for (const unidade of unidades) {
-    const atividades = unidade.atividadesFala ?? unidade.AtividadesFala ?? [];
-    const encontrada = atividades.find(
-      (af) => String(af.idAtividadeFala ?? af.IdAtividadeFala) === String(atividadeFalaId)
-    );
-    if (encontrada) {
-      const exercicios = encontrada.exercicios ?? encontrada.Exercicios ?? [];
-      return {
-        nome: encontrada.nome ?? encontrada.Nome ?? "Atividade de fala",
-        idsExercicios: exercicios.map((e) => e.idLicaoFala ?? e.IdLicaoFala),
-      };
-    }
-  }
-  return null;
-}
 
 export function useTelaAtividadeFalaSessao() {
   const { id: atividadeFalaId } = useParams();
@@ -48,7 +30,6 @@ export function useTelaAtividadeFalaSessao() {
   const [indiceAtual, setIndiceAtual] = useState(0);
 
   const [licao, setLicao] = useState(null);
-  const [idProgresso, setIdProgresso] = useState(null);
 
   const [estadoFala, setEstadoFala] = useState("ocioso");
   const [resultado, setResultado] = useState(null);
@@ -59,14 +40,21 @@ export function useTelaAtividadeFalaSessao() {
 
   const [mostrarModalSair, setMostrarModalSair] = useState(false);
   const promiseIniciarRef = useRef(null);
-  const inicioRef = useRef(Date.now());
+  const avaliacaoAbortRef = useRef(null);
+  // se o aluno sair da tela com o áudio ainda sendo avaliado, aborta a requisição
+  // pra o back-end não ficar esperando a IA por alguém que já foi embora
+  useEffect(() => () => avaliacaoAbortRef.current?.abort(), []);
+  const inicioRef = useRef(null);
+  useEffect(() => {
+    inicioRef.current = Date.now();
+  }, []);
   const licaoConcluida = useLicaoConcluida();
 
   useEffect(() => {
     let ativo = true;
 
     async function carregar() {
-      const res = await listarUnidades();
+      const res = await buscarAtividadeFala(atividadeFalaId);
       if (!ativo) return;
       if (!res.sucesso) {
         setErroCarga(res.mensagem);
@@ -74,8 +62,8 @@ export function useTelaAtividadeFalaSessao() {
         return;
       }
 
-      const info = extrairAtividade(res.data, atividadeFalaId);
-      if (!info || info.idsExercicios.length === 0) {
+      const info = res.data;
+      if (info.idsExercicios.length === 0) {
         setErroCarga("Atividade não encontrada.");
         setCarregando(false);
         return;
@@ -145,9 +133,10 @@ export function useTelaAtividadeFalaSessao() {
         setErroEnvio(inicioRes?.mensagem || "Não foi possível iniciar a atividade.");
         return;
       }
-      setIdProgresso(inicioRes.idProgresso);
 
-      const res = await concluirFala(inicioRes.idProgresso, blob);
+      avaliacaoAbortRef.current = new AbortController();
+      const res = await concluirFala(inicioRes.idProgresso, blob, avaliacaoAbortRef.current.signal);
+      if (res.cancelado) return;
       if (!res.sucesso) {
         setEstadoFala("erro");
         setErroEnvio(res.mensagem);
@@ -189,7 +178,6 @@ export function useTelaAtividadeFalaSessao() {
     setErroEnvio("");
     setEstadoFala("ocioso");
     setLicao(null);
-    setIdProgresso(null);
     setIndiceAtual((i) => i + 1);
   }, [indiceAtual, idsExercicios.length]);
 
@@ -200,9 +188,7 @@ export function useTelaAtividadeFalaSessao() {
 
     const licaoId = idsExercicios[indiceAtual];
     const inicioRes = await iniciarFala(licaoId);
-    if (inicioRes.sucesso) {
-      setIdProgresso(inicioRes.idProgresso);
-    } else {
+    if (!inicioRes.sucesso) {
       setErroEnvio(inicioRes.mensagem);
     }
   }, [idsExercicios, indiceAtual]);

@@ -154,3 +154,29 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* cabeçalho da unidade vira botão: abre/fecha o conteúdo (baixado sob demanda) */
+.unidade-cabecalho-botao {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+}
+
+.unidade-cabecalho-botao h2 {
+  flex: 1;
+}
+
+.unidade-seta {
+  margin-left: auto;
+  flex-shrink: 0;
+  color: var(--lipai-text-muted, #8858a0);
+  transition: transform 0.2s;
+}
+
+.unidade-seta.aberta {
+  transform: rotate(180deg);
+}

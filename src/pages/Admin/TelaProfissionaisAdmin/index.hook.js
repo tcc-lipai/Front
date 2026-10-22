@@ -27,22 +27,25 @@ export function useTelaProfissionaisAdmin() {
   const [erro, setErro] = useState("");
   const [profissionalParaExcluir, setProfissionalParaExcluir] = useState(null);
 
-  const carregar = useCallback(async () => {
-    setCarregando(true);
-    setErro("");
-    const res = await listarProfissionais();
-    if (!res.sucesso) {
-      setErro(res.mensagem);
-      setCarregando(false);
-      return;
-    }
-    setProfissionais(res.data.map(mapearProfissional));
-    setCarregando(false);
-  }, []);
-
   useEffect(() => {
-    carregar();
-  }, [carregar]);
+    let ativo = true;
+
+    (async () => {
+      const res = await listarProfissionais();
+      if (!ativo) return;
+      if (!res.sucesso) {
+        setErro(res.mensagem);
+        setCarregando(false);
+        return;
+      }
+      setProfissionais(res.data.map(mapearProfissional));
+      setCarregando(false);
+    })();
+
+    return () => {
+      ativo = false;
+    };
+  }, []);
 
   const confirmarExclusao = useCallback(async () => {
     if (!profissionalParaExcluir) return;

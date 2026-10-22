@@ -18,7 +18,10 @@ export function useTelaAtividadeVideo() {
   const [mostrarModalSair, setMostrarModalSair] = useState(false);
   const [progresso, setProgresso] = useState(0);
 
-  const inicioRef = useRef(Date.now());
+  const inicioRef = useRef(null);
+  useEffect(() => {
+    inicioRef.current = Date.now();
+  }, []);
 
   useEffect(() => {
     let ativo = true;

@@ -6,9 +6,10 @@ criação de conteúdo pedagógico real (26 fonemas) e otimizações de
 performance. Serve como brief técnico para a próxima IA/pessoa dar
 continuidade — leia antes de sugerir próximos passos.
 
-**Atualizado em**: 2026-10-22 (última sessão: correção do acesso cumulativo
-por nível em Fala/Interpretação/Vídeo, sistema de progressão de nível,
-exibição de nível de acerto e gráficos de desempenho).
+**Atualizado em**: 2026-10-22 (última sessão: limpeza das pendências —
+lint zerado, carregamento de unidades sob demanda, cancelamento de
+requisições ao backend/IA, contato do profissional, code-splitting; ver
+"Sessão de 2026-10-22 (parte 2)" na seção 2).
 
 ## 1. Visão geral — 3 repositórios
 
@@ -29,7 +30,7 @@ documento):**
 |---|---|---|
 | **Front** | `main` | **tudo mergeado, push direto autorizado pelo dono do projeto** |
 | **Backend** | `main` | **tudo mergeado, push direto autorizado pelo dono do projeto** |
-| **LipAI_LLM** | `experimento/mms-estilo-colab` | **ainda NÃO mergeada** — ver alerta de segurança abaixo |
+| **LipAI_LLM** | `main` | `experimento/mms-estilo-colab` **já foi mergeada** (PR #1) — mas o histórico ainda tem a chave Groq, ver alerta abaixo |
 
 A partir desta sessão o fluxo de trabalho mudou: **Front e Backend sobem
 direto pra `main`, sem PR intermediário** (pedido explícito do dono do
@@ -282,6 +283,54 @@ elegibilidade/subida de nível, comparação de tempos do endpoint resumido).
 (`claude mcp add playwright -- npx -y @playwright/mcp@latest`) pra que a
 próxima sessão consiga de fato abrir o Chrome e testar visualmente.
 
+### Sessão de 2026-10-22 (parte 2) — limpeza de pendências
+
+- **Lint zerado** (`npm run lint` passa sem erro): os 15 erros eram
+  `react-hooks/purity` (`useRef(Date.now())` no render → agora `useRef(null)`
+  + `useEffect` que grava o início) e `set-state-in-effect` (ajuste de estado
+  durante o render em `ConquistaToast`/`FormModal`/`InfoAtividades`, reset
+  de paginação nos setters em `PainelListaUsuarios`, e nos hooks Admin o
+  carregamento virou efeito com `ativo` + contador `recarga`). Também saiu o
+  estado `idProgresso` que nunca era lido.
+- **Performance**: `TelaInicioAtividadeUnidade` agora lista as 26 unidades
+  via `GET /Unidades/resumo` e só baixa o conteúdo de uma unidade
+  (`GET /Unidades/{id}`) quando ela é aberta (cabeçalho vira botão; a
+  primeira já vem aberta). `TelaAtividadeFalaSessao` usa o novo
+  `GET /AtividadeFala/{id}` (nome + ids dos exercícios, com checagem de
+  nível) em vez de baixar todas as unidades. **Ainda usa o grafo completo**:
+  `TelaInicioAtividades` ("Seu progresso"), que precisa dos itens de todas
+  as unidades pra calcular status — precisaria de um endpoint agregado.
+- **Travamento do backend**: `ConcluirFala`, `ProximoExercicioFala` e o
+  `IaController` propagam o `CancellationToken` da requisição até o
+  `HttpClient` da IA (499 se o aluno desistiu, 504 se a IA demorou mais que
+  o timeout); as avaliações acústicas simultâneas são limitadas a 3
+  (`SemaphoreSlim`), o resto espera na fila (cancelável). No front,
+  `concluirFala` recebe um `AbortController` que é abortado ao sair da tela.
+  Testado com uma IA falsa lenta: o backend fecha a conexão com a IA ~no
+  mesmo instante em que o cliente desiste, e segue respondendo normal.
+- **Contato do profissional**: `MensagemContato` ganhou `ProfissionalId`
+  (`UsuarioId` virou nullable; migration `ContatoDeProfissional`),
+  `POST /Contato` aceita `Usuario` e `Profissional`, `GET /Contato` (admin)
+  devolve também `origem` ("Aluno"/"Profissional"). `TelaContatoMedico`
+  deixou de ser fake (só dava `alert`) e usa `enviarMensagemContato`.
+  **Não testado de ponta a ponta com um profissional real** (sem login de
+  admin pra criar um); compilou e o fluxo do aluno não mudou.
+- **Bundle**: rotas com `React.lazy` + `Suspense`; entrada principal caiu de
+  ~622 kB para ~321 kB.
+- **Verificação em navegador real** (Chrome via Playwright, usuário Básico
+  de teste, depois apagado): 26 unidades listadas, primeira abre sozinha,
+  as demais baixam ao clicar, só aparece conteúdo Básico, sessão de fala
+  abre e carrega exercício, nenhum erro de console além do 502 esperado da
+  dica quando a IA está fora do ar. Backend devolve 403 pra grupo
+  Intermediário com usuário Básico.
+- **LipAI_LLM**: já estava mergeado na `main` (PR #1) — a pendência antiga
+  estava desatualizada.
+- **Motor adaptativo × sistema estático** (decisão ainda é do dono do
+  projeto): recomendação = manter o sistema estático (unidades/grupos por
+  nível) como fluxo principal do aluno e usar o motor adaptativo só pra
+  uma modalidade "treino livre/revisão" por fonema fraco, que não depende
+  de nível fixo. Nada foi mudado no código.
+
 ## 3. Como rodar tudo localmente
 
 ```bash
@@ -440,38 +489,18 @@ segurança.
    nenhum endpoint. Ponto de encaixe: `TelaLoginUser` (front) +
    `AuthController` (back, novo endpoint tipo `POST /Auth/google` que
    valida o id_token do Google e reusa o `JwtService` existente).
-3. **LipAI_LLM** ainda não foi mergeado na `main` (branch
-   `experimento/mms-estilo-colab`) — avaliar se o conteúdo dessa branch
-   (normalização fonética, fix de forced-align) deve virar PR normal, já
-   que os outros 2 repos agora vão direto pra main.
-4. **Performance — ainda falta otimizar as telas "pesadas"**:
-   `TelaInicioAtividadeUnidade` (tela onde o aluno escolhe a atividade) e
-   `TelaAtividadeFalaSessao` ainda usam `GET /Unidades` completo (não o
-   `/resumo`), porque precisam do conteúdo de verdade de uma unidade. Duas
-   opções discutidas e ainda não implementadas: (a) carregar sob demanda
-   só a unidade que o usuário abre (`GET /Unidades/{id}`, que já existe),
-   em vez das 26 de uma vez; (b) paginar os grupos de fala dentro de uma
-   unidade (hoje uma letra como "T" manda ~150 exercícios de uma vez).
-5. **Nenhuma verificação visual em navegador real ainda** — tudo desde o
-   início do projeto foi verificado via API/Playwright headless em sessões
-   anteriores, mas a sessão de 2026-10-22 (acesso por nível, progressão,
-   acerto, gráficos) só foi testada via chamadas de API, sem abrir o app
-   de fato num Chrome. O dono do projeto está configurando o Playwright
-   MCP pra próxima sessão conseguir fazer isso — **primeira coisa a fazer
-   assim que a ferramenta estiver disponível**: abrir
-   `TelaInicioAtividadeUnidade` logado como usuário Básico e conferir que
-   só aparece conteúdo até Básico, e que a barra de acerto/gráficos
-   realmente renderizam como esperado.
-6. **`TelaContatoMedico`** (contato do profissional) — `POST /Contato`
-   exige role `"Usuario"`, profissional não consegue usar. Precisa ajuste
-   no back se quiser abrir pra profissional.
-7. **Lint pré-existente**: 15 erros (`react-hooks/purity`,
-   `useRef(Date.now())` chamado durante o render) em `TelaAtividadeAlternativa`,
-   `TelaAtividadeFala`, `TelaAtividadeFalaSessao`, `TelaAtividadeVideo` —
-   já existiam antes da sessão de 2026-10-19 (vieram de um PR anterior),
-   não quebram nada em runtime, mas é dívida técnica fácil de limpar.
-8. Bundle do front está em ~550kB minificado — Vite avisa sobre isso;
-   nada crítico, mas dá pra fazer code-splitting por rota no futuro.
+3. ~~LipAI_LLM sem merge na main~~ — resolvido (PR #1 mergeado).
+4. **Performance restante**: `TelaInicioAtividades` ainda usa `GET /Unidades`
+   completo (ver parte 2 da sessão de 2026-10-22), e uma unidade como "T"
+   ainda manda ~150 exercícios de uma vez ao ser aberta (paginar os grupos).
+5. ~~Verificação visual em navegador~~ — feita na parte 2 da sessão de
+   2026-10-22 pra a tela de unidades e a sessão de fala. **Ainda não
+   verificado visualmente**: gráficos de "Seu progresso", botão "Subir de
+   nível" no caminho elegível e as barras de acerto com progresso real.
+6. ~~Contato do profissional~~ — resolvido (parte 2). Falta testar com um
+   profissional real.
+7. ~~Lint pré-existente~~ — resolvido, `npm run lint` passa.
+8. ~~Bundle grande~~ — resolvido com code-splitting por rota (~321 kB).
 9. Não há testes automatizados (unitários/integração) em nenhum dos 3
    repos — tudo foi verificado manualmente (ver seção 8), mas isso não
    fica no CI.

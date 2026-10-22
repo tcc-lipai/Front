@@ -28,7 +28,6 @@ export function useTelaAtividadeFala() {
   const [carregando, setCarregando] = useState(true);
   const [erroCarga, setErroCarga] = useState("");
   const [licao, setLicao] = useState(null);
-  const [idProgresso, setIdProgresso] = useState(null);
 
   const [estadoFala, setEstadoFala] = useState("ocioso");
   const [resultado, setResultado] = useState(null);
@@ -37,7 +36,14 @@ export function useTelaAtividadeFala() {
 
   const [mostrarModalSair, setMostrarModalSair] = useState(false);
   const promiseIniciarRef = useRef(null);
-  const inicioRef = useRef(Date.now());
+  const avaliacaoAbortRef = useRef(null);
+  // se o aluno sair da tela com o áudio ainda sendo avaliado, aborta a requisição
+  // pra o back-end não ficar esperando a IA por alguém que já foi embora
+  useEffect(() => () => avaliacaoAbortRef.current?.abort(), []);
+  const inicioRef = useRef(null);
+  useEffect(() => {
+    inicioRef.current = Date.now();
+  }, []);
 
   useEffect(() => {
     let ativo = true;
@@ -100,9 +106,10 @@ export function useTelaAtividadeFala() {
         setErroEnvio(inicioRes?.mensagem || "Não foi possível iniciar a atividade.");
         return;
       }
-      setIdProgresso(inicioRes.idProgresso);
 
-      const res = await concluirFala(inicioRes.idProgresso, blob);
+      avaliacaoAbortRef.current = new AbortController();
+      const res = await concluirFala(inicioRes.idProgresso, blob, avaliacaoAbortRef.current.signal);
+      if (res.cancelado) return;
       if (!res.sucesso) {
         setEstadoFala("erro");
         setErroEnvio(res.mensagem);
@@ -136,9 +143,7 @@ export function useTelaAtividadeFala() {
 
     // o progresso anterior já foi concluído; abre uma nova tentativa
     const inicioRes = await iniciarFala(licaoId);
-    if (inicioRes.sucesso) {
-      setIdProgresso(inicioRes.idProgresso);
-    } else {
+    if (!inicioRes.sucesso) {
       setErroEnvio(inicioRes.mensagem);
     }
   }, [licaoId]);

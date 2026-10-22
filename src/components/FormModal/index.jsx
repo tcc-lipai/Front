@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Botao from "../Botao";
 import "./index.css";
 
@@ -16,13 +16,15 @@ const FormModal = ({ isOpen, titulo, campos, valoresIniciais = {}, onSalvar, onF
   const [enviando, setEnviando] = useState(false);
   const [erro, setErro] = useState("");
 
-  useEffect(() => {
+  // ao abrir, recomeça o formulário (ajuste de estado durante o render)
+  const [abertoAntes, setAbertoAntes] = useState(isOpen);
+  if (abertoAntes !== isOpen) {
+    setAbertoAntes(isOpen);
     if (isOpen) {
       setValores(valoresIniciais);
       setErro("");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpen]);
+  }
 
   if (!isOpen) return null;
 

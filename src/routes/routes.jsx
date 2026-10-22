@@ -1,41 +1,41 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 
 import RotaProtegida from "./RotaProtegida";
 
-import TelaLoginUser from "../pages/TelaLoginUser";
-import TelaCadastroUser from "../pages/TelaCadastroUser";
-import TelaDashboard from "../pages/TelaDashboard";
-import TelaPerfil from "../pages/TelaPerfil";
-import TelaNotificacoes from "../pages/TelaNotificacoes";
-import TelaConquistas from "../pages/TelaConquistas";
-import TelaDicionario from "../pages/TelaDicionario";
-import TelaLoja from "../pages/TelaLoja";
-import TelaContato from "../pages/TelaContato";
-import TelaAcompanhante from "../pages/TelaAcompanhante";
-import TelaAtividadeSalva from "../pages/TelaAtividadeSalva";
-import TelaInicioAtividades from "../pages/TelaInicioAtividades";
-import TelaInicioAtividadeUnidade from "../pages/TelaInicioAtividadeUnidade";
-import TelaAtividadeAlternativa from "../pages/TelaAtividadeAlternativa";
-import TelaAtividadeFala from "../pages/TelaAtividadeFala";
-import TelaAtividadeFalaSessao from "../pages/TelaAtividadeFalaSessao";
-import TelaAtividadeVideo from "../pages/TelaAtividadeVideo";
-import TelaAcompanhanteIA from "../pages/TelaAcompanhanteIA";
-import TelaLandingPage from "../pages/TelaLandingPage";
-import DashboardMedico from "../pages/Profissional/TelaDashboardMedico";
-import CadastrarPaciente from "../pages/Admin/TelaPacienteCadastro";
-import TelaProfissionalCadastro from "../pages/Admin/TelaProfissionalCadastro";
-import TelaPaciente from "../pages/Profissional/TelaPaciente";
-import TelaPacienteAtividade from "../pages/Profissional/TelaPacienteAtividade";
+const TelaLoginUser = lazy(() => import("../pages/TelaLoginUser"));
+const TelaCadastroUser = lazy(() => import("../pages/TelaCadastroUser"));
+const TelaDashboard = lazy(() => import("../pages/TelaDashboard"));
+const TelaPerfil = lazy(() => import("../pages/TelaPerfil"));
+const TelaNotificacoes = lazy(() => import("../pages/TelaNotificacoes"));
+const TelaConquistas = lazy(() => import("../pages/TelaConquistas"));
+const TelaDicionario = lazy(() => import("../pages/TelaDicionario"));
+const TelaLoja = lazy(() => import("../pages/TelaLoja"));
+const TelaContato = lazy(() => import("../pages/TelaContato"));
+const TelaAcompanhante = lazy(() => import("../pages/TelaAcompanhante"));
+const TelaAtividadeSalva = lazy(() => import("../pages/TelaAtividadeSalva"));
+const TelaInicioAtividades = lazy(() => import("../pages/TelaInicioAtividades"));
+const TelaInicioAtividadeUnidade = lazy(() => import("../pages/TelaInicioAtividadeUnidade"));
+const TelaAtividadeAlternativa = lazy(() => import("../pages/TelaAtividadeAlternativa"));
+const TelaAtividadeFala = lazy(() => import("../pages/TelaAtividadeFala"));
+const TelaAtividadeFalaSessao = lazy(() => import("../pages/TelaAtividadeFalaSessao"));
+const TelaAtividadeVideo = lazy(() => import("../pages/TelaAtividadeVideo"));
+const TelaAcompanhanteIA = lazy(() => import("../pages/TelaAcompanhanteIA"));
+const TelaLandingPage = lazy(() => import("../pages/TelaLandingPage"));
+const DashboardMedico = lazy(() => import("../pages/Profissional/TelaDashboardMedico"));
+const CadastrarPaciente = lazy(() => import("../pages/Admin/TelaPacienteCadastro"));
+const TelaProfissionalCadastro = lazy(() => import("../pages/Admin/TelaProfissionalCadastro"));
+const TelaPaciente = lazy(() => import("../pages/Profissional/TelaPaciente"));
+const TelaPacienteAtividade = lazy(() => import("../pages/Profissional/TelaPacienteAtividade"));
 
-import TelaConfiguracoesMedico from "../pages/Profissional/TelaConfiguracoesMedico";
-import TelaContatoMedico from "../pages/Profissional/TelaContatoMedico";
-import DashboardAdmin from "../pages/Admin/TelaDashboardAdmin";
-import ProfissionaisAdmin from "../pages/Admin/TelaProfissionaisAdmin";
-import TelaAtividadesAdmin from "../pages/Admin/TelaAtividadesAdmin";
-import TelaUnidadeAdmin from "../pages/Admin/TelaUnidadeAdmin";
-import TelaConfiguracoesAdmin from "../pages/Admin/TelaConfiguracoesAdmin";
+const TelaConfiguracoesMedico = lazy(() => import("../pages/Profissional/TelaConfiguracoesMedico"));
+const TelaContatoMedico = lazy(() => import("../pages/Profissional/TelaContatoMedico"));
+const DashboardAdmin = lazy(() => import("../pages/Admin/TelaDashboardAdmin"));
+const ProfissionaisAdmin = lazy(() => import("../pages/Admin/TelaProfissionaisAdmin"));
+const TelaAtividadesAdmin = lazy(() => import("../pages/Admin/TelaAtividadesAdmin"));
+const TelaUnidadeAdmin = lazy(() => import("../pages/Admin/TelaUnidadeAdmin"));
+const TelaConfiguracoesAdmin = lazy(() => import("../pages/Admin/TelaConfiguracoesAdmin"));
 
 const PageTransition = ({ children }) => {
   return (
@@ -415,7 +415,10 @@ function AnimatedRoutes() {
 function AppRoutes() {
   return (
     <BrowserRouter>
-      <AnimatedRoutes />
+      {/* cada tela é um chunk separado (lazy): fallback vazio enquanto baixa */}
+      <Suspense fallback={null}>
+        <AnimatedRoutes />
+      </Suspense>
     </BrowserRouter>
   );
 }

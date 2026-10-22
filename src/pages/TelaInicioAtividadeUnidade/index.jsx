@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Mic, HelpCircle, Video as VideoIcon, Sparkles, Heart, TrendingUp } from "lucide-react";
+import { Mic, HelpCircle, Video as VideoIcon, Sparkles, Heart, TrendingUp, ChevronDown } from "lucide-react";
 import CardExercicio from "../../components/CardExercicio";
 import Botao from "../../components/Botao";
 import Navbar from "../../components/NavbarVoltar";
@@ -38,6 +38,7 @@ const TelaInicioAtividadeUnidade = () => {
     carregando,
     erro,
     unidades,
+    alternarUnidade,
     nivelUsuario,
     comecarComDica,
     dica,
@@ -92,7 +93,29 @@ const TelaInicioAtividadeUnidade = () => {
 
           {!carregando &&
             !erro &&
-            unidades.map((unidade, indice) => {
+            unidades.map((resumo, indice) => {
+              const unidade = resumo.dados;
+              if (!unidade) {
+                return (
+                  <section key={resumo.id} className="unidade-bloco">
+                    <button
+                      type="button"
+                      className="unidade-cabecalho unidade-cabecalho-botao"
+                      onClick={() => alternarUnidade(resumo.id)}
+                      aria-expanded={resumo.aberta}
+                    >
+                      <span className="unidade-numero">{indice + 1}</span>
+                      <h2>{resumo.nome}</h2>
+                      <ChevronDown size={20} className={resumo.aberta ? "unidade-seta aberta" : "unidade-seta"} />
+                    </button>
+                    {resumo.aberta && resumo.carregando && (
+                      <p className="descricao-atividade">Carregando exercícios...</p>
+                    )}
+                    {resumo.aberta && resumo.erro && <p className="descricao-atividade">{resumo.erro}</p>}
+                  </section>
+                );
+              }
+
               const mostrarVibracao = unidade.vibracao.length > 0;
               const mostrarVideo = unidade.video.length > 0;
               const mostrarAlternativa = unidade.alternativa.length > 0;
@@ -103,7 +126,12 @@ const TelaInicioAtividadeUnidade = () => {
 
               return (
                 <section key={unidade.id} className="unidade-bloco">
-                  <div className="unidade-cabecalho">
+                  <button
+                    type="button"
+                    className="unidade-cabecalho unidade-cabecalho-botao"
+                    onClick={() => alternarUnidade(unidade.id)}
+                    aria-expanded={resumo.aberta}
+                  >
                     <span className="unidade-numero">{indice + 1}</span>
                     <div>
                       <h2>
@@ -112,15 +140,16 @@ const TelaInicioAtividadeUnidade = () => {
                           <span className="unidade-media"> · {d.acertoGeralUnidade}% de acerto</span>
                         )}
                       </h2>
-                      {!temExercicio && (
+                      {resumo.aberta && !temExercicio && (
                         <p className="descricao-atividade">
                           Esta unidade ainda não tem exercícios liberados pro seu nível.
                         </p>
                       )}
                     </div>
-                  </div>
+                    <ChevronDown size={20} className={resumo.aberta ? "unidade-seta aberta" : "unidade-seta"} />
+                  </button>
 
-                  {mostrarVibracao && (
+                  {resumo.aberta && mostrarVibracao && (
                     <div className="grupo-tipo-exercicio">
                       <div className="grupo-tipo-cabecalho">
                         <IconeTipo tipo="vibracao" />
@@ -145,7 +174,7 @@ const TelaInicioAtividadeUnidade = () => {
                     </div>
                   )}
 
-                  {mostrarVideo && (
+                  {resumo.aberta && mostrarVideo && (
                     <div className="grupo-tipo-exercicio">
                       <div className="grupo-tipo-cabecalho">
                         <IconeTipo tipo="video" />
@@ -168,7 +197,7 @@ const TelaInicioAtividadeUnidade = () => {
                     </div>
                   )}
 
-                  {mostrarAlternativa && (
+                  {resumo.aberta && mostrarAlternativa && (
                     <div className="grupo-tipo-exercicio">
                       <div className="grupo-tipo-cabecalho">
                         <IconeTipo tipo="alternativa" />
@@ -194,7 +223,7 @@ const TelaInicioAtividadeUnidade = () => {
                     </div>
                   )}
 
-                  {mostrarFala && (
+                  {resumo.aberta && mostrarFala && (
                     <div className="grupo-tipo-exercicio">
                       <div className="grupo-tipo-cabecalho">
                         <IconeTipo tipo="fala" />

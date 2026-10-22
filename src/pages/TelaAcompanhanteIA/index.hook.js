@@ -17,7 +17,10 @@ export function useTelaAcompanhanteIA() {
   const [licao, setLicao] = useState(null);
   const [mostrarModalSair, setMostrarModalSair] = useState(false);
 
-  const inicioRef = useRef(Date.now());
+  const inicioRef = useRef(null);
+  useEffect(() => {
+    inicioRef.current = Date.now();
+  }, []);
 
   useEffect(() => {
     let ativo = true;
