@@ -79,6 +79,8 @@ function normalizarUnidade(unidade, concluidas, nivelUsuario, desempenho) {
 
   const atividadesFala = lista(unidade, "atividadesFala", "AtividadesFala")
     .filter((af) => nivelLiberado(af.nivelDificuldade ?? af.NivelDificuldade, nivelUsuario))
+    // grupo sem exercícios não tem o que praticar (ex.: criado pelo admin e ainda vazio)
+    .filter((af) => lista(af, "exercicios", "Exercicios").length > 0)
     .map((af) => {
       const exercicios = lista(af, "exercicios", "Exercicios");
       const idsExercicios = exercicios.map((e) => e.idLicaoFala ?? e.IdLicaoFala);

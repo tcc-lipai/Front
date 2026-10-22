@@ -21,7 +21,16 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
+    // 401 = token inválido/expirado; 404 na própria conta = ela foi apagada (ex.: pelo admin)
+    // e o token ainda não expirou. Nos dois casos a sessão não vale mais.
+    const id = localStorage.getItem("id");
+    const url = error.config?.url ?? "";
+    const propriaContaApagada =
+      error.response?.status === 404 &&
+      id &&
+      (url === `/Usuario/${id}` || url === `/Profissional/${id}`);
+
+    if (error.response?.status === 401 || propriaContaApagada) {
       ["token", "role", "id", "nome", "email"].forEach((chave) => localStorage.removeItem(chave));
       if (window.location.pathname !== "/login") {
         window.location.assign("/login");

@@ -84,6 +84,15 @@ export async function buscarUsuario(usuarioId) {
 
   try {
     const response = await api.get(`/Usuario/${usuarioId}`);
+
+    // se for o próprio usuário logado, mantém nome/e-mail da sessão em dia (o admin pode ter alterado)
+    if (String(usuarioId) === localStorage.getItem("id")) {
+      const nome = response.data?.nome ?? response.data?.Nome;
+      const email = response.data?.email ?? response.data?.Email;
+      if (nome) localStorage.setItem("nome", nome);
+      if (email) localStorage.setItem("email", email);
+    }
+
     return { sucesso: true, data: response.data };
   } catch (error) {
     return {
