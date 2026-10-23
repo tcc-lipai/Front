@@ -664,3 +664,6 @@ Cada fase foi testada de verdade, não só lida:
   tipo/unidade) e gráficos de desempenho — incluindo 2 bugs corrigidos no
   componente `BarrasDeDesempenho` (texto ilegível no modo escuro, % nunca
   renderizada). Ver seção 2.
+- **Sessão de 2026-10-23**: implementação de acessibilidade no frontend
+  com a adição do **VLibras Widget** (`vlibras-plugin.js`) no `index.html`,
+  disponibilizando tradução automática para Libras com avatar 3D em todas as telas da aplicação.
