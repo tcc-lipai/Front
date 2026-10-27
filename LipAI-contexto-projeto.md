@@ -6,10 +6,10 @@ criação de conteúdo pedagógico real (26 fonemas) e otimizações de
 performance. Serve como brief técnico para a próxima IA/pessoa dar
 continuidade — leia antes de sugerir próximos passos.
 
-**Atualizado em**: 2026-10-22 (última sessão: limpeza das pendências —
-lint zerado, carregamento de unidades sob demanda, cancelamento de
-requisições ao backend/IA, contato do profissional, code-splitting; ver
-"Sessão de 2026-10-22 (parte 2)" na seção 2).
+**Atualizado em**: 2026-10-26 (última sessão: auditoria de segurança —
+chave JWT rotacionada [estava exposta no histórico público], CORS
+restrito, rate limiting no login, senha mínima subiu pra 8, cabeçalhos
+de segurança; ver "Sessão de 2026-10-26" na seção 2).
 
 ## 1. Visão geral — 3 repositórios
 
@@ -380,6 +380,75 @@ próxima sessão consiga de fato abrir o Chrome e testar visualmente.
 - Conta de demonstração do profissional: `prof.demo@lipai.com` / `Prof@12345`
   (código TCRD7H), já vinculada ao aluno `gaelpinhoarthur@gmail.com`.
 
+### Sessão de 2026-10-26 — auditoria de segurança
+
+Pedido do dono do projeto: testar segurança de rotas/geral e sugerir
+melhorias. Li todos os controllers, `Program.cs`, `JwtService`, os DTOs
+de cadastro/edição, e o histórico do Git do Backend. Achado mais grave
+primeiro:
+
+**1. 🔴 A chave de assinatura JWT em uso estava exposta no histórico
+público do GitHub** — `appsettings.json` foi commitado nos primeiros
+commits do repo (`24ed2c2`, `6bbde68`, `c23d3bc`, `f4ffe75`), removido do
+tracking depois (está no `.gitignore` hoje), mas **o blob antigo continua
+alcançável a partir de `origin/main`**. Comparei o hash da chave desses
+commits com a chave que estava em uso: **era a mesma, nunca tinha sido
+trocada**. Ou seja, qualquer um que baixasse o histórico do repo
+conseguia forjar um token JWT válido pra qualquer usuário (inclusive
+Admin) sem senha nenhuma. **Corrigido**: gerei uma chave nova
+(64 bytes aleatórios, `RandomNumberGenerator`) e troquei em
+`appsettings.json` (local, gitignored, não entra em commit). **Efeito
+colateral esperado**: todo mundo que estava logado foi deslogado (token
+antigo não valida mais com a chave nova) — inclusive o usuário de teste
+e o Admin, precisei logar de novo pra continuar testando.
+A senha do Admin **não foi trocada** (pedido explícito do dono do
+projeto — só a chave).
+
+**2. CORS totalmente aberto** (`AllowAnyOrigin`) — trocado por uma lista
+configurável (`Cors:AllowedOrigins` em `appsettings.json`, hoje só
+`http://localhost:5173`; `appsettings.Example.json` atualizado com o
+mesmo formato). Testado: origem na lista recebe
+`Access-Control-Allow-Origin`, origem fora da lista não recebe nada
+(bloqueio acontece no navegador). **Quando for pra produção, adicionar o
+domínio real nessa lista.**
+
+**3. Sem rate limiting no login** — adicionado `AddRateLimiter` em
+`Program.cs` com uma política `"login"` (fixed window, 5 tentativas por
+minuto por IP, `RateLimitPartition.GetFixedWindowLimiter` particionado
+por `RemoteIpAddress`, 429 ao estourar), aplicada via
+`[EnableRateLimiting("login")]` em `AuthController.Login`. Testado de
+verdade: 5 tentativas erradas passam (401), a 6ª vira 429; esperei a
+janela de 1 minuto resetar e confirmei de novo limpo.
+
+**4. Senha mínima de 6 → 8 caracteres** — `UsuarioCadastroDto` e
+`ProfissionalCadastroDto` (`[MinLength(8)]`, antes era 6); também
+adicionei a validação (que **não existia nenhuma**) no campo opcional de
+troca de senha em `UsuarioEdicaoAdminDto` e `ProfissionalEdicaoDto`.
+Texto do placeholder no Front (`TelaProfissionalCadastro`) atualizado.
+
+**5. Sem cabeçalhos de segurança** — middleware simples em `Program.cs`
+adicionando `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY` e
+`Referrer-Policy: strict-origin-when-cross-origin` em toda resposta.
+Testado via request crua, os 3 cabeçalhos aparecem.
+
+**O que a auditoria confirmou que já estava correto** (vale saber, não
+é só lista de problema): senha com BCrypt (nunca texto puro); sem SQL
+injection (EF Core parametrizado em tudo, nenhum SQL cru no projeto);
+sem XSS óbvio no Front (nenhum `dangerouslySetInnerHTML`); mensagem de
+erro de login genérica pros 3 tipos de conta (não dá pra descobrir se
+um e-mail existe); `AcompanhamentoController` e
+`UsuarioController.GetUsuarioPorId` checam IDOR corretamente (paciente
+só vê o próprio, profissional só paciente vinculado); `RotaProtegida`
+no Front é só UX, a segurança de verdade já estava no back.
+
+**Não testado visualmente** (mesma limitação de sempre — sem navegador
+na sessão até o momento desta auditoria). Testado 100% via requisições
+diretas (PowerShell), incluindo o próprio rate limiting de ponta a ponta.
+
+**Pendência que ficou pra depois, não é bug**: a senha do Admin usada
+neste projeto é fraca/previsível — o dono do projeto pediu explicitamente
+pra não mexer nela por enquanto.
+
 ## 3. Como rodar tudo localmente
 
 ```bash
@@ -529,7 +598,9 @@ segurança.
 
 1. **🔴 Segurança — chave Groq exposta no histórico do `LipAI_LLM/main`**
    (ver alerta na seção 1). Rotacionar a chave e decidir o que fazer com o
-   histórico antes de considerar esse repo "limpo" pra produção.
+   histórico antes de considerar esse repo "limpo" pra produção. (A chave
+   JWT do Backend tinha o mesmo problema — **essa já foi corrigida** na
+   sessão de 2026-10-26, ver seção 2. A da Groq continua pendente.)
 2. **Login com Google** — pedido explicitamente pelo dono do projeto,
    **adiado por decisão dele** ("deixa isso do Google pra lá, depois a
    gente faz"). Decisão já tomada pra quando for implementado: email novo
@@ -565,6 +636,13 @@ segurança.
     comparar, já que gera dinamicamente). Vale decidir, em algum momento,
     se o fluxo do aluno deve usar o motor adaptativo, o sistema estático,
     ou os dois pra coisas diferentes.
+11. **Senha do Admin fraca/previsível** — identificado na auditoria de
+    segurança (2026-10-26), dono do projeto pediu explicitamente pra não
+    trocar por enquanto. Trocar quando for pra produção de verdade.
+12. **Acessibilidade — widget de contraste/tamanho de fonte**: pedido
+    pelo dono do projeto (além do VLibras que já existe em `index.html`),
+    ainda não implementado — próximo passo depois da auditoria de
+    segurança.
 
 ## 8. Como foi verificado (pra próxima pessoa/IA confiar no que está aqui)
 
@@ -606,6 +684,15 @@ Cada fase foi testada de verdade, não só lida:
   conteúdo de um nível inteiro com um usuário de teste, não foi feito por
   tempo — a lógica foi validada por inspeção de código + os casos de
   borda acima).
+- **Auditoria de segurança (sessão de 2026-10-26)**: chave JWT comparada
+  por hash entre o histórico do Git e o valor em uso (confirmado que era
+  a mesma antes de trocar); rate limiting testado de ponta a ponta (5
+  tentativas passam, 6ª vira 429, confirmado de novo após a janela
+  resetar); CORS testado com request crua (`Origin` permitida recebe
+  `Access-Control-Allow-Origin`, não-permitida não recebe); cabeçalhos
+  de segurança confirmados na resposta real. IDOR checado por leitura de
+  código em `AcompanhamentoController` e `UsuarioController` (não testado
+  via requisição real com dois usuários diferentes, só inspeção).
 
 ## 9. Detalhes internos: Motor Adaptativo e Controllers
 
@@ -667,3 +754,9 @@ Cada fase foi testada de verdade, não só lida:
 - **Sessão de 2026-10-23**: implementação de acessibilidade no frontend
   com a adição do **VLibras Widget** (`vlibras-plugin.js`) no `index.html`,
   disponibilizando tradução automática para Libras com avatar 3D em todas as telas da aplicação.
+- **Sessão de 2026-10-26**: auditoria de segurança completa — chave JWT
+  rotacionada (estava exposta no histórico público do GitHub, era a
+  mesma em uso), CORS restrito a origens conhecidas, rate limiting no
+  login (5/min por IP), senha mínima 6→8 caracteres (cadastro e edição,
+  incluindo um campo que não tinha validação nenhuma), cabeçalhos de
+  segurança adicionados. Ver seção 2.
