@@ -1,4 +1,4 @@
-import { X } from "lucide-react";
+import { Check, X } from "lucide-react";
 import "./index.css";
 
 import Botao from "../../components/Botao";
@@ -92,6 +92,12 @@ export default function TelaAtividadeAlternativa() {
                   >
                     <span className="option-letter">{opcao.letra})</span>
                     {opcao.texto}
+                    {estado === "correct" && (
+                      <Check size={18} className="option-item__icone-estado" aria-label="Resposta certa" />
+                    )}
+                    {estado === "incorrect" && (
+                      <X size={18} className="option-item__icone-estado" aria-label="Resposta errada" />
+                    )}
                   </button>
                 );
               })}

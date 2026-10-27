@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Atkinson+Hyperlegible:wght@400;700&display=swap");
 @import "./styles/theme.css";
 
 /* ==========================================================================
@@ -153,6 +153,88 @@
   --lipai-overlay: rgba(0, 0, 0, 0.85);
 
   color-scheme: dark;
+}
+
+/* --- Acessibilidade: modo daltônico -------------------------------------
+   Vermelho/verde é o par mais difícil de distinguir pra quem tem
+   daltonismo (o tipo mais comum). Troca os tokens de perigo/sucesso e os
+   estados de certo/errado (que usavam vermelho/verde fixo, não token) por
+   azul/laranja, o par mais distinguível pra todos os tipos de daltonismo.
+   O ícone de certo/errado (✓/✗) já aparece sempre, independente do modo —
+   isso aqui só troca a cor. */
+:root[data-daltonismo="true"] {
+  --lipai-danger: #d35400;
+  --lipai-success: #2980b9;
+}
+:root[data-daltonismo="true"] .option-item.correct {
+  background: rgba(41, 128, 185, 0.12) !important;
+  border-color: #2980b9 !important;
+  color: #0a3d62 !important;
+}
+:root[data-daltonismo="true"] .option-item.incorrect {
+  background: rgba(211, 84, 0, 0.12) !important;
+  border-color: #d35400 !important;
+  color: #7a3900 !important;
+}
+:root[data-daltonismo="true"] .option-item.correct .option-item__icone-estado {
+  color: #2980b9 !important;
+}
+:root[data-daltonismo="true"] .option-item.incorrect .option-item__icone-estado {
+  color: #d35400 !important;
+}
+
+/* --- Acessibilidade: reduzir animações ----------------------------------
+   Cobre transições/animações CSS comuns (hover, etc). As transições de
+   página do framer-motion são desligadas à parte, via <MotionConfig> em
+   src/routes/routes.jsx (CSS sozinho não alcança animação feita em JS). */
+:root[data-reduzir-animacao="true"] * {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* --- Acessibilidade: destacar links e botões --------------------------- */
+:root[data-destacar-links="true"] a:not([class*="btn"]) {
+  text-decoration: underline !important;
+  text-decoration-thickness: 2px !important;
+  text-underline-offset: 2px !important;
+}
+:root[data-destacar-links="true"] :is(button, a[class*="btn"], input[type="submit"]) {
+  outline: 2px solid currentColor !important;
+  outline-offset: 2px !important;
+}
+
+/* --- Acessibilidade: espaçamento do texto ------------------------------- */
+:root[data-espacamento="true"] {
+  letter-spacing: 0.03em;
+}
+:root[data-espacamento="true"] :is(p, li, span, label, h1, h2, h3, h4, h5, h6, a, button) {
+  line-height: 1.7 !important;
+  word-spacing: 0.08em;
+}
+
+/* --- Acessibilidade: fonte de leitura facilitada -------------------------
+   Atkinson Hyperlegible — feita pelo Braille Institute pra leitores com
+   baixa visão, importada no topo deste arquivo. */
+:root[data-fonte-leitura="true"],
+:root[data-fonte-leitura="true"] * {
+  font-family: "Atkinson Hyperlegible", sans-serif !important;
+}
+
+/* --- Acessibilidade: escala de cinza ------------------------------------- */
+:root[data-escala-cinza="true"] {
+  filter: grayscale(1);
+}
+
+/* --- Acessibilidade: cursor grande ---------------------------------------
+   Seta preta com contorno branco (visível em qualquer fundo), ~2x o
+   tamanho do cursor padrão do sistema. */
+:root[data-cursor-grande="true"] * {
+  cursor:
+    url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24'%3E%3Cpath d='M3 2 L3 19 L7.5 15.5 L10.5 21.5 L13.5 20 L10.5 14 L17 14 Z' fill='black' stroke='white' stroke-width='1.2'/%3E%3C/svg%3E")
+      3 2,
+    auto !important;
 }
 
 * {

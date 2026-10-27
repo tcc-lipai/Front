@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Accessibility, Minus, Plus, RotateCcw, X } from "lucide-react";
 import { useAcessibilidade } from "../../hooks/useAcessibilidade";
+import { TOGGLES_ACESSIBILIDADE } from "../AcessibilidadeProvider/index.types";
 import "./index.css";
 
 const LABEL_NIVEL = {
@@ -20,6 +21,8 @@ const WidgetAcessibilidade = () => {
     diminuirTexto,
     altoContraste,
     toggleAltoContraste,
+    toggles,
+    toggleFlag,
     resetarAcessibilidade,
   } = useAcessibilidade();
 
@@ -39,40 +42,57 @@ const WidgetAcessibilidade = () => {
             </button>
           </div>
 
-          <div className="widget-acessibilidade__item">
-            <span>Tamanho do texto</span>
-            <div className="widget-acessibilidade__controle-fonte">
-              <button
-                type="button"
-                onClick={diminuirTexto}
-                disabled={!podeDiminuir}
-                aria-label="Diminuir tamanho do texto"
-              >
-                <Minus size={14} />
-              </button>
-              <span className="widget-acessibilidade__valor-fonte">{LABEL_NIVEL[tamanhoTexto]}</span>
-              <button
-                type="button"
-                onClick={aumentarTexto}
-                disabled={!podeAumentar}
-                aria-label="Aumentar tamanho do texto"
-              >
-                <Plus size={14} />
-              </button>
+          <div className="widget-acessibilidade__lista">
+            <div className="widget-acessibilidade__item">
+              <span>Tamanho do texto</span>
+              <div className="widget-acessibilidade__controle-fonte">
+                <button
+                  type="button"
+                  onClick={diminuirTexto}
+                  disabled={!podeDiminuir}
+                  aria-label="Diminuir tamanho do texto"
+                >
+                  <Minus size={14} />
+                </button>
+                <span className="widget-acessibilidade__valor-fonte">{LABEL_NIVEL[tamanhoTexto]}</span>
+                <button
+                  type="button"
+                  onClick={aumentarTexto}
+                  disabled={!podeAumentar}
+                  aria-label="Aumentar tamanho do texto"
+                >
+                  <Plus size={14} />
+                </button>
+              </div>
             </div>
-          </div>
 
-          <div className="widget-acessibilidade__item">
-            <span>Alto contraste</span>
-            <label className="widget-acessibilidade__switch">
-              <input
-                type="checkbox"
-                checked={altoContraste}
-                onChange={toggleAltoContraste}
-                aria-label="Ativar alto contraste"
-              />
-              <span className="widget-acessibilidade__trilho" />
-            </label>
+            <div className="widget-acessibilidade__item">
+              <span>Alto contraste</span>
+              <label className="widget-acessibilidade__switch">
+                <input
+                  type="checkbox"
+                  checked={altoContraste}
+                  onChange={toggleAltoContraste}
+                  aria-label="Ativar alto contraste"
+                />
+                <span className="widget-acessibilidade__trilho" />
+              </label>
+            </div>
+
+            {TOGGLES_ACESSIBILIDADE.map(({ chave, label }) => (
+              <div className="widget-acessibilidade__item" key={chave}>
+                <span>{label}</span>
+                <label className="widget-acessibilidade__switch">
+                  <input
+                    type="checkbox"
+                    checked={Boolean(toggles[chave])}
+                    onChange={() => toggleFlag(chave)}
+                    aria-label={label}
+                  />
+                  <span className="widget-acessibilidade__trilho" />
+                </label>
+              </div>
+            ))}
           </div>
 
           <button

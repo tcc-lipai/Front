@@ -8,8 +8,10 @@ continuidade — leia antes de sugerir próximos passos.
 
 **Atualizado em**: 2026-10-26 (última sessão: auditoria de segurança
 [chave JWT rotacionada, CORS restrito, rate limiting, senha mínima 8,
-cabeçalhos] + widget de acessibilidade [contraste/tamanho de texto]; ver
-"Sessão de 2026-10-26" e "(parte 2)" na seção 2).
+cabeçalhos] + widget de acessibilidade [contraste/tamanho de texto +
+8 ferramentas extras: daltonismo, leitura em voz alta, reduzir animação,
+destacar links, espaçamento, fonte de leitura, escala de cinza, cursor
+grande]; ver "Sessão de 2026-10-26", "(parte 2)" e "(parte 3)" na seção 2).
 
 ## 1. Visão geral — 3 repositórios
 
@@ -485,6 +487,59 @@ contraste e aumento de texto, igual as que já existem em outros sites.
   ponto, apesar do dono do projeto ter tentado configurar). Checagem
   manual feita: nenhum outro elemento fixo ocupa o canto inferior
   esquerdo da tela (VLibras fica no inferior direito por padrão).
+
+### Sessão de 2026-10-26 (parte 3) — bug do contraste + 8 ferramentas novas
+
+O dono do projeto testou e o alto contraste não mudava nada na tela.
+Causa: `theme.css` (o arquivo que força cor em telas com CSS legado, feito
+originalmente só pro modo escuro) só disparava com `data-theme="dark"`,
+nunca com `data-contraste="alto"`. Como quase toda regra de lá já usa
+`var(--lipai-*) !important` (não cor fixa), a correção foi ampliar o
+seletor gatilho de `:root[data-theme="dark"]` pra
+`:root:is([data-theme="dark"], [data-contraste="alto"])` em **todo** o
+arquivo (`replace_all`), sem precisar reescrever cor nenhuma — exceto o
+bloco que força a landing page a ficar clara no escuro, que continua só
+em `data-theme="dark"` (é estética, não acessibilidade; alto contraste
+deve continuar valendo lá).
+
+Depois disso, a pedido do dono do projeto, **8 ferramentas novas** no
+mesmo widget (todas via `TOGGLES_ACESSIBILIDADE` em
+`AcessibilidadeProvider/index.types.js` — lista genérica de
+`{chave, label}`, cada uma vira `data-<chave>="true"` no `<html>` via
+`dataset`, sem precisar repetir a lógica de estado 8 vezes):
+
+- **Modo daltônico** — troca o par vermelho/verde (pior pra daltonismo)
+  por azul/laranja (o par mais distinguível pra todos os tipos). Cobre os
+  tokens `--lipai-danger`/`--lipai-success` **e** o estado certo/errado de
+  `TelaAtividadeAlternativa` (`.option-item.correct`/`.incorrect`), que
+  usava cor fixa, não token. **Além disso, independente do toggle**,
+  `option-item` ganhou um ícone ✓/✗ (lucide `Check`/`X`) ao lado do texto
+  — achado real da sessão: antes só a cor (verde/vermelho) indicava certo/
+  errado, inacessível pra quem tem daltonismo vermelho-verde mesmo sem
+  ativar o modo.
+- **Ler texto em voz alta** — `SpeechSynthesisUtterance` (Web Speech API,
+  nativa do navegador) lendo o texto do elemento clicado; ignora clique em
+  `input`/`textarea`/`select` pra não atrapalhar digitação.
+- **Reduzir animação** — CSS (`animation-duration`/`transition-duration`
+  quase zero, padrão `prefers-reduced-motion`) cobre transições de CSS;
+  as transições de **página** são do framer-motion (JS, não CSS), então
+  também foi adicionado `<MotionConfig reducedMotion={...}>` envolvendo
+  `<AnimatePresence>` em `routes.jsx`, lendo o toggle via
+  `useAcessibilidade()` dentro de `AnimatedRoutes`.
+- **Destacar links e botões** — sublinhado forte em link, contorno em
+  botão.
+- **Aumentar espaçamento** — `letter-spacing`/`line-height`/`word-spacing`.
+- **Fonte de leitura facilitada** — troca pra "Atkinson Hyperlegible"
+  (fonte do Braille Institute, feita pra baixa visão; import novo no
+  Google Fonts em `src/index.css`).
+- **Escala de cinza** — `filter: grayscale(1)` no `:root`.
+- **Cursor grande** — seta SVG inline (data URI) maior que o padrão,
+  contorno branco pra ficar visível em qualquer fundo.
+- **Verificação**: `npx eslint src` (0 erros) e `npm run build` (sucesso,
+  inclusive grep manual no CSS compilado confirmando que o seletor do
+  cursor/daltonismo/fonte saíram certos do build). **Ainda sem navegador
+  conectado nesta sessão** — nenhuma das 8 ferramentas novas foi vista
+  rodando de verdade, só validada por leitura de código + build.
 
 ## 3. Como rodar tudo localmente
 
