@@ -1,20 +1,26 @@
 /* ==========================================================================
-   Tema escuro central do LipAI
+   Tema escuro + alto contraste central do LipAI
    --------------------------------------------------------------------------
    Antes o modo escuro era feito com ~540 linhas espalhadas em 28 arquivos
    CSS, cada um com um roxo/cinza diferente. Agora fica tudo aqui, usando só
    os tokens de src/index.css (var(--lipai-*)).
 
-   Este arquivo cuida do tema ESCURO no nível estrutural (fundos, superfícies,
-   campos, texto). As telas definem o tema CLARO livremente; ajustes finos de
-   uma tela específica no escuro podem viver no CSS dela, sempre com tokens.
+   Este arquivo cuida do tema ESCURO e do ALTO CONTRASTE (widget de
+   acessibilidade) no nível estrutural (fundos, superfícies, campos, texto).
+   As duas coisas disparam o mesmo bloco de regras — [data-theme="dark"] OU
+   [data-contraste="alto"] — porque as regras só usam var(--lipai-*); quem
+   decide a cor de verdade é o bloco de tokens em src/index.css (o de alto
+   contraste vem depois do de escuro no arquivo, então ganha se os dois
+   estiverem ativos ao mesmo tempo). As telas definem o tema CLARO
+   livremente; ajustes finos de uma tela específica podem viver no CSS dela,
+   sempre com tokens.
 
    O `!important` aqui é proposital: é uma camada de tema que precisa vencer
    o CSS legado das telas (que usa cores fixas e, às vezes, `!important`).
    ========================================================================== */
 
 /* ---- Fundo de página / wrappers de tela ------------------------------- */
-:root[data-theme="dark"]
+:root:is([data-theme="dark"], [data-contraste="alto"])
   :is(
     .dashboard-wrapper,
     .tela-loja,
@@ -43,13 +49,15 @@
 }
 
 /* elementos puramente decorativos (ondas SVG, brilhos, círculos, gradientes) */
-:root[data-theme="dark"] :is(.bg-waves, .bg-circle, .bg-triangle) {
+:root:is([data-theme="dark"], [data-contraste="alto"]) :is(.bg-waves, .bg-circle, .bg-triangle) {
   opacity: 0.1 !important;
   filter: grayscale(1);
 }
 
 /* A landing page é marketing pré-login, com design próprio: roda sempre no
-   tema claro, mesmo com o app no escuro. */
+   tema claro, mesmo com o app no escuro (só no escuro por preferência
+   estética — alto contraste continua valendo aqui, é acessibilidade, não
+   gosto de cor, então essa regra não entra no :is() acima). */
 :root[data-theme="dark"] .landing {
   --lipai-bg: #f6f2fb;
   --lipai-surface: #ffffff;
@@ -64,7 +72,7 @@
 }
 
 /* ---- Superfícies (cards, painéis, modais, drawers) -------------------- */
-:root[data-theme="dark"]
+:root:is([data-theme="dark"], [data-contraste="alto"])
   :is(
     .card-section,
     .activity-card,
@@ -117,7 +125,7 @@
 }
 
 /* superfícies internas / sutis (chips neutros, trilhas, campos de busca) */
-:root[data-theme="dark"]
+:root:is([data-theme="dark"], [data-contraste="alto"])
   :is(
     .strike-day,
     .perf-track,
@@ -143,25 +151,25 @@
 }
 
 /* estados da opção de resposta (alternativa) — precisam vencer o !important acima */
-:root[data-theme="dark"] .option-item.selected {
+:root:is([data-theme="dark"], [data-contraste="alto"]) .option-item.selected {
   background-color: var(--lipai-primary-soft) !important;
   border-color: var(--lipai-primary);
 }
 
-:root[data-theme="dark"] .option-item.correct {
+:root:is([data-theme="dark"], [data-contraste="alto"]) .option-item.correct {
   background-color: rgba(76, 175, 80, 0.18) !important;
   border-color: #4caf50;
   color: #8fd99a;
 }
 
-:root[data-theme="dark"] .option-item.incorrect {
+:root:is([data-theme="dark"], [data-contraste="alto"]) .option-item.incorrect {
   background-color: rgba(240, 82, 82, 0.18) !important;
   border-color: #f05252;
   color: #ff9b9b;
 }
 
 /* ---- Overlays de modal / drawer ------------------------------------- */
-:root[data-theme="dark"]
+:root:is([data-theme="dark"], [data-contraste="alto"])
   :is(
     .modal-overlay,
     .licao-overlay,
@@ -177,20 +185,20 @@
 }
 
 /* ---- Campos de formulário ------------------------------------------- */
-:root[data-theme="dark"]
+:root:is([data-theme="dark"], [data-contraste="alto"])
   :is(input, textarea, select):not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
   background-color: var(--lipai-field) !important;
   border-color: var(--lipai-border) !important;
   color: var(--lipai-text) !important;
 }
 
-:root[data-theme="dark"] input::placeholder,
-:root[data-theme="dark"] textarea::placeholder {
+:root:is([data-theme="dark"], [data-contraste="alto"]) input::placeholder,
+:root:is([data-theme="dark"], [data-contraste="alto"]) textarea::placeholder {
   color: var(--lipai-text-muted);
   opacity: 1;
 }
 
-:root[data-theme="dark"] :is(input, textarea, select):focus {
+:root:is([data-theme="dark"], [data-contraste="alto"]) :is(input, textarea, select):focus {
   border-color: var(--lipai-primary) !important;
   outline-color: var(--lipai-primary);
 }
@@ -198,8 +206,8 @@
 /* ---- Texto -----------------------------------------------------------
    No escuro, texto de conteúdo vira claro por padrão. Elementos coloridos
    de propósito (badges, tags, botões, chips) ficam de fora. */
-:root[data-theme="dark"] :is(h1, h2, h3, h4, h5, h6, p, label, strong, li, th, td):not(.landing *),
-:root[data-theme="dark"]
+:root:is([data-theme="dark"], [data-contraste="alto"]) :is(h1, h2, h3, h4, h5, h6, p, label, strong, li, th, td):not(.landing *),
+:root:is([data-theme="dark"], [data-contraste="alto"])
   span:not([class*="badge"]):not([class*="tag"]):not([class*="btn"]):not([class*="chip"]):not(
     [class*="dot"]
   ):not([class*="estrela"]):not(.landing *) {
@@ -207,7 +215,7 @@
 }
 
 /* textos secundários conhecidos */
-:root[data-theme="dark"]
+:root:is([data-theme="dark"], [data-contraste="alto"])
   :is(
     .section-subtitle,
     .activity-desc,
@@ -235,7 +243,7 @@
 }
 
 /* links / botões de texto */
-:root[data-theme="dark"]
+:root:is([data-theme="dark"], [data-contraste="alto"])
   :is(
     a:not([class*="btn"]),
     .ver-mais-btn,
@@ -246,57 +254,57 @@
 }
 
 /* ---- Acentos de marca --------------------------------------------- */
-:root[data-theme="dark"] .strike-day--active {
+:root:is([data-theme="dark"], [data-contraste="alto"]) .strike-day--active {
   background-color: var(--lipai-primary) !important;
   border-color: var(--lipai-primary) !important;
 }
-:root[data-theme="dark"] .strike-day--active :is(.strike-month, .strike-num) {
+:root:is([data-theme="dark"], [data-contraste="alto"]) .strike-day--active :is(.strike-month, .strike-num) {
   color: var(--lipai-on-primary);
 }
 
 /* barra lateral do aluno (Navbar) */
-:root[data-theme="dark"] .navbar-container {
+:root:is([data-theme="dark"], [data-contraste="alto"]) .navbar-container {
   background-color: var(--lipai-surface) !important;
   border: 1px solid var(--lipai-border);
 }
-:root[data-theme="dark"] .nav-item {
+:root:is([data-theme="dark"], [data-contraste="alto"]) .nav-item {
   color: var(--lipai-text-muted);
 }
-:root[data-theme="dark"] :is(.nav-item:hover, .nav-item.active) {
+:root:is([data-theme="dark"], [data-contraste="alto"]) :is(.nav-item:hover, .nav-item.active) {
   background-color: var(--lipai-primary-soft);
   color: var(--lipai-primary);
 }
-:root[data-theme="dark"] .navbar-hamburguer {
+:root:is([data-theme="dark"], [data-contraste="alto"]) .navbar-hamburguer {
   background-color: var(--lipai-primary) !important;
   color: var(--lipai-on-primary);
 }
 
 /* menu lateral do perfil */
-:root[data-theme="dark"] .sidebar-menu-item {
+:root:is([data-theme="dark"], [data-contraste="alto"]) .sidebar-menu-item {
   color: var(--lipai-text-muted);
 }
-:root[data-theme="dark"] .sidebar-menu-item-active {
+:root:is([data-theme="dark"], [data-contraste="alto"]) .sidebar-menu-item-active {
   background-color: var(--lipai-primary-soft) !important;
   color: var(--lipai-primary) !important;
 }
 
 /* toggle de notificações (lidas / não lidas) */
-:root[data-theme="dark"] .btn-filtro {
+:root:is([data-theme="dark"], [data-contraste="alto"]) .btn-filtro {
   color: var(--lipai-text-muted);
 }
-:root[data-theme="dark"] .btn-filtro.ativo {
+:root:is([data-theme="dark"], [data-contraste="alto"]) .btn-filtro.ativo {
   background-color: var(--lipai-surface) !important;
   color: var(--lipai-text);
 }
 
 /* cabeçalho roxo da tela de notificações */
-:root[data-theme="dark"] .header-notificacoes {
+:root:is([data-theme="dark"], [data-contraste="alto"]) .header-notificacoes {
   background-color: var(--lipai-surface) !important;
   border-bottom: 1px solid var(--lipai-border);
 }
 
 /* preenchimentos roxos de progresso */
-:root[data-theme="dark"]
+:root:is([data-theme="dark"], [data-contraste="alto"])
   :is(
     .perf-fill,
     .info-atividade__progresso-preenchido,
@@ -308,7 +316,7 @@
 }
 
 /* divisórias */
-:root[data-theme="dark"] :is(hr, .divider, .linha-divisoria, .divisoria) {
+:root:is([data-theme="dark"], [data-contraste="alto"]) :is(hr, .divider, .linha-divisoria, .divisoria) {
   background-color: var(--lipai-border) !important;
   border-color: var(--lipai-border) !important;
 }
