@@ -6,10 +6,10 @@ criação de conteúdo pedagógico real (26 fonemas) e otimizações de
 performance. Serve como brief técnico para a próxima IA/pessoa dar
 continuidade — leia antes de sugerir próximos passos.
 
-**Atualizado em**: 2026-10-26 (última sessão: auditoria de segurança —
-chave JWT rotacionada [estava exposta no histórico público], CORS
-restrito, rate limiting no login, senha mínima subiu pra 8, cabeçalhos
-de segurança; ver "Sessão de 2026-10-26" na seção 2).
+**Atualizado em**: 2026-10-26 (última sessão: auditoria de segurança
+[chave JWT rotacionada, CORS restrito, rate limiting, senha mínima 8,
+cabeçalhos] + widget de acessibilidade [contraste/tamanho de texto]; ver
+"Sessão de 2026-10-26" e "(parte 2)" na seção 2).
 
 ## 1. Visão geral — 3 repositórios
 
@@ -449,6 +449,43 @@ diretas (PowerShell), incluindo o próprio rate limiting de ponta a ponta.
 neste projeto é fraca/previsível — o dono do projeto pediu explicitamente
 pra não mexer nela por enquanto.
 
+### Sessão de 2026-10-26 (parte 2) — widget de acessibilidade
+
+Pedido do dono do projeto: além do VLibras (já existia, ver sessão de
+2026-10-23), uma "caixinha" flutuante de acessibilidade com alto
+contraste e aumento de texto, igual as que já existem em outros sites.
+
+- **Novo**: `src/components/AcessibilidadeProvider/` (Context, mesmo
+  padrão do `ThemeProvider` — `index.jsx`, `themeContext.js`,
+  `index.types.js` com `NIVEIS_FONTE`) + hook
+  `src/hooks/useAcessibilidade.js` + `src/components/WidgetAcessibilidade/`
+  (botão flutuante canto inferior esquerdo + painel). Montado em
+  `App.jsx`, fora das rotas — aparece em toda tela, logado ou não.
+- **Tamanho do texto** (4 níveis: Normal/Grande/Maior/Máximo) — decisão
+  técnica importante: escala a página **inteira** via `zoom` no `<html>`
+  (`data-fonte="grande|maior|maximo"` em `src/index.css`), não só o
+  `font-size`. O motivo: o CSS do projeto usa `px` fixo espalhado em
+  dezenas de arquivos, não dava pra escalar só o texto sem reescrever
+  tudo pra `rem` (fora de escopo). `zoom` reflui o layout de verdade
+  (diferente de `transform: scale`, que cortaria conteúdo).
+- **Alto contraste** — mesmo mecanismo do tema claro/escuro: atributo
+  `data-contraste="alto"` no `<html>` sobrescrevendo os tokens
+  `var(--lipai-*)` com paleta preto/branco/amarelo. Independente do
+  tema claro/escuro (dá pra combinar os dois). Cobre bem telas que já
+  usam só tokens; **igual aconteceu com o dark mode** (que precisou de
+  ~540 linhas de override em `theme.css` pra telas com cor fixa), é
+  esperado que alguma tela específica precise de ajuste pontual depois
+  — não foi feita uma varredura tela por tela.
+- Preferências em `localStorage`
+  (`lipai-acessibilidade-fonte`/`lipai-acessibilidade-contraste`),
+  mesmo padrão do `lipai-theme`.
+- **Verificação**: `npx eslint src` (0 erros, projeto inteiro) e
+  `npm run build` (sucesso) — **não verificado visualmente num
+  navegador real** (sessão sem Playwright MCP conectado até este
+  ponto, apesar do dono do projeto ter tentado configurar). Checagem
+  manual feita: nenhum outro elemento fixo ocupa o canto inferior
+  esquerdo da tela (VLibras fica no inferior direito por padrão).
+
 ## 3. Como rodar tudo localmente
 
 ```bash
@@ -639,10 +676,10 @@ segurança.
 11. **Senha do Admin fraca/previsível** — identificado na auditoria de
     segurança (2026-10-26), dono do projeto pediu explicitamente pra não
     trocar por enquanto. Trocar quando for pra produção de verdade.
-12. **Acessibilidade — widget de contraste/tamanho de fonte**: pedido
-    pelo dono do projeto (além do VLibras que já existe em `index.html`),
-    ainda não implementado — próximo passo depois da auditoria de
-    segurança.
+12. ~~Acessibilidade — widget de contraste/tamanho de fonte~~ — resolvido
+    (parte 2 da sessão de 2026-10-26). **Não verificado visualmente**
+    (sem navegador na sessão) e **sem varredura de alto contraste em
+    todas as telas** — só os tokens globais, igual explicado na seção 2.
 
 ## 8. Como foi verificado (pra próxima pessoa/IA confiar no que está aqui)
 
@@ -760,3 +797,7 @@ Cada fase foi testada de verdade, não só lida:
   login (5/min por IP), senha mínima 6→8 caracteres (cadastro e edição,
   incluindo um campo que não tinha validação nenhuma), cabeçalhos de
   segurança adicionados. Ver seção 2.
+- **Sessão de 2026-10-26 (parte 2)**: widget de acessibilidade flutuante
+  (`AcessibilidadeProvider` + `WidgetAcessibilidade`) — 4 níveis de
+  tamanho de texto via `zoom` e alto contraste via override dos tokens
+  `var(--lipai-*)`, mesmo padrão do `ThemeProvider`. Ver seção 2.

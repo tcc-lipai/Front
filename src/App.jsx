@@ -1,10 +1,15 @@
 import AppRoutes from "./routes/routes.jsx";
 import { ThemeProvider } from "./components/ThemeProvider";
+import { AcessibilidadeProvider } from "./components/AcessibilidadeProvider";
+import WidgetAcessibilidade from "./components/WidgetAcessibilidade";
 
 function App() {
   return (
     <ThemeProvider>
-      <AppRoutes />
+      <AcessibilidadeProvider>
+        <AppRoutes />
+        <WidgetAcessibilidade />
+      </AcessibilidadeProvider>
     </ThemeProvider>
   );
 }

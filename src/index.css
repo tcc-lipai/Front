@@ -108,6 +108,53 @@
   }
 }
 
+/* --- Acessibilidade: tamanho do texto (widget flutuante) ---------------
+   O CSS do projeto usa px fixo espalhado em várias telas, então "aumentar
+   a fonte" de verdade (sem reescrever tudo pra rem) é escalar a página
+   inteira via zoom — funciona em todos os navegadores modernos e não
+   corta conteúdo como transform:scale faria. */
+:root[data-fonte="grande"] {
+  zoom: 1.15;
+}
+:root[data-fonte="maior"] {
+  zoom: 1.3;
+}
+:root[data-fonte="maximo"] {
+  zoom: 1.45;
+}
+
+/* --- Acessibilidade: alto contraste (widget flutuante) ------------------
+   Independente do tema claro/escuro — sobrescreve os mesmos tokens que o
+   modo escuro sobrescreve, então qualquer tela que já usa var(--lipai-*)
+   se adapta automaticamente. Telas com cor fixa no CSS podem precisar de
+   ajuste pontual depois, igual aconteceu com o modo escuro. */
+:root[data-contraste="alto"] {
+  --lipai-bg: #000000;
+  --lipai-surface: #000000;
+  --lipai-surface-2: #0d0d0d;
+  --lipai-field: #000000;
+
+  --lipai-border: #ffff00;
+  --lipai-border-subtle: #ffff00;
+  --lipai-border-strong: #ffff00;
+
+  --lipai-text: #ffffff;
+  --lipai-text-muted: #ffff00;
+
+  --lipai-primary: #ffff00;
+  --lipai-primary-hover: #ffffff;
+  --lipai-primary-soft: rgba(255, 255, 0, 0.15);
+  --lipai-on-primary: #000000;
+
+  --lipai-danger: #ff6b6b;
+  --lipai-success: #00ff7f;
+
+  --lipai-shadow: none;
+  --lipai-overlay: rgba(0, 0, 0, 0.85);
+
+  color-scheme: dark;
+}
+
 * {
   margin: 0;
   padding: 0;
