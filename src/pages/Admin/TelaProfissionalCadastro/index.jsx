@@ -39,7 +39,7 @@ const TelaProfissionalCadastro = () => {
                   type="password"
                   id="senha"
                   name="senha"
-                  placeholder={modoEdicao ? "Deixe em branco para manter a atual" : "Mínimo de 6 caracteres"}
+                  placeholder={modoEdicao ? "Deixe em branco para manter a atual" : "Mínimo de 8 caracteres"}
                   value={form.senha}
                   onChange={handleChange}
                   required={!modoEdicao}
