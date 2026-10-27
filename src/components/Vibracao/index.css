@@ -1,4 +1,4 @@
-.container {
+.vibracao {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -6,9 +6,9 @@
   font-family: "Poppins", sans-serif;
 }
 
-.card {
-  background-color: #fbf5fc;
-  border: 1px solid #f2e6f5;
+.vibracao__card {
+  background-color: var(--lipai-surface-2, #fbf5fc);
+  border: 1px solid var(--lipai-border, #f2e6f5);
   border-radius: 24px;
   width: 320px;
   height: 200px;
@@ -18,8 +18,8 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
 }
 
-.text {
-  color: #7d3c98;
+.vibracao__texto {
+  color: var(--lipai-primary, #7d3c98);
   font-size: 4.5rem;
   font-weight: 700;
   letter-spacing: -1px;

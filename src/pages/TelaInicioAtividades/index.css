@@ -98,7 +98,8 @@
 }
 
 .painel-desempenho__bloco {
-  flex: 1 1 280px;
+  flex: 1 1 min(280px, 100%);
+  min-width: 0;
   background: var(--lipai-surface, #fff);
   border: 1px solid var(--lipai-border, #ece2f2);
   border-radius: 14px;
@@ -132,7 +133,8 @@
 /* Novo nome da classe para evitar conflitos com outros CSS */
 /* Novo nome da classe para evitar conflitos com outros CSS */
 .card-progresso {
-  flex: 1 0 240px !important; /* REGRA DE OURO AQUI: Cresce para preencher a linha, mas não encolhe menos que 240px */
+  flex: 1 0 min(240px, 100%) !important; /* cresce para preencher a linha; mínimo 240px, ou a largura toda se a tela for menor */
+  min-width: 0;
   background-color: #ffffff !important;
   border-radius: 16px;
   padding: 12px 16px;
@@ -172,7 +174,9 @@
   text-align: left;
   margin: 0;
   width: auto;
-  flex: none;
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .card-progresso:nth-child(1) img {

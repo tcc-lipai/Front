@@ -40,7 +40,7 @@ const ListaNotificacoes = ({ notificacoes, filtro, vazioTexto, onClicar }) => (
       </button>
     ))}
     {notificacoes.length === 0 && (
-      <p style={{ color: "#666", marginTop: "10px" }}>
+      <p className="notificacoes-vazio" style={{ marginTop: "10px" }}>
         Nenhuma notificação {filtro} {vazioTexto}.
       </p>
     )}

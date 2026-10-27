@@ -39,6 +39,12 @@ const TelaUnidadeAdmin = lazy(() => import("../pages/Admin/TelaUnidadeAdmin"));
 const TelaConfiguracoesAdmin = lazy(() => import("../pages/Admin/TelaConfiguracoesAdmin"));
 
 const PageTransition = ({ children }) => {
+  const { toggles } = useAcessibilidade();
+
+  // "Reduzir animações": sem deslizar/aparecer, a tela só troca (o MotionConfig sozinho
+  // ainda deixava a tela que sai "pular" 15px antes de sumir)
+  if (toggles.reduzirAnimacao) return <div>{children}</div>;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 15 }}

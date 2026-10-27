@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Accessibility, Minus, Plus, RotateCcw, X } from "lucide-react";
 import { useAcessibilidade } from "../../hooks/useAcessibilidade";
 import { TOGGLES_ACESSIBILIDADE } from "../AcessibilidadeProvider/index.types";
@@ -13,6 +13,8 @@ const LABEL_NIVEL = {
 
 const WidgetAcessibilidade = () => {
   const [aberto, setAberto] = useState(false);
+  const botaoRef = useRef(null);
+  const painelRef = useRef(null);
   const {
     tamanhoTexto,
     podeAumentar,
@@ -26,10 +28,31 @@ const WidgetAcessibilidade = () => {
     resetarAcessibilidade,
   } = useAcessibilidade();
 
+  // teclado: ao abrir, o foco vai pro painel; Esc fecha e devolve o foco ao botão
+  useEffect(() => {
+    if (!aberto) return undefined;
+    painelRef.current?.focus();
+
+    const aoTeclar = (evento) => {
+      if (evento.key === "Escape") {
+        setAberto(false);
+        botaoRef.current?.focus();
+      }
+    };
+    document.addEventListener("keydown", aoTeclar);
+    return () => document.removeEventListener("keydown", aoTeclar);
+  }, [aberto]);
+
   return (
     <div className="widget-acessibilidade">
       {aberto && (
-        <div className="widget-acessibilidade__painel" role="dialog" aria-label="Opções de acessibilidade">
+        <div
+          className="widget-acessibilidade__painel"
+          role="dialog"
+          aria-label="Opções de acessibilidade"
+          tabIndex={-1}
+          ref={painelRef}
+        >
           <div className="widget-acessibilidade__cabecalho">
             <strong>Acessibilidade</strong>
             <button
@@ -71,6 +94,7 @@ const WidgetAcessibilidade = () => {
               <label className="widget-acessibilidade__switch">
                 <input
                   type="checkbox"
+                  role="switch"
                   checked={altoContraste}
                   onChange={toggleAltoContraste}
                   aria-label="Ativar alto contraste"
@@ -85,6 +109,7 @@ const WidgetAcessibilidade = () => {
                 <label className="widget-acessibilidade__switch">
                   <input
                     type="checkbox"
+                    role="switch"
                     checked={Boolean(toggles[chave])}
                     onChange={() => toggleFlag(chave)}
                     aria-label={label}
@@ -109,6 +134,7 @@ const WidgetAcessibilidade = () => {
       <button
         type="button"
         className="widget-acessibilidade__botao"
+        ref={botaoRef}
         onClick={() => setAberto((valor) => !valor)}
         aria-label="Abrir opções de acessibilidade"
         aria-expanded={aberto}

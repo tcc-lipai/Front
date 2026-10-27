@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Atkinson+Hyperlegible:wght@400;700&display=swap");
 @import "./styles/theme.css";
+@import "./styles/alto-contraste.css";
 
 /* ==========================================================================
    Tokens de tema do LipAI
@@ -113,14 +114,21 @@
    a fonte" de verdade (sem reescrever tudo pra rem) é escalar a página
    inteira via zoom — funciona em todos os navegadores modernos e não
    corta conteúdo como transform:scale faria. */
+:root {
+  /* fator de zoom atual, pra o CSS compensar medidas em vw/vh/min-width */
+  --zoom-acessibilidade: 1;
+}
 :root[data-fonte="grande"] {
   zoom: 1.15;
+  --zoom-acessibilidade: 1.15;
 }
 :root[data-fonte="maior"] {
   zoom: 1.3;
+  --zoom-acessibilidade: 1.3;
 }
 :root[data-fonte="maximo"] {
   zoom: 1.45;
+  --zoom-acessibilidade: 1.45;
 }
 
 /* --- Acessibilidade: alto contraste (widget flutuante) ------------------
@@ -181,6 +189,54 @@
 }
 :root[data-daltonismo="true"] .option-item.incorrect .option-item__icone-estado {
   color: #d35400 !important;
+}
+
+/* demais pares verde/vermelho do app (fala certa/errada, ícone do feedback,
+   mensagens do formulário da landing) — estavam só em vermelho/verde fixo */
+:root[data-daltonismo="true"] .fala-box.correct {
+  background-color: rgba(41, 128, 185, 0.14) !important;
+  color: #1f6fa3 !important;
+}
+:root[data-daltonismo="true"] :is(.fala-box.incorrect, .fala-box.error) {
+  background-color: rgba(211, 84, 0, 0.14) !important;
+  color: #a84300 !important;
+}
+:root[data-daltonismo="true"] .feedback-icone--success {
+  background: rgba(41, 128, 185, 0.16) !important;
+  color: #1f6fa3 !important;
+}
+:root[data-daltonismo="true"] .feedback-icone--error {
+  background: rgba(211, 84, 0, 0.16) !important;
+  color: #a84300 !important;
+}
+:root[data-daltonismo="true"] .landing__contato-feedback--sucesso {
+  background: #eaf3fb;
+  color: #1f6fa3;
+}
+:root[data-daltonismo="true"] .landing__contato-feedback--erro {
+  background: #fdf1e7;
+  color: #a84300;
+}
+
+/* sobre fundo escuro (tema escuro ou alto contraste) o azul/laranja escuros
+   perdem contraste: usa as versões claras do mesmo par */
+:root[data-daltonismo="true"]:is([data-theme="dark"], [data-contraste="alto"]) {
+  --lipai-danger: #ff9f5a;
+  --lipai-success: #6cb4ee;
+}
+:root[data-daltonismo="true"]:is([data-theme="dark"], [data-contraste="alto"]) .option-item.correct,
+:root[data-daltonismo="true"]:is([data-theme="dark"], [data-contraste="alto"]) .option-item.correct .option-item__icone-estado,
+:root[data-daltonismo="true"]:is([data-theme="dark"], [data-contraste="alto"]) .fala-box.correct,
+:root[data-daltonismo="true"]:is([data-theme="dark"], [data-contraste="alto"]) .feedback-icone--success {
+  color: #6cb4ee !important;
+  border-color: #6cb4ee !important;
+}
+:root[data-daltonismo="true"]:is([data-theme="dark"], [data-contraste="alto"]) .option-item.incorrect,
+:root[data-daltonismo="true"]:is([data-theme="dark"], [data-contraste="alto"]) .option-item.incorrect .option-item__icone-estado,
+:root[data-daltonismo="true"]:is([data-theme="dark"], [data-contraste="alto"]) :is(.fala-box.incorrect, .fala-box.error),
+:root[data-daltonismo="true"]:is([data-theme="dark"], [data-contraste="alto"]) .feedback-icone--error {
+  color: #ff9f5a !important;
+  border-color: #ff9f5a !important;
 }
 
 /* --- Acessibilidade: reduzir animações ----------------------------------
@@ -247,7 +303,8 @@
 html,
 body,
 #root {
-  min-width: 320px;
+  /* dividido pelo zoom: senão 320px x 1,45 passa da largura de um celular e a página rola pro lado */
+  min-width: calc(320px / var(--zoom-acessibilidade, 1));
   min-height: 100%;
 }
 

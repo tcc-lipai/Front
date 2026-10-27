@@ -16,6 +16,7 @@
 
 .atividade-header {
   display: flex;
+  flex-wrap: wrap; /* título longo + barra + X não cabem numa linha com texto aumentado */
   align-items: flex-start;
   gap: 20px;
 }

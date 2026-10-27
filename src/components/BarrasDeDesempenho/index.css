@@ -68,3 +68,16 @@
   font-size: 14px;
   color: var(--lipai-text-muted, #6b5a7a);
 }
+
+/* telas estreitas (ou texto aumentado): rótulo e espaços menores pra barra não estourar */
+@media (max-width: 480px) {
+  .barra-item-linha {
+    gap: 12px;
+  }
+
+  .barra-lado-esquerdo {
+    min-width: 104px;
+    max-width: 104px;
+    gap: 8px;
+  }
+}

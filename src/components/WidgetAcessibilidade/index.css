@@ -30,8 +30,13 @@
 }
 
 .widget-acessibilidade__painel {
-  width: 270px;
-  max-height: min(70vh, 520px);
+  /* o <html> pode estar com zoom (tamanho do texto): divide pelo fator pra o painel
+     nunca passar da tela nem ficar cortado em cima */
+  width: min(270px, calc((100vw - 40px) / var(--zoom-acessibilidade, 1)));
+  max-height: min(
+    calc((100vh - 120px) / var(--zoom-acessibilidade, 1)),
+    calc(520px)
+  );
   background: var(--lipai-surface, #fff);
   border: 1px solid var(--lipai-border, #e7dcf1);
   border-radius: 16px;
@@ -176,7 +181,24 @@
   }
 
   .widget-acessibilidade__painel {
-    width: calc(100vw - 48px);
-    max-width: 280px;
+    width: min(280px, calc((100vw - 40px) / var(--zoom-acessibilidade, 1)));
   }
+}
+
+.widget-acessibilidade__painel:focus {
+  outline: none;
+}
+
+/* o input do interruptor tem 0x0 de tamanho: sem isto o teclado não mostrava onde estava o foco */
+.widget-acessibilidade__switch input:focus-visible + .widget-acessibilidade__trilho {
+  outline: 3px solid var(--lipai-text, #241033);
+  outline-offset: 2px;
+}
+
+.widget-acessibilidade__botao:focus-visible,
+.widget-acessibilidade__fechar:focus-visible,
+.widget-acessibilidade__resetar:focus-visible,
+.widget-acessibilidade__controle-fonte button:focus-visible {
+  outline: 3px solid var(--lipai-text, #241033);
+  outline-offset: 2px;
 }

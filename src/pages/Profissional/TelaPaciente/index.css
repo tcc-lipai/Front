@@ -74,12 +74,12 @@
 
 .tag-iniciante {
   background-color: #e2bdf2;
-  color: #ffffff;
+  color: #3b1650;
 }
 
 .tag-ativo {
   background-color: #c9ebbf;
-  color: #ffffff;
+  color: #1d5a2c;
 }
 
 .paciente-descricao {
@@ -166,7 +166,7 @@
 
 .tag-inativo {
   background-color: #f0b4b4;
-  color: #ffffff;
+  color: #6b1a1a;
 }
 
 .paciente-estado {

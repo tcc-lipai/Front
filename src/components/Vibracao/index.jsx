@@ -3,9 +3,9 @@ import "./index.css";
 
 export default function Vibracao({ silaba = "Pa" }) {
   return (
-    <div className="container">
-      <div className="card">
-        <span className="text">{silaba}</span>
+    <div className="vibracao">
+      <div className="vibracao__card">
+        <span className="vibracao__texto">{silaba}</span>
       </div>
     </div>
   );

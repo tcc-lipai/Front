@@ -541,6 +541,40 @@ mesmo widget (todas via `TOGGLES_ACESSIBILIDADE` em
   conectado nesta sessão** — nenhuma das 8 ferramentas novas foi vista
   rodando de verdade, só validada por leitura de código + build.
 
+### Sessão de 2026-10-26 (parte 4) — teste das ferramentas de acessibilidade no navegador
+
+Primeira verificação **visual/automatizada** (Chrome via Playwright) do widget
+de acessibilidade. Cada ferramenta foi medida (estilo computado, pixels do
+screenshot, chamadas à Web Speech API espiada, auditoria de contraste WCAG em
+todas as telas de aluno/profissional/admin e nos modais). Resultado: todas as
+10 opções funcionavam em lógica, mas havia furos de **cobertura**. Corrigido:
+
+- **Esc** não fechava o painel e o teclado não via o foco nos interruptores
+  (input 0x0): agora Esc fecha e devolve o foco ao botão, o foco entra no
+  painel ao abrir, interruptores têm `role="switch"` e contorno de foco.
+- **Alto contraste não afetava a landing page** (ela fica de fora do
+  `theme.css` de propósito) e deixava botões com cor fixa (roxo/rosa/laranja
+  + texto branco, 2,4:1 a 3,7:1), a seta de voltar, etiquetas, o card de
+  vibração (`Vibracao` usava as classes globais `.container/.card/.text`,
+  agora `vibracao*` com tokens) e os botões dos modais ilegíveis. Novo
+  `src/styles/alto-contraste.css` (importado em `index.css`). Auditoria:
+  38 textos abaixo de 4,5:1 → 0 (aluno, admin, profissional, modais; claro e
+  escuro).
+- **Modo daltônico** só cobria as opções de interpretação: agora também a
+  caixa de fala certa/errada, o ícone do feedback e as mensagens da landing;
+  com tema escuro/alto contraste usa as versões claras do par azul/laranja.
+- **Reduzir animações**: a tela que saía ainda "pulava" 15px
+  (MotionConfig não basta) — `PageTransition` agora não anima quando ligado.
+- **Texto grande no celular**: `html/body/#root` com `min-width:320px`
+  multiplicado pelo zoom estourava a largura (+74px em todas as telas) e o
+  painel do widget saía da tela; novo `--zoom-acessibilidade` compensa.
+  Também corrigido o estouro em `/contato`, `/inicio-atividades` e
+  `/atividade/alternativa` com texto "Máximo".
+- Tags de status do profissional (branco sobre pastel, 1,6:1) com texto escuro.
+- **Ambiente**: a porta 5173 estava ocupada por outro projeto (`ArkWod`), então
+  o Front sobe em 5174, mas o CORS do Backend só libera `http://localhost:5173`
+  (`Cors:AllowedOrigins`) — nesse caso a API é bloqueada no navegador.
+
 ## 3. Como rodar tudo localmente
 
 ```bash

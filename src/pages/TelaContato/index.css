@@ -26,6 +26,7 @@
 .content-container {
   margin-left: 90px;
   flex: 1;
+  min-width: 0; /* sem isso o conteúdo não encolhe quando o texto é aumentado em tela pequena */
   display: flex;
   align-items: center;
   justify-content: center;

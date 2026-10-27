@@ -1,0 +1,155 @@
+/* ==========================================================================
+   Alto contraste — ajustes que os tokens (src/index.css) e o theme.css não
+   alcançam porque a tela usa cor FIXA no CSS:
+     1) a landing page (que ficou de fora do tema escuro de propósito)
+     2) botões/etiquetas com fundo roxo/rosa/laranja + texto branco
+        (razão 2,4:1 a 3,7:1 — abaixo dos 4,5:1 do WCAG AA)
+   Paleta: preto / branco / amarelo (mesma dos tokens de alto contraste).
+   `!important` é proposital: precisa vencer CSS legado e `style` inline.
+   ========================================================================== */
+
+/* ---- 1) Landing page --------------------------------------------------- */
+:root[data-contraste="alto"] :is(
+    .landing,
+    .landing__hero-wrapper,
+    .landing__hero,
+    .landing__features,
+    .landing__sobre,
+    .landing__cta,
+    .landing__contato,
+    .equipe,
+    .footer,
+    .navbar-lp
+  ) {
+  background: #000 !important;
+  background-image: none !important;
+  color: #fff !important;
+}
+
+/* ondas e formas decorativas coloridas só atrapalham a leitura */
+:root[data-contraste="alto"] :is(.landing__hero-wave, .landing__features-wave, .landing__sobre-bg, .landing__cta-circle) {
+  display: none !important;
+}
+
+:root[data-contraste="alto"] .landing :is(h1, h2, h3, h4, h5, h6, p, span, li, label, strong, small, a, div) {
+  color: #fff;
+}
+
+/* destaques em amarelo */
+:root[data-contraste="alto"] .landing :is(.landing__hero-subtitle, .landing__sobre-benefits h3, .form-group label, .equipe__header span) {
+  color: #ff0 !important;
+}
+
+/* texto com gradiente (background-clip: text) vira branco liso */
+:root[data-contraste="alto"] .landing :is(.landing__cta-text, .landing__cta-text *) {
+  background: none !important;
+  -webkit-text-fill-color: #fff !important;
+  color: #fff !important;
+}
+
+/* logo "LipAI": bloco roxo escuro com texto branco -> amarelo com texto preto */
+:root[data-contraste="alto"] .landing__hero-logo span,
+:root[data-contraste="alto"] .navbar-lp__logo span,
+:root[data-contraste="alto"] .footer__logo span {
+  background: #ff0 !important;
+  color: #000 !important;
+}
+:root[data-contraste="alto"] :is(.landing__hero-logo, .navbar-lp__logo, .footer__logo) {
+  color: #fff !important;
+}
+
+/* cartões */
+:root[data-contraste="alto"] :is(
+    .landing__feature-card,
+    .benefit-item,
+    .landing__cta-card,
+    .equipe__card,
+    .equipe__card-inner,
+    .landing__contato-form
+  ) {
+  background: #000 !important;
+  background-image: none !important;
+  border: 2px solid #ff0 !important;
+  box-shadow: none !important;
+}
+
+/* navbar e rodapé */
+:root[data-contraste="alto"] .navbar-lp {
+  border-bottom: 2px solid #ff0 !important;
+}
+:root[data-contraste="alto"] .footer {
+  border-top: 2px solid #ff0 !important;
+}
+:root[data-contraste="alto"] :is(.navbar-lp__links a, .footer__nav ul li a, .footer__social-icons a) {
+  color: #fff !important;
+}
+:root[data-contraste="alto"] :is(.navbar-lp__links a:hover, .footer__nav ul li a:hover) {
+  color: #ff0 !important;
+}
+
+/* campos do formulário de contato */
+:root[data-contraste="alto"] .landing :is(input, textarea, select) {
+  background: #000 !important;
+  color: #fff !important;
+  border: 2px solid #ff0 !important;
+}
+
+/* ---- 2) Botões e etiquetas com cor fixa -------------------------------- */
+:root[data-contraste="alto"] :is(
+    .landing__hero-btn,
+    .landing__cta-btn,
+    .landing__cta-btn-acessar,
+    .form-submit button,
+    .navbar-lp__btn-login,
+    .btn-generico,
+    .edit-profile-btn,
+    .btn-confirmar,
+    .feedback-button,
+    .logout-modal-confirm,
+    .logout-button,
+    .licao-btn-retry,
+    .btn-back
+  ) {
+  background: #ff0 !important;
+  background-image: none !important;
+  color: #000 !important;
+  border: 2px solid #ff0 !important;
+}
+
+/* botões secundários/contornados: fundo preto, texto e borda amarelos */
+:root[data-contraste="alto"] :is(
+    .btn-secundario,
+    .feedback-button--secundario,
+    .navbar-lp__btn-cadastrar,
+    .logout-modal-cancel,
+    .licao-btn-exit,
+    .btn-exit
+  ) {
+  background: #000 !important;
+  color: #ff0 !important;
+  border: 2px solid #ff0 !important;
+}
+
+/* perigo (excluir etc.): vermelho claro com texto preto */
+:root[data-contraste="alto"] .btn-perigo {
+  background: #ff6b6b !important;
+  border-color: #ff6b6b !important;
+  color: #000 !important;
+}
+
+/* etiquetas/"tags" */
+:root[data-contraste="alto"] :is(.ta-ver-atividades__tag, [class*="__tag"], [class*="badge"]) {
+  background: #000 !important;
+  color: #ff0 !important;
+  border: 1px solid #ff0 !important;
+}
+
+/* seta de voltar escura (roxo sobre preto) */
+:root[data-contraste="alto"] :is(.sidebar-back-button, .btn-voltar, .navbar-btn) {
+  color: #ff0 !important;
+}
+
+/* textos cinza fixos (#666 etc.) em telas vazias */
+:root[data-contraste="alto"] :is(.notificacoes-vazio, .lista-usuarios__vazio, .barras-empty-state, .paciente-estado, .unidade-estado) {
+  color: #fff !important;
+}
