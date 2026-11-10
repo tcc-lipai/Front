@@ -155,7 +155,7 @@ const TelaDashboard = () => {
             </p>
           )}
           <div className="activities-grid">
-            {unidadesDisponiveis.map((unidade) => (
+            {unidadesDisponiveis.slice(0, 3).map((unidade) => (
               <UnidadeCard
                 key={unidade.id}
                 nome={unidade.nome}
@@ -164,6 +164,15 @@ const TelaDashboard = () => {
               />
             ))}
           </div>
+          {unidadesDisponiveis.length > 3 && (
+            <button
+              type="button"
+              className="ver-mais-btn"
+              onClick={() => navigate("/inicio-atividades")}
+            >
+              Ver mais
+            </button>
+          )}
         </section>
 
         <section className="card-section">

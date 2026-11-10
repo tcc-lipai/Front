@@ -113,6 +113,27 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
+/* ---- Botão "Ver mais" compartilhado entre telas ------------------------
+   Mesmo motivo das regras acima: só existia em TelaDashboard/index.css,
+   então sumia (ficava sem estilo nenhum) em outras telas que usam a mesma
+   classe sem aquele CSS carregado (ex.: TelaInicioAtividades). */
+.ver-mais-btn {
+  background: none;
+  border: none;
+  color: #7a3a8e;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  white-space: nowrap;
+  align-self: flex-start;
+  margin-top: 4px;
+}
+
+.ver-mais-btn:hover {
+  text-decoration: underline;
+}
+
 /* ---- Fundo de página / wrappers de tela ------------------------------- */
 :root:is([data-theme="dark"], [data-contraste="alto"])
   :is(

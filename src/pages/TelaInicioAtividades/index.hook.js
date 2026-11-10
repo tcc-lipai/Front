@@ -156,6 +156,7 @@ export function useTelaInicioAtividades() {
   const fecharPerfil = () => setDrawerAberto(false);
   const abrirModalRealizadas = () => setModalAberto("realizadas");
   const abrirModalSalvas = () => setModalAberto("salvas");
+  const abrirModalTodas = () => setModalAberto("todas");
   const fecharModal = () => setModalAberto(null);
 
   useEffect(() => {
@@ -316,6 +317,7 @@ export function useTelaInicioAtividades() {
     modalAberto,
     abrirModalRealizadas,
     abrirModalSalvas,
+    abrirModalTodas,
     fecharModal,
     toggleSalvarUnidade,
   };

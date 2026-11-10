@@ -87,6 +87,7 @@ const TelaInicioAtividades = () => {
     modalAberto,
     abrirModalRealizadas,
     abrirModalSalvas,
+    abrirModalTodas,
     fecharModal,
     toggleSalvarUnidade,
   } = useTelaInicioAtividades();
@@ -170,18 +171,25 @@ const TelaInicioAtividades = () => {
             <p>Nenhuma unidade encontrada.</p>
           )}
           {!carregando && unidadesDisponiveis.length > 0 && (
-            <div className="lista-unidades">
-              {unidadesDisponiveis.map((unidade, indice) => (
-                <CardUnidade
-                  key={unidade.id}
-                  unidade={unidade}
-                  numero={indice + 1}
-                  subtitulo={`${unidade.totalAtividades} ${unidade.totalAtividades === 1 ? "atividade" : "atividades"}`}
-                  onAbrir={irParaUnidades}
-                  onToggleSalvar={(novoEstado) => toggleSalvarUnidade(unidade.id, novoEstado)}
-                />
-              ))}
-            </div>
+            <>
+              <div className="lista-unidades">
+                {unidadesDisponiveis.slice(0, 3).map((unidade, indice) => (
+                  <CardUnidade
+                    key={unidade.id}
+                    unidade={unidade}
+                    numero={indice + 1}
+                    subtitulo={`${unidade.totalAtividades} ${unidade.totalAtividades === 1 ? "atividade" : "atividades"}`}
+                    onAbrir={irParaUnidades}
+                    onToggleSalvar={(novoEstado) => toggleSalvarUnidade(unidade.id, novoEstado)}
+                  />
+                ))}
+              </div>
+              {unidadesDisponiveis.length > 3 && (
+                <button type="button" className="ver-mais-btn" onClick={abrirModalTodas}>
+                  Ver mais
+                </button>
+              )}
+            </>
           )}
         </section>
 
@@ -204,6 +212,17 @@ const TelaInicioAtividades = () => {
           titulo="Unidades salvas"
           unidades={unidadesSalvas}
           vazio="Você ainda não salvou nenhuma unidade."
+          onFechar={fecharModal}
+          onIrParaUnidade={irParaUnidades}
+          onToggleSalvar={toggleSalvarUnidade}
+        />
+      )}
+
+      {modalAberto === "todas" && (
+        <ListaUnidadesModal
+          titulo="Unidades disponíveis"
+          unidades={unidadesDisponiveis}
+          vazio="Nenhuma unidade encontrada."
           onFechar={fecharModal}
           onIrParaUnidade={irParaUnidades}
           onToggleSalvar={toggleSalvarUnidade}
