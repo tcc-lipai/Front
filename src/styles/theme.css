@@ -19,6 +19,100 @@
    o CSS legado das telas (que usa cores fixas e, às vezes, `!important`).
    ========================================================================== */
 
+/* ---- Overlay/fechar compartilhado entre os modais ---------------------
+   Base aqui (sempre carregado) em vez de só nos CSS de cada modal: uma
+   tela que renderiza um modal cujo componente-dono não está nela (ex.:
+   OfensivaCalendarioModal no Dashboard) só pega essas classes se elas
+   existirem num arquivo sempre carregado — senão o overlay não posiciona
+   e o botão de fechar vira texto solto. Cada CSS de modal pode continuar
+   redefinindo width/padding/etc. do próprio container sem conflito. */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-close-x {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  background: transparent;
+  border: none;
+  font-size: 28px;
+  color: #757575;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px;
+  transition: color 0.2s ease;
+}
+
+.modal-close-x:hover {
+  color: #4a154b;
+}
+
+/* ---- Toggle (.switch/.slider) compartilhado entre telas ----------------
+   Mesmo motivo do .modal-overlay acima: só existia no CSS de
+   TelaConfiguracoesMedico, então sumia (virava checkbox cru) em qualquer
+   outra tela que usasse o mesmo HTML sem aquele CSS carregado (ex.:
+   TelaPerfil). */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 26px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #e8daef;
+  transition: 0.3s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.3s;
+}
+
+input:checked + .slider {
+  background-color: #b37dd3;
+}
+
+input:checked + .slider:before {
+  transform: translateX(22px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
 /* ---- Fundo de página / wrappers de tela ------------------------------- */
 :root:is([data-theme="dark"], [data-contraste="alto"])
   :is(
