@@ -168,7 +168,7 @@ const TelaDashboard = () => {
             <button
               type="button"
               className="ver-mais-btn"
-              onClick={() => navigate("/inicio-atividades")}
+              onClick={() => navigate("/atividades-unidades")}
             >
               Ver mais
             </button>

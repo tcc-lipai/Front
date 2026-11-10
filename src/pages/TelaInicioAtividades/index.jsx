@@ -87,7 +87,6 @@ const TelaInicioAtividades = () => {
     modalAberto,
     abrirModalRealizadas,
     abrirModalSalvas,
-    abrirModalTodas,
     fecharModal,
     toggleSalvarUnidade,
   } = useTelaInicioAtividades();
@@ -185,7 +184,7 @@ const TelaInicioAtividades = () => {
                 ))}
               </div>
               {unidadesDisponiveis.length > 3 && (
-                <button type="button" className="ver-mais-btn" onClick={abrirModalTodas}>
+                <button type="button" className="ver-mais-btn" onClick={irParaUnidades}>
                   Ver mais
                 </button>
               )}
@@ -218,16 +217,6 @@ const TelaInicioAtividades = () => {
         />
       )}
 
-      {modalAberto === "todas" && (
-        <ListaUnidadesModal
-          titulo="Unidades disponíveis"
-          unidades={unidadesDisponiveis}
-          vazio="Nenhuma unidade encontrada."
-          onFechar={fecharModal}
-          onIrParaUnidade={irParaUnidades}
-          onToggleSalvar={toggleSalvarUnidade}
-        />
-      )}
 
       <UserProfileDrawer isOpen={drawerAberto} onClose={fecharPerfil} />
     </div>
