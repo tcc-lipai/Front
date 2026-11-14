@@ -19,6 +19,7 @@ function normalizarLicao(licao) {
   return {
     pergunta: licao.pergunta ?? licao.Pergunta ?? "",
     respostaCerta: String(licao.respostaCerta ?? licao.RespostaCerta ?? "").toLowerCase(),
+    videoUrl: licao.videoUrl ?? licao.VideoUrl ?? "",
     opcoes,
   };
 }

@@ -19,6 +19,7 @@ const TelaAtividadeSalva = lazy(() => import("../pages/TelaAtividadeSalva"));
 const TelaInicioAtividades = lazy(() => import("../pages/TelaInicioAtividades"));
 const TelaInicioAtividadeUnidade = lazy(() => import("../pages/TelaInicioAtividadeUnidade"));
 const TelaAtividadeAlternativa = lazy(() => import("../pages/TelaAtividadeAlternativa"));
+const TelaAtividadeAlternativaSessao = lazy(() => import("../pages/TelaAtividadeAlternativaSessao"));
 const TelaAtividadeFala = lazy(() => import("../pages/TelaAtividadeFala"));
 const TelaAtividadeFalaSessao = lazy(() => import("../pages/TelaAtividadeFalaSessao"));
 const TelaAtividadeVideo = lazy(() => import("../pages/TelaAtividadeVideo"));
@@ -217,6 +218,16 @@ function AnimatedRoutes() {
             <RotaProtegida papeis={["Usuario"]}>
               <PageTransition>
                 <TelaAtividadeAlternativa />
+              </PageTransition>
+            </RotaProtegida>
+          }
+        />
+        <Route
+          path="/atividade/alternativa-sessao/:id"
+          element={
+            <RotaProtegida papeis={["Usuario"]}>
+              <PageTransition>
+                <TelaAtividadeAlternativaSessao />
               </PageTransition>
             </RotaProtegida>
           }

@@ -55,8 +55,14 @@ function normalizarUnidade(unidade, concluidas, nivelUsuario, desempenho) {
       };
     });
 
-  const alternativa = lista(unidade, "licoesAlternativa", "LicoesAlternativa")
-    .filter((l) => nivelLiberado(l.nivelDificuldade ?? l.NivelDificuldade, nivelUsuario))
+  const todasAlternativa = lista(unidade, "licoesAlternativa", "LicoesAlternativa");
+  const alternativaAvulsa = todasAlternativa.filter(
+    (l) =>
+      (l.atividadeAlternativaId ?? l.AtividadeAlternativaId ?? null) == null &&
+      nivelLiberado(l.nivelDificuldade ?? l.NivelDificuldade, nivelUsuario)
+  );
+
+  const alternativa = alternativaAvulsa
     .map((l) => {
       const id = l.idLicaoAlternativa ?? l.IdLicaoAlternativa;
       return {
@@ -99,13 +105,36 @@ function normalizarUnidade(unidade, concluidas, nivelUsuario, desempenho) {
       };
     });
 
+  const atividadesAlternativa = lista(unidade, "atividadesAlternativa", "AtividadesAlternativa")
+    .filter((aa) => nivelLiberado(aa.nivelDificuldade ?? aa.NivelDificuldade, nivelUsuario))
+    // grupo sem exercícios não tem o que praticar (ex.: criado pelo admin e ainda vazio)
+    .filter((aa) => lista(aa, "exercicios", "Exercicios").length > 0)
+    .map((aa) => {
+      const exercicios = lista(aa, "exercicios", "Exercicios");
+      const idsExercicios = exercicios.map((e) => e.idLicaoAlternativa ?? e.IdLicaoAlternativa);
+      const scores = idsExercicios
+        .map((id) => concluidas.alternativa.get(id))
+        .filter((score) => score != null);
+      return {
+        id: aa.idAtividadeAlternativa ?? aa.IdAtividadeAlternativa,
+        nome: aa.nome ?? aa.Nome ?? "Atividade de interpretação",
+        nivel: nomeNivelDificuldade(aa.nivelDificuldade ?? aa.NivelDificuldade),
+        totalExercicios: idsExercicios.length,
+        concluida:
+          idsExercicios.length > 0 && idsExercicios.every((id) => concluidas.alternativa.has(id)),
+        acerto:
+          scores.length > 0 ? scores.reduce((soma, s) => soma + s, 0) / scores.length : null,
+      };
+    });
+
   const nome = unidade.nome ?? unidade.Nome ?? "Unidade";
   const temAlgumConcluido =
     vibracao.some((v) => v.concluida) ||
     video.some((v) => v.concluida) ||
     alternativa.some((v) => v.concluida) ||
     fala.some((v) => v.concluida) ||
-    atividadesFala.some((v) => v.concluida);
+    atividadesFala.some((v) => v.concluida) ||
+    atividadesAlternativa.some((v) => v.concluida);
 
   return {
     id: unidade.idUnidade ?? unidade.IdUnidade,
@@ -117,6 +146,7 @@ function normalizarUnidade(unidade, concluidas, nivelUsuario, desempenho) {
     atividadesFala,
     video,
     alternativa,
+    atividadesAlternativa,
     desempenho: desempenho ?? null,
   };
 }

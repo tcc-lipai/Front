@@ -29,3 +29,29 @@ export function buscarLicaoAlternativa(id) {
 export function buscarLicaoVibracao(id) {
   return buscarLicao("vibracao", id, "Não foi possível carregar a atividade.");
 }
+
+/** Grupo de interpretação (nome + ids dos exercícios, em ordem), sem carregar as unidades. */
+export async function buscarAtividadeAlternativa(atividadeAlternativaId) {
+  try {
+    const response = await api.get(`/AtividadeAlternativa/${atividadeAlternativaId}`);
+    const d = response.data;
+    return {
+      sucesso: true,
+      data: {
+        nome: d.nome ?? d.Nome ?? "Atividade de interpretação",
+        idsExercicios: d.exercicios ?? d.Exercicios ?? [],
+      },
+    };
+  } catch (error) {
+    if (error.response?.status === 403) {
+      return { sucesso: false, mensagem: SEM_ACESSO };
+    }
+    if (error.response?.status === 404) {
+      return { sucesso: false, mensagem: "Atividade não encontrada." };
+    }
+    return {
+      sucesso: false,
+      mensagem: mensagemDeErro(error, "Não foi possível carregar a atividade."),
+    };
+  }
+}

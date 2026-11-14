@@ -46,9 +46,13 @@ export default function TelaAtividadeAlternativa() {
         </div>
 
         <div className="video-container">
-          <div className="video-placeholder">
-            <span>VIDEO DA LEITURA LABIAL</span>
-          </div>
+          {licao?.videoUrl ? (
+            <video className="video-placeholder" src={licao.videoUrl} controls />
+          ) : (
+            <div className="video-placeholder">
+              <span>VIDEO DA LEITURA LABIAL</span>
+            </div>
+          )}
         </div>
 
         {carregando && (

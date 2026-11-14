@@ -119,7 +119,8 @@ const TelaInicioAtividadeUnidade = () => {
 
               const mostrarVibracao = unidade.vibracao.length > 0;
               const mostrarVideo = unidade.video.length > 0;
-              const mostrarAlternativa = unidade.alternativa.length > 0;
+              const mostrarAlternativa =
+                unidade.atividadesAlternativa.length > 0 || unidade.alternativa.length > 0;
               const mostrarFala = unidade.atividadesFala.length > 0 || unidade.fala.length > 0;
 
               const temExercicio = mostrarVibracao || mostrarVideo || mostrarAlternativa || mostrarFala;
@@ -215,6 +216,22 @@ const TelaInicioAtividadeUnidade = () => {
                         <TituloComMedia titulo={TIPOS.alternativa.titulo} acerto={d?.acertoInterpretacao} />
                       </div>
                       <div className="grid-cards">
+                        {unidade.atividadesAlternativa.map((atividadeAlternativa) => (
+                          <CardExercicio
+                            key={`aa-${atividadeAlternativa.id}`}
+                            imagem={<IconeTipo tipo="alternativa" />}
+                            titulo={atividadeAlternativa.nome}
+                            descricao={`${atividadeAlternativa.nivel} · ${atividadeAlternativa.totalExercicios} exercício${atividadeAlternativa.totalExercicios === 1 ? "" : "s"}`}
+                            corDestaque={TIPOS.alternativa.cor}
+                            concluida={atividadeAlternativa.concluida}
+                            acerto={atividadeAlternativa.acerto}
+                            onComecar={() =>
+                              comecarComDica(unidade, () =>
+                                navigate(`/atividade/alternativa-sessao/${atividadeAlternativa.id}`)
+                              )
+                            }
+                          />
+                        ))}
                         {unidade.alternativa.map((licao) => (
                           <CardExercicio
                             key={`a-${licao.id}`}
