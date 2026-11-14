@@ -1,5 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { listarCategorias, listarPalavras } from "../../services/dicionarioService";
+import { getCached, setCached } from "../../utils/apiCache";
+
+const CHAVE_CACHE = "dicionario";
 
 export function useTelaDicionario() {
   const [carregando, setCarregando] = useState(true);
@@ -13,11 +16,13 @@ export function useTelaDicionario() {
     let ativo = true;
 
     async function carregar() {
-      const [categoriasRes, palavrasRes] = await Promise.all([
+      const emCache = getCached(CHAVE_CACHE);
+      const [categoriasRes, palavrasRes] = emCache ?? (await Promise.all([
         listarCategorias(),
         listarPalavras(),
-      ]);
+      ]));
       if (!ativo) return;
+      if (!emCache) setCached(CHAVE_CACHE, [categoriasRes, palavrasRes]);
 
       if (categoriasRes.sucesso) {
         setCategorias(categoriasRes.data);

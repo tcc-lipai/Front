@@ -3,6 +3,7 @@ import { buscarUsuario } from "../../services/usuarioService";
 import { buscarDesempenho } from "../../services/progressoService";
 import { listarConquistasUsuario } from "../../services/conquistaService";
 import { listarUnidadesResumo } from "../../services/unidadeService";
+import { getCached, setCached } from "../../utils/apiCache";
 
 function lista(objeto, ...nomes) {
   for (const nome of nomes) {
@@ -22,16 +23,9 @@ export function useTelaDashboard() {
   useEffect(() => {
     let ativo = true;
     const usuarioId = localStorage.getItem("id");
+    const chaveCache = `dashboard:${usuarioId}`;
 
-    async function carregar() {
-      const [usuarioRes, desempenhoRes, conquistasRes, unidadesRes] = await Promise.all([
-        buscarUsuario(usuarioId),
-        buscarDesempenho(usuarioId),
-        listarConquistasUsuario(usuarioId),
-        listarUnidadesResumo(),
-      ]);
-      if (!ativo) return;
-
+    function aplicarResultados({ usuarioRes, desempenhoRes, conquistasRes, unidadesRes }) {
       if (usuarioRes.sucesso) setUsuario(usuarioRes.data);
 
       if (desempenhoRes.sucesso && desempenhoRes.data) {
@@ -54,7 +48,27 @@ export function useTelaDashboard() {
         }));
         setUnidadesDisponiveis(unidades);
       }
+    }
 
+    async function carregar() {
+      const emCache = getCached(chaveCache);
+      if (emCache) {
+        aplicarResultados(emCache);
+        setCarregando(false);
+        return;
+      }
+
+      const [usuarioRes, desempenhoRes, conquistasRes, unidadesRes] = await Promise.all([
+        buscarUsuario(usuarioId),
+        buscarDesempenho(usuarioId),
+        listarConquistasUsuario(usuarioId),
+        listarUnidadesResumo(),
+      ]);
+      if (!ativo) return;
+
+      const resultados = { usuarioRes, desempenhoRes, conquistasRes, unidadesRes };
+      setCached(chaveCache, resultados);
+      aplicarResultados(resultados);
       setCarregando(false);
     }
 

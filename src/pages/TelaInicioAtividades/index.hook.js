@@ -4,6 +4,7 @@ import { buscarUsuario, valorNivelDificuldade } from "../../services/usuarioServ
 import { salvarItem, dessalvarItem, listarItensSalvos } from "../../services/atividadeService";
 import { buscarDesempenho, buscarDesempenhoPorUnidade } from "../../services/progressoService";
 import api from "../../services/api";
+import { getCached, setCached, invalidateCached } from "../../utils/apiCache";
 
 /**
  * Achata todas as lições de todas as unidades em um array plano, mantendo o
@@ -159,10 +160,72 @@ export function useTelaInicioAtividades() {
   const fecharModal = () => setModalAberto(null);
 
   useEffect(() => {
+    const usuarioId = localStorage.getItem("id");
+    const chaveCache = `inicio-atividades:${usuarioId}`;
+
+    function aplicarResultados({
+      nivelUsuario,
+      resUnidades,
+      resResumo,
+      progressoData,
+      resSalvos,
+      resDesempenho,
+      resDesempenhoUnidades,
+    }) {
+      if (resUnidades.sucesso) {
+        setTodasLicoes(extrairLicoes(resUnidades.data, nivelUsuario));
+      }
+      if (resResumo.sucesso) {
+        setUnidadesBase(extrairUnidades(resResumo.data));
+      }
+
+      if (progressoData) {
+        const emAndamento = new Set();
+        const concluidas = new Set();
+
+        for (const p of progressoData?.Alternativas ?? progressoData?.alternativas ?? []) {
+          const chave = `alternativa-${p.LicaoAlternativaId ?? p.licaoAlternativaId}`;
+          const st = p.Status ?? p.status;
+          if (st === "EmAndamento" || st === 1) emAndamento.add(chave);
+          if (st === "Concluido" || st === 2) concluidas.add(chave);
+        }
+
+        for (const p of progressoData?.Falas ?? progressoData?.falas ?? []) {
+          const chave = `fala-${p.LicaoFalaId ?? p.licaoFalaId}`;
+          const st = p.Status ?? p.status;
+          if (st === "EmAndamento" || st === 1) emAndamento.add(chave);
+          if (st === "Concluido" || st === 2) concluidas.add(chave);
+        }
+
+        for (const p of progressoData?.Videos ?? progressoData?.videos ?? []) {
+          const chave = `video-${p.LicaoVideoId ?? p.licaoVideoId}`;
+          const st = p.Status ?? p.status;
+          if (st === "Concluido" || st === 2) concluidas.add(chave);
+        }
+
+        setProgressoIds({ emAndamento, concluidas });
+      }
+
+      if (resSalvos?.sucesso) {
+        const chaves = new Set(
+          resSalvos.data.map((s) => `${s.tipoItem ?? s.TipoItem}:${s.itemId ?? s.ItemId}`)
+        );
+        setAtividadesSalvasIds(chaves);
+      }
+
+      if (resDesempenho?.sucesso) setDesempenhoTipos(resDesempenho.data);
+      if (resDesempenhoUnidades?.sucesso) setDesempenhoUnidades(resDesempenhoUnidades.data);
+    }
+
     async function carregar() {
       setCarregando(true);
 
-      const usuarioId = localStorage.getItem("id");
+      const emCache = getCached(chaveCache);
+      if (emCache) {
+        aplicarResultados(emCache);
+        setCarregando(false);
+        return;
+      }
 
       let nivelUsuario = null;
       if (usuarioId) {
@@ -175,62 +238,39 @@ export function useTelaInicioAtividades() {
       }
 
       const [resUnidades, resResumo] = await Promise.all([listarUnidades(), listarUnidadesResumo()]);
-      if (resUnidades.sucesso) {
-        setTodasLicoes(extrairLicoes(resUnidades.data, nivelUsuario));
-      }
-      if (resResumo.sucesso) {
-        setUnidadesBase(extrairUnidades(resResumo.data));
-      }
+
+      let progressoData = null;
+      let resSalvos = null;
+      let resDesempenho = null;
+      let resDesempenhoUnidades = null;
 
       if (usuarioId) {
         try {
           const res = await api.get(`/Progresso/usuario/${usuarioId}`);
-          const data = res.data;
-
-          const emAndamento = new Set();
-          const concluidas = new Set();
-
-          for (const p of data?.Alternativas ?? data?.alternativas ?? []) {
-            const chave = `alternativa-${p.LicaoAlternativaId ?? p.licaoAlternativaId}`;
-            const st = p.Status ?? p.status;
-            if (st === "EmAndamento" || st === 1) emAndamento.add(chave);
-            if (st === "Concluido" || st === 2) concluidas.add(chave);
-          }
-
-          for (const p of data?.Falas ?? data?.falas ?? []) {
-            const chave = `fala-${p.LicaoFalaId ?? p.licaoFalaId}`;
-            const st = p.Status ?? p.status;
-            if (st === "EmAndamento" || st === 1) emAndamento.add(chave);
-            if (st === "Concluido" || st === 2) concluidas.add(chave);
-          }
-
-          for (const p of data?.Videos ?? data?.videos ?? []) {
-            const chave = `video-${p.LicaoVideoId ?? p.licaoVideoId}`;
-            const st = p.Status ?? p.status;
-            if (st === "Concluido" || st === 2) concluidas.add(chave);
-          }
-
-          setProgressoIds({ emAndamento, concluidas });
+          progressoData = res.data;
         } catch {
           // progresso indisponível — trata tudo como "não iniciada"
         }
 
-        const resSalvos = await listarItensSalvos();
-        if (resSalvos.sucesso) {
-          const chaves = new Set(
-            resSalvos.data.map((s) => `${s.tipoItem ?? s.TipoItem}:${s.itemId ?? s.ItemId}`)
-          );
-          setAtividadesSalvasIds(chaves);
-        }
+        resSalvos = await listarItensSalvos();
 
-        const [resDesempenho, resDesempenhoUnidades] = await Promise.all([
+        [resDesempenho, resDesempenhoUnidades] = await Promise.all([
           buscarDesempenho(usuarioId),
           buscarDesempenhoPorUnidade(usuarioId),
         ]);
-        if (resDesempenho.sucesso) setDesempenhoTipos(resDesempenho.data);
-        if (resDesempenhoUnidades.sucesso) setDesempenhoUnidades(resDesempenhoUnidades.data);
       }
 
+      const resultados = {
+        nivelUsuario,
+        resUnidades,
+        resResumo,
+        progressoData,
+        resSalvos,
+        resDesempenho,
+        resDesempenhoUnidades,
+      };
+      setCached(chaveCache, resultados);
+      aplicarResultados(resultados);
       setCarregando(false);
     }
 
@@ -239,6 +279,9 @@ export function useTelaInicioAtividades() {
 
   const toggleSalvarUnidade = async (unidadeId, novoEstado) => {
     const chave = `unidade:${unidadeId}`;
+    // invalida a cache dessa tela — senão, voltando antes do TTL expirar,
+    // o salvar/dessalvar pareceria ter "voltado atrás"
+    invalidateCached(`inicio-atividades:${localStorage.getItem("id")}`);
 
     if (novoEstado) {
       const res = await salvarItem("unidade", unidadeId);

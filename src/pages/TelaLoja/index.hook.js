@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { listarProdutos, comprarProduto } from "../../services/produtoService";
 import { buscarUsuario } from "../../services/usuarioService";
+import { getCached, setCached } from "../../utils/apiCache";
 
 const ICONE_POR_TIPO = {
   BloqueioOfensiva: "gelo",
@@ -50,11 +51,16 @@ export function useTelaLoja() {
     let ativo = true;
 
     async function carregar() {
-      const [produtosRes, usuarioRes] = await Promise.all([
+      const chaveCache = `loja:${usuarioId}`;
+      // só consulta a cache na primeira carga — depois de uma compra
+      // (tentativaCarga > 0) sempre busca de novo, pra refletir o saldo real
+      const emCache = tentativaCarga === 0 ? getCached(chaveCache) : undefined;
+      const [produtosRes, usuarioRes] = emCache ?? (await Promise.all([
         listarProdutos(),
         buscarUsuario(usuarioId),
-      ]);
+      ]));
       if (!ativo) return;
+      if (!emCache) setCached(chaveCache, [produtosRes, usuarioRes]);
 
       setProdutos(produtosRes.sucesso ? produtosRes.data.map(normalizarProduto) : []);
       if (usuarioRes.sucesso) {

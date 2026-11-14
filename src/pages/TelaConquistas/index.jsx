@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Conquistas from "../../components/Conquistas";
 import { listarConquistasUsuario } from "../../services/conquistaService";
 import { DEFAULT_CONQUISTA_DATA } from "../../components/Conquistas/index.types";
+import { getCached, setCached } from "../../utils/apiCache";
 import "./index.css";
 
 const TelaConquistas = () => {
@@ -15,7 +16,9 @@ const TelaConquistas = () => {
   useEffect(() => {
     async function carregarConquistas() {
       const usuarioId = localStorage.getItem("id");
-      const resultado = await listarConquistasUsuario(usuarioId);
+      const chaveCache = `conquistas:${usuarioId}`;
+      const resultado = getCached(chaveCache) ?? (await listarConquistasUsuario(usuarioId));
+      setCached(chaveCache, resultado);
 
       if (resultado.sucesso) {
         setAtingidas(resultado.data.atingidas ?? resultado.data.Atingidas ?? []);

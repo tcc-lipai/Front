@@ -6,6 +6,9 @@ import {
   buscarProfissional,
 } from "../../../services/profissionalService";
 import { nomeNivelDificuldade } from "../../../services/usuarioService";
+import { getCached, setCached, invalidateCached } from "../../../utils/apiCache";
+
+const CHAVE_CACHE = "admin-profissionais";
 
 function mapearProfissional(profissional) {
   const qtde = profissional.qtdePacientes ?? profissional.QtdePacientes ?? 0;
@@ -31,8 +34,9 @@ export function useTelaProfissionaisAdmin() {
     let ativo = true;
 
     (async () => {
-      const res = await listarProfissionais();
+      const res = getCached(CHAVE_CACHE) ?? (await listarProfissionais());
       if (!ativo) return;
+      setCached(CHAVE_CACHE, res);
       if (!res.sucesso) {
         setErro(res.mensagem);
         setCarregando(false);
@@ -53,6 +57,7 @@ export function useTelaProfissionaisAdmin() {
     if (!res.sucesso) {
       setErro(res.mensagem);
     } else {
+      invalidateCached(CHAVE_CACHE);
       setProfissionais((atual) => atual.filter((p) => p.id !== profissionalParaExcluir.id));
     }
     setProfissionalParaExcluir(null);
@@ -94,7 +99,13 @@ export function useTelaProfissionaisAdmin() {
     setProfissionalParaExcluir,
     cancelarExclusao: () => setProfissionalParaExcluir(null),
     confirmarExclusao,
-    abrirCadastro: () => navigate("/cadastrar-profissional"),
-    abrirEdicao: (profissional) => navigate(`/editar-profissional/${profissional.id}`),
+    abrirCadastro: () => {
+      invalidateCached(CHAVE_CACHE);
+      navigate("/cadastrar-profissional");
+    },
+    abrirEdicao: (profissional) => {
+      invalidateCached(CHAVE_CACHE);
+      navigate(`/editar-profissional/${profissional.id}`);
+    },
   };
 }

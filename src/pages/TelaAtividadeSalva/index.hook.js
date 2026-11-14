@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { listarItensSalvos, dessalvarItem } from "../../services/atividadeService";
+import { getCached, setCached } from "../../utils/apiCache";
 
 const DESCRICAO_POR_TIPO = {
   video: "Vídeo-aula de leitura labial.",
@@ -28,8 +29,11 @@ export function useTelaAtividadeSalva() {
     let ativo = true;
 
     async function carregar() {
-      const resultado = await listarItensSalvos();
+      const usuarioId = localStorage.getItem("id");
+      const chaveCache = `itens-salvos:${usuarioId}`;
+      const resultado = getCached(chaveCache) ?? (await listarItensSalvos());
       if (!ativo) return;
+      setCached(chaveCache, resultado);
 
       if (resultado.sucesso) {
         setAtividades(resultado.data.map(normalizar));

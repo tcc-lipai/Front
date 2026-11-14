@@ -7,6 +7,7 @@ import {
   subirNivel as subirNivelServico,
 } from "../../services/progressoService";
 import api from "../../services/api";
+import { getCached, setCached } from "../../utils/apiCache";
 
 function lista(objeto, ...nomes) {
   for (const nome of nomes) {
@@ -255,7 +256,10 @@ export function useTelaInicioAtividadeUnidade() {
 
   const carregarUnidade = useCallback(async (idUnidade, baseAtual) => {
     setDetalhes((atual) => ({ ...atual, [idUnidade]: { carregando: true } }));
-    const res = await buscarUnidade(idUnidade);
+    const chaveCache = `unidade-raw:${idUnidade}`;
+    const emCache = getCached(chaveCache);
+    const res = emCache ?? (await buscarUnidade(idUnidade));
+    if (!emCache) setCached(chaveCache, res);
     setDetalhes((atual) => ({
       ...atual,
       [idUnidade]: res.sucesso
@@ -275,8 +279,12 @@ export function useTelaInicioAtividadeUnidade() {
     let ativo = true;
 
     async function carregar() {
-      const dados = await buscarBase();
+      const usuarioId = localStorage.getItem("id");
+      const chaveCache = `atividade-unidade-base:${usuarioId}`;
+      const emCache = getCached(chaveCache);
+      const dados = emCache ?? (await buscarBase());
       if (!ativo) return;
+      if (!emCache) setCached(chaveCache, dados);
 
       if (dados.erro) {
         setErro(dados.erro);
@@ -350,6 +358,8 @@ export function useTelaInicioAtividadeUnidade() {
     const dados = await buscarBase();
     setSubindoNivel(false);
     if (dados.erro) return;
+    const usuarioId = localStorage.getItem("id");
+    setCached(`atividade-unidade-base:${usuarioId}`, dados);
     setBase(dados);
     // o nível mudou: o que cada unidade mostra muda junto, então rebaixa só as abertas
     setDetalhes({});

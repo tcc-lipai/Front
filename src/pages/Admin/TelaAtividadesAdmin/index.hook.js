@@ -7,6 +7,9 @@ import {
   atualizarUnidade,
   excluirUnidade,
 } from "../../../services/conteudoService";
+import { getCached, setCached } from "../../../utils/apiCache";
+
+const CHAVE_CACHE = "admin-unidades-atividades";
 
 export function useTelaAtividadesAdmin() {
   const navigate = useNavigate();
@@ -27,8 +30,11 @@ export function useTelaAtividadesAdmin() {
     let ativo = true;
 
     (async () => {
-      const [resUnidades, resAtividades] = await Promise.all([listarUnidadesAdmin(), listarAtividades()]);
+      const emCache = recarga === 0 ? getCached(CHAVE_CACHE) : undefined;
+      const [resUnidades, resAtividades] =
+        emCache ?? (await Promise.all([listarUnidadesAdmin(), listarAtividades()]));
       if (!ativo) return;
+      if (!emCache) setCached(CHAVE_CACHE, [resUnidades, resAtividades]);
       if (!resUnidades.sucesso) setErro(resUnidades.mensagem);
       else {
         setErro("");

@@ -1,6 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { listarUsuarios, excluirUsuario, nomeNivelDificuldade } from "../../../services/usuarioService";
+import { getCached, setCached, invalidateCached } from "../../../utils/apiCache";
+
+const CHAVE_CACHE = "admin-usuarios";
 
 const DIAS_PARA_CONSIDERAR_INATIVO = 7;
 
@@ -32,8 +35,9 @@ export function useTelaDashboardAdmin() {
     let ativo = true;
 
     (async () => {
-      const res = await listarUsuarios();
+      const res = getCached(CHAVE_CACHE) ?? (await listarUsuarios());
       if (!ativo) return;
+      setCached(CHAVE_CACHE, res);
       if (!res.sucesso) {
         setErro(res.mensagem);
         setCarregando(false);
@@ -48,8 +52,17 @@ export function useTelaDashboardAdmin() {
     };
   }, []);
 
-  const abrirCadastro = useCallback(() => navigate("/cadastrar-paciente"), [navigate]);
-  const abrirEdicao = useCallback((paciente) => navigate(`/editar-paciente/${paciente.id}`), [navigate]);
+  const abrirCadastro = useCallback(() => {
+    invalidateCached(CHAVE_CACHE);
+    navigate("/cadastrar-paciente");
+  }, [navigate]);
+  const abrirEdicao = useCallback(
+    (paciente) => {
+      invalidateCached(CHAVE_CACHE);
+      navigate(`/editar-paciente/${paciente.id}`);
+    },
+    [navigate]
+  );
   const pedirExclusao = useCallback((paciente) => setPacienteParaExcluir(paciente), []);
   const cancelarExclusao = useCallback(() => setPacienteParaExcluir(null), []);
 
@@ -63,6 +76,7 @@ export function useTelaDashboardAdmin() {
       setPacienteParaExcluir(null);
       return;
     }
+    invalidateCached(CHAVE_CACHE);
     setPacientes((atual) => atual.filter((p) => p.id !== pacienteParaExcluir.id));
     setPacienteParaExcluir(null);
   }, [pacienteParaExcluir]);

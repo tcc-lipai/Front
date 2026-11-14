@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { listarNotificacoes, marcarNotificacaoComoLida } from "../../services/notificacaoService";
+import { getCached, setCached } from "../../utils/apiCache";
 
 const UM_DIA_MS = 24 * 60 * 60 * 1000;
 
@@ -25,8 +26,10 @@ export function useTelaNotificacoes() {
     let ativo = true;
 
     async function carregar() {
-      const resultado = await listarNotificacoes(usuarioId);
+      const chaveCache = `notificacoes:${usuarioId}`;
+      const resultado = getCached(chaveCache) ?? (await listarNotificacoes(usuarioId));
       if (!ativo) return;
+      setCached(chaveCache, resultado);
 
       if (resultado.sucesso) {
         setNotificacoes(resultado.data.map(normalizar));
@@ -49,6 +52,16 @@ export function useTelaNotificacoes() {
         notificacao.id === id ? { ...notificacao, lida: true } : notificacao
       )
     );
+    // marca também na cache (mesmo formato cru da API), senão um remonte
+    // dentro do TTL mostraria a notificação como não lida de novo
+    const chaveCache = `notificacoes:${usuarioId}`;
+    const emCache = getCached(chaveCache);
+    if (emCache?.sucesso) {
+      const atualizadas = emCache.data.map((n) =>
+        (n.idNotificacao ?? n.IdNotificacao) === id ? { ...n, lida: true, Lida: true } : n
+      );
+      setCached(chaveCache, { ...emCache, data: atualizadas });
+    }
     await marcarNotificacaoComoLida(id, true);
   };
 

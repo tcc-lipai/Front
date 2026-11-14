@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { listarPacientesDoProfissional } from "../../../services/profissionalService";
 import { nomeNivelDificuldade } from "../../../services/usuarioService";
+import { getCached, setCached } from "../../../utils/apiCache";
 
 const DIAS_PARA_CONSIDERAR_INATIVO = 7;
 
@@ -27,8 +28,11 @@ export function useTelaDashboardMedico() {
   useEffect(() => {
     let ativo = true;
     async function carregar() {
-      const res = await listarPacientesDoProfissional();
+      const profissionalId = localStorage.getItem("id");
+      const chaveCache = `pacientes-profissional:${profissionalId}`;
+      const res = getCached(chaveCache) ?? (await listarPacientesDoProfissional());
       if (!ativo) return;
+      setCached(chaveCache, res);
       if (!res.sucesso) {
         setErro(res.mensagem);
       } else {
