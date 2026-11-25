@@ -25,9 +25,19 @@ export function useTelaDicionario() {
       if (!ativo) return;
       if (!emCache) setCached(CHAVE_CACHE, [categoriasRes, palavrasRes]);
 
+      const palavrasComVideo = palavrasRes.sucesso
+        ? palavrasRes.data.filter((p) => p.videoUrl ?? p.VideoUrl)
+        : [];
+
       if (categoriasRes.sucesso) {
-        setCategorias(categoriasRes.data);
-        const primeira = categoriasRes.data[0];
+        const idsComVideo = new Set(
+          palavrasComVideo.map((p) => p.categoriaId ?? p.CategoriaId)
+        );
+        const categoriasComVideo = categoriasRes.data.filter((c) =>
+          idsComVideo.has(c.idCategoria ?? c.IdCategoria)
+        );
+        setCategorias(categoriasComVideo);
+        const primeira = categoriasComVideo[0];
         if (primeira) {
           setCategoriaAtiva(primeira.idCategoria ?? primeira.IdCategoria);
         }
