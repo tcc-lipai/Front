@@ -52,8 +52,9 @@ export function useTelaDicionario() {
   const fecharPalavra = () => setPalavraAberta(null);
 
   const cardsFiltrados = useMemo(() => {
-    if (categoriaAtiva == null) return palavras;
-    return palavras.filter(
+    const comVideo = palavras.filter((palavra) => palavra.videoUrl ?? palavra.VideoUrl);
+    if (categoriaAtiva == null) return comVideo;
+    return comVideo.filter(
       (palavra) => (palavra.categoriaId ?? palavra.CategoriaId) === categoriaAtiva
     );
   }, [palavras, categoriaAtiva]);
