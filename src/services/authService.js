@@ -1,3 +1,4 @@
+import { clearCache } from "../utils/apiCache";
 import api from "./api";
 
 export async function login(email, senha) {
@@ -19,6 +20,7 @@ export async function login(email, senha) {
 }
 
 export function logout() {
+  clearCache();
   localStorage.removeItem("token");
   localStorage.removeItem("role");
   localStorage.removeItem("id");

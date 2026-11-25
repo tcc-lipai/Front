@@ -46,9 +46,25 @@ function extrairLicoes(unidades = [], nivelUsuario = null) {
 
     const alt = unidade.licoesAlternativa ?? unidade.LicoesAlternativa ?? [];
     for (const l of alt) {
-      if (!liberado(l)) continue;
+      if ((l.atividadeAlternativaId ?? l.AtividadeAlternativaId ?? null) != null || !liberado(l)) continue;
       const id = l.idLicaoAlternativa ?? l.IdLicaoAlternativa;
       licoes.push({ id: `alternativa-${id}`, licaoId: id, tipoSalvar: "alternativa", unidadeId });
+    }
+
+    const atividadesAlternativa = unidade.atividadesAlternativa ?? unidade.AtividadesAlternativa ?? [];
+    for (const aa of atividadesAlternativa) {
+      if (!liberado(aa)) continue;
+      const id = aa.idAtividadeAlternativa ?? aa.IdAtividadeAlternativa;
+      const exercicios = aa.exercicios ?? aa.Exercicios ?? [];
+      if (exercicios.length === 0) continue;
+      licoes.push({
+        id: `alternativa-sessao-${id}`,
+        licaoId: id,
+        tipoSalvar: "alternativa-sessao",
+        unidadeId,
+        tipoExercicio: "alternativa",
+        exercicioIds: exercicios.map((e) => e.idLicaoAlternativa ?? e.IdLicaoAlternativa),
+      });
     }
 
     const video = unidade.licoesVideo ?? unidade.LicoesVideo ?? [];
@@ -81,7 +97,7 @@ function extrairUnidades(resumo = []) {
  */
 function calcularProgressoItem(item, progressoIds) {
   if (Array.isArray(item.exercicioIds) && item.exercicioIds.length > 0) {
-    const chaves = item.exercicioIds.map((id) => `fala-${id}`);
+    const chaves = item.exercicioIds.map((id) => `${item.tipoExercicio ?? "fala"}-${id}`);
     const concluidos = chaves.filter((c) => progressoIds.concluidas.has(c)).length;
     const iniciados = chaves.filter(
       (c) => progressoIds.concluidas.has(c) || progressoIds.emAndamento.has(c)

@@ -575,6 +575,21 @@ todas as telas de aluno/profissional/admin e nos modais). Resultado: todas as
   o Front sobe em 5174, mas o CORS do Backend só libera `http://localhost:5173`
   (`Cors:AllowedOrigins`) — nesse caso a API é bloqueada no navegador.
 
+### Sessão de 2026-11-25 — correções sobre interpretação agrupada e cache
+
+Entre 10/11 e 14/11 entraram a sessão agrupada de interpretação
+(`AtividadeAlternativa`, `/atividade/alternativa-sessao/:id`), o cache de 30s
+(`src/utils/apiCache.js`) e o limite de 3 unidades com "Ver mais". Correções:
+
+- Migration `AddAtividadeAlternativa` aplicada no banco local (estava faltando).
+- Admin (`TelaUnidadeAdmin`): CRUD de atividades de interpretação e perguntas
+  dentro do grupo; editar uma pergunta não a tira mais do grupo (o formulário
+  não enviava `AtividadeAlternativaId`). API recusa grupo de outra unidade (400).
+- Cache: qualquer gravação (e logout/401) esvazia tudo; erro não é guardado;
+  revisitar a tela não renova mais o prazo.
+- Acompanhamento do profissional e "Seu progresso" contam o grupo de
+  interpretação como 1 atividade, igual ao aluno.
+
 ## 3. Como rodar tudo localmente
 
 ```bash

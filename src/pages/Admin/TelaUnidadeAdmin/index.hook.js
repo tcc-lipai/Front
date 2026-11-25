@@ -8,6 +8,9 @@ import {
   criarAtividadeFala,
   atualizarAtividadeFala,
   excluirAtividadeFala,
+  criarAtividadeAlternativa,
+  atualizarAtividadeAlternativa,
+  excluirAtividadeAlternativa,
 } from "../../../services/conteudoService";
 
 // tipo: { chave, rota } — define a rota da API e como montar o corpo do pedido
@@ -16,6 +19,21 @@ export const TIPOS = {
   alternativa: { rota: "alternativa", id: "idLicaoAlternativa" },
   fala: { rota: "fala", id: "idLicaoFala" },
   atividadeFala: { rota: null, id: "idAtividadeFala" },
+  atividadeAlternativa: { rota: null, id: "idAtividadeAlternativa" },
+};
+
+// grupos (fala e interpretação) têm endpoints próprios
+const GRUPOS = {
+  atividadeFala: {
+    criar: criarAtividadeFala,
+    atualizar: atualizarAtividadeFala,
+    excluir: excluirAtividadeFala,
+  },
+  atividadeAlternativa: {
+    criar: criarAtividadeAlternativa,
+    atualizar: atualizarAtividadeAlternativa,
+    excluir: excluirAtividadeAlternativa,
+  },
 };
 
 function corpoVideo(unidadeId, v) {
@@ -40,6 +58,8 @@ function corpoAlternativa(unidadeId, v) {
     RespostaCerta: v.respostaCerta,
     ValorGanho: Number(v.valorGanho || 0),
     NivelDificuldade: Number(v.nivelDificuldade),
+    // sem isto, salvar a edição tirava a pergunta do grupo dela
+    AtividadeAlternativaId: v.atividadeAlternativaId ? Number(v.atividadeAlternativaId) : null,
   };
 }
 
@@ -88,9 +108,11 @@ export function useTelaUnidadeAdmin() {
   const salvar = async (valores) => {
     const { tipo, item } = form;
     let res;
-    if (tipo === "atividadeFala") {
+    if (GRUPOS[tipo]) {
       const dados = { Nome: valores.nome, NivelDificuldade: Number(valores.nivelDificuldade), UnidadeId: unidade.idUnidade };
-      res = item ? await atualizarAtividadeFala(item.idAtividadeFala, dados) : await criarAtividadeFala(dados);
+      res = item
+        ? await GRUPOS[tipo].atualizar(item[TIPOS[tipo].id], dados)
+        : await GRUPOS[tipo].criar(dados);
     } else {
       const corpo =
         tipo === "video" ? corpoVideo(unidade.idUnidade, valores)
@@ -106,10 +128,9 @@ export function useTelaUnidadeAdmin() {
 
   const confirmarExclusao = async () => {
     const { tipo, item } = paraExcluir;
-    const res =
-      tipo === "atividadeFala"
-        ? await excluirAtividadeFala(item.idAtividadeFala)
-        : await excluirLicao(TIPOS[tipo].rota, item[TIPOS[tipo].id]);
+    const res = GRUPOS[tipo]
+      ? await GRUPOS[tipo].excluir(item[TIPOS[tipo].id])
+      : await excluirLicao(TIPOS[tipo].rota, item[TIPOS[tipo].id]);
     setParaExcluir(null);
     if (!res.sucesso) setErro(res.mensagem);
     else await carregar();

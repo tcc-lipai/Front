@@ -10,7 +10,7 @@ import { useTelaUnidadeAdmin, TIPOS } from "./index.hook";
 const OPCOES_NIVEL = NIVEIS_DIFICULDADE.map((n) => ({ valor: n.valor, label: n.label }));
 const OPCOES_RESPOSTA = ["a", "b", "c", "d"].map((l) => ({ valor: l, label: l.toUpperCase() }));
 
-function camposDoForm(tipo, atividadesFala) {
+function camposDoForm(tipo, atividadesFala, atividadesAlternativa) {
   if (tipo === "video") {
     return [
       { name: "titulo", label: "Título", required: true },
@@ -30,6 +30,11 @@ function camposDoForm(tipo, atividadesFala) {
       { name: "videoUrl", label: "URL do vídeo (opcional)" },
       { name: "valorGanho", label: "Moedas ao acertar", type: "number" },
       { name: "nivelDificuldade", label: "Nível", required: true, options: OPCOES_NIVEL },
+      {
+        name: "atividadeAlternativaId",
+        label: "Atividade de interpretação (opcional)",
+        options: atividadesAlternativa.map((a) => ({ valor: a.idAtividadeAlternativa, label: a.nome })),
+      },
     ];
   }
   if (tipo === "fala") {
@@ -45,7 +50,11 @@ function camposDoForm(tipo, atividadesFala) {
     ];
   }
   return [
-    { name: "nome", label: "Nome da atividade de fala", required: true },
+    {
+      name: "nome",
+      label: tipo === "atividadeAlternativa" ? "Nome da atividade de interpretação" : "Nome da atividade de fala",
+      required: true,
+    },
     { name: "nivelDificuldade", label: "Nível", required: true, options: OPCOES_NIVEL },
   ];
 }
@@ -53,7 +62,9 @@ function camposDoForm(tipo, atividadesFala) {
 function valoresIniciais(tipo, item, grupoId) {
   if (!item) {
     if (tipo === "fala") return { nivelDificuldade: "", valorGanho: 0, atividadeFalaId: grupoId ?? "" };
-    if (tipo === "alternativa") return { valorGanho: 0, nivelDificuldade: "" };
+    if (tipo === "alternativa") {
+      return { valorGanho: 0, nivelDificuldade: "", atividadeAlternativaId: grupoId ?? "" };
+    }
     if (tipo === "video") return { nivelDificuldade: "" };
     return {};
   }
@@ -68,7 +79,7 @@ function valoresIniciais(tipo, item, grupoId) {
     return {
       pergunta: item.pergunta, a: item.a, b: item.b, c: item.c, d: item.d,
       respostaCerta: item.respostaCerta, videoUrl: item.videoUrl, valorGanho: item.valorGanho,
-      nivelDificuldade: nivel,
+      nivelDificuldade: nivel, atividadeAlternativaId: item.atividadeAlternativaId ?? "",
     };
   }
   if (tipo === "fala") {
@@ -85,6 +96,7 @@ const TITULOS = {
   alternativa: "alternativa",
   fala: "exercício de fala",
   atividadeFala: "atividade de fala",
+  atividadeAlternativa: "atividade de interpretação",
 };
 
 const TelaUnidadeAdmin = () => {
@@ -101,6 +113,24 @@ const TelaUnidadeAdmin = () => {
     ? todosGrupos.filter((g) => valorNivelDificuldade(g.nivelDificuldade) === Number(filtroNivel))
     : todosGrupos;
   const exercicioSemGrupo = (u.licoesFala ?? []).filter((l) => !l.atividadeFalaId);
+
+  const gruposAlternativa = u.atividadesAlternativa ?? [];
+  const alternativasAvulsas = (u.licoesAlternativa ?? []).filter((a) => !a.atividadeAlternativaId);
+
+  const renderAlternativa = (a, fundo) => (
+    <div key={a.idLicaoAlternativa} className="card-usuario" style={fundo ? { background: fundo } : undefined}>
+      <div className="card-usuario__info">
+        <h3 className="card-usuario__nome">{a.pergunta}</h3>
+        <p className="card-usuario__descricao">
+          {nomeNivelDificuldade(a.nivelDificuldade)} · Resposta: {String(a.respostaCerta).toUpperCase()} · {a.valorGanho} moedas
+        </p>
+      </div>
+      <div className="card-usuario__acoes">
+        <Botao texto="Editar" variante="secundario" onClick={() => h.abrirForm("alternativa", a)} />
+        <Botao texto="Excluir" variante="perigo" onClick={() => h.pedirExclusao("alternativa", a)} />
+      </div>
+    </div>
+  );
 
   const { form } = h;
   const tipoForm = form?.tipo;
@@ -145,25 +175,64 @@ const TelaUnidadeAdmin = () => {
 
         <section className="lista-usuarios__container">
           <div className="lista-usuarios__controles">
-            <h2 style={{ margin: 0, color: "var(--lipai-text)" }}>Alternativas</h2>
+            <h2 style={{ margin: 0, color: "var(--lipai-text)" }}>
+              Atividades de interpretação ({gruposAlternativa.length})
+            </h2>
+            <Botao texto="Nova atividade de interpretação" onClick={() => h.abrirForm("atividadeAlternativa")} />
+          </div>
+
+          {gruposAlternativa.map((g) => {
+            const chave = `alt-${g.idAtividadeAlternativa}`;
+            const aberto = abertos[chave];
+            return (
+              <div key={chave} className="card-usuario" style={{ flexDirection: "column", alignItems: "stretch" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+                  <div className="card-usuario__info">
+                    <h3 className="card-usuario__nome">{g.nome}</h3>
+                    <p className="card-usuario__descricao">
+                      {nomeNivelDificuldade(g.nivelDificuldade)} · {(g.exercicios ?? []).length} pergunta(s)
+                    </p>
+                  </div>
+                  <div className="card-usuario__acoes">
+                    <Botao
+                      texto={aberto ? "Fechar" : "Perguntas"}
+                      variante="secundario"
+                      onClick={() => setAbertos((s) => ({ ...s, [chave]: !aberto }))}
+                    />
+                    <Botao texto="Editar" variante="secundario" onClick={() => h.abrirForm("atividadeAlternativa", g)} />
+                    <Botao texto="Excluir" variante="perigo" onClick={() => h.pedirExclusao("atividadeAlternativa", g)} />
+                  </div>
+                </div>
+
+                {aberto && (
+                  <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 12 }}>
+                    {(g.exercicios ?? []).map((a) => renderAlternativa(a, "var(--lipai-surface-2)"))}
+                    <div>
+                      <Botao
+                        texto="Nova pergunta"
+                        onClick={() => h.abrirForm("alternativa", null, g.idAtividadeAlternativa)}
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+          {gruposAlternativa.length === 0 && (
+            <p className="lista-usuarios__vazio">Nenhuma atividade de interpretação.</p>
+          )}
+        </section>
+
+        <section className="lista-usuarios__container">
+          <div className="lista-usuarios__controles">
+            <h2 style={{ margin: 0, color: "var(--lipai-text)" }}>Alternativas avulsas</h2>
             <Botao texto="Nova alternativa" onClick={() => h.abrirForm("alternativa")} />
           </div>
           <ul className="lista-usuarios__lista">
-            {(u.licoesAlternativa ?? []).map((a) => (
-              <li key={a.idLicaoAlternativa} className="card-usuario">
-                <div className="card-usuario__info">
-                  <h3 className="card-usuario__nome">{a.pergunta}</h3>
-                  <p className="card-usuario__descricao">
-                    {nomeNivelDificuldade(a.nivelDificuldade)} · Resposta: {String(a.respostaCerta).toUpperCase()} · {a.valorGanho} moedas
-                  </p>
-                </div>
-                <div className="card-usuario__acoes">
-                  <Botao texto="Editar" variante="secundario" onClick={() => h.abrirForm("alternativa", a)} />
-                  <Botao texto="Excluir" variante="perigo" onClick={() => h.pedirExclusao("alternativa", a)} />
-                </div>
-              </li>
+            {alternativasAvulsas.map((a) => (
+              <li key={a.idLicaoAlternativa}>{renderAlternativa(a)}</li>
             ))}
-            {(u.licoesAlternativa ?? []).length === 0 && <p className="lista-usuarios__vazio">Nenhuma alternativa.</p>}
+            {alternativasAvulsas.length === 0 && <p className="lista-usuarios__vazio">Nenhuma alternativa avulsa.</p>}
           </ul>
         </section>
 
@@ -260,7 +329,7 @@ const TelaUnidadeAdmin = () => {
         key={`${tipoForm ?? "none"}-${form?.item?.[TIPOS[tipoForm]?.id] ?? "novo"}-${form?.grupoId ?? ""}`}
         isOpen={!!form}
         titulo={form ? `${form.item ? "Editar" : "Novo"} ${TITULOS[tipoForm]}` : ""}
-        campos={form ? camposDoForm(tipoForm, grupos) : []}
+        campos={form ? camposDoForm(tipoForm, todosGrupos, gruposAlternativa) : []}
         valoresIniciais={form ? valoresIniciais(tipoForm, form.item, form.grupoId) : {}}
         onSalvar={h.salvar}
         onFechar={h.fecharForm}

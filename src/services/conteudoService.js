@@ -56,6 +56,18 @@ export function excluirLicao(tipo, id) {
   return executar(api.delete(`/Licao/${tipo}/${id}`), "Não foi possível excluir.");
 }
 
+export function criarAtividadeAlternativa(dados) {
+  return executar(api.post("/AtividadeAlternativa", dados), "Não foi possível criar a atividade de interpretação.");
+}
+
+export function atualizarAtividadeAlternativa(id, dados) {
+  return executar(api.put(`/AtividadeAlternativa/${id}`, dados), "Não foi possível salvar a atividade de interpretação.");
+}
+
+export function excluirAtividadeAlternativa(id) {
+  return executar(api.delete(`/AtividadeAlternativa/${id}`), "Não foi possível excluir a atividade de interpretação.");
+}
+
 export function criarAtividadeFala(dados) {
   return executar(api.post("/AtividadeFala", dados), "Não foi possível criar a atividade de fala.");
 }
