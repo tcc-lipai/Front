@@ -607,6 +607,16 @@ Entre 10/11 e 14/11 entraram a sessão agrupada de interpretação
 - **Diagnóstico não salvava**: o perfil mandava a senha vazia, reprovada pela
   validação de tamanho mínimo. Agora manda `null`.
 
+### Sessão de 2026-11-25 (parte 3) — menos "Carregando" e telas mais rápidas
+
+- "Seu progresso" e a lista de atividades do admin baixavam `GET /Unidades`
+  (~5 MB). Agora usam `GET /Unidades/itens` (só ids/níveis, 87 KB) e
+  `/Unidades/resumo` (ganhou `qtdAtividadesFala`, `qtdVideos`, `qtdAlternativas`).
+- GETs com cache de 60s e pedidos iguais simultâneos unificados no
+  `services/api.js`; qualquer gravação/logout limpa.
+- Mensagens "Carregando..." só aparecem após 0,5s (`.carregando-atrasado`).
+- Telas do perfil logado são pré-baixadas em segundo plano (`routes.jsx`).
+
 ## 3. Como rodar tudo localmente
 
 ```bash

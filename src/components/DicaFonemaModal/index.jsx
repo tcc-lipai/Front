@@ -54,7 +54,7 @@ const DicaFonemaModal = ({ fonema, onContinuar, onFechar }) => {
           antes de ir pra atividade.
         </p>
 
-        {carregando && <p className="dica-fonema-modal__texto">Carregando dica...</p>}
+        {carregando && <p className="carregando-atrasado dica-fonema-modal__texto">Carregando dica...</p>}
         {!carregando && erro && <p className="dica-fonema-modal__texto">{erro}</p>}
         {!carregando && !erro && (
           <div className="dica-fonema-modal__texto">

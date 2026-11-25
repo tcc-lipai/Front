@@ -35,7 +35,7 @@ const TelaAtividadesAdmin = () => {
 
         <div className="lista-usuarios__container">
           {h.erro && <p className="lista-usuarios__vazio">{h.erro}</p>}
-          {h.carregando && <p className="lista-usuarios__vazio">Carregando...</p>}
+          {h.carregando && <p className="carregando-atrasado lista-usuarios__vazio">Carregando...</p>}
 
           {!h.carregando && (
             <ul className="lista-usuarios__lista">
@@ -45,8 +45,8 @@ const TelaAtividadesAdmin = () => {
                     <div className="card-usuario__info">
                       <h3 className="card-usuario__nome">{u.nome}</h3>
                       <p className="card-usuario__descricao">
-                        {u.atividadesFala?.length ?? 0} atividade(s) de fala · {u.licoesVideo?.length ?? 0} vídeo(s) ·{" "}
-                        {u.licoesAlternativa?.length ?? 0} alternativa(s)
+                        {u.qtdAtividadesFala ?? 0} atividade(s) de fala · {u.qtdVideos ?? 0} vídeo(s) ·{" "}
+                        {u.qtdAlternativas ?? 0} alternativa(s)
                       </p>
                     </div>
                     <div className="card-usuario__acoes">

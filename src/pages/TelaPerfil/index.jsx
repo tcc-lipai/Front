@@ -224,7 +224,7 @@ const TelaPerfil = () => {
             </div>
           </div>
 
-          {carregando && <p className="perfil-status">Carregando seus dados...</p>}
+          {carregando && <p className="carregando-atrasado perfil-status">Carregando seus dados...</p>}
           {mensagem && (
             <p className="perfil-status" role="status">
               {mensagem}

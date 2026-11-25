@@ -97,7 +97,7 @@ const PainelListaUsuarios = ({
 
           {erro && <p className="lista-usuarios__vazio">{erro}</p>}
 
-          {!erro && carregando && <p className="lista-usuarios__vazio">Carregando...</p>}
+          {!erro && carregando && <p className="carregando-atrasado lista-usuarios__vazio">Carregando...</p>}
 
           {!erro && !carregando && (
             <ul className="lista-usuarios__lista">

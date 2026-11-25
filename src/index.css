@@ -303,3 +303,18 @@ button {
   background: var(--lipai-primary);
   color: var(--lipai-on-primary);
 }
+
+/* "Carregando..." só aparece se a espera passar de meio segundo — o que carrega rápido
+   não pisca mensagem na tela */
+.carregando-atrasado {
+  animation: carregando-aparecer 0s linear 0.5s both;
+}
+
+@keyframes carregando-aparecer {
+  from {
+    visibility: hidden;
+  }
+  to {
+    visibility: visible;
+  }
+}

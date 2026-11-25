@@ -57,7 +57,7 @@ export default function TelaAtividadeAlternativa() {
 
         {carregando && (
           <div className="atividade-conteudo">
-            <p>Carregando atividade...</p>
+            <p className="carregando-atrasado">Carregando atividade...</p>
           </div>
         )}
 

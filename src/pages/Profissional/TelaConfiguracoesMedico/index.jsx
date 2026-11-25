@@ -34,7 +34,7 @@ const TelaConfiguracoesMedico = () => {
         <section ref={perfilRef} className="perfil-section">
           <h1 className="prof-config__titulo">Seu Perfil</h1>
 
-          {h.carregando && <p className="perfil-status">Carregando seus dados...</p>}
+          {h.carregando && <p className="carregando-atrasado perfil-status">Carregando seus dados...</p>}
           {h.mensagem && (
             <p className="perfil-status" role="status">
               {h.mensagem}

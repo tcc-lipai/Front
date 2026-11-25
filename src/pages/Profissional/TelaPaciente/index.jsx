@@ -16,7 +16,7 @@ const TelaPaciente = () => {
 
       <main className="paciente-main-content">
         <div className="paciente-card-background">
-          {carregando && <p className="paciente-estado">Carregando dados do paciente...</p>}
+          {carregando && <p className="carregando-atrasado paciente-estado">Carregando dados do paciente...</p>}
           {!carregando && erro && <p className="paciente-estado">{erro}</p>}
 
           {!carregando && !erro && paciente && (

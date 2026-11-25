@@ -37,7 +37,7 @@ const TelaDicionario = () => {
             Aprenda a leitura labial de diferentes palavras com vídeos demonstrativos.
           </p>
 
-          {carregando && <p className="tela-dicionario__vazio">Carregando...</p>}
+          {carregando && <p className="carregando-atrasado tela-dicionario__vazio">Carregando...</p>}
           {!carregando && erro && <p className="tela-dicionario__vazio">{erro}</p>}
 
           {!carregando && !erro && (

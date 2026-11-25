@@ -41,7 +41,7 @@ function TelaAtividadeSalva() {
           labial.
         </p>
 
-        {carregando && <p className="tela-atividade-salva__vazio">Carregando...</p>}
+        {carregando && <p className="carregando-atrasado tela-atividade-salva__vazio">Carregando...</p>}
         {!carregando && erro && <p className="tela-atividade-salva__vazio">{erro}</p>}
 
         {!carregando && !erro && (

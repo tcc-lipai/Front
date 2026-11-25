@@ -1,5 +1,5 @@
 import axios from "axios";
-import { clearCache } from "../utils/apiCache";
+import { clearCache, getCached, setCached, invalidateCached } from "../utils/apiCache";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://localhost:7268/api";
 
@@ -50,5 +50,28 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+// Buscas (GET) são reaproveitadas por 60s e pedidos iguais feitos ao mesmo tempo viram um só
+// (cabeçalho, perfil e tela pediam o mesmo usuário várias vezes). Qualquer gravação limpa tudo.
+const SEM_CACHE = [/proximo-exercicio/, /\/Ia\//];
+const buscarNoServidor = api.get.bind(api);
+
+api.get = (url, config) => {
+  if (config?.signal || SEM_CACHE.some((padrao) => padrao.test(url))) {
+    return buscarNoServidor(url, config);
+  }
+
+  // o token entra na chave: outra conta nunca reaproveita resposta da anterior
+  const chave = `http:${localStorage.getItem("token") ?? ""}:${url}:${JSON.stringify(config?.params ?? {})}`;
+  const guardado = getCached(chave);
+  if (guardado) return guardado;
+
+  const pedido = buscarNoServidor(url, config).catch((erro) => {
+    invalidateCached(chave); // erro não fica guardado
+    throw erro;
+  });
+  setCached(chave, pedido);
+  return pedido;
+};
 
 export default api;

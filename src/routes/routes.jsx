@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { motion, MotionConfig } from "framer-motion";
 
@@ -57,8 +57,50 @@ const PageTransition = ({ children }) => {
   );
 };
 
+// telas de cada perfil, baixadas em segundo plano logo depois que a pessoa entra
+const TELAS_POR_PERFIL = {
+  Usuario: () => [
+    import("../pages/TelaDashboard"),
+    import("../pages/TelaInicioAtividades"),
+    import("../pages/TelaInicioAtividadeUnidade"),
+    import("../pages/TelaLoja"),
+    import("../pages/TelaDicionario"),
+    import("../pages/TelaPerfil"),
+    import("../pages/TelaConquistas"),
+    import("../pages/TelaNotificacoes"),
+    import("../pages/TelaAcompanhante"),
+    import("../pages/TelaAtividadeSalva"),
+    import("../pages/TelaContato"),
+    import("../pages/TelaAtividadeFalaSessao"),
+    import("../pages/TelaAtividadeAlternativaSessao"),
+  ],
+  Profissional: () => [
+    import("../pages/Profissional/TelaDashboardMedico"),
+    import("../pages/Profissional/TelaPaciente"),
+    import("../pages/Profissional/TelaPacienteUnidade"),
+    import("../pages/Profissional/TelaContatoMedico"),
+    import("../pages/Profissional/TelaConfiguracoesMedico"),
+  ],
+  Admin: () => [
+    import("../pages/Admin/TelaDashboardAdmin"),
+    import("../pages/Admin/TelaProfissionaisAdmin"),
+    import("../pages/Admin/TelaAtividadesAdmin"),
+    import("../pages/Admin/TelaUnidadeAdmin"),
+    import("../pages/Admin/TelaConfiguracoesAdmin"),
+  ],
+};
+const perfisBaixados = new Set();
+
 function AnimatedRoutes() {
   const location = useLocation();
+
+  useEffect(() => {
+    const perfil = localStorage.getItem("role");
+    if (!TELAS_POR_PERFIL[perfil] || perfisBaixados.has(perfil)) return;
+    perfisBaixados.add(perfil);
+    const quandoLivre = window.requestIdleCallback ?? ((fn) => setTimeout(fn, 800));
+    quandoLivre(() => TELAS_POR_PERFIL[perfil]());
+  }, [location.pathname]);
   const { toggles } = useAcessibilidade();
 
   return (

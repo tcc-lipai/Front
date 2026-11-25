@@ -42,7 +42,7 @@ export const UserProfileDrawer = ({ isOpen, onClose }) => {
           <div className="avatar-circle">
             <User size={48} color="white" />
           </div>
-          <h2 className="username">{carregando ? "Carregando..." : nome || "Usuário"}</h2>
+          <h2 className="username">{carregando ? localStorage.getItem("nome") || "" : nome || "Usuário"}</h2>
           <span className="user-email">{email}</span>
         </div>
 

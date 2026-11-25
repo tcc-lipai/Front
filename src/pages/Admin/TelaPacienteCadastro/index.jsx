@@ -19,7 +19,7 @@ const CadastrarPaciente = () => {
           </div>
 
           {carregando ? (
-            <p className="cadastro-carregando">Carregando...</p>
+            <p className="carregando-atrasado cadastro-carregando">Carregando...</p>
           ) : (
             <form onSubmit={handleSubmit} className="cadastro-form">
               <div className="form-group">

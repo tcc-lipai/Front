@@ -1,4 +1,4 @@
-const DEFAULT_TTL_MS = 30_000;
+const DEFAULT_TTL_MS = 60_000;
 const cache = new Map();
 
 /** true se o resultado (ou algum dos resultados agrupados) é uma resposta de erro. */
@@ -21,7 +21,7 @@ export function getCached(key) {
 }
 
 /**
- * Guarda um valor em cache por `ttlMs` (padrão 30s). Não guarda respostas de erro, e regravar
+ * Guarda um valor em cache por `ttlMs` (padrão 60s). Não guarda respostas de erro, e regravar
  * o mesmo valor que veio da cache não renova o prazo (senão o dado nunca venceria).
  */
 export function setCached(key, value, ttlMs = DEFAULT_TTL_MS) {

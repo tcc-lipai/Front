@@ -54,7 +54,7 @@ const TelaAcompanhanteIA = () => {
 
           {carregando && (
             <div className="acompanhante-texto">
-              <p>Carregando...</p>
+              <p className="carregando-atrasado">Carregando...</p>
             </div>
           )}
 

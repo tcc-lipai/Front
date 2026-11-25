@@ -7,9 +7,10 @@ function lista(objeto, ...nomes) {
   return [];
 }
 
+/** Ids e níveis de tudo que há em cada unidade (leve) — para calcular progresso. */
 export async function listarUnidades() {
   try {
-    const response = await api.get("/Unidades");
+    const response = await api.get("/Unidades/itens");
     const data = Array.isArray(response.data) ? response.data : [];
     return { sucesso: true, data };
   } catch (error) {

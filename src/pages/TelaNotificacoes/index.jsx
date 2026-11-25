@@ -94,7 +94,7 @@ const TelaNotificacoes = () => {
           </button>
         </div>
 
-        {carregando && <p style={{ marginTop: 16 }}>Carregando...</p>}
+        {carregando && <p className="carregando-atrasado" style={{ marginTop: 16 }}>Carregando...</p>}
         {!carregando && erro && <p style={{ marginTop: 16 }}>{erro}</p>}
 
         {!carregando && !erro && (

@@ -13,7 +13,7 @@ const TelaPacienteUnidade = () => {
 
       <main className="atividade-detalhe-main-content">
         <div className="atividade-detalhe-card-background">
-          {carregando && <p className="unidade-estado">Carregando desempenho da unidade...</p>}
+          {carregando && <p className="carregando-atrasado unidade-estado">Carregando desempenho da unidade...</p>}
           {!carregando && erro && <p className="unidade-estado">{erro}</p>}
 
           {!carregando && !erro && unidade && (

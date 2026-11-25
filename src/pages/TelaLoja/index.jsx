@@ -64,7 +64,7 @@ const TelaLoja = () => {
               <Search size={18} />
             </div>
 
-            {carregando && <p className="tela-loja__vazio">Carregando produtos...</p>}
+            {carregando && <p className="carregando-atrasado tela-loja__vazio">Carregando produtos...</p>}
 
             {!carregando && (
               <div className="tela-loja__grid">

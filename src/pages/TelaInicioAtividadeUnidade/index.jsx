@@ -85,7 +85,7 @@ const TelaInicioAtividadeUnidade = () => {
             )}
           </div>
 
-          {carregando && <p className="descricao-atividade">Carregando unidades...</p>}
+          {carregando && <p className="carregando-atrasado descricao-atividade">Carregando unidades...</p>}
           {!carregando && erro && <p className="descricao-atividade">{erro}</p>}
 
           {!carregando && !erro && unidades.length === 0 && (
@@ -110,7 +110,7 @@ const TelaInicioAtividadeUnidade = () => {
                       <ChevronDown size={20} className={resumo.aberta ? "unidade-seta aberta" : "unidade-seta"} />
                     </button>
                     {resumo.aberta && resumo.carregando && (
-                      <p className="descricao-atividade">Carregando exercícios...</p>
+                      <p className="carregando-atrasado descricao-atividade">Carregando exercícios...</p>
                     )}
                     {resumo.aberta && resumo.erro && <p className="descricao-atividade">{resumo.erro}</p>}
                   </section>

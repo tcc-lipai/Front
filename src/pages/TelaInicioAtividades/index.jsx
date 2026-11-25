@@ -165,7 +165,7 @@ const TelaInicioAtividades = () => {
           )}
 
           <h2>Unidades disponíveis</h2>
-          {carregando && <p className="secao-carregando">Carregando...</p>}
+          {carregando && <p className="carregando-atrasado secao-carregando">Carregando...</p>}
           {!carregando && unidadesDisponiveis.length === 0 && (
             <p>Nenhuma unidade encontrada.</p>
           )}

@@ -145,7 +145,7 @@ const TelaDashboard = () => {
 
         <section className="card-section">
           <h2 className="section-title">Unidades Disponíveis</h2>
-          {carregando && <p className="section-subtitle">Carregando...</p>}
+          {carregando && <p className="carregando-atrasado section-subtitle">Carregando...</p>}
           {!carregando && unidadesDisponiveis.length === 0 && (
             <p className="section-subtitle">
               Nenhuma unidade disponível ainda.{" "}

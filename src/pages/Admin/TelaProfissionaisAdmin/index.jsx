@@ -50,7 +50,7 @@ const ProfissionaisAdmin = () => {
             </button>
             <h2 className="modal-title">Pacientes de {vinculados.nome}</h2>
 
-            {carregandoVinculados && <p>Carregando...</p>}
+            {carregandoVinculados && <p className="carregando-atrasado">Carregando...</p>}
             {vinculados.erro && <p>{vinculados.erro}</p>}
             {!carregandoVinculados && !vinculados.erro && vinculados.pacientes.length === 0 && (
               <p>Nenhum paciente vinculado.</p>

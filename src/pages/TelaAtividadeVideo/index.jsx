@@ -74,7 +74,7 @@ const TelaAtividadeVideo = () => {
 
           {carregando && (
             <div className="atividade-conteudo">
-              <p>Carregando...</p>
+              <p className="carregando-atrasado">Carregando...</p>
             </div>
           )}
 

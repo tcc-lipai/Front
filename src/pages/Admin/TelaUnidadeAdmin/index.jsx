@@ -104,7 +104,7 @@ const TelaUnidadeAdmin = () => {
   const [abertos, setAbertos] = useState({});
   const [filtroNivel, setFiltroNivel] = useState("");
 
-  if (h.carregando) return <p className="lista-usuarios__vazio">Carregando...</p>;
+  if (h.carregando) return <p className="carregando-atrasado lista-usuarios__vazio">Carregando...</p>;
   if (h.erro && !h.unidade) return <p className="lista-usuarios__vazio">{h.erro}</p>;
 
   const u = h.unidade;

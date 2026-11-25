@@ -81,7 +81,7 @@ const TelaAtividadeFala = () => {
             </button>
           </div>
 
-          {carregando && <p className="fala-instrucao">Carregando a atividade...</p>}
+          {carregando && <p className="carregando-atrasado fala-instrucao">Carregando a atividade...</p>}
 
           {!carregando && erroCarga && (
             <div className="fala-erro-msg">

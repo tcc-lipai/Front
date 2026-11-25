@@ -33,7 +33,7 @@ const TelaConquistas = () => {
     carregarConquistas();
   }, []);
 
-  if (carregando) return <p>Carregando conquistas...</p>;
+  if (carregando) return <p className="carregando-atrasado">Carregando conquistas...</p>;
   if (erro) return <p>{erro}</p>;
 
   return (

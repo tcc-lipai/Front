@@ -20,7 +20,7 @@ async function executar(promessa, padrao) {
 }
 
 export function listarUnidadesAdmin() {
-  return executar(api.get("/Unidades"), "Não foi possível carregar as unidades.");
+  return executar(api.get("/Unidades/resumo"), "Não foi possível carregar as unidades.");
 }
 
 export function buscarUnidadeAdmin(id) {

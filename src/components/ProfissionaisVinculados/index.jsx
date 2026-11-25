@@ -22,7 +22,7 @@ export default function ProfissionaisVinculados() {
         {h.maximo} vinculados ao mesmo tempo e pode remover um vínculo quando quiser.
       </p>
 
-      {h.carregando && <p className="prof-vinc__vazio">Carregando...</p>}
+      {h.carregando && <p className="carregando-atrasado prof-vinc__vazio">Carregando...</p>}
 
       {!h.carregando && h.profissionais.length === 0 && (
         <p className="prof-vinc__vazio">Você ainda não tem nenhum profissional vinculado.</p>
