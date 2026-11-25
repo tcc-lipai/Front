@@ -11,6 +11,7 @@ export function useTelaDicionario() {
   const [palavras, setPalavras] = useState([]);
   const [categoriaAtiva, setCategoriaAtiva] = useState(null);
   const [drawerAberto, setDrawerAberto] = useState(false);
+  const [palavraAberta, setPalavraAberta] = useState(null);
 
   useEffect(() => {
     let ativo = true;
@@ -47,6 +48,8 @@ export function useTelaDicionario() {
 
   const abrirPerfil = () => setDrawerAberto(true);
   const fecharPerfil = () => setDrawerAberto(false);
+  const abrirPalavra = (palavra) => setPalavraAberta(palavra);
+  const fecharPalavra = () => setPalavraAberta(null);
 
   const cardsFiltrados = useMemo(() => {
     if (categoriaAtiva == null) return palavras;
@@ -65,5 +68,8 @@ export function useTelaDicionario() {
     drawerAberto,
     abrirPerfil,
     fecharPerfil,
+    palavraAberta,
+    abrirPalavra,
+    fecharPalavra,
   };
 }

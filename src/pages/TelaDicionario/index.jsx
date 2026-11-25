@@ -3,6 +3,7 @@ import Navbar from "../../components/Navbar";
 import { HeaderActions } from "../../components/HeaderActions";
 import Botao from "../../components/Botao";
 import { UserProfileDrawer } from "../../components/UserProfileDrawer";
+import { ModalVideoDicionario } from "../../components/ModalVideoDicionario";
 import "./index.css";
 
 import { useTelaDicionario } from "./index.hook";
@@ -20,6 +21,9 @@ const TelaDicionario = () => {
     drawerAberto,
     abrirPerfil,
     fecharPerfil,
+    palavraAberta,
+    abrirPalavra,
+    fecharPalavra,
   } = useTelaDicionario();
 
   return (
@@ -67,6 +71,8 @@ const TelaDicionario = () => {
                       <DicionarioCard
                         titulo={palavra.nome ?? palavra.Nome}
                         descricao={palavra.nomeCategoria ?? palavra.NomeCategoria ?? ""}
+                        imagemUrl={palavra.imagemUrl ?? palavra.ImagemUrl ?? ""}
+                        onAbrir={() => abrirPalavra(palavra)}
                       />
                     </div>
                   );
@@ -82,6 +88,13 @@ const TelaDicionario = () => {
       </main>
 
       <UserProfileDrawer isOpen={drawerAberto} onClose={fecharPerfil} />
+
+      <ModalVideoDicionario
+        isOpen={!!palavraAberta}
+        onClose={fecharPalavra}
+        titulo={palavraAberta?.nome ?? palavraAberta?.Nome ?? ""}
+        videoUrl={palavraAberta?.videoUrl ?? palavraAberta?.VideoUrl ?? ""}
+      />
     </div>
   );
 };
