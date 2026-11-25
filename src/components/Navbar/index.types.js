@@ -11,6 +11,7 @@ export const NAV_ITENS_ALUNO = [
 export const NAV_ITENS_PROFISSIONAL = [
   { icon: Home, path: "/dashboard-medico", label: "Início" },
   { icon: Phone, path: "/contato-medico", label: "Contato" },
+  { icon: Settings, path: "/configuracoes-medico", label: "Configurações" },
 ];
 
 export const NAV_ITENS_ADMIN = [

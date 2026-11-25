@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./index.css";
 import { useNavigate } from "react-router-dom";
 import Botao from "../../components/Botao";
@@ -10,6 +10,13 @@ const TelaLoginUser = () => {
   const [form, setForm] = useState({ email: "", senha: "" });
   const [erro, setErro] = useState("");
   const [carregando, setCarregando] = useState(false);
+
+  // já baixa as telas iniciais enquanto a pessoa digita: ao entrar, abrem na hora
+  useEffect(() => {
+    import("../TelaDashboard");
+    import("../Profissional/TelaDashboardMedico");
+    import("../Admin/TelaDashboardAdmin");
+  }, []);
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });

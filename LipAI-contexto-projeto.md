@@ -379,7 +379,7 @@ próxima sessão consiga de fato abrir o Chrome e testar visualmente.
   separados por vírgula e **substitui o conjunto**; vazio desvincula de todos.
 - Todas as checagens "é paciente deste profissional" (acompanhamento, progresso,
   conquistas, notificações) passaram a olhar a tabela de vínculos.
-- Conta de demonstração do profissional: `prof.demo@lipai.com` / `Prof@12345`
+- Conta de demonstração do profissional: `prof.demo@lipai.com` (senha fora do repositório)
   (código TCRD7H), já vinculada ao aluno `gaelpinhoarthur@gmail.com`.
 
 ### Sessão de 2026-10-26 — auditoria de segurança
@@ -589,6 +589,23 @@ Entre 10/11 e 14/11 entraram a sessão agrupada de interpretação
   revisitar a tela não renova mais o prazo.
 - Acompanhamento do profissional e "Seu progresso" contam o grupo de
   interpretação como 1 atividade, igual ao aluno.
+
+### Sessão de 2026-11-25 (parte 2) — ajustes pedidos pela equipe
+
+- **Login mais rápido** (~1,0s → ~0,32s até o painel): sem animação de saída
+  entre telas, telas iniciais pré-carregadas no login, VLibras carregado depois
+  da página e aquecimento do EF no startup. 429 agora tem mensagem própria.
+- **Tema claro é o padrão** (não segue o sistema; chave nova `lipai-tema`).
+- **Contas de teste** de profissional e pacientes foram criadas no banco local
+  (as credenciais não são registradas neste repositório).
+- **Área do profissional**: ícone de perfil abre o drawer, item
+  "Configurações" na navbar e tela real (perfil, código de vínculo, tema, sair).
+  API nova `GET/PUT /Profissional/meu-perfil`.
+- **Landing**: navbar fixa (`overflow-x: clip`) e link "Equipe" (`#equipe`).
+- **Mensagens com acentos quebrados**: strings do backend com dupla
+  codificação corrigidas, assim como as notificações já gravadas.
+- **Diagnóstico não salvava**: o perfil mandava a senha vazia, reprovada pela
+  validação de tamanho mínimo. Agora manda `null`.
 
 ## 3. Como rodar tudo localmente
 

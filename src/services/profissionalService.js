@@ -83,3 +83,28 @@ export async function listarPacientesDoProfissional() {
     };
   }
 }
+
+/** Perfil do profissional logado (nome, e-mail, registro e código de vínculo). */
+export async function buscarMeuPerfilProfissional() {
+  try {
+    const response = await api.get("/Profissional/meu-perfil");
+    return { sucesso: true, data: response.data };
+  } catch (error) {
+    return { sucesso: false, mensagem: mensagemDeErro(error, "Não foi possível carregar o perfil.") };
+  }
+}
+
+export async function atualizarMeuPerfilProfissional(dados) {
+  try {
+    await api.put("/Profissional/meu-perfil", dados);
+    return { sucesso: true };
+  } catch (error) {
+    const erros = error.response?.data?.errors;
+    return {
+      sucesso: false,
+      mensagem: erros
+        ? Object.values(erros).flat().join(" ")
+        : mensagemDeErro(error, "Não foi possível salvar o perfil."),
+    };
+  }
+}

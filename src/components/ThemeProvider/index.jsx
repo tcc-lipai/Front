@@ -1,20 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 import { ThemeContext } from "./themeContext";
 
-const STORAGE_KEY = "lipai-theme";
-
-function prefereEscuroNoSistema() {
-  return (
-    typeof window !== "undefined" && window.matchMedia?.("(prefers-color-scheme: dark)").matches
-  );
-}
+// chave nova: a antiga guardava sozinha o tema do sistema (escuro) mesmo sem a pessoa escolher
+const STORAGE_KEY = "lipai-tema";
 
 function obterTemaInicial() {
-  const salvo = localStorage.getItem(STORAGE_KEY);
-  if (salvo === "dark" || salvo === "light") {
-    return salvo;
-  }
-  return prefereEscuroNoSistema() ? "dark" : "light";
+  // claro é o padrão; só fica escuro se a pessoa tiver escolhido
+  return localStorage.getItem(STORAGE_KEY) === "dark" ? "dark" : "light";
 }
 
 export function ThemeProvider({ children }) {

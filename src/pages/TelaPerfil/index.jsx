@@ -128,7 +128,8 @@ const TelaPerfil = () => {
     const resultado = await atualizarUsuario(usuarioId, {
       nome,
       email,
-      senha,
+      // senha em branco = não trocar (mandar "" era recusado e nada do perfil era salvo)
+      senha: senha || null,
       diagnostico,
       nivelDificuldade,
     });

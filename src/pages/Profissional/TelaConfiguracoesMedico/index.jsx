@@ -1,153 +1,143 @@
-import React, { useState } from "react";
+import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { UserSidebar } from "../../../components/UserSidebar";
+import { useTheme } from "../../../hooks/useTheme";
+import { useTelaConfiguracoesMedico } from "./index.hook";
+import "../../TelaPerfil/index.css";
 import "./index.css";
 
 const TelaConfiguracoesMedico = () => {
-  const [modoEscuro, setModoEscuro] = useState(false);
-  const [notificacoes, setNotificacoes] = useState(true);
-  const [autenticacao, setAutenticacao] = useState(false);
-  const [historico, setHistorico] = useState(true);
+  const navigate = useNavigate();
+  const { isDarkMode, setTheme } = useTheme();
+  const h = useTelaConfiguracoesMedico();
+  const [secaoAtiva, setSecaoAtiva] = useState("perfil");
+  const [confirmarSaida, setConfirmarSaida] = useState(false);
+  const perfilRef = useRef(null);
+  const configuracoesRef = useRef(null);
 
-  const [temaSelecionado, setTemaSelecionado] = useState("claro");
+  const irParaSecao = (secao) => {
+    setSecaoAtiva(secao);
+    const ref = secao === "perfil" ? perfilRef : configuracoesRef;
+    ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   return (
-    <div className="configuracoes-page-container">
-      <div className="bg-waves">
-        <svg
-          viewBox="0 0 1440 1024"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          preserveAspectRatio="none"
-        >
-          <path
-            d="M1440 0H900C1100 200 1050 500 1250 750C1350 870 1390 960 1440 1024V0Z"
-            fill="#ecdcf7"
-            opacity="0.6"
-          />
-          <path
-            d="M1440 250C1200 450 1280 700 1100 850C1000 930 920 970 850 1024H1440V250Z"
-            fill="#f0e4fa"
-            opacity="0.5"
-          />
-          <path
-            d="M1440 600C1350 720 1380 850 1200 950C1120 990 1050 1010 1000 1024H1440V600Z"
-            fill="#e6d2f5"
-            opacity="0.4"
-          />
-        </svg>
-      </div>
+    <div className="perfil-page-container">
+      <UserSidebar
+        activeSection={secaoAtiva}
+        onSectionChange={irParaSecao}
+        onBackClick={() => navigate("/dashboard-medico")}
+        nome={h.nomeSalvo}
+      />
 
-      <UserSidebar onBackClick={() => console.log("Voltou para a Home")} />
+      <main className="perfil-main-content">
+        <section ref={perfilRef} className="perfil-section">
+          <h1 className="prof-config__titulo">Seu Perfil</h1>
 
-      <main className="configuracoes-main-content">
-        <h1 className="configuracoes-title">Configurações</h1>
-
-        <div className="configuracoes-grid">
-          <div className="config-card">
-            <h3 className="config-card-title">Modo de Cor</h3>
-            <p className="config-card-description">
-              Ative o tema escuro para reduzir o cansaço visual em ambientes de baixa luminosidade.
+          {h.carregando && <p className="perfil-status">Carregando seus dados...</p>}
+          {h.mensagem && (
+            <p className="perfil-status" role="status">
+              {h.mensagem}
             </p>
-            <div className="config-card-action">
-              <label className="switch">
-                <input
-                  type="checkbox"
-                  checked={modoEscuro}
-                  onChange={(e) => setModoEscuro(e.target.checked)}
-                />
-                <span className="slider round"></span>
-              </label>
+          )}
+
+          <form className="perfil-form" onSubmit={h.salvar}>
+            <div className="form-group">
+              <label htmlFor="prof-nome">Nome:</label>
+              <span>Como seus pacientes veem você</span>
+              <input id="prof-nome" type="text" value={h.form.nome} onChange={h.alterar("nome")} required />
+            </div>
+            <div className="form-group">
+              <label htmlFor="prof-email">Email:</label>
+              <span>E-mail usado para entrar</span>
+              <input id="prof-email" type="email" value={h.form.email} onChange={h.alterar("email")} required />
+            </div>
+            <div className="form-group">
+              <label htmlFor="prof-registro">Registro profissional:</label>
+              <span>Ex.: CRFa 0000 (opcional)</span>
+              <input id="prof-registro" type="text" value={h.form.registro} onChange={h.alterar("registro")} />
+            </div>
+            <div className="form-group">
+              <label htmlFor="prof-senha">Senha:</label>
+              <span>Preencha somente se desejar trocar (mínimo de 8 caracteres)</span>
+              <input
+                id="prof-senha"
+                type="password"
+                value={h.form.senha}
+                onChange={h.alterar("senha")}
+                autoComplete="new-password"
+              />
+            </div>
+            <button type="submit" className="btn-confirmar" disabled={h.salvando || h.carregando}>
+              {h.salvando ? "Salvando..." : "Confirmar"}
+            </button>
+          </form>
+        </section>
+
+        <section ref={configuracoesRef} className="configuracoes-section">
+          <h2 className="prof-config__titulo">Configurações</h2>
+
+          <div className="prof-config__cartao">
+            <div>
+              <h3 className="config-card-title">Código de vínculo</h3>
+              <p className="config-card-description">
+                Passe este código ao paciente: ele usa em Perfil → Configurações para se vincular a você.
+                {h.qtdePacientes != null && ` Pacientes vinculados: ${h.qtdePacientes}.`}
+              </p>
+            </div>
+            <div className="prof-config__codigo">
+              <strong>{h.codigo || "—"}</strong>
+              <button type="button" onClick={h.copiarCodigo} disabled={!h.codigo}>
+                {h.copiado ? "Copiado!" : "Copiar"}
+              </button>
             </div>
           </div>
 
-          <div className="config-card">
-            <h3 className="config-card-title">Notificações</h3>
-            <p className="config-card-description">
-              Receba alertas e atualizações importantes sobre o seu perfil diretamente no sistema.
-            </p>
-            <div className="config-card-action">
-              <label className="switch">
-                <input
-                  type="checkbox"
-                  checked={notificacoes}
-                  onChange={(e) => setNotificacoes(e.target.checked)}
-                />
-                <span className="slider round"></span>
-              </label>
+          <div className="prof-config__cartao">
+            <div>
+              <h3 className="config-card-title">Modo de Cor</h3>
+              <p className="config-card-description">
+                Ative o tema escuro para reduzir o cansaço visual em ambientes de baixa luminosidade.
+              </p>
             </div>
+            <label className="prof-config__tema">
+              <input
+                type="checkbox"
+                checked={isDarkMode}
+                onChange={(e) => setTheme(e.target.checked ? "dark" : "light")}
+                aria-label="Ativar modo escuro"
+              />
+              Tema escuro
+            </label>
           </div>
 
-          <div className="config-card">
-            <h3 className="config-card-title">Segurança</h3>
-            <p className="config-card-description">
-              Exigir confirmação de duas etapas em todas as alterações de dados sensíveis na conta.
-            </p>
-            <div className="config-card-action">
-              <label className="switch">
-                <input
-                  type="checkbox"
-                  checked={autenticacao}
-                  onChange={(e) => setAutenticacao(e.target.checked)}
-                />
-                <span className="slider round"></span>
-              </label>
+          <div className="prof-config__cartao">
+            <div>
+              <h3 className="config-card-title">Sair da conta</h3>
+              <p className="config-card-description">Encerre sua sessão neste dispositivo.</p>
             </div>
+            <button type="button" className="logout-button" onClick={() => setConfirmarSaida(true)}>
+              Sair
+            </button>
           </div>
-
-          <div className="config-card">
-            <h3 className="config-card-title">Histórico médico</h3>
-            <p className="config-card-description">
-              Permitir que o sistema salve um registro histórico das alterações feitas no seu
-              diagnóstico.
-            </p>
-            <div className="config-card-action">
-              <label className="switch">
-                <input
-                  type="checkbox"
-                  checked={historico}
-                  onChange={(e) => setHistorico(e.target.checked)}
-                />
-                <span className="slider round"></span>
-              </label>
-            </div>
-          </div>
-        </div>
-
-        <div className="config-card-wide">
-          <div className="wide-info">
-            <h3 className="config-card-title">Tema do Sistema</h3>
-            <p className="config-card-description">
-              Escolha manualmente a paleta de cores predominante da interface do seu aplicativo.
-            </p>
-          </div>
-
-          <div className="wide-actions">
-            <div className="wide-toggle-row">
-              <span className="toggle-label">Claro</span>
-              <label className="switch">
-                <input
-                  type="checkbox"
-                  checked={temaSelecionado === "claro"}
-                  onChange={() => setTemaSelecionado("claro")}
-                />
-                <span className="slider round"></span>
-              </label>
-            </div>
-
-            <div className="wide-toggle-row">
-              <span className="toggle-label">Escuro</span>
-              <label className="switch">
-                <input
-                  type="checkbox"
-                  checked={temaSelecionado === "escuro"}
-                  onChange={() => setTemaSelecionado("escuro")}
-                />
-                <span className="slider round"></span>
-              </label>
-            </div>
-          </div>
-        </div>
+        </section>
       </main>
+
+      {confirmarSaida && (
+        <div className="logout-modal-overlay" role="presentation" onClick={() => setConfirmarSaida(false)}>
+          <div className="logout-modal" role="alertdialog" aria-modal="true" onClick={(e) => e.stopPropagation()}>
+            <h2 className="logout-modal-title">Deseja sair da conta?</h2>
+            <div className="logout-modal-actions">
+              <button type="button" className="logout-modal-cancel" onClick={() => setConfirmarSaida(false)}>
+                Cancelar
+              </button>
+              <button type="button" className="logout-modal-confirm" onClick={h.sair}>
+                Sair
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -25,7 +25,7 @@ const NavbarLandingPage = () => {
           </a>
         </li>
         <li>
-          <a href="#participantes" onClick={closeMenu}>
+          <a href="#equipe" onClick={closeMenu}>
             Equipe
           </a>
         </li>

@@ -1,6 +1,6 @@
 import React, { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import { AnimatePresence, motion, MotionConfig } from "framer-motion";
+import { motion, MotionConfig } from "framer-motion";
 
 import RotaProtegida from "./RotaProtegida";
 import { useAcessibilidade } from "../hooks/useAcessibilidade";
@@ -48,10 +48,9 @@ const PageTransition = ({ children }) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 15 }}
+      initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -15 }}
-      transition={{ duration: 0.2 }}
+      transition={{ duration: 0.18 }}
     >
       {children}
     </motion.div>
@@ -64,7 +63,7 @@ function AnimatedRoutes() {
 
   return (
     <MotionConfig reducedMotion={toggles.reduzirAnimacao ? "always" : "user"}>
-      <AnimatePresence mode="wait">
+      <>
       <Routes location={location} key={location.pathname}>
         {/* ---- Rotas públicas: landing, login e cadastro ---- */}
         <Route
@@ -428,7 +427,7 @@ function AnimatedRoutes() {
           }
         />
       </Routes>
-      </AnimatePresence>
+      </>
     </MotionConfig>
   );
 }

@@ -13,7 +13,13 @@ img {
 
   background-color: #ffffff;
   color: #1f2937;
-  overflow-x: hidden;
+  /* "clip" (e não "hidden"): hidden criava uma área de rolagem e a navbar deixava de ficar fixa */
+  overflow-x: clip;
+}
+
+/* ao clicar num link da navbar, a seção não fica escondida atrás dela */
+.landing section[id] {
+  scroll-margin-top: 80px;
 }
 
 .landing__hero-wrapper {

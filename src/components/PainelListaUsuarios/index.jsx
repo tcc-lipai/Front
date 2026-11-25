@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Search, ChevronDown } from "lucide-react";
 import Navbar from "../Navbar";
 import { HeaderActions } from "../HeaderActions";
+import { UserProfileDrawer } from "../UserProfileDrawer";
 import CardUsuario from "../CardUsuario";
 import DropdownFiltro from "../DropdownFiltro";
 import { usePainelListaUsuarios } from "./index.hook";
@@ -49,6 +51,8 @@ const PainelListaUsuarios = ({
     CONSISTENCIAS,
   } = usePainelListaUsuarios(usuarios);
 
+  const [perfilAberto, setPerfilAberto] = useState(false);
+
   return (
     <div className="lista-usuarios">
       <aside className="lista-usuarios__sidebar">
@@ -58,7 +62,7 @@ const PainelListaUsuarios = ({
       <main className="lista-usuarios__main">
         <header className="lista-usuarios__header">
           <h1 className="lista-usuarios__titulo">{titulo}</h1>
-          {mostrarHeaderActions && <HeaderActions onOpenProfile={() => {}} />}
+          {mostrarHeaderActions && <HeaderActions onOpenProfile={() => setPerfilAberto(true)} />}
         </header>
 
         <div className="lista-usuarios__container">
@@ -128,6 +132,10 @@ const PainelListaUsuarios = ({
           </div>
         </div>
       </main>
+
+      {mostrarHeaderActions && (
+        <UserProfileDrawer isOpen={perfilAberto} onClose={() => setPerfilAberto(false)} />
+      )}
     </div>
   );
 };

@@ -14,7 +14,10 @@ export async function login(email, senha) {
 
     return { sucesso: true, data: response.data };
   } catch (error) {
-    const mensagem = error.response?.data?.message || "Erro ao fazer login.";
+    const mensagem =
+      error.response?.status === 429
+        ? "Muitas tentativas de login. Aguarde 1 minuto e tente de novo."
+        : error.response?.data?.message || "Erro ao fazer login.";
     return { sucesso: false, mensagem };
   }
 }
