@@ -177,3 +177,16 @@
     margin-left: 0px;
   }
 }
+
+/* ícones do topo alinhados com o botão do menu */
+@media (max-width: 480px) {
+  .tela-loja__topo .header-actions-container {
+    margin-top: 24px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+  .tela-loja__topo .header-actions-container {
+    margin-top: 9px;
+  }
+}

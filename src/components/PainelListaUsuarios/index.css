@@ -163,3 +163,62 @@
     align-items: stretch;
   }
 }
+
+/* o título não pode ser espremido pelos botões do topo */
+.lista-usuarios__header .header-actions-container {
+  width: auto;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.lista-usuarios__header:has(.header-actions-container) {
+  gap: 12px;
+}
+
+.lista-usuarios__header:has(.header-actions-container) .lista-usuarios__titulo {
+  white-space: nowrap;
+}
+
+.lista-usuarios__controles > button {
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  /* "center" fazia cada bloco ter a largura do próprio conteúdo */
+  .lista-usuarios__main {
+    align-items: stretch;
+  }
+
+  .lista-usuarios__header {
+    padding: 0 52px;
+  }
+
+  .lista-usuarios__header:has(.header-actions-container) {
+    justify-content: space-between;
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 380px) {
+  .lista-usuarios__header:has(.header-actions-container) .lista-usuarios__titulo {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .lista-usuarios__header {
+    padding-right: 0;
+  }
+
+  /* botão comprido ocupa a linha toda em vez de encostar na borda */
+  .lista-usuarios__controles > button {
+    flex: 1 1 100%;
+    white-space: normal;
+  }
+}
+
+@media (max-width: 360px) {
+  .lista-usuarios__titulo {
+    font-size: 1.15rem;
+  }
+}

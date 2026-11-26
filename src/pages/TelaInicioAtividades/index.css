@@ -613,3 +613,38 @@ h2 {
     padding: 28px 20px;
   }
 }
+
+@media (max-width: 420px) {
+  .card-progresso {
+    padding: 10px 8px !important;
+    gap: 8px;
+  }
+
+  .card-progresso img {
+    padding: 8px;
+  }
+
+  .card-progresso h3 {
+    font-size: 14px;
+  }
+}
+
+/* ícones do topo alinhados com o botão do menu */
+@media (max-width: 480px) {
+  .topo-acoes .header-actions-container {
+    margin-top: 28px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .topo-acoes .header-actions-container {
+    margin-top: 9px;
+  }
+}
+
+/* celular bem estreito: um cartão de progresso por linha */
+@media (max-width: 360px) {
+  .infos {
+    grid-template-columns: 1fr !important;
+  }
+}

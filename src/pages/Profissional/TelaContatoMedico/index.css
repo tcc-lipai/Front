@@ -477,3 +477,10 @@
     align-self: stretch;
   }
 }
+
+/* espaço para o botão do menu, que fica no topo esquerdo */
+@media (max-width: 768px) {
+  .content-container {
+    padding-top: 100px;
+  }
+}

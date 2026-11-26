@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Atkinson+Hyperlegible:wght@400;700&display=swap");
 @import "./styles/theme.css";
 @import "./styles/alto-contraste.css";
+@import "./styles/responsivo.css";
 
 /* ==========================================================================
    Tokens de tema do LipAI

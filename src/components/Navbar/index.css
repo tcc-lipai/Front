@@ -108,3 +108,11 @@
     height: 40px;
   }
 }
+
+/* deixa livre o canto de baixo, onde fica o botão de acessibilidade */
+@media (min-width: 769px) {
+  .sidebar-navbar .navbar-container {
+    height: min(85vh, calc(100vh - 164px));
+    min-height: 280px;
+  }
+}

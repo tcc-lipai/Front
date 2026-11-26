@@ -115,3 +115,16 @@
   background: #fff6f6;
   color: #9a3333;
 }
+
+/* ícones do topo alinhados com o botão do menu */
+@media (max-width: 480px) {
+  .tela-dicionario__topo .header-actions-container {
+    margin-top: 24px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .tela-dicionario__topo .header-actions-container {
+    margin-top: 9px;
+  }
+}

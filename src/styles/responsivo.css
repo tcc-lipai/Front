@@ -1,0 +1,72 @@
+/* Ajustes de celular que valem para varias telas. Os seletores sao compostos de
+   proposito: o CSS de cada pagina carrega depois e venceria um seletor simples. */
+
+@media (max-width: 600px) {
+  /* atividades: titulo e X na primeira linha, barra de progresso embaixo */
+  .atividade-container .atividade-header {
+    flex-wrap: wrap;
+    gap: 8px 12px;
+  }
+
+  .atividade-header .atividade-titulo {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .atividade-header .atividade-titulo h1 {
+    font-size: 1.4rem;
+  }
+
+  .atividade-header .btn-fechar {
+    order: 1;
+    margin-left: auto;
+    flex-shrink: 0;
+    padding: 0;
+  }
+
+  .atividade-header .atividade-progresso {
+    order: 2;
+    flex-basis: 100%;
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .atividade-overlay .atividade-container {
+    width: 100%;
+  }
+
+  .atividade-container .video-placeholder span {
+    font-size: 1.4rem;
+    text-align: center;
+  }
+
+  /* modais de confirmacao */
+  .modal-overlay .modal-container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .modal-overlay .modal-container .modal-title {
+    font-size: 1.25rem;
+  }
+
+  .modal-container .modal-actions {
+    gap: 12px;
+  }
+
+  .modal-container .modal-actions button {
+    min-width: 0;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+/* o texto do aviso encostava nos botoes */
+.modal-container p + .modal-actions {
+  margin-top: 20px;
+}
+
+.modal-container .modal-actions button {
+  white-space: nowrap;
+}

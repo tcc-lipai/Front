@@ -500,3 +500,16 @@ body {
     margin: 0 12px 24px;
   }
 }
+
+/* ícones do topo alinhados com o botão do menu */
+@media (max-width: 480px) {
+  .ta-header .header-actions-container {
+    margin-top: 30px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .ta-header .header-actions-container {
+    margin-top: 13px;
+  }
+}

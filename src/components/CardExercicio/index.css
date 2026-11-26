@@ -127,7 +127,7 @@
   }
 
   .card-exercicio__botao {
-    width: 100%;
+    width: calc(100% - 62px);
     margin-left: 62px;
   }
 }

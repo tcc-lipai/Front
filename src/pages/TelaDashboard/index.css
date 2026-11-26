@@ -454,3 +454,30 @@
   color: var(--lipai-text-muted);
   font-size: 0.9rem;
 }
+
+/* celular: ícones na linha do menu e saudação embaixo, na largura toda */
+@media (max-width: 480px) {
+  .dashboard-header {
+    padding-left: 0;
+    padding-top: 0;
+  }
+
+  .dashboard-header .header-right {
+    order: -1;
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+/* ícones do topo alinhados com o botão do menu */
+@media (max-width: 480px) {
+  .dashboard-header .header-actions-container {
+    margin-top: 20px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .dashboard-header .header-actions-container {
+    margin-top: 5px;
+  }
+}

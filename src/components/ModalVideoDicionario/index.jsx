@@ -5,7 +5,7 @@ export const ModalVideoDicionario = ({ isOpen, onClose, titulo, videoUrl }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
+    <div className="modal-overlay tv-overlay" onClick={onClose}>
       <div className="tv-modal" onClick={(e) => e.stopPropagation()}>
         <button className="modal-close-x tv-modal__fechar" onClick={onClose} aria-label="Fechar">
           <X size={24} />

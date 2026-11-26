@@ -99,6 +99,11 @@ const TITULOS = {
   atividadeAlternativa: "atividade de interpretação",
 };
 
+const tituloAcao = (editando, nome) => {
+  if (editando) return "Editar";
+  return /^(alternativa|atividade)/.test(nome) ? "Nova" : "Novo";
+};
+
 const TelaUnidadeAdmin = () => {
   const h = useTelaUnidadeAdmin();
   const [abertos, setAbertos] = useState({});
@@ -328,7 +333,7 @@ const TelaUnidadeAdmin = () => {
       <FormModal
         key={`${tipoForm ?? "none"}-${form?.item?.[TIPOS[tipoForm]?.id] ?? "novo"}-${form?.grupoId ?? ""}`}
         isOpen={!!form}
-        titulo={form ? `${form.item ? "Editar" : "Novo"} ${TITULOS[tipoForm]}` : ""}
+        titulo={form ? `${tituloAcao(form.item, TITULOS[tipoForm])} ${TITULOS[tipoForm]}` : ""}
         campos={form ? camposDoForm(tipoForm, todosGrupos, gruposAlternativa) : []}
         valoresIniciais={form ? valoresIniciais(tipoForm, form.item, form.grupoId) : {}}
         onSalvar={h.salvar}

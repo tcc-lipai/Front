@@ -3,8 +3,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 94%;
-  max-width: 760px;
+  /* limita também pela altura da janela (a tela é 4:3) */
+  width: max(260px, min(94vw, 760px, calc((100vh - 200px) * 4 / 3)));
   font-family: "Poppins", sans-serif;
 }
 
@@ -82,4 +82,16 @@
   font-size: 1.4rem;
   font-weight: 700;
   text-align: center;
+}
+
+.modal-overlay.tv-overlay {
+  background-color: rgba(18, 12, 26, 0.88);
+  overflow-y: auto;
+}
+
+/* o X fica acima da TV, não em cima do vídeo (outro CSS de modal vencia o top) */
+.tv-modal .tv-modal__fechar {
+  top: -44px;
+  right: -6px;
+  color: #fff;
 }
